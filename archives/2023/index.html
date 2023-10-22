@@ -1857,8 +1857,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   volantis.GLOBAL_CONFIG ={
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
-    default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1697944232984),
+    default: {"avatar":"/images/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
+    lastupdate: new Date(1697951290152),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","guide","tagcloud","webinfo"],
@@ -2262,7 +2262,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   /******************************************************************************/
   //图像加载出错时的处理
   function errorImgAvatar(img) {
-    img.src = "https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg";
+    img.src = "/images/userphoto02.png";
     img.onerror = null;
   }
   function errorImgCover(img) {
@@ -2633,6 +2633,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           
         
+          
+        
       
     
     
@@ -2640,7 +2642,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://cs0522.github.io/test/hello-world/zh-CN/">
+  <link itemprop="mainEntityOfPage" href="https://cs0522.github.io/test/test-asset/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="诚实同学的博客">
   </span>
@@ -2658,7 +2660,68 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/test/hello-world/zh-CN/"  itemprop="url">
+      <a href="/test/test-asset/"  itemprop="url">
+        test-asset
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      <p>这是文章摘要</p>
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-10-22T11:12:59+08:00">2023-10-22</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/test/">test</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/test/" itemprop="url"><span itemprop="name">test</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/test/test-asset/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://cs0522.github.io/test/hello-world/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="诚实同学的博客">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="诚实同学的博客">
+    <meta itemprop="description" content="Blog, Computer Science, Learning, Life">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/test/hello-world/"  itemprop="url">
         Hello World
       </a>
     </h2>
@@ -2688,7 +2751,7 @@ Qu...
       </div>
       
         <div>
-          <a class='readmore' href='/test/hello-world/zh-CN/' itemprop="url">
+          <a class='readmore' href='/test/hello-world/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -2704,7 +2767,7 @@ Qu...
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://cs0522.github.io/test/test-post/zh-CN/">
+  <link itemprop="mainEntityOfPage" href="https://cs0522.github.io/test/test-post/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="诚实同学的博客">
   </span>
@@ -2722,7 +2785,7 @@ Qu...
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/test/test-post/zh-CN/"  itemprop="url">
+      <a href="/test/test-post/"  itemprop="url">
         test post
       </a>
     </h2>
@@ -2753,7 +2816,7 @@ Qu...
       </div>
       
         <div>
-          <a class='readmore' href='/test/test-post/zh-CN/' itemprop="url">
+          <a class='readmore' href='/test/test-post/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -2787,7 +2850,7 @@ Qu...
     
       
         <a class='avatar flat-box rectangle' href='/about/'>
-          <img no-lazy src='https://gcore.jsdelivr.net/gh/xaoxuu/cdn-assets/avatar/avatar.png'/>
+          <img no-lazy src='/images/userphoto02_scaled.png'/>
         </a>
       
     
@@ -2797,12 +2860,60 @@ Qu...
           <h2>Chen Shi</h2>
         
         
-          <p>DLUT DRISE</p>
-
+          <p>DLUT DRISE</p><p>2024届本科生</p>
         
         
       </div>
     
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="mailto:chenshi020522@outlook.com"
+              class="social fa-solid fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="https://github.com/CS0522/"
+              class="social fa-brands fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="/images/weixin.png"
+              class="social fa-brands fa-weixin flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="/images/qq.jpg"
+              class="social fa-brands fa-qq flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="https://space.bilibili.com/37047123/"
+              class="social fa-brands fa-bilibili flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+      </div>
     
   </div>
 </section>
@@ -2830,7 +2941,7 @@ Qu...
           <li><a class="flat-box"
             title="/categories/test/" href="/categories/test/"
             active-action="action-categoriestest"
-            ><div class='name'>test</div><div class='badge'>(2)</div></a></li>
+            ><div class='name'>test</div><div class='badge'>(3)</div></a></li>
         
       </ul>
     </div>
@@ -2908,7 +3019,7 @@ Qu...
 
 
     <div class='content'>
-      <a href="/tags/test1/" style="font-size: 24px; color: #555">test1</a> <a href="/tags/test2/" style="font-size: 24px; color: #555">test2</a> <a href="/tags/test3/" style="font-size: 14px; color: #999">test3</a>
+      <a href="/tags/test1/" style="font-size: 24px; color: #555">test1</a> <a href="/tags/test2/" style="font-size: 24px; color: #555">test2</a> <a href="/tags/test3/" style="font-size: 14px; color: #999">test3</a> <a href="/tags/test4/" style="font-size: 14px; color: #999">test4</a>
     </div>
   </section>
 
@@ -2934,7 +3045,7 @@ Qu...
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>2 篇</div>
+          <div>3 篇</div>
         </div>
       
 
@@ -2949,7 +3060,7 @@ Qu...
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>77 字</div>
+          <div>95 字</div>
         </div>
       
 
@@ -3039,8 +3150,8 @@ Qu...
         <div class="social-wrapper" itemprop="about" itemscope itemtype="http://schema.org/Thing">
           
             
-              <a href="/"
-                class="social fa-solid fa-rss flat-btn"
+              <a href="mailto:chenshi020522@outlook.com"
+                class="social fa-solid fa-envelope flat-btn"
                 target="_blank"
                 rel="external nofollow noopener noreferrer" itemprop="url">
                 
@@ -3057,7 +3168,7 @@ Qu...
             
           
             
-              <a href="https://weixin.com/"
+              <a href="/images/weixin.png"
                 class="social fa-brands fa-weixin flat-btn"
                 target="_blank"
                 rel="external nofollow noopener noreferrer" itemprop="url">
@@ -3066,7 +3177,7 @@ Qu...
             
           
             
-              <a href="https://qq.com/"
+              <a href="/images/qq.jpg"
                 class="social fa-brands fa-qq flat-btn"
                 target="_blank"
                 rel="external nofollow noopener noreferrer" itemprop="url">
@@ -3780,7 +3891,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/054.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/039.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/042.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/056.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/052.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/005.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/003.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/033.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/006.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/012.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/034.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/004.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/002.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/016.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/019.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/051.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/025.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/035.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/001.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/038.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/046.webp"];
+  let imgs = ["https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/039.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/012.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/006.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/019.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/033.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/054.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/005.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/034.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/002.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/035.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/016.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/038.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/001.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/046.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/004.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/056.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/042.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/025.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/003.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/051.webp","https://unpkg.com/volantis-static@0.0.1654736714924/media/wallpaper/minimalist/2020/052.webp"];
   let index = 0;
   let IntervalParallax = null;
 
