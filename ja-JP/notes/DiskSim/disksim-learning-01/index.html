@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"/images/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1698118762396),
+    lastupdate: new Date(1698163161035),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2187,9 +2187,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <!-- Custom Files headEnd end-->
   <!-- front-matter head_end begin -->
   <!-- front-matter head_end end -->
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://unpkg.com/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --></head>
+</head>
   <body itemscope itemtype="http://schema.org/WebPage">
     <!-- import body_begin begin-->
     <!-- import body_begin end-->
@@ -2602,7 +2600,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：175 字</p>
+      <p>字数：177 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2627,31 +2625,39 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="post-body" itemprop="articleBody">
     <p>老东西 DiskSim 环境的配置</p>
 <span id="more"></span>
-
-<div class="story post-story"><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><h3 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h3><ul>
+<div class="story post-story"><h2 id="环境">环境</h2>
+<h3 id="系统环境">系统环境</h3>
+<ul>
 <li>Ubuntu14.04 x64 以下</li>
 <li>测试通过：Ubuntu14.04 x64，Ubuntu10.04 x86</li>
-<li>老版本需要更换官方源<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ubuntu10.04 换源</span></span><br></pre></td></tr></table></figure></li>
+<li>老版本需要更换官方源 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ubuntu10.04 换源</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="gcc-等工具"><a href="#gcc-等工具" class="headerlink" title="gcc 等工具"></a>gcc 等工具</h3><ul>
+<h3 id="gcc-等工具">gcc 等工具</h3>
+<ul>
 <li><font color="red">gcc 版本要在 gcc-4.8 以下，越老越好</font></li>
-<li>直接安装<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gcc g++ build-essential make flex-old bison</span><br></pre></td></tr></table></figure></li>
+<li>直接安装 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gcc g++ build-essential make flex-old bison</span><br></pre></td></tr></table></figure></li>
 </ul>
-</div><div class="story post-story"><h2 id="安装-DiskSim"><a href="#安装-DiskSim" class="headerlink" title="安装 DiskSim"></a>安装 DiskSim</h2><h3 id="1-下载源码包"><a href="#1-下载源码包" class="headerlink" title="1. 下载源码包"></a>1. 下载源码包</h3><ul>
+</div><div class="story post-story"><h2 id="安装-disksim">安装 DiskSim</h2>
+<h3 id="下载源码包">1. 下载源码包</h3>
+<ul>
 <li><a target="_blank" rel="noopener" href="http://www.pdl.cmu.edu/DiskSim/">DiskSim</a></li>
 <li><a target="_blank" rel="noopener" href="http://research.microsoft.com/en-us/downloads/b41019e2-1d2b-44d8-b512-ba35ab814cd4/">ssd-add-on</a></li>
 </ul>
-<h3 id="2-解压"><a href="#2-解压" class="headerlink" title="2. 解压"></a>2. 解压</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar xfz disksim-4.0-with-dixtrac.tar.gz</span><br><span class="line"><span class="built_in">cd</span> disksim-4.0</span><br><span class="line">unzip ../ssd-add-on.zip</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-下载修改补丁、x64-兼容补丁"><a href="#3-下载修改补丁、x64-兼容补丁" class="headerlink" title="3. 下载修改补丁、x64 兼容补丁"></a>3. 下载修改补丁、x64 兼容补丁</h3><ul>
+<h3 id="解压">2. 解压</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar xfz disksim-4.0-with-dixtrac.tar.gz</span><br><span class="line"><span class="built_in">cd</span> disksim-4.0</span><br><span class="line">unzip ../ssd-add-on.zip</span><br></pre></td></tr></table></figure>
+<h3 id="下载修改补丁x64-兼容补丁">3. 下载修改补丁、x64 兼容补丁</h3>
+<ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/cighao/disksim-4.0-with-ssdmodel-patch">modify-patch</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/cighao/disksim-4.0-with-ssdmodel-64bit-patch">64bit-patch</a></li>
 </ul>
-<h3 id="4-打上补丁"><a href="#4-打上补丁" class="headerlink" title="4. 打上补丁"></a>4. 打上补丁</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># disksim-4.0/</span></span><br><span class="line">patch -p1 &lt; ssdmodel/ssd-patch</span><br><span class="line"></span><br><span class="line">patch -p1 &lt; modify-patch</span><br><span class="line"></span><br><span class="line">patch -p1 &lt; 64bit-patch</span><br></pre></td></tr></table></figure>
+<h3 id="打上补丁">4. 打上补丁</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># disksim-4.0/</span></span><br><span class="line">patch -p1 &lt; ssdmodel/ssd-patch</span><br><span class="line"></span><br><span class="line">patch -p1 &lt; modify-patch</span><br><span class="line"></span><br><span class="line">patch -p1 &lt; 64bit-patch</span><br></pre></td></tr></table></figure>
+</div><div class="story post-story"><h2 id="编译与验证">编译与验证</h2>
+<h3 id="make">Make</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># disksim-4.0/</span></span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<h3 id="验证">验证</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> valid</span><br><span class="line">./runvalid</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证 ssdmodel</span></span><br><span class="line"><span class="built_in">chmod</span> a+x ./ssdmodel/valid/runvalid</span><br><span class="line"><span class="built_in">cd</span> ./ssdmodel/valid</span><br><span class="line">./runvalid</span><br></pre></td></tr></table></figure>
 
-</div><div class="story post-story"><h2 id="编译与验证"><a href="#编译与验证" class="headerlink" title="编译与验证"></a>编译与验证</h2><h3 id="Make"><a href="#Make" class="headerlink" title="Make"></a>Make</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># disksim-4.0/</span></span><br><span class="line">make</span><br></pre></td></tr></table></figure>
-
-<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> valid</span><br><span class="line">./runvalid</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证 ssdmodel</span></span><br><span class="line"><span class="built_in">chmod</span> a+x ./ssdmodel/valid/runvalid</span><br><span class="line"><span class="built_in">cd</span> ./ssdmodel/valid</span><br><span class="line">./runvalid</span><br></pre></td></tr></table></figure>
 </div>
   </div>
   
@@ -2768,27 +2774,26 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class='prev' href='/notes/SimPy/simpy-learning-01/'>
           <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【学习笔记】SimPy 学习（一）：基础</p>
-          <p class='content'>Python 仿真库 SimPy，基本安装和简单结构
+          <p class='content'>Python 仿真库 SimPy，安装、结构和基本概念
 
 
-
-学习笔记参考  
+学习笔记参考
 
 SimPy 简介
-“SimPy 是基于过程的离散事件的标准 Python 模拟框架”SimPy 文档  
 
-Sim...</p>
+"SimPy 是基于过程的离散事件的标准 Python 模拟框架"
+SimPy 文档
+
+SimPy...</p>
         </a>
       
       
-        <a class='next' href='/notes/SimPy/simpy-learning-02/'>
-          <p class='title'>【学习笔记】SimPy 学习（二）：进程交互与资源共享<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>学习 SimPy 的一些核心概念，分为 Environment 的进程交互和 Resource 的资源共享
+        <a class='next' href='/docs/ssh-instruction/'>
+          <p class='title'>【文档小记】SSH 使用方法<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>记录 SSH 一些使用方法
 
 
-Environment决定仿真的起点和终点，管理仿真元素之间的关联
-APIs
-添加...</p>
+This document shows how to set up SSH client (no-password login) on Windows and L...</p>
         </a>
       
     </div>
@@ -2830,7 +2835,7 @@ APIs
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>10 篇</div>
+          <div>13 篇</div>
         </div>
       
 
@@ -2845,7 +2850,7 @@ APIs
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>7.7k 字</div>
+          <div>21.8k 字</div>
         </div>
       
 
@@ -2897,7 +2902,7 @@ APIs
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83"><span class="toc-number">1.1.</span> <span class="toc-text">系统环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gcc-%E7%AD%89%E5%B7%A5%E5%85%B7"><span class="toc-number">1.2.</span> <span class="toc-text">gcc 等工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-DiskSim"><span class="toc-number">2.</span> <span class="toc-text">安装 DiskSim</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%8B%E8%BD%BD%E6%BA%90%E7%A0%81%E5%8C%85"><span class="toc-number">2.1.</span> <span class="toc-text">1. 下载源码包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%A7%A3%E5%8E%8B"><span class="toc-number">2.2.</span> <span class="toc-text">2. 解压</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%8B%E8%BD%BD%E4%BF%AE%E6%94%B9%E8%A1%A5%E4%B8%81%E3%80%81x64-%E5%85%BC%E5%AE%B9%E8%A1%A5%E4%B8%81"><span class="toc-number">2.3.</span> <span class="toc-text">3. 下载修改补丁、x64 兼容补丁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%89%93%E4%B8%8A%E8%A1%A5%E4%B8%81"><span class="toc-number">2.4.</span> <span class="toc-text">4. 打上补丁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="toc-number">3.</span> <span class="toc-text">编译与验证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Make"><span class="toc-number">3.1.</span> <span class="toc-text">Make</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81"><span class="toc-number">3.2.</span> <span class="toc-text">验证</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83"><span class="toc-number">1.1.</span> <span class="toc-text">系统环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gcc-%E7%AD%89%E5%B7%A5%E5%85%B7"><span class="toc-number">1.2.</span> <span class="toc-text">gcc 等工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-disksim"><span class="toc-number">2.</span> <span class="toc-text">安装 DiskSim</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E6%BA%90%E7%A0%81%E5%8C%85"><span class="toc-number">2.1.</span> <span class="toc-text">1. 下载源码包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%8E%8B"><span class="toc-number">2.2.</span> <span class="toc-text">2. 解压</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E4%BF%AE%E6%94%B9%E8%A1%A5%E4%B8%81x64-%E5%85%BC%E5%AE%B9%E8%A1%A5%E4%B8%81"><span class="toc-number">2.3.</span> <span class="toc-text">3. 下载修改补丁、x64 兼容补丁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E4%B8%8A%E8%A1%A5%E4%B8%81"><span class="toc-number">2.4.</span> <span class="toc-text">4. 打上补丁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="toc-number">3.</span> <span class="toc-text">编译与验证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#make"><span class="toc-number">3.1.</span> <span class="toc-text">Make</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81"><span class="toc-number">3.2.</span> <span class="toc-text">验证</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -3722,7 +3727,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["/images/91.jpg"];
+  let imgs = ["/images/127.jpg"];
   let index = 0;
   let IntervalParallax = null;
 

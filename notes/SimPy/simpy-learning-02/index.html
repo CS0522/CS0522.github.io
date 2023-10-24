@@ -45,8 +45,8 @@
 <meta property="og:description" content="学习 SimPy 的一些核心概念，分为 Environment 的进程交互和 Resource 的资源共享">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-<meta property="article:published_time" content="2023-10-23T12:13:23.000Z">
-<meta property="article:modified_time" content="2023-10-24T03:38:53.914Z">
+<meta property="article:published_time" content="2023-10-24T00:13:23.000Z">
+<meta property="article:modified_time" content="2023-10-24T15:58:24.681Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="SimPy">
 <meta property="article:tag" content="Python">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"/images/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1698118762396),
+    lastupdate: new Date(1698163161035),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2187,9 +2187,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <!-- Custom Files headEnd end-->
   <!-- front-matter head_end begin -->
   <!-- front-matter head_end end -->
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://unpkg.com/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --></head>
+</head>
   <body itemscope itemtype="http://schema.org/WebPage">
     <!-- import body_begin begin-->
     <!-- import body_begin end-->
@@ -2588,10 +2586,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
         
           
-            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-10-23T20:13:23+08:00">
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-10-24T08:13:23+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2023年10月23日</p>
+    <p>发布于：2023年10月24日</p>
   </a>
 </div>
 
@@ -2602,7 +2600,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：1.8k 字</p>
+      <p>字数：2k 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2627,9 +2625,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="post-body" itemprop="articleBody">
     <p>学习 SimPy 的一些核心概念，分为 Environment 的进程交互和 Resource 的资源共享</p>
 <span id="more"></span>
-
-<div class="story post-story"><h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><p>决定仿真的起点和终点，管理仿真元素之间的关联</p>
-<h3 id="APIs"><a href="#APIs" class="headerlink" title="APIs"></a>APIs</h3><ul>
+<div class="story post-story"><h2 id="environment">Environment</h2>
+<p>决定仿真的起点和终点，管理仿真元素之间的关联</p>
+<h3 id="apis">APIs</h3>
+<ul>
 <li>添加仿真进程：<code>simpy.Environment.process()</code></li>
 <li>创建事件： <code>simpy.Environment.event()</code></li>
 <li>提供延时事件：<code>simpy.Environment.timeout()</code></li>
@@ -2637,40 +2636,34 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>仿真启动：<code>simpy.Environment.run()</code></li>
 <li>现在的时间：<code>simpy.Environment.now</code></li>
 </ul>
-<h3 id="Example-03"><a href="#Example-03" class="headerlink" title="Example 03"></a>Example 03</h3><details>
-<summary>定义一个进程，仿真的简单代码结构</summary>
-
+<h3 id="example-2.1">Example 2.1</h3>
+<details>
+<p><summary>定义一个进程，仿真的简单代码结构</summary></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个汽车进程</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">car</span>(<span class="params">env</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Start parking at %d&#x27;</span> % env.now)</span><br><span class="line">        parking_duration = <span class="number">5</span></span><br><span class="line">        <span class="comment"># 进程延时 5s</span></span><br><span class="line">        <span class="keyword">yield</span> env.timeout(parking_duration) </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Start driving at %d&#x27;</span> % env.now)</span><br><span class="line">        trip_duration = <span class="number">2</span></span><br><span class="line">        <span class="comment"># 延时 2s</span></span><br><span class="line">        <span class="keyword">yield</span> env.timeout(trip_duration) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 仿真启动</span></span><br><span class="line">env = simpy.Environment()   <span class="comment"># 实例化环境</span></span><br><span class="line">env.process(car(env))   <span class="comment"># 添加汽车进程</span></span><br><span class="line">env.run(until = <span class="number">15</span>)   <span class="comment"># 设定仿真结束条件, 这里是 15s 后停止</span></span><br></pre></td></tr></table></figure>
 </details>
-
-<h3 id="Example-04"><a href="#Example-04" class="headerlink" title="Example 04"></a>Example 04</h3><details>
-<summary>描述一个汽车驾驶一段时间后停车充电， 汽车驾驶进程和电池充电进程通过事件的激活来相互影响</summary>
-
+<h3 id="example-2.2">Example 2.2</h3>
+<details>
+<p><summary>描述一个汽车驾驶一段时间后停车充电， 汽车驾驶进程和电池充电进程通过事件的激活来相互影响</summary></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">描述一个汽车驾驶一段时间后停车充电， 汽车驾驶进程和电池充电进程通过事件的激活来相互影响</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> seed, randint</span><br><span class="line">seed(<span class="number">23</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ENV</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, env</span>):</span><br><span class="line">        self.env = env</span><br><span class="line">        self.drive_proc = env.process(self.drive(env))</span><br><span class="line">        self.bat_ctrl_proc = env.process(self.bat_ctrl(env))</span><br><span class="line">        <span class="comment"># 这里的 reactivate 和 sleep 是先执行了 drive() 和 bat_ctrl() 中的</span></span><br><span class="line">        <span class="comment"># ？下面这段在做什么</span></span><br><span class="line">        self.bat_ctrl_reactivate = env.event()</span><br><span class="line">        self.bat_ctrl_sleep = env.event()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 驾驶进程</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">drive</span>(<span class="params">self, env</span>):</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="comment"># drive 20~40 minutes</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Start driving at: &quot;</span>, env.now)</span><br><span class="line">            <span class="keyword">yield</span> env.timeout(randint(<span class="number">20</span>, <span class="number">40</span>))</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;End driving at: &quot;</span>, env.now)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># parking 1~6 hours</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Start parking at: &quot;</span>, env.now)</span><br><span class="line">            <span class="comment"># activate battery charging</span></span><br><span class="line">            <span class="comment"># 这段代码应该是指创建事件</span></span><br><span class="line">            self.bat_ctrl_reactivate.succeed()</span><br><span class="line">            self.bat_ctrl_reactivate =  env.event()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 超时并挂起，等待 bat_ctrl_sleep 事件发生</span></span><br><span class="line">            <span class="keyword">yield</span> env.timeout(randint(<span class="number">60</span>, <span class="number">360</span>)) &amp; self.bat_ctrl_sleep</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;End parking at: &quot;</span>, env.now)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 电池充电进程</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">bat_ctrl</span>(<span class="params">self, env</span>):</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Charge sleep at: &quot;</span>, env.now)</span><br><span class="line">            <span class="comment"># 挂起。接收到 drive() 中的事件发生后恢复</span></span><br><span class="line">            <span class="keyword">yield</span> self.bat_ctrl_reactivate</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Charge activate at: &quot;</span>, env.now)</span><br><span class="line">            <span class="keyword">yield</span> env.timeout(randint(<span class="number">30</span>, <span class="number">90</span>))</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Charge end at:&quot;</span>, env.now)</span><br><span class="line">            <span class="comment"># 这段代码应该是指创建事件</span></span><br><span class="line">            self.bat_ctrl_sleep.succeed()</span><br><span class="line">            self.bat_ctrl_sleep = env.event()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    env = simpy.Environment()</span><br><span class="line">    ENV(env)</span><br><span class="line">    env.run(until=<span class="number">300</span>)</span><br></pre></td></tr></table></figure>
 </details>
-
 <p>汽车的进程需要引用环境（<code>env</code>）来创建新的事件。汽车的行为被描述成一个无限循环。记住，这个函数是一个生成器。尽管它永远不会终止，但一旦到达 <code>yield</code> 语句，它会将控制流传回仿真程序。触发生成的事件后（<code>事件发生</code>），模拟将在此语句中恢复该函数。</p>
 <details>
-<summary>查看结果</summary>
-
+<p><summary>查看结果</summary></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Start driving at:  0</span><br><span class="line">Charge <span class="built_in">sleep</span> at:  0</span><br><span class="line">End driving at:  29</span><br><span class="line">Start parking at:  29</span><br><span class="line">Charge activate at:  29</span><br><span class="line">Charge end at: 60</span><br><span class="line">Charge <span class="built_in">sleep</span> at:  60</span><br><span class="line">End parking at:  131</span><br><span class="line">Start driving at:  131</span><br><span class="line">End driving at:  169</span><br><span class="line">Start parking at:  169</span><br><span class="line">Charge activate at:  169</span><br><span class="line">Charge end at: 226</span><br><span class="line">Charge <span class="built_in">sleep</span> at:  226</span><br></pre></td></tr></table></figure>
 </details>
-
-<h3 id="Example-05"><a href="#Example-05" class="headerlink" title="Example 05"></a>Example 05</h3><details>
-<summary>在电动汽车还在充电过程中，接到一个紧急通知，需要中断充电进程马上出门</summary>
-
+<h3 id="example-2.3">Example 2.3</h3>
+<details>
+<p><summary>在电动汽车还在充电过程中，接到一个紧急通知，需要中断充电进程马上出门</summary></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">driver</span>(<span class="params">env, car</span>):</span><br><span class="line">    <span class="keyword">yield</span> env.timeout(<span class="number">3</span>)</span><br><span class="line">    car.action.interrupt()</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, env</span>):</span><br><span class="line">        self.env = env</span><br><span class="line">        <span class="comment"># 实例化时开始run进程</span></span><br><span class="line">        self.action = env.process(self.run())</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;开始停车充电： %d&#x27;</span> % self.env.now)</span><br><span class="line">            charge_duration = <span class="number">5</span></span><br><span class="line">            <span class="comment"># 挂起process()返回的进程</span></span><br><span class="line">            <span class="comment"># 等待充电结束</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">yield</span> self.env.process(self.charge(charge_duration))</span><br><span class="line">            <span class="keyword">except</span> simpy.Interrupt:</span><br><span class="line">                <span class="comment"># 当我们接收到一个中断，我们停止充电，切换到行驶状态</span></span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&#x27;终止充电。祈祷电量足够......&#x27;</span>)</span><br><span class="line">                </span><br><span class="line">            <span class="comment"># 充电结束，可以重新上路</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;开始行驶： %d&#x27;</span> % self.env.now)</span><br><span class="line">            trip_duration = <span class="number">2</span></span><br><span class="line">            <span class="keyword">yield</span> self.env.timeout(trip_duration)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">charge</span>(<span class="params">self, duration</span>):</span><br><span class="line">        <span class="keyword">yield</span> self.env.timeout(duration)  </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    env = simpy.Environment()</span><br><span class="line">    car = Car(env)</span><br><span class="line">    env.process(driver(env, car))</span><br></pre></td></tr></table></figure>
 </details>
-
 <details>
-<summary>查看结果</summary>
-
+<p><summary>查看结果</summary></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">开始停车充电： 0</span><br><span class="line">终止充电。祈祷电量足够......</span><br><span class="line">开始行驶： 3</span><br><span class="line">开始停车充电： 5</span><br><span class="line">开始行驶： 10</span><br><span class="line">开始停车充电： 12</span><br></pre></td></tr></table></figure>
 </details>
-
-
-</div><div class="story post-story"><h2 id="Resource-Store"><a href="#Resource-Store" class="headerlink" title="Resource &#x2F; Store"></a>Resource &#x2F; Store</h2><p>仿真中涉及的人力资源以及工艺上的物料消耗都会抽象用 <code>Resource</code> 来表达，主要的 <code>method</code> 是 <code>request</code>。<code>Store</code> 处理各种优先级的队列问题，表现跟 <code>queue</code> 一致，通过 <code>get/put</code> 存放 <code>item</code>。</p>
-<h3 id="APIs-1"><a href="#APIs-1" class="headerlink" title="APIs"></a>APIs</h3><ul>
+</div><div class="story post-story"><h2 id="resource-store">Resource / Store</h2>
+<p>仿真中涉及的人力资源以及工艺上的物料消耗都会抽象用 <code>Resource</code> 来表达，主要的 <code>method</code> 是 <code>request</code>。<code>Store</code> 处理各种优先级的队列问题，表现跟 <code>queue</code> 一致，通过 <code>get/put</code> 存放 <code>item</code>。</p>
+<h3 id="apis-1">APIs</h3>
+<ul>
 <li>资源或限制条件：<code>simpy.Resource(env, capacity)</code></li>
 <li>优先级、不可打断正在服务的进程：<code>simpy.PriorityResource</code></li>
 <li>优先级、可以打断正在服务的进程：<code>simpy.PreemptiveResource</code></li>
@@ -2679,33 +2672,35 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>存在分类：<code>simpy.FilterStore</code></li>
 <li>连续不可分的元素：<code>simpy.Container</code></li>
 </ul>
-<h3 id="Example-06"><a href="#Example-06" class="headerlink" title="Example 06"></a>Example 06</h3><details>
-<summary>电动汽车使用两个充电桩中间的一个进行充电。如果这两个点都在使用，汽车将等待其中一个点直至其再次可用，然后开始给充电，完成后离开充电站</summary>
-
+<h3 id="example-2.4">Example 2.4</h3>
+<details>
+<p><summary>电动汽车使用两个充电桩中间的一个进行充电。如果这两个点都在使用，汽车将等待其中一个点直至其再次可用，然后开始给充电，完成后离开充电站</summary></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">car</span>(<span class="params">env, name, bcs, driving_time, charge_duration</span>):</span><br><span class="line">    <span class="comment"># 驶向充电站</span></span><br><span class="line">    <span class="keyword">yield</span> env.timeout(driving_time)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;%s 到达时间 %d&#x27;</span> % (name, env.now))</span><br><span class="line">    <span class="comment"># 请求充电桩</span></span><br><span class="line">    <span class="keyword">with</span> bcs.request() <span class="keyword">as</span> req:</span><br><span class="line">        <span class="keyword">yield</span> req</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;%s 充电开始时间 %d&#x27;</span> % (name, env.now))</span><br><span class="line">        <span class="keyword">yield</span> env.timeout(charge_duration)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;%s 充电结束并驶离时间 %d&#x27;</span> % (name, env.now))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">env = simpy.Environment()</span><br><span class="line"><span class="comment"># bcs 充电桩资源</span></span><br><span class="line">bcs = simpy.Resource(env, capacity = <span class="number">2</span>)</span><br><span class="line"><span class="comment"># 创建汽车进程</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    env.process(car(env, <span class="string">&#x27;第 %d 辆车&#x27;</span> % (i + <span class="number">1</span>), bcs, i * <span class="number">2</span>, <span class="number">5</span>))</span><br><span class="line"></span><br><span class="line">env.run()</span><br></pre></td></tr></table></figure>
 </details>
-
-
+<p>资源 <code>resource</code> 的 <code>request()</code> 方法生成一个事件 <code>event</code>， 该事件会等待直至资源可用。之后一直拥有资源，直至资源被释放。</p>
+<p>在代码中使用 <code>with</code> 构造资源的请求使用，资源在使用后将<code>自动释放</code>。如果没通过 <code>with</code> 使用 <code>request()</code>，需要自行使用 <code>release()</code> 释放资源。</p>
+<p>释放资源后，下一个等待的进程将激活，占用资源。资源的排队规则遵循<code>先进先出 FIFO</code>策略。</p>
 <details>
-<summary>查看结果</summary>
-
+<p><summary>查看结果</summary></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">第 1 辆车 到达时间 0</span><br><span class="line">第 1 辆车 充电开始时间 0</span><br><span class="line">第 2 辆车 到达时间 2</span><br><span class="line">第 2 辆车 充电开始时间 2</span><br><span class="line">第 3 辆车 到达时间 4</span><br><span class="line">第 1 辆车 充电结束并驶离时间 5</span><br><span class="line">第 3 辆车 充电开始时间 5</span><br><span class="line">第 4 辆车 到达时间 6</span><br><span class="line">第 2 辆车 充电结束并驶离时间 7</span><br><span class="line">第 4 辆车 充电开始时间 7</span><br><span class="line">第 3 辆车 充电结束并驶离时间 10</span><br><span class="line">第 4 辆车 充电结束并驶离时间 12</span><br></pre></td></tr></table></figure>
 </details>
-
-<h3 id="Example-07"><a href="#Example-07" class="headerlink" title="Example 07"></a>Example 07</h3><details>
-<summary>银行排队服务例子：一个柜台对客户进行服务，服务耗时，客户等候过长会离开柜台</summary>
-
+<h3 id="example-2.5">Example 2.5</h3>
+<details>
+<p><summary>银行排队服务例子：一个柜台对客户进行服务，服务耗时，客户等候过长会离开柜台</summary></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">银行排队服务例子：一个柜台对客户进行服务，服务耗时，客户等候过长会离开柜台</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">RANDOM_SEED = <span class="number">42</span></span><br><span class="line">NEW_CUSTOMERS = <span class="number">5</span>  <span class="comment"># 客户数</span></span><br><span class="line">INTERVAL_CUSTOMERS = <span class="number">10.0</span>  <span class="comment"># 客户到达的间距时间</span></span><br><span class="line">MIN_PATIENCE = <span class="number">1</span>  <span class="comment"># 客户等待时间, 最小</span></span><br><span class="line">MAX_PATIENCE = <span class="number">3</span>  <span class="comment"># 客户等待时间, 最大</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成客户</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">source</span>(<span class="params">env, number, interval, counter</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(number):</span><br><span class="line">        c = customer(env, <span class="string">&#x27;Customer%02d&#x27;</span> % i, counter, time_in_bank = <span class="number">12.0</span>)</span><br><span class="line">        env.process(c)</span><br><span class="line">        t = random.expovariate(<span class="number">1.0</span> / interval)</span><br><span class="line">        <span class="keyword">yield</span> env.timeout(t)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 客户到达、服务、离开</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">customer</span>(<span class="params">env, name, counter, time_in_bank</span>):</span><br><span class="line">    arrive = env.now</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;%7.4f %s: Here I am&#x27;</span> % (arrive, name))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> counter.request() <span class="keyword">as</span> req:</span><br><span class="line">        patience = random.uniform(MIN_PATIENCE, MAX_PATIENCE)</span><br><span class="line">        <span class="comment"># 等待柜员服务或者超出忍耐时间离开队伍</span></span><br><span class="line">        results = <span class="keyword">yield</span> req | env.timeout(patience)</span><br><span class="line">        wait = env.now - arrive</span><br><span class="line">        <span class="keyword">if</span> req <span class="keyword">in</span> results:</span><br><span class="line">        <span class="comment"># 到达柜台</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;%7.4f %s: Waited %6.3f&#x27;</span> % (env.now, name, wait))</span><br><span class="line">            tib = random.expovariate(<span class="number">1.0</span> / time_in_bank)</span><br><span class="line">            <span class="keyword">yield</span> env.timeout(tib)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;%7.4f %s: Finished&#x27;</span> % (env.now, name))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 没有服务到位</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;%7.4f %s: RENEGED after %6.3f&#x27;</span> % (env.now, name, wait))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Setup and start the simulation</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Bank renege&#x27;</span>)</span><br><span class="line">random.seed(RANDOM_SEED)</span><br><span class="line">env = simpy.Environment()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Start processes and run</span></span><br><span class="line">counter = simpy.Resource(env, capacity = <span class="number">1</span>)</span><br><span class="line">env.process(source(env, NEW_CUSTOMERS, INTERVAL_CUSTOMERS, counter))</span><br><span class="line">env.run()</span><br></pre></td></tr></table></figure>
 </details>
-
 <details>
-<summary>查看结果</summary>
-
+<p><summary>查看结果</summary></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Bank renege</span><br><span class="line"> 0.0000 Customer00: Here I am</span><br><span class="line"> 0.0000 Customer00: Waited  0.000</span><br><span class="line"> 3.8595 Customer00: Finished</span><br><span class="line">10.2006 Customer01: Here I am</span><br><span class="line">10.2006 Customer01: Waited  0.000</span><br><span class="line">12.7265 Customer02: Here I am</span><br><span class="line">13.9003 Customer02: RENEGED after  1.174</span><br><span class="line">23.7507 Customer01: Finished</span><br><span class="line">34.9993 Customer03: Here I am</span><br><span class="line">34.9993 Customer03: Waited  0.000</span><br><span class="line">37.9599 Customer03: Finished</span><br><span class="line">40.4798 Customer04: Here I am</span><br><span class="line">40.4798 Customer04: Waited  0.000</span><br><span class="line">43.1401 Customer04: Finished</span><br></pre></td></tr></table></figure>
 </details>
+<p><br> <br> <br></p>
+<p>SimPy 学习</p>
+<ul>
+<li><a href="/notes/SimPy/simpy-learning-01/" title="【学习笔记】SimPy 学习（一）：基础">【学习笔记】SimPy 学习（一）：基础</a></li>
+<li><a href="/notes/SimPy/simpy-learning-02/" title="【学习笔记】SimPy 学习（二）：进程交互与资源共享">【学习笔记】SimPy 学习（二）：进程交互与资源共享</a></li>
+<li><a href="/notes/SimPy/simpy-learning-03/" title="【学习笔记】SimPy 学习（三）：">【学习笔记】SimPy 学习（三）：</a></li>
+</ul>
 
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
 </div>
   </div>
   
@@ -2730,7 +2725,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-10-24T11:38:53+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-10-24T23:58:24+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>最后更新于：2023年10月24日</p>
@@ -2820,25 +2815,27 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/notes/DiskSim/disksim-learning-01/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【学习笔记】DiskSim 学习（一）：安装</p>
-          <p class='content'>老东西 DiskSim 环境的配置
+        <a class='prev' href='/learnings/%E7%9B%98%E8%8A%82%E8%83%BD/srcmap/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【论文随记】230817_SRCMap</p>
+          <p class='content'>本文针对数据中心的能源消耗问题，通过设计存储虚拟化层实现一个能源比例存储系统
 
-
-环境系统环境
-Ubuntu14.04 x64 以下
-测试通过：Ubuntu14.04 x64，Ubuntu10.04 x86
-老版本需要更换官方源1# U...</p>
+SRCMap: Energy Proportional Storage using Dynamic Consoli...</p>
         </a>
       
       
-        <a class='next' href='/docs/ssh-instruction/'>
-          <p class='title'>【文档小记】SSH 使用方法<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>记录 SSH 一些使用方法
+        <a class='next' href='/notes/SimPy/simpy-learning-01/'>
+          <p class='title'>【学习笔记】SimPy 学习（一）：基础<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>Python 仿真库 SimPy，安装、结构和基本概念
 
 
+学习笔记参考
 
-This document shows how to set up SSH client (no-password login) on Windows and ...</p>
+SimPy 简介
+
+"SimPy 是基于过程的离散事件的标准 Python 模拟框架"
+SimPy 文档
+
+SimPy...</p>
         </a>
       
     </div>
@@ -2880,7 +2877,7 @@ This document shows how to set up SSH client (no-password login) on Windows and 
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>10 篇</div>
+          <div>13 篇</div>
         </div>
       
 
@@ -2895,7 +2892,7 @@ This document shows how to set up SSH client (no-password login) on Windows and 
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>7.7k 字</div>
+          <div>21.8k 字</div>
         </div>
       
 
@@ -2947,7 +2944,7 @@ This document shows how to set up SSH client (no-password login) on Windows and 
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Environment"><span class="toc-number">1.</span> <span class="toc-text">Environment</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#APIs"><span class="toc-number">1.1.</span> <span class="toc-text">APIs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Example-03"><span class="toc-number">1.2.</span> <span class="toc-text">Example 03</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Example-04"><span class="toc-number">1.3.</span> <span class="toc-text">Example 04</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Example-05"><span class="toc-number">1.4.</span> <span class="toc-text">Example 05</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resource-Store"><span class="toc-number">2.</span> <span class="toc-text">Resource &#x2F; Store</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#APIs-1"><span class="toc-number">2.1.</span> <span class="toc-text">APIs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Example-06"><span class="toc-number">2.2.</span> <span class="toc-text">Example 06</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Example-07"><span class="toc-number">2.3.</span> <span class="toc-text">Example 07</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.4.</span> <span class="toc-text"></span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#environment"><span class="toc-number">1.</span> <span class="toc-text">Environment</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#apis"><span class="toc-number">1.1.</span> <span class="toc-text">APIs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#example-2.1"><span class="toc-number">1.2.</span> <span class="toc-text">Example 2.1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#example-2.2"><span class="toc-number">1.3.</span> <span class="toc-text">Example 2.2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#example-2.3"><span class="toc-number">1.4.</span> <span class="toc-text">Example 2.3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#resource-store"><span class="toc-number">2.</span> <span class="toc-text">Resource &#x2F; Store</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#apis-1"><span class="toc-number">2.1.</span> <span class="toc-text">APIs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#example-2.4"><span class="toc-number">2.2.</span> <span class="toc-text">Example 2.4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#example-2.5"><span class="toc-number">2.3.</span> <span class="toc-text">Example 2.5</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -3772,7 +3769,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["/images/91.jpg"];
+  let imgs = ["/images/127.jpg"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4091,7 +4088,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/SimPy/","name":"SimPy"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/notes/SimPy/simpy-learning-02/","name":"【学习笔记】SimPy 学习（二）：进程交互与资源共享"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记】SimPy 学习（二）：进程交互与资源共享","description":"学习 SimPy 的一些核心概念，分为 Environment 的进程交互和 Resource 的资源共享","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/SimPy/simpy-learning-02/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/SimPy/simpy-learning-02/","wordCount":53,"datePublished":"2023-10-23T12:13:23.000Z","dateModified":"2023-10-24T03:38:53.914Z","articleSection":"学习笔记","keywords":"SimPy,Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/SimPy/","name":"SimPy"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/notes/SimPy/simpy-learning-02/","name":"【学习笔记】SimPy 学习（二）：进程交互与资源共享"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记】SimPy 学习（二）：进程交互与资源共享","description":"学习 SimPy 的一些核心概念，分为 Environment 的进程交互和 Resource 的资源共享","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/SimPy/simpy-learning-02/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/SimPy/simpy-learning-02/","wordCount":53,"datePublished":"2023-10-24T00:13:23.000Z","dateModified":"2023-10-24T15:58:24.681Z","articleSection":"学习笔记","keywords":"SimPy,Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

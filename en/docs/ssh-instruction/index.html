@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"/images/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1698118762396),
+    lastupdate: new Date(1698163161035),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2187,9 +2187,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <!-- Custom Files headEnd end-->
   <!-- front-matter head_end begin -->
   <!-- front-matter head_end end -->
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://unpkg.com/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --></head>
+</head>
   <body itemscope itemtype="http://schema.org/WebPage">
     <!-- import body_begin begin-->
     <!-- import body_begin end-->
@@ -2598,7 +2596,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>315 words</p>
+      <p>316 words</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2623,62 +2621,47 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="post-body" itemprop="articleBody">
     <p>记录 SSH 一些使用方法</p>
 <span id="more"></span>
-
 <blockquote>
-<p>This document shows how to set up SSH client (no-password login) on Windows and Linux and SSH server on Linux (Windows is complicated because of the authority of the <code>.ssh/*</code> files).  </p>
+<p>This document shows how to set up SSH client (no-password login) on Windows and Linux and SSH server on Linux (Windows is complicated because of the authority of the <code>.ssh/*</code> files).</p>
 </blockquote>
-<div class="story post-story"><h2 id="Client-Side"><a href="#Client-Side" class="headerlink" title="Client Side"></a>Client Side</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
-<li><p>Install <code>OpenSSH Client</code> and <code>OpenSSH Server</code> (not necessary)  </p>
-</li>
-<li><p>Powershell (Admin) input   </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Start-Service sshd</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Command Prompt input   </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh Frank@localhost</span><br></pre></td></tr></table></figure>
-<p>and connect successfully, but it needs password;</p>
-</li>
-<li><p>For no-password, use Git to generate rsa key  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-<p>and get files <code>id_rsa</code> and <code>id_rsa.pub</code> under dir <code>~/.ssh</code></p>
-</li>
-<li><p>Copy the content in the <code>id_rsa.pub</code> to  <code>~/.ssh/authorized_keys</code> which is on the server</p>
-</li>
-<li><p>Create a file called <code>config</code> under the <code>.ssh/</code>, in the <code>config</code> file  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host [anynameuwant]</span><br><span class="line">HostName [host ip or domain]</span><br><span class="line">User [username on server]</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile [.ssh/id_rsa]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Finally, Command Prompt input  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh [anynameuwant]</span><br></pre></td></tr></table></figure>
-<p>and it will connect successfully without password if u have done all above correctly.</p>
-</li>
+<div class="story post-story"><h2 id="client-side">Client Side</h2>
+<h3 id="windows">Windows</h3>
+<ul>
+<li><p>Install <code>OpenSSH Client</code> and <code>OpenSSH Server</code> (not necessary)</p></li>
+<li><p>Powershell (Admin) input<br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Start-Service sshd</span><br></pre></td></tr></table></figure></p></li>
+<li><p>Command Prompt input<br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh Frank@localhost</span><br></pre></td></tr></table></figure> and connect successfully, but it needs password;</p></li>
+<li><p>For no-password, use Git to generate rsa key<br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure> and get files <code>id_rsa</code> and <code>id_rsa.pub</code> under dir <code>~/.ssh</code></p></li>
+<li><p>Copy the content in the <code>id_rsa.pub</code> to <code>~/.ssh/authorized_keys</code> which is on the server</p></li>
+<li><p>Create a file called <code>config</code> under the <code>.ssh/</code>, in the <code>config</code> file<br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host [anynameuwant]</span><br><span class="line">HostName [host ip or domain]</span><br><span class="line">User [username on server]</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile [.ssh/id_rsa]</span><br></pre></td></tr></table></figure></p></li>
+<li><p>Finally, Command Prompt input<br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh [anynameuwant]</span><br></pre></td></tr></table></figure> and it will connect successfully without password if u have done all above correctly.</p></li>
 </ul>
-<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><ul>
-<li>Almost the same as Windows, but has a more convenient way to copy <code>id_rsa.pub</code>. Terminal input  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id -i [~/.ssh/id_rsa.pub] [user]@[server]</span><br></pre></td></tr></table></figure></li>
+<h3 id="linux">Linux</h3>
+<ul>
+<li>Almost the same as Windows, but has a more convenient way to copy <code>id_rsa.pub</code>. Terminal input<br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id -i [~/.ssh/id_rsa.pub] [user]@[server]</span><br></pre></td></tr></table></figure></li>
 </ul>
-</div><div class="story post-story"><h2 id="Server-Side"><a href="#Server-Side" class="headerlink" title="Server Side"></a>Server Side</h2><blockquote>
+</div><div class="story post-story"><h2 id="server-side">Server Side</h2>
+<blockquote>
 <p>The most essential thing is to pay attention to the authority of the dir <code>.ssh</code>. Use <code>chmod</code> command.</p>
 </blockquote>
 <ul>
-<li><p>Install <code>openSSH</code>  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install openssh-server</span><br></pre></td></tr></table></figure>
-<p>and start it:  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh start</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Use <code>vim</code> and open <code>/etc/ssh/sshd_config</code>, add following contents</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AuthorizedKeysFile .ssh/authorized_keys </span><br><span class="line">  </span><br><span class="line">PubkeyAuthentication <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Generate <code>.ssh</code> directory by using <code>ssh-keygen</code></p>
-</li>
-<li><p>If no <code>authorized_keys</code> file, generate one (and need to change authority in following steps)  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将<code>服务器自己的公钥</code> 和 <code>远程登录机器对应的公钥</code> 复制到 <code>authorized_keys</code> 文件中  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/[id_rsa name].pub &gt;&gt; ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Finally change authority  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">～: 750,  </span><br><span class="line">`~/.ssh: 700,  </span><br><span class="line">`~/.ssh/*: 600,  </span><br><span class="line">`~/.ssh/config: 700,</span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> 700 ~/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 600 .ssh/authorized_keys</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Theoretically it works</p>
-</li>
+<li><p>Install <code>openSSH</code><br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install openssh-server</span><br></pre></td></tr></table></figure> and start it:<br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh start</span><br></pre></td></tr></table></figure></p></li>
+<li><p>Use <code>vim</code> and open <code>/etc/ssh/sshd_config</code>, add following contents <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AuthorizedKeysFile .ssh/authorized_keys </span><br><span class="line">  </span><br><span class="line">PubkeyAuthentication <span class="built_in">yes</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>Generate <code>.ssh</code> directory by using <code>ssh-keygen</code></p></li>
+<li><p>If no <code>authorized_keys</code> file, generate one (and need to change authority in following steps)<br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></p></li>
+<li><p>将<code>服务器自己的公钥</code> 和 <code>远程登录机器对应的公钥</code> 复制到 <code>authorized_keys</code> 文件中<br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/[id_rsa name].pub &gt;&gt; ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></p></li>
+<li><p>Finally change authority<br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">～: 750,  </span><br><span class="line">`~/.ssh: 700,  </span><br><span class="line">`~/.ssh/*: 600,  </span><br><span class="line">`~/.ssh/config: 700,</span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> 700 ~/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 600 .ssh/authorized_keys</span><br></pre></td></tr></table></figure></p></li>
+<li><p>Theoretically it works</p></li>
 </ul>
 
 </div>
@@ -2795,14 +2778,16 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/notes/SimPy/simpy-learning-02/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【学习笔记】SimPy 学习（二）：进程交互与资源共享</p>
-          <p class='content'>学习 SimPy 的一些核心概念，分为 Environment 的进程交互和 Resource 的资源共享
+        <a class='prev' href='/notes/DiskSim/disksim-learning-01/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【学习笔记】DiskSim 学习（一）：安装</p>
+          <p class='content'>老东西 DiskSim 环境的配置
 
+环境
+系统环境
 
-Environment决定仿真的起点和终点，管理仿真元素之间的关联
-APIs
-添加...</p>
+Ubuntu14.04 x64 以下
+测试通过：Ubuntu14.04 x64，Ubuntu10.04 x86
+老版本需要更换官方源 1#...</p>
         </a>
       
       
@@ -2810,8 +2795,9 @@ APIs
           <p class='title'>【文档小记】Node & Vue 使用方法<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
           <p class='content'>记录 Node 和 Vue 一些使用方法
 
-
-安装 Node安装 nvm 工具1curl https:# raw.githubusercontent.com/creationix/nvm/mas...</p>
+安装 Node
+安装 nvm 工具
+1curl https:# raw.githubusercontent.com/creationix/nvm/ma...</p>
         </a>
       
     </div>
@@ -2853,7 +2839,7 @@ APIs
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>10 篇</div>
+          <div>13 篇</div>
         </div>
       
 
@@ -2868,7 +2854,7 @@ APIs
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>7.7k 字</div>
+          <div>21.8k 字</div>
         </div>
       
 
@@ -2920,7 +2906,7 @@ APIs
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Client-Side"><span class="toc-number">1.</span> <span class="toc-text">Client Side</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows"><span class="toc-number">1.1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux"><span class="toc-number">1.2.</span> <span class="toc-text">Linux</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Server-Side"><span class="toc-number">2.</span> <span class="toc-text">Server Side</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#client-side"><span class="toc-number">1.</span> <span class="toc-text">Client Side</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#windows"><span class="toc-number">1.1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#linux"><span class="toc-number">1.2.</span> <span class="toc-text">Linux</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#server-side"><span class="toc-number">2.</span> <span class="toc-text">Server Side</span></a></li></ol>
     </div>
   </section>
 
@@ -3745,7 +3731,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["/images/91.jpg"];
+  let imgs = ["/images/127.jpg"];
   let index = 0;
   let IntervalParallax = null;
 

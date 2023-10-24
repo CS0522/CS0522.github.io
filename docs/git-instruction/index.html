@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"/images/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1698118762396),
+    lastupdate: new Date(1698163161035),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2187,9 +2187,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <!-- Custom Files headEnd end-->
   <!-- front-matter head_end begin -->
   <!-- front-matter head_end end -->
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://unpkg.com/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --></head>
+</head>
   <body itemscope itemtype="http://schema.org/WebPage">
     <!-- import body_begin begin-->
     <!-- import body_begin end-->
@@ -2598,7 +2596,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：886 字</p>
+      <p>字数：896 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2623,80 +2621,95 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="post-body" itemprop="articleBody">
     <p>记录 Git &amp; GitHub 一些使用方法</p>
 <span id="more"></span>
-
-<div class="story post-story"><h2 id="Git-基本操作"><a href="#Git-基本操作" class="headerlink" title="Git 基本操作"></a>Git 基本操作</h2><h3 id="SSH-key"><a href="#SSH-key" class="headerlink" title="SSH key"></a>SSH key</h3><ol>
-<li><p>创建 SSH key</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;812359326@qq.com&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li><p>复制 key 到 Github SSH 设置中</p>
-</li>
-<li><p>验证连接  </p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></li>
+<div class="story post-story"><h2 id="git-基本操作">Git 基本操作</h2>
+<h3 id="ssh-key">SSH key</h3>
+<ol type="1">
+<li><p>创建 SSH key <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;812359326@qq.com&quot;</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>复制 key 到 Github SSH 设置中</p></li>
+<li><p>验证连接<br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></p></li>
 </ol>
-<h3 id="配置用户名、email、默认文本编辑器"><a href="#配置用户名、email、默认文本编辑器" class="headerlink" title="配置用户名、email、默认文本编辑器"></a>配置用户名、email、默认文本编辑器</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;Frank&quot;</span> </span><br><span class="line">git config --global user.email <span class="string">&quot;812359326@qq.com&quot;</span></span><br><span class="line">git config --global core.editor gedit</span><br></pre></td></tr></table></figure>
-
-<h3 id="Check-config"><a href="#Check-config" class="headerlink" title="Check config"></a>Check config</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
-
-<h3 id="工作区、暂存库、版本库"><a href="#工作区、暂存库、版本库" class="headerlink" title="工作区、暂存库、版本库"></a>工作区、暂存库、版本库</h3><p>  <img src="https://www.runoob.com/wp-content/uploads/2015/02/1352126739_7909.jpg" class="lazyload" data-srcset="https://www.runoob.com/wp-content/uploads/2015/02/1352126739_7909.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Git工作区暂存库"></p>
-<h3 id="进入仓库、初始化"><a href="#进入仓库、初始化" class="headerlink" title="进入仓库、初始化"></a>进入仓库、初始化</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-
-<h3 id="克隆仓库"><a href="#克隆仓库" class="headerlink" title="克隆仓库"></a>克隆仓库</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/CS0522/GitTest.git ./ideaTest</span><br></pre></td></tr></table></figure>
-
-<h3 id="Git基本操作命令"><a href="#Git基本操作命令" class="headerlink" title="Git基本操作命令"></a>Git基本操作命令</h3><p>  <img src="https://www.runoob.com/wp-content/uploads/2015/02/git-command.jpg" class="lazyload" data-srcset="https://www.runoob.com/wp-content/uploads/2015/02/git-command.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Git工作区暂存库"><br>  <img src="https://img-blog.csdnimg.cn/20200312120348300.png" class="lazyload" data-srcset="https://img-blog.csdnimg.cn/20200312120348300.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Git工作区暂存库"></p>
-<h3 id="提出更改，添加到暂存区"><a href="#提出更改，添加到暂存区" class="headerlink" title="提出更改，添加到暂存区"></a>提出更改，添加到暂存区</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add ./src/ </span><br><span class="line">git add ./out/  </span><br><span class="line">git add ./ideaTest.iml  </span><br><span class="line">git add *</span><br></pre></td></tr></table></figure>
-
-<h3 id="查看仓库当前的状态，显示有变更的文件"><a href="#查看仓库当前的状态，显示有变更的文件" class="headerlink" title="查看仓库当前的状态，显示有变更的文件"></a>查看仓库当前的状态，显示有变更的文件</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
-
-<h3 id="比较文件的暂存区和工作区的差异"><a href="#比较文件的暂存区和工作区的差异" class="headerlink" title="比较文件的暂存区和工作区的差异"></a>比较文件的暂存区和工作区的差异</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff</span><br></pre></td></tr></table></figure>
-
-<h3 id="改动提交到-HEAD-版本库-但还没到远端仓库"><a href="#改动提交到-HEAD-版本库-但还没到远端仓库" class="headerlink" title="改动提交到 HEAD 版本库, 但还没到远端仓库"></a>改动提交到 HEAD 版本库, 但还没到远端仓库</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;test&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="回退版本，可以指定退回某一次提交的版本"><a href="#回退版本，可以指定退回某一次提交的版本" class="headerlink" title="回退版本，可以指定退回某一次提交的版本"></a>回退版本，可以指定退回某一次提交的版本</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset [--soft | --hard | --mixed] [HEAD]</span><br><span class="line">git reset --hard HEAD~3</span><br></pre></td></tr></table></figure>
+<h3 id="配置用户名email默认文本编辑器">配置用户名、email、默认文本编辑器</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;Frank&quot;</span> </span><br><span class="line">git config --global user.email <span class="string">&quot;812359326@qq.com&quot;</span></span><br><span class="line">git config --global core.editor gedit</span><br></pre></td></tr></table></figure></p>
+<h3 id="check-config">Check config</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure></p>
+<h3 id="工作区暂存库版本库">工作区、暂存库、版本库</h3>
+<figure>
+<img src="https://www.runoob.com/wp-content/uploads/2015/02/1352126739_7909.jpg" class="lazyload" data-srcset="https://www.runoob.com/wp-content/uploads/2015/02/1352126739_7909.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" /><figcaption>Git工作区暂存库</figcaption>
+</figure>
+<h3 id="进入仓库初始化">进入仓库、初始化</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure></p>
+<h3 id="克隆仓库">克隆仓库</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/CS0522/GitTest.git ./ideaTest</span><br></pre></td></tr></table></figure></p>
+<h3 id="git基本操作命令">Git基本操作命令</h3>
+<p><img src="https://www.runoob.com/wp-content/uploads/2015/02/git-command.jpg" class="lazyload" data-srcset="https://www.runoob.com/wp-content/uploads/2015/02/git-command.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Git工作区暂存库" /><br />
+<img src="https://img-blog.csdnimg.cn/20200312120348300.png" class="lazyload" data-srcset="https://img-blog.csdnimg.cn/20200312120348300.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Git工作区暂存库" /></p>
+<h3 id="提出更改添加到暂存区">提出更改，添加到暂存区</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add ./src/ </span><br><span class="line">git add ./out/  </span><br><span class="line">git add ./ideaTest.iml  </span><br><span class="line">git add *</span><br></pre></td></tr></table></figure></p>
+<h3 id="查看仓库当前的状态显示有变更的文件">查看仓库当前的状态，显示有变更的文件</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure></p>
+<h3 id="比较文件的暂存区和工作区的差异">比较文件的暂存区和工作区的差异</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff</span><br></pre></td></tr></table></figure></p>
+<h3 id="改动提交到-head-版本库-但还没到远端仓库">改动提交到 HEAD 版本库, 但还没到远端仓库</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;test&quot;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="回退版本可以指定退回某一次提交的版本">回退版本，可以指定退回某一次提交的版本</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset [--soft | --hard | --mixed] [HEAD]</span><br><span class="line">git reset --hard HEAD~3</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>–soft 参数用于回退到某个版本, 只进行对commit操作的回退，不影响工作区  </li>
-<li>–hard 参数撤销工作区中所有未提交，将暂存区与工作区都回到上一版本  </li>
-<li>–mixed 为默认，可以不用带该参数，重置暂存区与上一次的commit保持一致，工作区文件内容保持不变</li>
+<li>--soft 参数用于回退到某个版本, 只进行对commit操作的回退，不影响工作区<br />
+</li>
+<li>--hard 参数撤销工作区中所有未提交，将暂存区与工作区都回到上一版本<br />
+</li>
+<li>--mixed 为默认，可以不用带该参数，重置暂存区与上一次的commit保持一致，工作区文件内容保持不变</li>
 </ul>
-<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">rm</span> [-- cached] [-f | -r] [file]</span><br></pre></td></tr></table></figure>
+<h3 id="删除文件">删除文件</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">rm</span> [-- cached] [-f | -r] [file]</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>不带参数时，将文件从暂存区和*工作区中删除</li>
-<li>– cached 文件仅从暂存区域移除，工作目录保留</li>
+<li>-- cached 文件仅从暂存区域移除，工作目录保留</li>
 </ul>
-<h3 id="查看历史提交记录"><a href="#查看历史提交记录" class="headerlink" title="查看历史提交记录"></a>查看历史提交记录</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+<h3 id="查看历史提交记录">查看历史提交记录</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="添加远程仓库">添加远程仓库</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add [<span class="built_in">alias</span>] [url | server]</span><br><span class="line">git remote add origin https://github.com/CS0522/GitTest.git</span><br></pre></td></tr></table></figure></p>
+<h3 id="删除远程仓库重命名远程仓库">删除远程仓库、重命名远程仓库</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote <span class="built_in">rm</span> [name] </span><br><span class="line">git remote rename [old_name] [new_name]</span><br></pre></td></tr></table></figure></p>
+<h3 id="查看当前配置的远程仓库">查看当前配置的远程仓库</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure></p>
+<h3 id="把远程仓库master分支下载到本地并存为temp分支">把远程仓库master分支下载到本地并存为temp分支</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin master:temp</span><br></pre></td></tr></table></figure></p>
+<h3 id="合并本地的temp分支和master分支">合并本地的temp分支和master分支</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge temp</span><br></pre></td></tr></table></figure></p>
+<h3 id="拉取远程代码并合并">拉取远程代码并合并</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt; </span><br><span class="line">git pull origin master:brantest```  </span><br><span class="line">git pull origin master</span><br></pre></td></tr></table></figure></p>
+<h3 id="推送代码至远程并合并">推送代码至远程并合并</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;  </span><br><span class="line">git push origin master:master</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure></p>
+</div><div class="story post-story"><h2 id="git分支管理">Git分支管理</h2>
+<h3 id="git分支">Git分支</h3>
+<figure>
+<img src="https://static.runoob.com/images/svg/git-brance.svg" class="lazyload" data-srcset="https://static.runoob.com/images/svg/git-brance.svg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" /><figcaption>Git分支</figcaption>
+</figure>
+<h3 id="创建分支">创建分支</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  git branch [branchname]</span><br><span class="line">  ```  </span><br><span class="line">  * 不带[branchname]时，列出所有分支</span><br><span class="line"></span><br><span class="line"><span class="comment">### 删除分支  </span></span><br><span class="line">  ```bash</span><br><span class="line">  git branch -d [branchname]</span><br></pre></td></tr></table></figure></p>
+<h3 id="切换分支">切换分支</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout [-b] [branchname]</span><br></pre></td></tr></table></figure> * -b 表示创建新的分支并切换到该分支下<br />
+* 切换分支的时候，Git 会用该分支的最后提交的快照替换你的工作目录的内容，所以多 分支不需要多个目录</p>
+<h3 id="将temp分支和本地的master分支合并">将temp分支和本地的master分支合并</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge temp [--allow-unrelated-histories]</span><br></pre></td></tr></table></figure> * --allow-unrelated-histories 参数会允许合并无关历史，当远程版本远高于本地版本时，可能需要</p>
+</div><div class="story post-story"><h2 id="git可能会出现的问题">Git可能会出现的问题</h2>
+<h3 id="鉴权失败">鉴权失败</h3>
+<p>用户名和密码的登录方式失效，需要到 Dev Settings 设置 Token.</p>
+<h3 id="每次-pullpush-都要鉴权">每次 pull/push 都要鉴权</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global credential.helper store</span><br></pre></td></tr></table></figure></p>
+<h3 id="无法合并">无法合并</h3>
+<p>本地版本太老，先远程下载分支，然后本地合并:<br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin master:temp  </span><br><span class="line">git merge temp --allow-unrelated-histories</span><br></pre></td></tr></table></figure></p>
+<h3 id="想要忽略某个文件文件夹">想要忽略某个文件(文件夹)</h3>
+<p>使用 .gitignore 文件<br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 忽略 Holiday Homework  </span></span><br><span class="line">Holiday Homework/  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 忽略 *.class  </span></span><br><span class="line">*.class  </span><br></pre></td></tr></table></figure></p>
+<h3 id="已经上传至版本库后想要忽略某个文件文件夹">已经上传至版本库后，想要忽略某个文件(文件夹)</h3>
+<pre><code>git清除本地缓存（改变成未track状态），然后再提交  </code></pre>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">rm</span> -r --cached .</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&#x27;update .gitignore&#x27;</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure></p>
 
-<h3 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add [<span class="built_in">alias</span>] [url | server]</span><br><span class="line">git remote add origin https://github.com/CS0522/GitTest.git</span><br></pre></td></tr></table></figure>
-
-<h3 id="删除远程仓库、重命名远程仓库"><a href="#删除远程仓库、重命名远程仓库" class="headerlink" title="删除远程仓库、重命名远程仓库"></a>删除远程仓库、重命名远程仓库</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote <span class="built_in">rm</span> [name] </span><br><span class="line">git remote rename [old_name] [new_name]</span><br></pre></td></tr></table></figure>
-
-<h3 id="查看当前配置的远程仓库"><a href="#查看当前配置的远程仓库" class="headerlink" title="查看当前配置的远程仓库"></a>查看当前配置的远程仓库</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
-
-<h3 id="把远程仓库master分支下载到本地并存为temp分支"><a href="#把远程仓库master分支下载到本地并存为temp分支" class="headerlink" title="把远程仓库master分支下载到本地并存为temp分支"></a>把远程仓库master分支下载到本地并存为temp分支</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin master:temp</span><br></pre></td></tr></table></figure>
-
-<h3 id="合并本地的temp分支和master分支"><a href="#合并本地的temp分支和master分支" class="headerlink" title="合并本地的temp分支和master分支"></a>合并本地的temp分支和master分支</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge temp</span><br></pre></td></tr></table></figure>
-
-<h3 id="拉取远程代码并合并"><a href="#拉取远程代码并合并" class="headerlink" title="拉取远程代码并合并"></a>拉取远程代码并合并</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt; </span><br><span class="line">git pull origin master:brantest```  </span><br><span class="line">git pull origin master</span><br></pre></td></tr></table></figure>
-
-<h3 id="推送代码至远程并合并"><a href="#推送代码至远程并合并" class="headerlink" title="推送代码至远程并合并"></a>推送代码至远程并合并</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;  </span><br><span class="line">git push origin master:master</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
-
-</div><div class="story post-story"><h2 id="Git分支管理"><a href="#Git分支管理" class="headerlink" title="Git分支管理"></a>Git分支管理</h2><h3 id="Git分支"><a href="#Git分支" class="headerlink" title="Git分支"></a>Git分支</h3><p>  <img src="https://static.runoob.com/images/svg/git-brance.svg" class="lazyload" data-srcset="https://static.runoob.com/images/svg/git-brance.svg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Git分支"></p>
-<h3 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  git branch [branchname]</span><br><span class="line">  ```  </span><br><span class="line">  * 不带[branchname]时，列出所有分支</span><br><span class="line"></span><br><span class="line"><span class="comment">### 删除分支  </span></span><br><span class="line">  ```bash</span><br><span class="line">  git branch -d [branchname]</span><br></pre></td></tr></table></figure>
-
-<h3 id="切换分支"><a href="#切换分支" class="headerlink" title="切换分支"></a>切换分支</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout [-b] [branchname]</span><br></pre></td></tr></table></figure>
-<ul>
-<li>-b 表示创建新的分支并切换到该分支下   </li>
-<li>切换分支的时候，Git 会用该分支的最后提交的快照替换你的工作目录的内容，所以多 分支不需要多个目录</li>
-</ul>
-<h3 id="将temp分支和本地的master分支合并"><a href="#将temp分支和本地的master分支合并" class="headerlink" title="将temp分支和本地的master分支合并"></a>将temp分支和本地的master分支合并</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge temp [--allow-unrelated-histories]</span><br></pre></td></tr></table></figure>
-<ul>
-<li>–allow-unrelated-histories 参数会允许合并无关历史，当远程版本远高于本地版本时，可能需要</li>
-</ul>
-</div><div class="story post-story"><h2 id="Git可能会出现的问题"><a href="#Git可能会出现的问题" class="headerlink" title="Git可能会出现的问题"></a>Git可能会出现的问题</h2><h3 id="鉴权失败"><a href="#鉴权失败" class="headerlink" title="鉴权失败"></a>鉴权失败</h3><p>  用户名和密码的登录方式失效，需要到 Dev Settings 设置 Token.</p>
-<h3 id="每次-pull-push-都要鉴权"><a href="#每次-pull-push-都要鉴权" class="headerlink" title="每次 pull&#x2F;push 都要鉴权"></a>每次 pull&#x2F;push 都要鉴权</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global credential.helper store</span><br></pre></td></tr></table></figure>
-
-<h3 id="无法合并"><a href="#无法合并" class="headerlink" title="无法合并"></a>无法合并</h3><p>  本地版本太老，先远程下载分支，然后本地合并:<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin master:temp  </span><br><span class="line">git merge temp --allow-unrelated-histories</span><br></pre></td></tr></table></figure></p>
-<h3 id="想要忽略某个文件-文件夹"><a href="#想要忽略某个文件-文件夹" class="headerlink" title="想要忽略某个文件(文件夹)"></a>想要忽略某个文件(文件夹)</h3><p>  使用 .gitignore 文件<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 忽略 Holiday Homework  </span></span><br><span class="line">Holiday Homework/  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 忽略 *.class  </span></span><br><span class="line">*.class  </span><br></pre></td></tr></table></figure></p>
-<h3 id="已经上传至版本库后，想要忽略某个文件-文件夹"><a href="#已经上传至版本库后，想要忽略某个文件-文件夹" class="headerlink" title="已经上传至版本库后，想要忽略某个文件(文件夹)"></a>已经上传至版本库后，想要忽略某个文件(文件夹)</h3><pre><code>git清除本地缓存（改变成未track状态），然后再提交  
-</code></pre>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">rm</span> -r --cached .</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&#x27;update .gitignore&#x27;</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
 </div>
   </div>
   
@@ -2815,11 +2828,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【文档小记】Linux 使用方法</p>
           <p class='content'>记录 Linux(Ubuntu) 一些使用方法
 
-
 Ubuntu 环境配置
-Ubuntu 备份与恢复VSCode 创建启动器
 
-C++, Java 环境安装配置  123456789101112...</p>
+Ubuntu 备份与恢复
+VSCode 创建启动器
+
+C++, Java 环境安装配置
+123456789101112...</p>
         </a>
       
       
@@ -2827,8 +2842,8 @@ C++, Java 环境安装配置  123456789101112...</p>
           <p class='title'>【文档小记】Anaconda3 使用方法<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
           <p class='content'>记录 Anaconda3 的使用方法
 
-
-Install1234567wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020....</p>
+Install
+1234567wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020....</p>
         </a>
       
     </div>
@@ -2870,7 +2885,7 @@ Install1234567wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020....<
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>10 篇</div>
+          <div>13 篇</div>
         </div>
       
 
@@ -2885,7 +2900,7 @@ Install1234567wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020....<
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>7.7k 字</div>
+          <div>21.8k 字</div>
         </div>
       
 
@@ -2937,7 +2952,7 @@ Install1234567wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020....<
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">Git 基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH-key"><span class="toc-number">1.1.</span> <span class="toc-text">SSH key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%94%A8%E6%88%B7%E5%90%8D%E3%80%81email%E3%80%81%E9%BB%98%E8%AE%A4%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">配置用户名、email、默认文本编辑器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check-config"><span class="toc-number">1.3.</span> <span class="toc-text">Check config</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8C%BA%E3%80%81%E6%9A%82%E5%AD%98%E5%BA%93%E3%80%81%E7%89%88%E6%9C%AC%E5%BA%93"><span class="toc-number">1.4.</span> <span class="toc-text">工作区、暂存库、版本库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E4%BB%93%E5%BA%93%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.5.</span> <span class="toc-text">进入仓库、初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%8B%E9%9A%86%E4%BB%93%E5%BA%93"><span class="toc-number">1.6.</span> <span class="toc-text">克隆仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="toc-number">1.7.</span> <span class="toc-text">Git基本操作命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E5%87%BA%E6%9B%B4%E6%94%B9%EF%BC%8C%E6%B7%BB%E5%8A%A0%E5%88%B0%E6%9A%82%E5%AD%98%E5%8C%BA"><span class="toc-number">1.8.</span> <span class="toc-text">提出更改，添加到暂存区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E4%BB%93%E5%BA%93%E5%BD%93%E5%89%8D%E7%9A%84%E7%8A%B6%E6%80%81%EF%BC%8C%E6%98%BE%E7%A4%BA%E6%9C%89%E5%8F%98%E6%9B%B4%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-number">1.9.</span> <span class="toc-text">查看仓库当前的状态，显示有变更的文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E6%96%87%E4%BB%B6%E7%9A%84%E6%9A%82%E5%AD%98%E5%8C%BA%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%8C%BA%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="toc-number">1.10.</span> <span class="toc-text">比较文件的暂存区和工作区的差异</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B9%E5%8A%A8%E6%8F%90%E4%BA%A4%E5%88%B0-HEAD-%E7%89%88%E6%9C%AC%E5%BA%93-%E4%BD%86%E8%BF%98%E6%B2%A1%E5%88%B0%E8%BF%9C%E7%AB%AF%E4%BB%93%E5%BA%93"><span class="toc-number">1.11.</span> <span class="toc-text">改动提交到 HEAD 版本库, 但还没到远端仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E9%80%80%E7%89%88%E6%9C%AC%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%8C%87%E5%AE%9A%E9%80%80%E5%9B%9E%E6%9F%90%E4%B8%80%E6%AC%A1%E6%8F%90%E4%BA%A4%E7%9A%84%E7%89%88%E6%9C%AC"><span class="toc-number">1.12.</span> <span class="toc-text">回退版本，可以指定退回某一次提交的版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6"><span class="toc-number">1.13.</span> <span class="toc-text">删除文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%8E%86%E5%8F%B2%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95"><span class="toc-number">1.14.</span> <span class="toc-text">查看历史提交记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-number">1.15.</span> <span class="toc-text">添加远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E3%80%81%E9%87%8D%E5%91%BD%E5%90%8D%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-number">1.16.</span> <span class="toc-text">删除远程仓库、重命名远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E9%85%8D%E7%BD%AE%E7%9A%84%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-number">1.17.</span> <span class="toc-text">查看当前配置的远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%8A%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93master%E5%88%86%E6%94%AF%E4%B8%8B%E8%BD%BD%E5%88%B0%E6%9C%AC%E5%9C%B0%E5%B9%B6%E5%AD%98%E4%B8%BAtemp%E5%88%86%E6%94%AF"><span class="toc-number">1.18.</span> <span class="toc-text">把远程仓库master分支下载到本地并存为temp分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E6%9C%AC%E5%9C%B0%E7%9A%84temp%E5%88%86%E6%94%AF%E5%92%8Cmaster%E5%88%86%E6%94%AF"><span class="toc-number">1.19.</span> <span class="toc-text">合并本地的temp分支和master分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%89%E5%8F%96%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E5%B9%B6%E5%90%88%E5%B9%B6"><span class="toc-number">1.20.</span> <span class="toc-text">拉取远程代码并合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A8%E9%80%81%E4%BB%A3%E7%A0%81%E8%87%B3%E8%BF%9C%E7%A8%8B%E5%B9%B6%E5%90%88%E5%B9%B6"><span class="toc-number">1.21.</span> <span class="toc-text">推送代码至远程并合并</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">Git分支管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Git%E5%88%86%E6%94%AF"><span class="toc-number">2.1.</span> <span class="toc-text">Git分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%88%86%E6%94%AF"><span class="toc-number">2.2.</span> <span class="toc-text">创建分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF"><span class="toc-number">2.3.</span> <span class="toc-text">切换分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86temp%E5%88%86%E6%94%AF%E5%92%8C%E6%9C%AC%E5%9C%B0%E7%9A%84master%E5%88%86%E6%94%AF%E5%90%88%E5%B9%B6"><span class="toc-number">2.4.</span> <span class="toc-text">将temp分支和本地的master分支合并</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git%E5%8F%AF%E8%83%BD%E4%BC%9A%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">Git可能会出现的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%89%B4%E6%9D%83%E5%A4%B1%E8%B4%A5"><span class="toc-number">3.1.</span> <span class="toc-text">鉴权失败</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E6%AC%A1-pull-push-%E9%83%BD%E8%A6%81%E9%89%B4%E6%9D%83"><span class="toc-number">3.2.</span> <span class="toc-text">每次 pull&#x2F;push 都要鉴权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E6%B3%95%E5%90%88%E5%B9%B6"><span class="toc-number">3.3.</span> <span class="toc-text">无法合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%B3%E8%A6%81%E5%BF%BD%E7%95%A5%E6%9F%90%E4%B8%AA%E6%96%87%E4%BB%B6-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">3.4.</span> <span class="toc-text">想要忽略某个文件(文件夹)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%B2%E7%BB%8F%E4%B8%8A%E4%BC%A0%E8%87%B3%E7%89%88%E6%9C%AC%E5%BA%93%E5%90%8E%EF%BC%8C%E6%83%B3%E8%A6%81%E5%BF%BD%E7%95%A5%E6%9F%90%E4%B8%AA%E6%96%87%E4%BB%B6-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">3.5.</span> <span class="toc-text">已经上传至版本库后，想要忽略某个文件(文件夹)</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#git-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">Git 基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh-key"><span class="toc-number">1.1.</span> <span class="toc-text">SSH key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%94%A8%E6%88%B7%E5%90%8Demail%E9%BB%98%E8%AE%A4%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">配置用户名、email、默认文本编辑器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#check-config"><span class="toc-number">1.3.</span> <span class="toc-text">Check config</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8C%BA%E6%9A%82%E5%AD%98%E5%BA%93%E7%89%88%E6%9C%AC%E5%BA%93"><span class="toc-number">1.4.</span> <span class="toc-text">工作区、暂存库、版本库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E4%BB%93%E5%BA%93%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.5.</span> <span class="toc-text">进入仓库、初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%8B%E9%9A%86%E4%BB%93%E5%BA%93"><span class="toc-number">1.6.</span> <span class="toc-text">克隆仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="toc-number">1.7.</span> <span class="toc-text">Git基本操作命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E5%87%BA%E6%9B%B4%E6%94%B9%E6%B7%BB%E5%8A%A0%E5%88%B0%E6%9A%82%E5%AD%98%E5%8C%BA"><span class="toc-number">1.8.</span> <span class="toc-text">提出更改，添加到暂存区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E4%BB%93%E5%BA%93%E5%BD%93%E5%89%8D%E7%9A%84%E7%8A%B6%E6%80%81%E6%98%BE%E7%A4%BA%E6%9C%89%E5%8F%98%E6%9B%B4%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-number">1.9.</span> <span class="toc-text">查看仓库当前的状态，显示有变更的文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E6%96%87%E4%BB%B6%E7%9A%84%E6%9A%82%E5%AD%98%E5%8C%BA%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%8C%BA%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="toc-number">1.10.</span> <span class="toc-text">比较文件的暂存区和工作区的差异</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B9%E5%8A%A8%E6%8F%90%E4%BA%A4%E5%88%B0-head-%E7%89%88%E6%9C%AC%E5%BA%93-%E4%BD%86%E8%BF%98%E6%B2%A1%E5%88%B0%E8%BF%9C%E7%AB%AF%E4%BB%93%E5%BA%93"><span class="toc-number">1.11.</span> <span class="toc-text">改动提交到 HEAD 版本库, 但还没到远端仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E9%80%80%E7%89%88%E6%9C%AC%E5%8F%AF%E4%BB%A5%E6%8C%87%E5%AE%9A%E9%80%80%E5%9B%9E%E6%9F%90%E4%B8%80%E6%AC%A1%E6%8F%90%E4%BA%A4%E7%9A%84%E7%89%88%E6%9C%AC"><span class="toc-number">1.12.</span> <span class="toc-text">回退版本，可以指定退回某一次提交的版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6"><span class="toc-number">1.13.</span> <span class="toc-text">删除文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%8E%86%E5%8F%B2%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95"><span class="toc-number">1.14.</span> <span class="toc-text">查看历史提交记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-number">1.15.</span> <span class="toc-text">添加远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E9%87%8D%E5%91%BD%E5%90%8D%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-number">1.16.</span> <span class="toc-text">删除远程仓库、重命名远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E9%85%8D%E7%BD%AE%E7%9A%84%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-number">1.17.</span> <span class="toc-text">查看当前配置的远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%8A%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93master%E5%88%86%E6%94%AF%E4%B8%8B%E8%BD%BD%E5%88%B0%E6%9C%AC%E5%9C%B0%E5%B9%B6%E5%AD%98%E4%B8%BAtemp%E5%88%86%E6%94%AF"><span class="toc-number">1.18.</span> <span class="toc-text">把远程仓库master分支下载到本地并存为temp分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E6%9C%AC%E5%9C%B0%E7%9A%84temp%E5%88%86%E6%94%AF%E5%92%8Cmaster%E5%88%86%E6%94%AF"><span class="toc-number">1.19.</span> <span class="toc-text">合并本地的temp分支和master分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%89%E5%8F%96%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E5%B9%B6%E5%90%88%E5%B9%B6"><span class="toc-number">1.20.</span> <span class="toc-text">拉取远程代码并合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A8%E9%80%81%E4%BB%A3%E7%A0%81%E8%87%B3%E8%BF%9C%E7%A8%8B%E5%B9%B6%E5%90%88%E5%B9%B6"><span class="toc-number">1.21.</span> <span class="toc-text">推送代码至远程并合并</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">Git分支管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git%E5%88%86%E6%94%AF"><span class="toc-number">2.1.</span> <span class="toc-text">Git分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%88%86%E6%94%AF"><span class="toc-number">2.2.</span> <span class="toc-text">创建分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF"><span class="toc-number">2.3.</span> <span class="toc-text">切换分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86temp%E5%88%86%E6%94%AF%E5%92%8C%E6%9C%AC%E5%9C%B0%E7%9A%84master%E5%88%86%E6%94%AF%E5%90%88%E5%B9%B6"><span class="toc-number">2.4.</span> <span class="toc-text">将temp分支和本地的master分支合并</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git%E5%8F%AF%E8%83%BD%E4%BC%9A%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">Git可能会出现的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%89%B4%E6%9D%83%E5%A4%B1%E8%B4%A5"><span class="toc-number">3.1.</span> <span class="toc-text">鉴权失败</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E6%AC%A1-pullpush-%E9%83%BD%E8%A6%81%E9%89%B4%E6%9D%83"><span class="toc-number">3.2.</span> <span class="toc-text">每次 pull&#x2F;push 都要鉴权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E6%B3%95%E5%90%88%E5%B9%B6"><span class="toc-number">3.3.</span> <span class="toc-text">无法合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%B3%E8%A6%81%E5%BF%BD%E7%95%A5%E6%9F%90%E4%B8%AA%E6%96%87%E4%BB%B6%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">3.4.</span> <span class="toc-text">想要忽略某个文件(文件夹)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%B2%E7%BB%8F%E4%B8%8A%E4%BC%A0%E8%87%B3%E7%89%88%E6%9C%AC%E5%BA%93%E5%90%8E%E6%83%B3%E8%A6%81%E5%BF%BD%E7%95%A5%E6%9F%90%E4%B8%AA%E6%96%87%E4%BB%B6%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">3.5.</span> <span class="toc-text">已经上传至版本库后，想要忽略某个文件(文件夹)</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -3762,7 +3777,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["/images/91.jpg"];
+  let imgs = ["/images/127.jpg"];
   let index = 0;
   let IntervalParallax = null;
 

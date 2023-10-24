@@ -1765,7 +1765,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"/images/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1698118762396),
+    lastupdate: new Date(1698163161035),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2186,9 +2186,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <!-- Custom Files headEnd end-->
   <!-- front-matter head_end begin -->
   <!-- front-matter head_end end -->
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://unpkg.com/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --></head>
+</head>
   <body itemscope itemtype="http://schema.org/WebPage">
     <!-- import body_begin begin-->
     <!-- import body_begin end-->
@@ -2597,7 +2595,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：140 字</p>
+      <p>字数：142 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2622,10 +2620,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="post-body" itemprop="articleBody">
     <p>记录 Anaconda3 的使用方法</p>
 <span id="more"></span>
+<div class="story post-story"><h2 id="install">Install</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh</span><br><span class="line"></span><br><span class="line">sudo gedit ~/.bashrc</span><br><span class="line"><span class="comment"># .bashrc</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;/home/&lt;username&gt;/anaconda3/bin:<span class="variable">$PATH</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+</div><div class="story post-story"><h2 id="use">Use</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># set no auto activate</span></span><br><span class="line">conda config --<span class="built_in">set</span> auto_activate_base <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># create a new env</span></span><br><span class="line">conda create -n &lt;env_name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># check all envs</span></span><br><span class="line">conda info --envs</span><br><span class="line"></span><br><span class="line"><span class="comment"># activate the env</span></span><br><span class="line">conda activate &lt;env_name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># deactivate env</span></span><br><span class="line">conda deactivate &lt;env_name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># install package</span></span><br><span class="line">conda install &lt;package_name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># list packages</span></span><br><span class="line">conda list</span><br><span class="line"></span><br><span class="line"><span class="comment"># remove env</span></span><br><span class="line">conda remove -n &lt;env_name&gt; --all</span><br><span class="line"></span><br><span class="line"><span class="comment"># set one env&#x27;s python version</span></span><br><span class="line">conda install python==3.8 -n <span class="string">&quot;&lt;env_name&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># if pip failed</span></span><br><span class="line"><span class="comment"># Linux</span></span><br><span class="line">sudo <span class="built_in">mkdir</span> ~/.pip</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">touch</span> ~/.pip/pip.conf</span><br><span class="line"></span><br><span class="line">sudo vim ~/.pip/pip.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># in pip.conf</span></span><br><span class="line">[global]</span><br><span class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<div class="story post-story"><h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh</span><br><span class="line"></span><br><span class="line">sudo gedit ~/.bashrc</span><br><span class="line"><span class="comment"># .bashrc</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;/home/&lt;username&gt;/anaconda3/bin:<span class="variable">$PATH</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
-
-</div><div class="story post-story"><h2 id="Use"><a href="#Use" class="headerlink" title="Use"></a>Use</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># set no auto activate</span></span><br><span class="line">conda config --<span class="built_in">set</span> auto_activate_base <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># create a new env</span></span><br><span class="line">conda create -n &lt;env_name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># check all envs</span></span><br><span class="line">conda info --envs</span><br><span class="line"></span><br><span class="line"><span class="comment"># activate the env</span></span><br><span class="line">conda activate &lt;env_name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># deactivate env</span></span><br><span class="line">conda deactivate &lt;env_name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># install package</span></span><br><span class="line">conda install &lt;package_name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># list packages</span></span><br><span class="line">conda list</span><br><span class="line"></span><br><span class="line"><span class="comment"># remove env</span></span><br><span class="line">conda remove -n &lt;env_name&gt; --all</span><br><span class="line"></span><br><span class="line"><span class="comment"># set one env&#x27;s python version</span></span><br><span class="line">conda install python==3.8 -n <span class="string">&quot;&lt;env_name&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># if pip failed</span></span><br><span class="line"><span class="comment"># Linux</span></span><br><span class="line">sudo <span class="built_in">mkdir</span> ~/.pip</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">touch</span> ~/.pip/pip.conf</span><br><span class="line"></span><br><span class="line">sudo vim ~/.pip/pip.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># in pip.conf</span></span><br><span class="line">[global]</span><br><span class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 </div>
   </div>
   
@@ -2744,10 +2743,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【文档小记】Git 使用方法</p>
           <p class='content'>记录 Git &amp; GitHub 一些使用方法
 
+Git 基本操作
+SSH key
 
-Git 基本操作SSH key
-创建 SSH key
-  1ssh-keygen -t rsa -C &quot;812359326@q...</p>
+创建 SSH key 1ssh-keygen -t rsa -C &quot;812359326@qq...</p>
         </a>
       
       
@@ -2756,13 +2755,13 @@ Git 基本操作SSH key
           <p class='content'>记录搭建本博客的过程，以及遇到的一些问题及解决方案
 
 
-
-Based on Hexo &amp; Volantis  
+Based on Hexo &amp; Volantis
 
 
 详细说明参考文档 Hexo &amp; Volantis
 
-搭建环境安...</p>
+搭建环境
+安装 ...</p>
         </a>
       
     </div>
@@ -2804,7 +2803,7 @@ Based on Hexo &amp; Volantis
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>10 篇</div>
+          <div>13 篇</div>
         </div>
       
 
@@ -2819,7 +2818,7 @@ Based on Hexo &amp; Volantis
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>7.7k 字</div>
+          <div>21.8k 字</div>
         </div>
       
 
@@ -2871,7 +2870,7 @@ Based on Hexo &amp; Volantis
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Install"><span class="toc-number">1.</span> <span class="toc-text">Install</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Use"><span class="toc-number">2.</span> <span class="toc-text">Use</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#install"><span class="toc-number">1.</span> <span class="toc-text">Install</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#use"><span class="toc-number">2.</span> <span class="toc-text">Use</span></a></li></ol>
     </div>
   </section>
 
@@ -3696,7 +3695,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["/images/91.jpg"];
+  let imgs = ["/images/127.jpg"];
   let index = 0;
   let IntervalParallax = null;
 
