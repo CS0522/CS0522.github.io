@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-10-24T07:42:11.000Z">
-<meta property="article:modified_time" content="2023-10-24T15:35:09.208Z">
+<meta property="article:modified_time" content="2023-10-25T02:17:58.322Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="论文">
 <meta property="article:tag" content="盘节能">
@@ -1767,8 +1767,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   volantis.GLOBAL_CONFIG ={
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
-    default: {"avatar":"/images/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1698163161035),
+    default: {"avatar":"https://z1.ax1x.com/2023/10/25/piVuHBR.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
+    lastupdate: new Date(1698217809200),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2172,7 +2172,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   /******************************************************************************/
   //图像加载出错时的处理
   function errorImgAvatar(img) {
-    img.src = "/images/userphoto02.png";
+    img.src = "https://z1.ax1x.com/2023/10/25/piVuHBR.png";
     img.onerror = null;
   }
   function errorImgCover(img) {
@@ -2638,7 +2638,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h3 id="创新点">创新点</h3>
 <p>而本文的 ThinRAID 的创新点在于，根据数据集的大小，用 RAID 的部分磁盘建立小型的 RAID，建立了预测模型，预测下一个阶段的工作负载以确定待启动的磁盘数量；然后新提出了一个数据重组算法，优先迁移具有更高热度的数据到待启动磁盘上，以最小化数据迁移的开销。</p>
 <h3 id="贡献">贡献</h3>
-<p>文章的贡献包括： * 一种新的节能策略，即所有数据都将集中在磁盘的一部分，而其他磁盘则关闭电源以节省能源；高工作负载时，休眠磁盘将启动以服务高负载 * <em>固定条带宽度的 RAID 扩展方案，可以减少数据迁移和奇偶校验更新的次数。扩展后，原条带的宽度不变，迁移数据留下的空间用于构建新的条带<code>（条带宽度就是磁盘的个数，横着的一行为一个条带）</code> </em> 一种功率控制策略，它确定了待启动磁盘的最佳数量，以在最低能耗的情况下保持峰值性能；一种高效的小型数据迁移算法（ES 数据迁移），最大限度地减少数据迁移，并确保所有活动磁盘之间的工作负载平衡 * 在 Linux 内核中实现，实验结果表明，与传统 RAID 相比，ThinRAID 可以节省 15-27% 的能耗；与 PARAID 相比，可以获得 62% 的性能改进</p>
+<p>文章的贡献包括：</p>
+<ul>
+<li><p>一种新的节能策略，即所有数据都将集中在磁盘的一部分，而其他磁盘则关闭电源以节省能源；高工作负载时，休眠磁盘将启动以服务高负载</p></li>
+<li><p>固定条带宽度的 RAID 扩展方案，可以减少数据迁移和奇偶校验更新的次数。扩展后，原条带的宽度不变，迁移数据留下的空间用于构建新的条带<code>（条带宽度就是磁盘的个数，横着的一行为一个条带）</code></p></li>
+<li><p>一种功率控制策略，它确定了待启动磁盘的最佳数量，以在最低能耗的情况下保持峰值性能；一种高效的小型数据迁移算法（ES 数据迁移），最大限度地减少数据迁移，并确保所有活动磁盘之间的工作负载平衡</p></li>
+<li><p>在 Linux 内核中实现，实验结果表明，与传统 RAID 相比，ThinRAID 可以节省 15-27% 的能耗；与 PARAID 相比，可以获得 62% 的性能改进</p></li>
+</ul>
 </div><div class="story post-story"><h2 id="背景">背景</h2>
 <p>文章的背景是一些对 PARAID 的分析和观察结果，以引出本文的 ThinRAID 的设计思路和目标。</p>
 <p><img src="./fig01.png" class="lazyload" data-srcset="./fig01.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
@@ -2731,10 +2737,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-10-24T23:35:09+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-10-25T10:17:58+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：2023年10月24日</p>
+    <p>最后更新于：2023年10月25日</p>
   </a>
 </div>
 
@@ -2890,7 +2896,7 @@ SRCMap: Energy Proportional Storage using Dynamic Consoli...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>21.8k 字</div>
+          <div>22.5k 字</div>
         </div>
       
 
@@ -2915,7 +2921,7 @@ SRCMap: Energy Proportional Storage using Dynamic Consoli...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2023-10-24 日</div>
+          <div id="last-update-show">2023-10-25 日</div>
         </div>
       
     </div>
@@ -3049,7 +3055,7 @@ SRCMap: Energy Proportional Storage using Dynamic Consoli...</p>
             
           
             
-              <a href="/images/weixin.png"
+              <a href="https://z1.ax1x.com/2023/10/25/piVuON6.png"
                 class="social fa-brands fa-weixin flat-btn"
                 target="_blank"
                 rel="external nofollow noopener noreferrer" itemprop="url">
@@ -3058,7 +3064,7 @@ SRCMap: Energy Proportional Storage using Dynamic Consoli...</p>
             
           
             
-              <a href="/images/qq.jpg"
+              <a href="https://z1.ax1x.com/2023/10/25/piVuIc4.jpg"
                 class="social fa-brands fa-qq flat-btn"
                 target="_blank"
                 rel="external nofollow noopener noreferrer" itemprop="url">
@@ -3767,7 +3773,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["/images/127.jpg"];
+  let imgs = ["https://z1.ax1x.com/2023/10/25/piVKoPf.jpg"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4086,7 +4092,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/learnings/","name":"论文随记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/learnings/盘节能/","name":"盘节能"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/learnings/盘节能/thinraid/","name":"【论文随记】230824_ThinRAID"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【论文随记】230824_ThinRAID","description":"本文针对数据中心的能源消耗问题，根据数据集大小使用部分磁盘建立 RAID 以节省能源","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/learnings/%E7%9B%98%E8%8A%82%E8%83%BD/thinraid/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/learnings/%E7%9B%98%E8%8A%82%E8%83%BD/thinraid/","wordCount":42,"datePublished":"2023-10-24T07:42:11.000Z","dateModified":"2023-10-24T15:35:09.208Z","articleSection":"论文随记","keywords":"论文,盘节能,RAID,数据迁移","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/learnings/","name":"论文随记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/learnings/盘节能/","name":"盘节能"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/learnings/盘节能/thinraid/","name":"【论文随记】230824_ThinRAID"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【论文随记】230824_ThinRAID","description":"本文针对数据中心的能源消耗问题，根据数据集大小使用部分磁盘建立 RAID 以节省能源","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/learnings/%E7%9B%98%E8%8A%82%E8%83%BD/thinraid/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/learnings/%E7%9B%98%E8%8A%82%E8%83%BD/thinraid/","wordCount":42,"datePublished":"2023-10-24T07:42:11.000Z","dateModified":"2023-10-25T02:17:58.322Z","articleSection":"论文随记","keywords":"论文,盘节能,RAID,数据迁移","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
