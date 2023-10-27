@@ -46,7 +46,7 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-10-23T13:00:52.000Z">
-<meta property="article:modified_time" content="2023-10-24T15:58:38.489Z">
+<meta property="article:modified_time" content="2023-10-27T07:20:42.026Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="SimPy">
 <meta property="article:tag" content="Python">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1698334309204),
+    lastupdate: new Date(1698391831164),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2659,11 +2659,24 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h3 id="example-1.1">Example 1.1</h3>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;starting...&quot;</span>)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        res = <span class="keyword">yield</span> <span class="number">4</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;res:&quot;</span>,res)</span><br><span class="line">g = foo()</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(g))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;*&quot;</span>*<span class="number">20</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(g))</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">starting...</span><br><span class="line">4</span><br><span class="line">********************</span><br><span class="line">res: None</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
-<p>运行过程： * 程序开始执行以后，因为 <code>foo()</code> 中有 <code>yield</code> 关键字，所以 <code>foo()</code> 并不会真的执行，而是先得到一个生成器 g（相当于一个对象）； * 调用 <code>next(g)</code>，<code>foo()</code> 正式开始执行，先执行 <code>print("starting...")</code>，然后进入 <code>while</code>； * 程序遇到 <code>yield</code> 关键字，把<code>yield</code> 想成 <code>return</code>。<code>return</code> 了一个 4 之后，程序停止，并没有执行赋值给 res 操作，此时 <code>next(g)</code> 执行完成，所以输出的前两行第一个是 while 上面 print 的结果,第二个是return出的结果； * 程序执行 <code>print("*"20)</code>； * 又开始执行下面的 <code>print(next(g))</code>，从刚才那个next程序停止的地方开始执行，也就是要执行 res 的赋值操作，<code>这个时候赋值操作的右边是没有值的</code>（因为刚才那个是return出去了，并没有给赋值操作的左边传参数），所以这个时候 res 赋值是 None，所以接着下面的输出就是 <code>res:None</code>； * 程序会继续在 while 里执行，又一次碰到<code>yield</code>，这个时候同样 return 出 4，然后程序停止，print 函数输出的 4 就是这次 return 出的 4。</p>
+<p>运行过程：</p>
+<ul>
+<li>程序开始执行以后，因为 <code>foo()</code> 中有 <code>yield</code> 关键字，所以 <code>foo()</code> 并不会真的执行，而是先得到一个生成器 g（相当于一个对象）；</li>
+<li>调用 <code>next(g)</code>，<code>foo()</code> 正式开始执行，先执行 <code>print("starting...")</code>，然后进入 <code>while</code>；</li>
+<li>程序遇到 <code>yield</code> 关键字，把<code>yield</code> 想成 <code>return</code>。<code>return</code> 了一个 4 之后，程序停止，并没有执行赋值给 res 操作，此时 <code>next(g)</code> 执行完成，所以输出的前两行第一个是 while 上面 print 的结果,第二个是return出的结果；</li>
+<li>程序执行 <code>print("*"20)</code>；</li>
+<li>又开始执行下面的 <code>print(next(g))</code>，从刚才那个next程序停止的地方开始执行，也就是要执行 res 的赋值操作，<code>这个时候赋值操作的右边是没有值的</code>（因为刚才那个是return出去了，并没有给赋值操作的左边传参数），所以这个时候 res 赋值是 None，所以接着下面的输出就是 <code>res:None</code>；</li>
+<li>程序会继续在 while 里执行，又一次碰到<code>yield</code>，这个时候同样 return 出 4，然后程序停止，print 函数输出的 4 就是这次 return 出的 4。</li>
+</ul>
 <h3 id="example-1.2">Example 1.2</h3>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;starting...&quot;</span>)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        res = <span class="keyword">yield</span> <span class="number">4</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;res:&quot;</span>,res)</span><br><span class="line">g = foo()</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(g))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;*&quot;</span>*<span class="number">20</span>)</span><br><span class="line"><span class="comment">###</span></span><br><span class="line"><span class="built_in">print</span>(g.send(<span class="number">7</span>))</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">starting...</span><br><span class="line">4</span><br><span class="line">********************</span><br><span class="line">res: 7</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
-<p>运行过程： * 程序执行 <code>g.send(7)</code>，程序会从 <code>yield</code>关键字那一行继续向下运行，<code>send</code> 会把 7 这个值赋值给 res 变量； * 由于 <code>send</code> 方法中包含 <code>next()</code> 方法，所以程序会继续向下运行执行 <code>print</code>，然后再次进入 while； * 程序执行再次遇到 <code>yield</code> 关键字，<code>yield</code> 会返回后面的值后，程序再次暂停，直到再次调用 <code>next</code>方法或 <code>send</code> 方法。</p>
+<p>运行过程：</p>
+<ul>
+<li>程序执行 <code>g.send(7)</code>，程序会从 <code>yield</code>关键字那一行继续向下运行，<code>send</code> 会把 7 这个值赋值给 res 变量；</li>
+<li>由于 <code>send</code> 方法中包含 <code>next()</code> 方法，所以程序会继续向下运行执行 <code>print</code>，然后再次进入 while；</li>
+<li>程序执行再次遇到 <code>yield</code> 关键字，<code>yield</code> 会返回后面的值后，程序再次暂停，直到再次调用 <code>next</code>方法或 <code>send</code> 方法。</li>
+</ul>
 </div><div class="story post-story"><h2 id="python-生成器">Python 生成器</h2>
 <p>使用了 <code>yield</code> 的函数被称为<code>生成器函数</code>。生成器函数可以在迭代过程中逐步产生值，而不是一次性返回所有结果。生成器是一个返回迭代器的函数，只能用于迭代操作，更简单点理解生成器就是一个迭代器。</p>
 <p>当在生成器函数中使用 <code>yield</code> 语句时，函数的执行将会暂停，并将 <code>yield</code> 后面的表达式作为当前迭代的值返回；然后，每次调用生成器的 <code>next()</code> 方法或使用 for 循环进行迭代时，函数会从上次暂停的地方继续执行，直到再次遇到 <code>yield</code> 语句。这样，生成器函数可以逐步产生值，而不需要一次性计算并返回所有结果。</p>
@@ -2706,10 +2719,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-10-24T23:58:38+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-10-27T15:20:42+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：2023年10月24日</p>
+    <p>最后更新于：2023年10月27日</p>
   </a>
 </div>
 
@@ -2874,7 +2887,7 @@ Ubuntu14.04 x64 以下
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>23.8k 字</div>
+          <div>24.1k 字</div>
         </div>
       
 
@@ -2899,7 +2912,7 @@ Ubuntu14.04 x64 以下
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2023-10-26 日</div>
+          <div id="last-update-show">2023-10-27 日</div>
         </div>
       
     </div>
@@ -3073,7 +3086,7 @@ Ubuntu14.04 x64 以下
     
     <!-- Custom Files footer begin-->
     
-    <p>本站采用 <a href="https://volantis.js.org/" target="_blank">Volantis</a> 主题设计</p>
+    <p style="font-size: .8125rem">本站采用 <a href="https://volantis.js.org/" target="_blank">Volantis</a> 主题设计</p>
     <!-- Custom Files footer end-->
   </footer>
 
@@ -3749,7 +3762,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["/images/covers/cover02.jpg","/images/covers/cover05.jpg","/images/covers/cover04.jpg","/images/covers/cover07.jpg","/images/covers/cover03.jpg","/images/covers/cover10.jpg","/images/covers/cover06.jpg","/images/covers/cover01.jpg","/images/covers/cover08.jpg","/images/covers/cover09.jpg"];
+  let imgs = ["/images/covers/cover04.jpg","/images/covers/cover09.jpg","/images/covers/cover01.jpg","/images/covers/cover06.jpg","/images/covers/cover02.jpg","/images/covers/cover05.jpg","/images/covers/cover10.jpg","/images/covers/cover03.jpg","/images/covers/cover07.jpg","/images/covers/cover08.jpg"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4068,7 +4081,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.gitee.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.gitee.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.gitee.io/categories/notes/SimPy/","name":"SimPy"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.gitee.io/ja-JP/notes/SimPy/simpy-learning-01/","name":"【学习笔记】SimPy 学习（一）：基础"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.gitee.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记】SimPy 学习（一）：基础","description":"Python 仿真库 SimPy，安装、结构和基本概念","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.gitee.io/notes/SimPy/simpy-learning-01/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.gitee.io/notes/SimPy/simpy-learning-01/","wordCount":27,"datePublished":"2023-10-23T13:00:52.000Z","dateModified":"2023-10-24T15:58:38.489Z","articleSection":"学习笔记","keywords":"SimPy,Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.gitee.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.gitee.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.gitee.io/categories/notes/SimPy/","name":"SimPy"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.gitee.io/ja-JP/notes/SimPy/simpy-learning-01/","name":"【学习笔记】SimPy 学习（一）：基础"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.gitee.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记】SimPy 学习（一）：基础","description":"Python 仿真库 SimPy，安装、结构和基本概念","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.gitee.io/notes/SimPy/simpy-learning-01/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.gitee.io/notes/SimPy/simpy-learning-01/","wordCount":27,"datePublished":"2023-10-23T13:00:52.000Z","dateModified":"2023-10-27T07:20:42.026Z","articleSection":"学习笔记","keywords":"SimPy,Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
