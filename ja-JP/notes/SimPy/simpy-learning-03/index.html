@@ -34,17 +34,19 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>【学习笔记】SimPy 学习（三）： - 诚实同学的博客</title>
+  <title>【学习笔记】SimPy 学习（三）：资源共享 - 诚实同学的博客</title>
   <meta name="keywords" content="SimPy,Python,个人博客, 计算机, 学习">
-  <meta desc name="description" content="Patience is key in life. - Chen Shi - 诚实同学的博客">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="【学习笔记】SimPy 学习（三）：">
+  <meta desc name="description" content="SimPy 的资源共享，Resource、Container、Store 等 - Chen Shi - 诚实同学的博客">
+  
+<meta property="og:type" content="article">
+<meta property="og:title" content="【学习笔记】SimPy 学习（三）：资源共享">
 <meta property="og:url" content="https://cs0522.gitee.io/ja-JP/notes/SimPy/simpy-learning-03/index.html">
 <meta property="og:site_name" content="诚实同学的博客">
+<meta property="og:description" content="SimPy 的资源共享，Resource、Container、Store 等">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-<meta property="article:published_time" content="2023-10-24T08:24:09.000Z">
-<meta property="article:modified_time" content="2023-10-24T07:32:11.547Z">
+<meta property="article:published_time" content="2023-10-27T08:24:09.000Z">
+<meta property="article:modified_time" content="2023-10-28T14:42:33.174Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="SimPy">
 <meta property="article:tag" content="Python">
@@ -1764,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1698415949176),
+    lastupdate: new Date(1698591649781),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2549,7 +2551,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title" itemprop="name headline">
-        【学习笔记】SimPy 学习（三）：
+        【学习笔记】SimPy 学习（三）：资源共享
       </h1>
       <div class='new-meta-box'>
         
@@ -2584,10 +2586,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
         
           
-            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-10-24T16:24:09+08:00">
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-10-27T16:24:09+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2023年10月24日</p>
+    <p>发布于：2023年10月27日</p>
   </a>
 </div>
 
@@ -2598,13 +2600,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：0 字</p>
+      <p>字数：3k 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>时长：1 分钟</p>
+      <p>时长：14 分钟</p>
     </a>
   </div>
 
@@ -2621,9 +2623,150 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <span id="more"></span>
+    <p>SimPy 的资源共享，Resource、Container、Store 等</p>
+<span id="more"></span>
+<p>仿真中涉及的人力资源以及工艺上的物料消耗都会抽象用 <code>Resource</code> 来表达，主要的 <code>method</code> 是 <code>request</code>。<code>Store</code> 处理各种优先级的队列问题，表现跟 <code>queue</code> 一致，通过 <code>get()/put()</code> 存放 <code>item</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">BaseResource(capacity):</span><br><span class="line">  put_queue</span><br><span class="line">  get_queue</span><br><span class="line"></span><br><span class="line">  put(): event</span><br><span class="line">  get(): event</span><br></pre></td></tr></table></figure>
+<p>每个资源都有一个最大容量和两个队列：一个队列用于要向其中放入内容的进程，另一个队列则用于要取出内容的进程。<code>put()</code> 和 <code>get()</code> 方法都返回一个在相应操作成功时触发的事件。</p>
+<p>SimPy 定义了三类资源：</p>
+<ul>
+<li><code>Resources</code>：一次可由有限数量的过程使用的资源（例如，具有有限数量燃油泵的加油站）
+<ul>
+<li>资源或限制条件：<code>simpy.Resource(env, capacity)</code></li>
+<li>优先级、不可打断正在服务的进程：<code>simpy.PriorityResource</code></li>
+<li>优先级、可以打断正在服务的进程：<code>simpy.PreemptiveResource</code></li>
+</ul></li>
+<li><code>Containers</code>：模拟同质、未分散的生产、消费资源。它可以是连续的（如水）或离散的（如苹果）
+<ul>
+<li>连续不可分的元素：<code>simpy.Container</code></li>
+</ul></li>
+<li><code>Stores</code>：允许生产和使用 Python 对象的资源
+<ul>
+<li>存取 <code>Item</code>、遵循先来后到：<code>simpy.Store</code></li>
+<li>添加优先级：<code>simpy.PriorityStore</code></li>
+<li>存在分类：<code>simpy.FilterStore</code></li>
+</ul></li>
+</ul>
+<div class="story post-story"><h2 id="resources">Resources</h2>
+<h3 id="apis">APIs</h3>
+<ul>
+<li><code>simpy.Resource(env, capacity = )</code></li>
+<li><code>simpy.Resource.request(priority = )</code></li>
+<li><code>simpy.Resource.release()</code></li>
+</ul>
+<h3 id="example-3.1">Example 3.1</h3>
+<details>
+<p><summary>电动汽车使用两个充电桩中间的一个进行充电。如果这两个点都在使用，汽车将等待其中一个点直至其再次可用，然后开始给充电，完成后离开充电站</summary></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">car</span>(<span class="params">env, name, bcs, driving_time, charge_duration</span>):</span><br><span class="line">    <span class="comment"># 驶向充电站</span></span><br><span class="line">    <span class="keyword">yield</span> env.timeout(driving_time)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;%s 到达时间 %d&#x27;</span> % (name, env.now))</span><br><span class="line">    <span class="comment"># 请求充电桩</span></span><br><span class="line">    <span class="keyword">with</span> bcs.request() <span class="keyword">as</span> req:</span><br><span class="line">        <span class="keyword">yield</span> req</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;%s 充电开始时间 %d&#x27;</span> % (name, env.now))</span><br><span class="line">        <span class="keyword">yield</span> env.timeout(charge_duration)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;%s 充电结束并驶离时间 %d&#x27;</span> % (name, env.now))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">env = simpy.Environment()</span><br><span class="line"><span class="comment"># bcs 充电桩资源</span></span><br><span class="line">bcs = simpy.Resource(env, capacity = <span class="number">2</span>)</span><br><span class="line"><span class="comment"># 创建汽车进程</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    env.process(car(env, <span class="string">&#x27;第 %d 辆车&#x27;</span> % (i + <span class="number">1</span>), bcs, i * <span class="number">2</span>, <span class="number">5</span>))</span><br><span class="line"></span><br><span class="line">env.run()</span><br></pre></td></tr></table></figure>
+</details>
+<p>资源 <code>resource</code> 的 <code>request()</code> 方法生成一个事件 <code>event</code>， 该事件会等待直至资源可用。之后一直拥有资源，直至资源被释放。</p>
+<p>在代码中使用 <code>with</code> 构造资源的请求使用，资源在使用后将<code>自动释放</code>。如果没通过 <code>with</code> 使用 <code>request()</code>，需要自行使用 <code>release()</code> 释放资源。</p>
+<p>释放资源后，下一个等待的进程将激活，占用资源。资源的排队规则遵循<code>先进先出 FIFO</code>策略。</p>
+<details>
+<p><summary>查看结果</summary></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">第 1 辆车 到达时间 0</span><br><span class="line">第 1 辆车 充电开始时间 0</span><br><span class="line">第 2 辆车 到达时间 2</span><br><span class="line">第 2 辆车 充电开始时间 2</span><br><span class="line">第 3 辆车 到达时间 4</span><br><span class="line">第 1 辆车 充电结束并驶离时间 5</span><br><span class="line">第 3 辆车 充电开始时间 5</span><br><span class="line">第 4 辆车 到达时间 6</span><br><span class="line">第 2 辆车 充电结束并驶离时间 7</span><br><span class="line">第 4 辆车 充电开始时间 7</span><br><span class="line">第 3 辆车 充电结束并驶离时间 10</span><br><span class="line">第 4 辆车 充电结束并驶离时间 12</span><br></pre></td></tr></table></figure>
+</details>
+<h3 id="example-3.2">Example 3.2</h3>
+<details>
+<p><summary>银行排队服务例子：一个柜台对客户进行服务，服务耗时，客户等候过长会离开柜台</summary></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">银行排队服务例子：一个柜台对客户进行服务，服务耗时，客户等候过长会离开柜台</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">RANDOM_SEED = <span class="number">42</span></span><br><span class="line">NEW_CUSTOMERS = <span class="number">5</span>  <span class="comment"># 客户数</span></span><br><span class="line">INTERVAL_CUSTOMERS = <span class="number">10.0</span>  <span class="comment"># 客户到达的间距时间</span></span><br><span class="line">MIN_PATIENCE = <span class="number">1</span>  <span class="comment"># 客户等待时间, 最小</span></span><br><span class="line">MAX_PATIENCE = <span class="number">3</span>  <span class="comment"># 客户等待时间, 最大</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成客户</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">source</span>(<span class="params">env, number, interval, counter</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(number):</span><br><span class="line">        c = customer(env, <span class="string">&#x27;Customer%02d&#x27;</span> % i, counter, time_in_bank = <span class="number">12.0</span>)</span><br><span class="line">        env.process(c)</span><br><span class="line">        t = random.expovariate(<span class="number">1.0</span> / interval)</span><br><span class="line">        <span class="keyword">yield</span> env.timeout(t)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 客户到达、服务、离开</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">customer</span>(<span class="params">env, name, counter, time_in_bank</span>):</span><br><span class="line">    arrive = env.now</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;%7.4f %s: Here I am&#x27;</span> % (arrive, name))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> counter.request() <span class="keyword">as</span> req:</span><br><span class="line">        patience = random.uniform(MIN_PATIENCE, MAX_PATIENCE)</span><br><span class="line">        <span class="comment"># 等待柜员服务或者超出忍耐时间离开队伍</span></span><br><span class="line">        results = <span class="keyword">yield</span> req | env.timeout(patience)</span><br><span class="line">        wait = env.now - arrive</span><br><span class="line">        <span class="keyword">if</span> req <span class="keyword">in</span> results:</span><br><span class="line">        <span class="comment"># 到达柜台</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;%7.4f %s: Waited %6.3f&#x27;</span> % (env.now, name, wait))</span><br><span class="line">            tib = random.expovariate(<span class="number">1.0</span> / time_in_bank)</span><br><span class="line">            <span class="keyword">yield</span> env.timeout(tib)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;%7.4f %s: Finished&#x27;</span> % (env.now, name))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 没有服务到位</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;%7.4f %s: RENEGED after %6.3f&#x27;</span> % (env.now, name, wait))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Setup and start the simulation</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Bank renege&#x27;</span>)</span><br><span class="line">random.seed(RANDOM_SEED)</span><br><span class="line">env = simpy.Environment()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Start processes and run</span></span><br><span class="line">counter = simpy.Resource(env, capacity = <span class="number">1</span>)</span><br><span class="line">env.process(source(env, NEW_CUSTOMERS, INTERVAL_CUSTOMERS, counter))</span><br><span class="line">env.run()</span><br></pre></td></tr></table></figure>
+</details>
+<details>
+<p><summary>查看结果</summary></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Bank renege</span><br><span class="line"> 0.0000 Customer00: Here I am</span><br><span class="line"> 0.0000 Customer00: Waited  0.000</span><br><span class="line"> 3.8595 Customer00: Finished</span><br><span class="line">10.2006 Customer01: Here I am</span><br><span class="line">10.2006 Customer01: Waited  0.000</span><br><span class="line">12.7265 Customer02: Here I am</span><br><span class="line">13.9003 Customer02: RENEGED after  1.174</span><br><span class="line">23.7507 Customer01: Finished</span><br><span class="line">34.9993 Customer03: Here I am</span><br><span class="line">34.9993 Customer03: Waited  0.000</span><br><span class="line">37.9599 Customer03: Finished</span><br><span class="line">40.4798 Customer04: Here I am</span><br><span class="line">40.4798 Customer04: Waited  0.000</span><br><span class="line">43.1401 Customer04: Finished</span><br></pre></td></tr></table></figure>
+</details>
+<h3 id="example-3.3">Example 3.3</h3>
+<p><code>PriorityResource</code> 优先资源。此资源子类允许请求进程为每个请求提供优先级。更重要的请求将比不重要的请求更早地访问资源。优先级用整数表示；<code>较小的数字意味着较高的优先级</code>。</p>
+<details>
+<p><summary>优先资源例子</summary></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">resource_user</span>(<span class="params">name, env, resource, wait, prio</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;<span class="subst">&#123;name&#125;</span> 在 <span class="subst">&#123;env.now&#125;</span> 到达，优先级是 <span class="subst">&#123;prio&#125;</span>&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;<span class="subst">&#123;name&#125;</span> 挂起...&#x27;</span>)</span><br><span class="line">    <span class="keyword">yield</span> env.timeout(wait)</span><br><span class="line">    <span class="keyword">with</span> resource.request(priority=prio) <span class="keyword">as</span> req:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;<span class="subst">&#123;name&#125;</span> requesting at <span class="subst">&#123;env.now&#125;</span> with priority=<span class="subst">&#123;prio&#125;</span>&#x27;</span>)</span><br><span class="line">        <span class="keyword">yield</span> req</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;<span class="subst">&#123;name&#125;</span> got resource at <span class="subst">&#123;env.now&#125;</span>&#x27;</span>)</span><br><span class="line">        <span class="keyword">yield</span> env.timeout(<span class="number">3</span>)</span><br><span class="line"> </span><br><span class="line">env = simpy.Environment()</span><br><span class="line">res = simpy.PriorityResource(env, capacity=<span class="number">1</span>)</span><br><span class="line">p2 = env.process(resource_user(<span class="number">2</span>, env, res, wait=<span class="number">1</span>, prio=<span class="number">0</span>))</span><br><span class="line">p1 = env.process(resource_user(<span class="number">1</span>, env, res, wait=<span class="number">0</span>, prio=<span class="number">0</span>))</span><br><span class="line">p3 = env.process(resource_user(<span class="number">3</span>, env, res, wait=<span class="number">2</span>, prio=-<span class="number">1</span>))</span><br><span class="line">env.run()</span><br></pre></td></tr></table></figure>
+</details>
+<details>
+<p><summary>查看结果</summary></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span> 在 <span class="number">0</span> 到达，优先级是 <span class="number">0</span></span><br><span class="line"><span class="number">2</span> 挂起...</span><br><span class="line"><span class="number">1</span> 在 <span class="number">0</span> 到达，优先级是 <span class="number">0</span></span><br><span class="line"><span class="number">1</span> 挂起...</span><br><span class="line"><span class="number">3</span> 在 <span class="number">0</span> 到达，优先级是 -<span class="number">1</span></span><br><span class="line"><span class="number">3</span> 挂起...</span><br><span class="line"><span class="number">1</span> requesting at <span class="number">0</span> <span class="keyword">with</span> priority=<span class="number">0</span></span><br><span class="line"><span class="number">1</span> got resource at <span class="number">0</span></span><br><span class="line"><span class="number">2</span> requesting at <span class="number">1</span> <span class="keyword">with</span> priority=<span class="number">0</span></span><br><span class="line"><span class="number">3</span> requesting at <span class="number">2</span> <span class="keyword">with</span> priority=-<span class="number">1</span></span><br><span class="line"><span class="number">3</span> got resource at <span class="number">3</span></span><br><span class="line"><span class="number">2</span> got resource at <span class="number">6</span></span><br></pre></td></tr></table></figure>
+</details>
+<h3 id="example-3.4">Example 3.4</h3>
+<p><code>PreemptiveResource</code> 抢占资源。</p>
+<details>
+<p><summary>抢占资源例子</summary></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">resource_user</span>(<span class="params">name, env, resource, wait, prio</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;<span class="subst">&#123;name&#125;</span> 在 <span class="subst">&#123;env.now&#125;</span> 到达，优先级是 <span class="subst">&#123;prio&#125;</span>&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;<span class="subst">&#123;name&#125;</span> 挂起...&#x27;</span>)</span><br><span class="line">    <span class="keyword">yield</span> env.timeout(wait)</span><br><span class="line">    <span class="keyword">with</span> resource.request(priority=prio) <span class="keyword">as</span> req:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;<span class="subst">&#123;name&#125;</span> requesting at <span class="subst">&#123;env.now&#125;</span> with priority=<span class="subst">&#123;prio&#125;</span>&#x27;</span>)</span><br><span class="line">        <span class="keyword">yield</span> req</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;<span class="subst">&#123;name&#125;</span> got resource at <span class="subst">&#123;env.now&#125;</span>&#x27;</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">yield</span> env.timeout(<span class="number">3</span>)</span><br><span class="line">        <span class="keyword">except</span> simpy.Interrupt <span class="keyword">as</span> interrupt:</span><br><span class="line">            by = interrupt.cause.by</span><br><span class="line">            usage = env.now - interrupt.cause.usage_since</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&#x27;<span class="subst">&#123;name&#125;</span> got preempted by <span class="subst">&#123;by&#125;</span> at <span class="subst">&#123;env.now&#125;</span>&#x27;</span></span><br><span class="line">                <span class="string">f&#x27; after <span class="subst">&#123;usage&#125;</span>&#x27;</span>)</span><br><span class="line"> </span><br><span class="line">env = simpy.Environment()</span><br><span class="line">res = simpy.PreemptiveResource(env, capacity=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">p3 = env.process(resource_user(<span class="number">3</span>, env, res, wait=<span class="number">2</span>, prio=-<span class="number">1</span>))</span><br><span class="line">p1 = env.process(resource_user(<span class="number">1</span>, env, res, wait=<span class="number">0</span>, prio=<span class="number">0</span>))</span><br><span class="line">p2 = env.process(resource_user(<span class="number">2</span>, env, res, wait=<span class="number">1</span>, prio=<span class="number">0</span>))</span><br><span class="line">env.run()</span><br></pre></td></tr></table></figure>
+</details>
+<details>
+<p><summary>查看结果</summary></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">3 在 0 到达，优先级是 -1</span><br><span class="line">3 挂起...</span><br><span class="line">1 在 0 到达，优先级是 0</span><br><span class="line">1 挂起...</span><br><span class="line">2 在 0 到达，优先级是 0</span><br><span class="line">2 挂起...</span><br><span class="line">1 requesting at 0 with priority=0</span><br><span class="line">1 got resource at 0</span><br><span class="line">2 requesting at 1 with priority=0</span><br><span class="line">3 requesting at 2 with priority=-1</span><br><span class="line">1 got preempted by &lt;Process(resource_user) object at 0x7fa733116898&gt; at 2 after 2</span><br><span class="line">3 got resource at 2</span><br><span class="line">2 got resource at 5</span><br></pre></td></tr></table></figure>
+</details>
+<h3 id="example-3.5">Example 3.5</h3>
+<p>抢占请求不允许跳过优先级更高的请求。以下示例显示，在队列中，抢占式的低优先级请求无法插队非抢占式的高优先级请求。</p>
+<details>
+<p><summary>抢占式低优先级不允许跳过例子</summary></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">user</span>(<span class="params">name, env, res, prio, preempt</span>):</span><br><span class="line">    <span class="keyword">with</span> res.request(priority=prio, preempt=preempt) <span class="keyword">as</span> req:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&#x27;<span class="subst">&#123;name&#125;</span> requesting at <span class="subst">&#123;env.now&#125;</span>&#x27;</span>)</span><br><span class="line">            <span class="keyword">assert</span> <span class="built_in">isinstance</span>(env.now, <span class="built_in">int</span>), <span class="built_in">type</span>(env.now)</span><br><span class="line">            <span class="keyword">yield</span> req</span><br><span class="line">            <span class="keyword">assert</span> <span class="built_in">isinstance</span>(env.now, <span class="built_in">int</span>), <span class="built_in">type</span>(env.now)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&#x27;<span class="subst">&#123;name&#125;</span> got resource at <span class="subst">&#123;env.now&#125;</span>&#x27;</span>)</span><br><span class="line">            <span class="keyword">yield</span> env.timeout(<span class="number">3</span>)</span><br><span class="line">        <span class="keyword">except</span> simpy.Interrupt:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&#x27;<span class="subst">&#123;name&#125;</span> got preempted at <span class="subst">&#123;env.now&#125;</span>&#x27;</span>)</span><br><span class="line"> </span><br><span class="line">env = simpy.Environment()</span><br><span class="line">res = simpy.PreemptiveResource(env, capacity=<span class="number">1</span>)</span><br><span class="line">A = env.process(user(<span class="string">&#x27;A&#x27;</span>, env, res, prio=<span class="number">0</span>, preempt=<span class="literal">True</span>))</span><br><span class="line">env.run(until=<span class="number">1</span>)  <span class="comment"># Give A a head start</span></span><br><span class="line"></span><br><span class="line">B = env.process(user(<span class="string">&#x27;B&#x27;</span>, env, res, prio=-<span class="number">2</span>, preempt=<span class="literal">False</span>))</span><br><span class="line">C = env.process(user(<span class="string">&#x27;C&#x27;</span>, env, res, prio=-<span class="number">1</span>, preempt=<span class="literal">True</span>))</span><br><span class="line">env.run()</span><br></pre></td></tr></table></figure>
+</details>
+<ul>
+<li><p>处理 A 请求优先级为 0 的资源。它立即成为用户</p></li>
+<li><p>进程 B 请求优先级为 -2 的资源，但将 preempt 设置为 False。它会排队等候</p></li>
+<li><p>进程 C 请求优先级为 -1 的资源，但保留 preempt 为 True。通常情况下，它会抢占 A，但在这种情况下，B 在 C 之前排队，并阻止 C 抢占 A。由于 B 的优先级不够高，C 也不能抢占 B</p></li>
+</ul>
+<p>由于进程B的优先级较高，在本例中不发生抢占。优先级为 -3 的请求可以抢占 A。</p>
+<details>
+<p><summary>查看结果</summary></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">A requesting at 0</span><br><span class="line">A got resource at 0</span><br><span class="line">B requesting at 1</span><br><span class="line">C requesting at 1</span><br><span class="line">B got resource at 3</span><br><span class="line">C got resource at 6</span><br></pre></td></tr></table></figure>
+</details>
+</div><div class="story post-story"><h2 id="containers">Containers</h2>
+<h3 id="apis-1">APIs</h3>
+<ul>
+<li><code>simpy.Container(env, init = , capacity = )</code></li>
+<li><code>simpy.Container.level</code></li>
+<li><code>simpy.Container.put()</code></li>
+<li><code>simpy.Container.get()</code></li>
+</ul>
+<h3 id="example-3.6">Example 3.6</h3>
+<details>
+<p><summary>模拟加油站的 tank。Tanker 增加了 tank 中的汽油量，而 Car 则减少了汽油量</summary></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GasStation</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, env</span>):</span><br><span class="line">        <span class="comment"># 2 个加油机</span></span><br><span class="line">        self.fuel_dispensers = simpy.Resource(env, capacity=<span class="number">2</span>)</span><br><span class="line">        <span class="comment"># tank 容量为 1000，初始 100</span></span><br><span class="line">        self.gas_tank = simpy.Container(env, init=<span class="number">100</span>, capacity=<span class="number">1000</span>)</span><br><span class="line">        self.mon_proc = env.process(self.monitor_tank(env))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 监视是否需要加油</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">monitor_tank</span>(<span class="params">self, env</span>):</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">if</span> self.gas_tank.level &lt; <span class="number">100</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&#x27;Calling tanker at <span class="subst">&#123;env.now&#125;</span>&#x27;</span>)</span><br><span class="line">                env.process(tanker(env, self))</span><br><span class="line">            <span class="keyword">yield</span> env.timeout(<span class="number">15</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tanker</span>(<span class="params">env, gas_station</span>):</span><br><span class="line">    <span class="keyword">yield</span> env.timeout(<span class="number">10</span>)  <span class="comment"># Need 10 Minutes to arrive</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;Tanker arriving at <span class="subst">&#123;env.now&#125;</span>&#x27;</span>)</span><br><span class="line">    <span class="comment"># tank 加满</span></span><br><span class="line">    amount = gas_station.gas_tank.capacity - gas_station.gas_tank.level</span><br><span class="line">    <span class="keyword">yield</span> gas_station.gas_tank.put(amount)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">car</span>(<span class="params">name, env, gas_station</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;Car <span class="subst">&#123;name&#125;</span> arriving at <span class="subst">&#123;env.now&#125;</span>&#x27;</span>)</span><br><span class="line">    <span class="keyword">with</span> gas_station.fuel_dispensers.request() <span class="keyword">as</span> req:</span><br><span class="line">        <span class="keyword">yield</span> req</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;Car <span class="subst">&#123;name&#125;</span> starts refueling at <span class="subst">&#123;env.now&#125;</span>&#x27;</span>)</span><br><span class="line">        <span class="keyword">yield</span> gas_station.gas_tank.get(<span class="number">40</span>)</span><br><span class="line">        <span class="keyword">yield</span> env.timeout(<span class="number">5</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;Car <span class="subst">&#123;name&#125;</span> done refueling at <span class="subst">&#123;env.now&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">car_generator</span>(<span class="params">env, gas_station</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        env.process(car(i, env, gas_station))</span><br><span class="line">        <span class="keyword">yield</span> env.timeout(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">env = simpy.Environment()</span><br><span class="line">gas_station = GasStation(env)</span><br><span class="line">car_gen = env.process(car_generator(env, gas_station))</span><br><span class="line">env.run(<span class="number">35</span>)</span><br></pre></td></tr></table></figure>
+</details>
+<p>加油站具有数量有限的加油机（建模为 <code>Resource</code>）和油箱（建模为 <code>Container</code>）。可以检查其当前液位及其容量（<code>GasStation.monitor_tank()</code> 和 <code>tanker()</code>）。可以通过 <code>put_queue</code> 和 <code>get_queue</code>属性（类似于<code>Resource.queue</code>）访问等待事件列表。</p>
+<details>
+<p><summary>查看结果</summary></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Car 0 arriving at 0</span><br><span class="line">Car 0 starts refueling at 0</span><br><span class="line">Car 1 arriving at 5</span><br><span class="line">Car 0 <span class="keyword">done</span> refueling at 5</span><br><span class="line">Car 1 starts refueling at 5</span><br><span class="line">Car 2 arriving at 10</span><br><span class="line">Car 1 <span class="keyword">done</span> refueling at 10</span><br><span class="line">Car 2 starts refueling at 10</span><br><span class="line">Calling tanker at 15</span><br><span class="line">Car 3 arriving at 15</span><br><span class="line">Car 3 starts refueling at 15</span><br><span class="line">Tanker arriving at 25</span><br><span class="line">Car 2 <span class="keyword">done</span> refueling at 30</span><br><span class="line">Car 3 <span class="keyword">done</span> refueling at 30</span><br></pre></td></tr></table></figure>
+</details>
+</div><div class="story post-story"><h2 id="stores">Stores</h2>
+<p>使用 <code>Stores</code> 可以对具体对象的生产和消费进行建模。单个 <code>Store</code> 甚至可以包含多种类型的对象。</p>
+<h3 id="apis-2">APIs</h3>
+<ul>
+<li><code>simpy.Store(env, capcity = )</code></li>
+<li><code>simpy.Store.get()</code></li>
+<li><code>simpy.Store.put()</code></li>
+<li><code>simpy.PriorityStore()</code></li>
+<li><code>simpy.PriorityItem(priority, item)</code></li>
+</ul>
+<h3 id="example-3.7">Example 3.7</h3>
+<details>
+<p><summary>一般生产者/消费者场景</summary></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">producer</span>(<span class="params">env, store</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">        <span class="keyword">yield</span> env.timeout(<span class="number">2</span>)</span><br><span class="line">        <span class="keyword">yield</span> store.put(<span class="string">f&#x27;spam <span class="subst">&#123;i&#125;</span>&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;Produced spam at&#x27;</span>, env.now)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">consumer</span>(<span class="params">name, env, store</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">yield</span> env.timeout(<span class="number">1</span>)</span><br><span class="line">        <span class="built_in">print</span>(name, <span class="string">&#x27;requesting spam at&#x27;</span>, env.now)</span><br><span class="line">        item = <span class="keyword">yield</span> store.get()</span><br><span class="line">        <span class="built_in">print</span>(name, <span class="string">&#x27;got&#x27;</span>, item, <span class="string">&#x27;at&#x27;</span>, env.now)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">env = simpy.Environment()</span><br><span class="line">store = simpy.Store(env, capacity=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">prod = env.process(producer(env, store))</span><br><span class="line">consumers = [env.process(consumer(i, env, store)) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>)]</span><br><span class="line"></span><br><span class="line">env.run(until=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+</details>
+<details>
+<p><summary>查看结果</summary></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">0 requesting spam at 1</span><br><span class="line">1 requesting spam at 1</span><br><span class="line">Produced spam at 2</span><br><span class="line">0 got spam 0 at 2</span><br><span class="line">0 requesting spam at 3</span><br><span class="line">Produced spam at 4</span><br><span class="line">1 got spam 1 at 4</span><br><span class="line">1 requesting spam at 5</span><br><span class="line">Produced spam at 6</span><br><span class="line">0 got spam 2 at 6</span><br><span class="line">0 requesting spam at 7</span><br><span class="line">Produced spam at 8</span><br><span class="line">1 got spam 3 at 8</span><br><span class="line">1 requesting spam at 9</span><br></pre></td></tr></table></figure>
+</details>
+<h3 id="example-3.8">Example 3.8</h3>
+<p><code>PriorityStore</code> 具有优先级的 Store。</p>
+<details>
+<p><summary>inspector process 发现并记录单独的 maintainer process 按优先级顺序修复的问题。</summary></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line">env = simpy.Environment()</span><br><span class="line">issues = simpy.PriorityStore(env)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">inspector</span>(<span class="params">env, issues</span>):</span><br><span class="line">    <span class="keyword">for</span> issue <span class="keyword">in</span> [simpy.PriorityItem(<span class="string">&#x27;P2&#x27;</span>, <span class="string">&#x27;#0000&#x27;</span>),</span><br><span class="line">                  simpy.PriorityItem(<span class="string">&#x27;P0&#x27;</span>, <span class="string">&#x27;#0001&#x27;</span>),</span><br><span class="line">                  simpy.PriorityItem(<span class="string">&#x27;P3&#x27;</span>, <span class="string">&#x27;#0002&#x27;</span>),</span><br><span class="line">                  simpy.PriorityItem(<span class="string">&#x27;P1&#x27;</span>, <span class="string">&#x27;#0003&#x27;</span>)]:</span><br><span class="line">        <span class="keyword">yield</span> env.timeout(<span class="number">1</span>)</span><br><span class="line">        <span class="built_in">print</span>(env.now, <span class="string">&#x27;log&#x27;</span>, issue)</span><br><span class="line">        <span class="keyword">yield</span> issues.put(issue)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">maintainer</span>(<span class="params">env, issues</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">yield</span> env.timeout(<span class="number">3</span>)</span><br><span class="line">        issue = <span class="keyword">yield</span> issues.get()</span><br><span class="line">        <span class="built_in">print</span>(env.now, <span class="string">&#x27;repair&#x27;</span>, issue)</span><br><span class="line"></span><br><span class="line">_ = env.process(inspector(env, issues))</span><br><span class="line">_ = env.process(maintainer(env, issues))</span><br><span class="line">env.run()</span><br></pre></td></tr></table></figure>
+</details>
+<details>
+<p><summary>查看结果</summary></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1 <span class="built_in">log</span> PriorityItem(priority=<span class="string">&#x27;P2&#x27;</span>, item=<span class="string">&#x27;#0000&#x27;</span>)</span><br><span class="line">2 <span class="built_in">log</span> PriorityItem(priority=<span class="string">&#x27;P0&#x27;</span>, item=<span class="string">&#x27;#0001&#x27;</span>)</span><br><span class="line">3 <span class="built_in">log</span> PriorityItem(priority=<span class="string">&#x27;P3&#x27;</span>, item=<span class="string">&#x27;#0002&#x27;</span>)</span><br><span class="line">3 repair PriorityItem(priority=<span class="string">&#x27;P0&#x27;</span>, item=<span class="string">&#x27;#0001&#x27;</span>)</span><br><span class="line">4 <span class="built_in">log</span> PriorityItem(priority=<span class="string">&#x27;P1&#x27;</span>, item=<span class="string">&#x27;#0003&#x27;</span>)</span><br><span class="line">6 repair PriorityItem(priority=<span class="string">&#x27;P1&#x27;</span>, item=<span class="string">&#x27;#0003&#x27;</span>)</span><br><span class="line">9 repair PriorityItem(priority=<span class="string">&#x27;P2&#x27;</span>, item=<span class="string">&#x27;#0000&#x27;</span>)</span><br><span class="line">12 repair PriorityItem(priority=<span class="string">&#x27;P3&#x27;</span>, item=<span class="string">&#x27;#0002&#x27;</span>)</span><br></pre></td></tr></table></figure>
+</details>
+<p><br> <br> <br></p>
+<p>SimPy 学习</p>
+<ul>
+<li><a href="/notes/SimPy/simpy-learning-01/" title="【学习笔记】SimPy 学习（一）：基础">【学习笔记】SimPy 学习（一）：基础</a></li>
+<li><a href="/notes/SimPy/simpy-learning-02/" title="【学习笔记】SimPy 学习（二）：进程交互">【学习笔记】SimPy 学习（二）：进程交互</a></li>
+<li><a href="/notes/SimPy/simpy-learning-03/" title="【学习笔记】SimPy 学习（三）：资源共享">【学习笔记】SimPy 学习（三）：资源共享</a></li>
+</ul>
 
-
+</div>
   </div>
   
   
@@ -2647,10 +2790,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-10-24T15:32:11+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-10-28T22:42:33+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：2023年10月24日</p>
+    <p>最后更新于：2023年10月28日</p>
   </a>
 </div>
 
@@ -2680,7 +2823,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cs0522.gitee.io/notes/SimPy/simpy-learning-03/&title=【学习笔记】SimPy 学习（三）： - 诚实同学的博客&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cs0522.gitee.io/notes/SimPy/simpy-learning-03/&title=【学习笔记】SimPy 学习（三）：资源共享 - 诚实同学的博客&summary=SimPy 的资源共享，Resource、Container、Store 等"
           
           >
           
@@ -2692,7 +2835,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://cs0522.gitee.io/notes/SimPy/simpy-learning-03/&title=【学习笔记】SimPy 学习（三）： - 诚实同学的博客&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://cs0522.gitee.io/notes/SimPy/simpy-learning-03/&title=【学习笔记】SimPy 学习（三）：资源共享 - 诚实同学的博客&summary=SimPy 的资源共享，Resource、Container、Store 等"
           
           >
           
@@ -2704,7 +2847,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://cs0522.gitee.io/notes/SimPy/simpy-learning-03/&title=【学习笔记】SimPy 学习（三）： - 诚实同学的博客&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://cs0522.gitee.io/notes/SimPy/simpy-learning-03/&title=【学习笔记】SimPy 学习（三）：资源共享 - 诚实同学的博客&summary=SimPy 的资源共享，Resource、Container、Store 等"
           
           >
           
@@ -2737,20 +2880,21 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/docs/atlantis-project/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【文档小记】Atlantis JMVT 游戏车队交流平台</p>
+        <a class='prev' href='/notes/SimPy/simpy-learning-04/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【学习笔记】SimPy 学习（四）：实时模拟与时间调度</p>
+          <p class='content'>Simpy 的 Real-time simulations，即设置模拟的时间步长
+
+Real-time-simulation
+不以快的速度执行模拟，与现实的时钟时间同步（他是真的执行了这么长时间...</p>
+        </a>
+      
+      
+        <a class='next' href='/docs/atlantis-project/'>
+          <p class='title'>【文档小记】Atlantis JMVT 游戏车队交流平台<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
           <p class='content'>记录了这个 Vue + SpringBoot 前后端项目开发的一些知识点以及解决方案
 
 
 </p>
-        </a>
-      
-      
-        <a class='next' href='/learnings/%E7%9B%98%E8%8A%82%E8%83%BD/thinraid/'>
-          <p class='title'>【论文随记】230824_ThinRAID<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>本文针对数据中心的能源消耗问题，根据数据集大小使用部分磁盘建立 RAID 以节省能源
-
-ThinRAID: Thinning Down RAID Array for Energy Conserv...</p>
         </a>
       
     </div>
@@ -2792,7 +2936,7 @@ ThinRAID: Thinning Down RAID Array for Energy Conserv...</p>
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>13 篇</div>
+          <div>15 篇</div>
         </div>
       
 
@@ -2807,7 +2951,7 @@ ThinRAID: Thinning Down RAID Array for Energy Conserv...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>24.1k 字</div>
+          <div>25.8k 字</div>
         </div>
       
 
@@ -2832,7 +2976,7 @@ ThinRAID: Thinning Down RAID Array for Energy Conserv...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2023-10-27 日</div>
+          <div id="last-update-show">2023-10-29 日</div>
         </div>
       
     </div>
@@ -2849,9 +2993,19 @@ ThinRAID: Thinning Down RAID Array for Energy Conserv...</p>
   
 
 
-  <div class="">
-    <!-- pjax占位 -->
-  </div>
+  <section class="widget toc-wrapper desktop mobile " id="toc-div" >
+    
+  <header>
+    
+      <i class="fa-solid fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#resources"><span class="toc-number">1.</span> <span class="toc-text">Resources</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#apis"><span class="toc-number">1.1.</span> <span class="toc-text">APIs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#example-3.1"><span class="toc-number">1.2.</span> <span class="toc-text">Example 3.1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#example-3.2"><span class="toc-number">1.3.</span> <span class="toc-text">Example 3.2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#example-3.3"><span class="toc-number">1.4.</span> <span class="toc-text">Example 3.3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#example-3.4"><span class="toc-number">1.5.</span> <span class="toc-text">Example 3.4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#example-3.5"><span class="toc-number">1.6.</span> <span class="toc-text">Example 3.5</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#containers"><span class="toc-number">2.</span> <span class="toc-text">Containers</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#apis-1"><span class="toc-number">2.1.</span> <span class="toc-text">APIs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#example-3.6"><span class="toc-number">2.2.</span> <span class="toc-text">Example 3.6</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stores"><span class="toc-number">3.</span> <span class="toc-text">Stores</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#apis-2"><span class="toc-number">3.1.</span> <span class="toc-text">APIs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#example-3.7"><span class="toc-number">3.2.</span> <span class="toc-text">Example 3.7</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#example-3.8"><span class="toc-number">3.3.</span> <span class="toc-text">Example 3.8</span></a></li></ol></li></ol>
+    </div>
+  </section>
 
   
 
@@ -3672,7 +3826,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.jpg"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.jpg"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -3991,7 +4145,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.gitee.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.gitee.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.gitee.io/categories/notes/SimPy/","name":"SimPy"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.gitee.io/ja-JP/notes/SimPy/simpy-learning-03/","name":"【学习笔记】SimPy 学习（三）："}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.gitee.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记】SimPy 学习（三）：","description":"Patience is key in life.","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.gitee.io/notes/SimPy/simpy-learning-03/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.gitee.io/notes/SimPy/simpy-learning-03/","wordCount":0,"datePublished":"2023-10-24T08:24:09.000Z","dateModified":"2023-10-24T07:32:11.547Z","articleSection":"学习笔记","keywords":"SimPy,Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.gitee.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.gitee.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.gitee.io/categories/notes/SimPy/","name":"SimPy"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.gitee.io/ja-JP/notes/SimPy/simpy-learning-03/","name":"【学习笔记】SimPy 学习（三）：资源共享"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.gitee.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记】SimPy 学习（三）：资源共享","description":"SimPy 的资源共享，Resource、Container、Store 等","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.gitee.io/notes/SimPy/simpy-learning-03/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.gitee.io/notes/SimPy/simpy-learning-03/","wordCount":38,"datePublished":"2023-10-27T08:24:09.000Z","dateModified":"2023-10-28T14:42:33.174Z","articleSection":"学习笔记","keywords":"SimPy,Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

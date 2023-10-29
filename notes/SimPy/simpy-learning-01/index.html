@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1698415949176),
+    lastupdate: new Date(1698591649781),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2691,8 +2691,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>SimPy 学习</p>
 <ul>
 <li><a href="/notes/SimPy/simpy-learning-01/" title="【学习笔记】SimPy 学习（一）：基础">【学习笔记】SimPy 学习（一）：基础</a></li>
-<li><a href="/notes/SimPy/simpy-learning-02/" title="【学习笔记】SimPy 学习（二）：核心概念">【学习笔记】SimPy 学习（二）：核心概念</a></li>
-<li><a href="/notes/SimPy/simpy-learning-03/" title="【学习笔记】SimPy 学习（三）：">【学习笔记】SimPy 学习（三）：</a></li>
+<li><a href="/notes/SimPy/simpy-learning-02/" title="【学习笔记】SimPy 学习（二）：进程交互">【学习笔记】SimPy 学习（二）：进程交互</a></li>
+<li><a href="/notes/SimPy/simpy-learning-03/" title="【学习笔记】SimPy 学习（三）：资源共享">【学习笔记】SimPy 学习（三）：资源共享</a></li>
 </ul>
 
 </div>
@@ -2810,14 +2810,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class="prev-next">
       
         <a class='prev' href='/notes/SimPy/simpy-learning-02/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【学习笔记】SimPy 学习（二）：核心概念</p>
-          <p class='content'>学习 SimPy 的一些核心概念，分为 Environment、Events、进程交互和资源共享
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【学习笔记】SimPy 学习（二）：进程交互</p>
+          <p class='content'>SimPy 的 Environment、Events、进程交互等
 
 Environment
 决定仿真的起点和终点，管理仿真元素之间的关联。
 APIs
 
-添加仿真进...</p>
+添加仿真进程：simpy.Environm...</p>
         </a>
       
       
@@ -2872,7 +2872,7 @@ Ubuntu14.04 x64 以下
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>13 篇</div>
+          <div>15 篇</div>
         </div>
       
 
@@ -2887,7 +2887,7 @@ Ubuntu14.04 x64 以下
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>24.1k 字</div>
+          <div>25.8k 字</div>
         </div>
       
 
@@ -2912,7 +2912,7 @@ Ubuntu14.04 x64 以下
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2023-10-27 日</div>
+          <div id="last-update-show">2023-10-29 日</div>
         </div>
       
     </div>
@@ -3762,7 +3762,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.jpg"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.jpg"];
   let index = 0;
   let IntervalParallax = null;
 
