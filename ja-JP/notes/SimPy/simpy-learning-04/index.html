@@ -46,7 +46,7 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-10-28T14:41:08.000Z">
-<meta property="article:modified_time" content="2023-10-29T13:02:54.223Z">
+<meta property="article:modified_time" content="2023-10-30T08:19:17.731Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="SimPy">
 <meta property="article:tag" content="Python">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1698591649781),
+    lastupdate: new Date(1698653973707),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2600,7 +2600,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：532 字</p>
+      <p>字数：599 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2654,6 +2654,15 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>模拟环境中的进程是<font color="red">并行</font>运行，但当模拟在 CPU 上运行时，所有事件会按顺序进行确定处理。如果多次运行模拟（不使用 <code>random</code> 情况下），则总会得到相同的结果。</p>
 <p>SimPy 的事件队列被实现为堆队列。因此，将事件作为元组 <code>(t, event)</code>（t 是计划时间）插入其中，那么队列中的第一个元素将始终是t最小的元素，下一个元素将被处理。</p>
 <p>如果同时调度两个事件，则存储 <code>(t, event)</code> 元组将不起作用。为了解决这个问题，SimPy 还存储了一个严格递增的事件 id: <code>(t, eid, event)</code>。这样，如果两个事件被安排在同一时间，那么首先被安排的事件（id 更小）将始终被首先处理。</p>
+<p><br> <br> <br></p>
+<p>SimPy 学习</p>
+<ul>
+<li><a href="/notes/SimPy/simpy-learning-01/" title="【学习笔记】SimPy 学习（一）：基础">【学习笔记】SimPy 学习（一）：基础</a></li>
+<li><a href="/notes/SimPy/simpy-learning-02/" title="【学习笔记】SimPy 学习（二）：进程交互">【学习笔记】SimPy 学习（二）：进程交互</a></li>
+<li><a href="/notes/SimPy/simpy-learning-03/" title="【学习笔记】SimPy 学习（三）：资源共享">【学习笔记】SimPy 学习（三）：资源共享</a></li>
+<li><a href="/notes/SimPy/simpy-learning-04/" title="【学习笔记】SimPy 学习（四）：实时模拟与时间调度">【学习笔记】SimPy 学习（四）：实时模拟与时间调度</a></li>
+<li><a href="/notes/SimPy/simpy-learning-05/" title="【学习笔记】SimPy 学习（五）：SimPy 版本迁移">【学习笔记】SimPy 学习（五）：SimPy 版本迁移</a></li>
+</ul>
 
 </div>
   </div>
@@ -2679,10 +2688,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-10-29T21:02:54+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-10-30T16:19:17+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：2023年10月29日</p>
+    <p>最后更新于：2023年10月30日</p>
   </a>
 </div>
 
@@ -2773,9 +2782,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【学习笔记】SimPy 学习（五）：SimPy 版本迁移</p>
           <p class='content'>SimPy 版本迁移：SimPy 2 -&gt; SimPy 3 -&gt; SimPy 4
 
+
+API Reference
+
 SimPy 2 to 3
 Imports
-SimPy 3 的 import 被简化。SimPy 2...</p>
+SimPy 3 的 im...</p>
         </a>
       
       
@@ -2840,7 +2852,7 @@ SimPy 3 的 import 被简化。SimPy 2...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>25.8k 字</div>
+          <div>26.8k 字</div>
         </div>
       
 
@@ -2865,7 +2877,7 @@ SimPy 3 的 import 被简化。SimPy 2...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2023-10-29 日</div>
+          <div id="last-update-show">2023-10-30 日</div>
         </div>
       
     </div>
@@ -3715,7 +3727,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.jpg"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.jpg","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.jpg"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4034,7 +4046,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.gitee.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.gitee.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.gitee.io/categories/notes/SimPy/","name":"SimPy"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.gitee.io/ja-JP/notes/SimPy/simpy-learning-04/","name":"【学习笔记】SimPy 学习（四）：实时模拟与时间调度"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.gitee.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记】SimPy 学习（四）：实时模拟与时间调度","description":"Simpy 的 Real-time simulations，即设置模拟的时间步长","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.gitee.io/notes/SimPy/simpy-learning-04/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.gitee.io/notes/SimPy/simpy-learning-04/","wordCount":40,"datePublished":"2023-10-28T14:41:08.000Z","dateModified":"2023-10-29T13:02:54.223Z","articleSection":"学习笔记","keywords":"SimPy,Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.gitee.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.gitee.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.gitee.io/categories/notes/SimPy/","name":"SimPy"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.gitee.io/ja-JP/notes/SimPy/simpy-learning-04/","name":"【学习笔记】SimPy 学习（四）：实时模拟与时间调度"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.gitee.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.gitee.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记】SimPy 学习（四）：实时模拟与时间调度","description":"Simpy 的 Real-time simulations，即设置模拟的时间步长","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.gitee.io/notes/SimPy/simpy-learning-04/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.gitee.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.gitee.io/notes/SimPy/simpy-learning-04/","wordCount":40,"datePublished":"2023-10-28T14:41:08.000Z","dateModified":"2023-10-30T08:19:17.731Z","articleSection":"学习笔记","keywords":"SimPy,Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
