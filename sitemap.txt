@@ -1,10 +1,9 @@
 https://cs0522.github.io/about/index.html
+https://cs0522.github.io/docs/python-used-codes/
 https://cs0522.github.io/docs/ubuntu-vscode-cmake/
-https://cs0522.github.io/docs/matplotlib/
 https://cs0522.github.io/%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/%E6%95%B0%E7%BB%84/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/array-erfen-l704/
 https://cs0522.github.io/%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/%E6%95%B0%E7%BB%84/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/array-erfen-l34/
 https://cs0522.github.io/%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/%E6%95%B0%E7%BB%84/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/array-erfen-l69/
-https://cs0522.github.io/docs/ANN/wadg-ann/
 https://cs0522.github.io/docs/git-instruction/
 https://cs0522.github.io/notes/DiskSim/disksim-learning-05/
 https://cs0522.github.io/docs/build-my-blog/
@@ -53,11 +52,11 @@ https://cs0522.github.io/tags/Python/
 https://cs0522.github.io/tags/Git/
 https://cs0522.github.io/tags/GitHub/
 https://cs0522.github.io/tags/Ubuntu/
-https://cs0522.github.io/tags/WADG/
-https://cs0522.github.io/tags/matplotlib/
 https://cs0522.github.io/tags/Node-js/
 https://cs0522.github.io/tags/npm/
 https://cs0522.github.io/tags/nvm/
+https://cs0522.github.io/tags/WADG/
+https://cs0522.github.io/tags/matplotlib/
 https://cs0522.github.io/tags/%E8%AE%BA%E6%96%87/
 https://cs0522.github.io/tags/%E7%9B%98%E8%8A%82%E8%83%BD/
 https://cs0522.github.io/tags/%E8%83%BD%E6%BA%90%E6%AF%94%E4%BE%8B/
@@ -67,8 +66,6 @@ https://cs0522.github.io/tags/RAID/
 https://cs0522.github.io/tags/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/
 https://cs0522.github.io/tags/VSCode/
 https://cs0522.github.io/tags/CMake/
-https://cs0522.github.io/tags/ANN/
-https://cs0522.github.io/tags/NSG/
 https://cs0522.github.io/categories/docs/
 https://cs0522.github.io/categories/%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/
 https://cs0522.github.io/categories/%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/%E6%95%B0%E7%BB%84/
@@ -77,5 +74,4 @@ https://cs0522.github.io/categories/%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/%E6%95%
 https://cs0522.github.io/categories/notes/DiskSim/
 https://cs0522.github.io/categories/notes/SimPy/
 https://cs0522.github.io/categories/learnings/
-https://cs0522.github.io/categories/docs/ANN/
 https://cs0522.github.io/categories/learnings/%E7%9B%98%E8%8A%82%E8%83%BD/
