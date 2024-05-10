@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://cs0522.github.io/docs/python-used-codes/</loc>
+    
+    <lastmod>2024-05-10</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://cs0522.github.io/docs/git-instruction/</loc>
     
     <lastmod>2024-05-09</lastmod>
@@ -12,15 +21,6 @@
   
   <url>
     <loc>https://cs0522.github.io/notes/valgrind/performance-stats/</loc>
-    
-    <lastmod>2024-05-09</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://cs0522.github.io/docs/python-used-codes/</loc>
     
     <lastmod>2024-05-09</lastmod>
     
