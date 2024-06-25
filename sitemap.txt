@@ -1,3 +1,5 @@
+https://cs0522.github.io/practices/%E9%93%BE%E8%A1%A8/%E4%BA%A4%E6%8D%A2%E8%8A%82%E7%82%B9/p-linklist-swap-l24/
+https://cs0522.github.io/practices/%E9%93%BE%E8%A1%A8/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/p-linklist-reverse-l206/
 https://cs0522.github.io/practices/%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8%E5%9F%BA%E7%A1%80/p-linklist-basic-l707/
 https://cs0522.github.io/practices/%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8%E5%9F%BA%E7%A1%80/p-linklist-basic-l203/
 https://cs0522.github.io/practices/p-note/
@@ -89,6 +91,8 @@ https://cs0522.github.io/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/
 https://cs0522.github.io/tags/%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5/
 https://cs0522.github.io/tags/%E9%93%BE%E8%A1%A8/
 https://cs0522.github.io/tags/%E9%93%BE%E8%A1%A8%E5%9F%BA%E7%A1%80/
+https://cs0522.github.io/tags/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/
+https://cs0522.github.io/tags/%E4%BA%A4%E6%8D%A2%E8%8A%82%E7%82%B9/
 https://cs0522.github.io/categories/docs/
 https://cs0522.github.io/categories/learnings/
 https://cs0522.github.io/categories/learnings/%E7%9B%98%E8%8A%82%E8%83%BD/
@@ -106,3 +110,5 @@ https://cs0522.github.io/categories/practices/%E6%95%B0%E7%BB%84/%E4%BA%8C%E5%88
 https://cs0522.github.io/categories/practices/%E6%95%B0%E7%BB%84/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/
 https://cs0522.github.io/categories/practices/%E6%95%B0%E7%BB%84/%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5/
 https://cs0522.github.io/categories/practices/%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8%E5%9F%BA%E7%A1%80/
+https://cs0522.github.io/categories/practices/%E9%93%BE%E8%A1%A8/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/
+https://cs0522.github.io/categories/practices/%E9%93%BE%E8%A1%A8/%E4%BA%A4%E6%8D%A2%E8%8A%82%E7%82%B9/
