@@ -1,3 +1,4 @@
+https://cs0522.github.io/docs/d-linux-instruction/
 https://cs0522.github.io/practices/%E9%93%BE%E8%A1%A8/%E5%88%A0%E9%99%A4%E8%8A%82%E7%82%B9/p-linklist-delNFromEnd-l19/
 https://cs0522.github.io/practices/%E9%93%BE%E8%A1%A8/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/p-linklist-reverse-l206/
 https://cs0522.github.io/practices/%E9%93%BE%E8%A1%A8/%E4%BA%A4%E6%8D%A2%E8%8A%82%E7%82%B9/p-linklist-swap-l24/
@@ -33,7 +34,6 @@ https://cs0522.github.io/docs/d-atlantis-project/
 https://cs0522.github.io/docs/d-python-used-codes/
 https://cs0522.github.io/docs/d-git-instruction/
 https://cs0522.github.io/notes/valgrind/n-performance-stats/
-https://cs0522.github.io/docs/d-linux-instruction/
 https://cs0522.github.io/docs/d-ssh-instruction/
 https://cs0522.github.io/docs/d-ubuntu-vscode-cmake/
 https://cs0522.github.io/notes/DiskSim/n-disksim-learning-05/
@@ -68,9 +68,9 @@ https://cs0522.github.io/tags/npm/
 https://cs0522.github.io/tags/nvm/
 https://cs0522.github.io/tags/Python/
 https://cs0522.github.io/tags/matplotlib/
+https://cs0522.github.io/tags/SSH/
 https://cs0522.github.io/tags/VSCode/
 https://cs0522.github.io/tags/CMake/
-https://cs0522.github.io/tags/SSH/
 https://cs0522.github.io/tags/%E8%AE%BA%E6%96%87/
 https://cs0522.github.io/tags/DiskANN/
 https://cs0522.github.io/tags/ANN/
