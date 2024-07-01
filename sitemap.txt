@@ -1,5 +1,6 @@
 https://cs0522.github.io/docs/d-cpp-used-codes/
 https://cs0522.github.io/notes/C/n-mmap/
+https://cs0522.github.io/docs/d-linux-instruction/
 https://cs0522.github.io/notes/Gem5/n-gem5-01/
 https://cs0522.github.io/notes/SimPy/n-simpy-04/
 https://cs0522.github.io/notes/SimPy/n-simpy-05/
@@ -25,7 +26,6 @@ https://cs0522.github.io/practices/%E9%93%BE%E8%A1%A8/p-linklist-swap-l24/
 https://cs0522.github.io/practices/%E9%93%BE%E8%A1%A8/p-linklist-reverse-l206/
 https://cs0522.github.io/practices/%E9%93%BE%E8%A1%A8/p-linklist-basic-l707/
 https://cs0522.github.io/practices/%E9%93%BE%E8%A1%A8/p-linklist-basic-l203/
-https://cs0522.github.io/docs/d-linux-instruction/
 https://cs0522.github.io/practices/p-note/
 https://cs0522.github.io/about/index.html
 https://cs0522.github.io/learnings/ANN/l-diskann/
@@ -90,6 +90,7 @@ https://cs0522.github.io/tags/DiskSim/
 https://cs0522.github.io/tags/SimPy/
 https://cs0522.github.io/tags/Gem5/
 https://cs0522.github.io/tags/mmap/
+https://cs0522.github.io/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/
 https://cs0522.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/
 https://cs0522.github.io/tags/valgrind/
 https://cs0522.github.io/tags/%E5%88%B7%E9%A2%98/
