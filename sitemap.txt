@@ -1,6 +1,8 @@
-https://cs0522.github.io/notes/C/n-mmap/
-https://cs0522.github.io/docs/d-cpp-used-codes/
+https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-02/
+https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-01/
+https://cs0522.github.io/notes/C/n-virtual-memory-mmap/
 https://cs0522.github.io/docs/d-linux-instruction/
+https://cs0522.github.io/docs/d-cpp-used-codes/
 https://cs0522.github.io/notes/Gem5/n-gem5-01/
 https://cs0522.github.io/notes/SimPy/n-simpy-04/
 https://cs0522.github.io/notes/SimPy/n-simpy-05/
@@ -8,7 +10,6 @@ https://cs0522.github.io/notes/SimPy/n-simpy-01/
 https://cs0522.github.io/notes/SimPy/n-simpy-02/
 https://cs0522.github.io/notes/SimPy/n-simpy-03/
 https://cs0522.github.io/notes/SimPy/n-simpy-06/
-https://cs0522.github.io/notes/n-pattern-01/
 https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5/p-array-spiralMatrix-l59/
 https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/p-array-moveWindow-l904/
 https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/p-array-moveWindow-l209/
@@ -89,10 +90,10 @@ https://cs0522.github.io/tags/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/
 https://cs0522.github.io/tags/DiskSim/
 https://cs0522.github.io/tags/SimPy/
 https://cs0522.github.io/tags/Gem5/
-https://cs0522.github.io/tags/mmap/
-https://cs0522.github.io/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/
 https://cs0522.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/
 https://cs0522.github.io/tags/valgrind/
+https://cs0522.github.io/tags/mmap/
+https://cs0522.github.io/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/
 https://cs0522.github.io/tags/%E5%88%B7%E9%A2%98/
 https://cs0522.github.io/tags/%E6%95%B0%E7%BB%84/
 https://cs0522.github.io/tags/%E5%8F%8C%E6%8C%87%E9%92%88/
@@ -105,13 +106,14 @@ https://cs0522.github.io/categories/learnings/
 https://cs0522.github.io/categories/learnings/%E7%9B%98%E8%8A%82%E8%83%BD/
 https://cs0522.github.io/categories/learnings/ANN/
 https://cs0522.github.io/categories/notes/
+https://cs0522.github.io/categories/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/
 https://cs0522.github.io/categories/notes/ANN/
 https://cs0522.github.io/categories/notes/valgrind/
 https://cs0522.github.io/categories/notes/SimPy/
 https://cs0522.github.io/categories/notes/DiskSim/
+https://cs0522.github.io/categories/notes/C/
 https://cs0522.github.io/categories/practices/
 https://cs0522.github.io/categories/notes/Gem5/
-https://cs0522.github.io/categories/notes/C/
 https://cs0522.github.io/categories/practices/%E6%95%B0%E7%BB%84-%E5%8F%8C%E6%8C%87%E9%92%88/
 https://cs0522.github.io/categories/practices/%E6%95%B0%E7%BB%84-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/
 https://cs0522.github.io/categories/practices/%E6%95%B0%E7%BB%84-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/
