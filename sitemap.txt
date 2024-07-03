@@ -1,8 +1,8 @@
+https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-03/
 https://cs0522.github.io/practices/p-note/
 https://cs0522.github.io/practices/%E9%93%BE%E8%A1%A8/p-linklist-reverse-l206/
 https://cs0522.github.io/practices/%E9%93%BE%E8%A1%A8/p-linklist-circle-l142/
 https://cs0522.github.io/docs/d-cpp-used-codes/
-https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-03/
 https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-02/
 https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-01/
 https://cs0522.github.io/docs/d-linux-instruction/
