@@ -1,5 +1,7 @@
-https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-02/
+https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-06/
+https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-05/
 https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-04/
+https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-02/
 https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-03/
 https://cs0522.github.io/practices/p-note/
 https://cs0522.github.io/practices/%E9%93%BE%E8%A1%A8/p-linklist-reverse-l206/
@@ -65,11 +67,11 @@ https://cs0522.github.io/tags/SpringBoot/
 https://cs0522.github.io/tags/WebSite/
 https://cs0522.github.io/tags/%E5%89%8D%E7%AB%AF/
 https://cs0522.github.io/tags/%E5%90%8E%E7%AB%AF/
+https://cs0522.github.io/tags/C/
+https://cs0522.github.io/tags/Linux/
 https://cs0522.github.io/tags/Hexo/
 https://cs0522.github.io/tags/Volantis/
 https://cs0522.github.io/tags/Blog/
-https://cs0522.github.io/tags/C/
-https://cs0522.github.io/tags/Linux/
 https://cs0522.github.io/tags/Git/
 https://cs0522.github.io/tags/GitHub/
 https://cs0522.github.io/tags/Ubuntu/
