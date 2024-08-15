@@ -1,3 +1,5 @@
+https://cs0522.github.io/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/p-str-repeatedStr-L459/
+https://cs0522.github.io/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/p-str-kmp-l28/
 https://cs0522.github.io/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/p-str-rotateStr-l55/
 https://cs0522.github.io/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/p-str-reverseWords-l151/
 https://cs0522.github.io/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/p-str-replaceNum-l54/
@@ -85,11 +87,11 @@ https://cs0522.github.io/tags/SpringBoot/
 https://cs0522.github.io/tags/WebSite/
 https://cs0522.github.io/tags/%E5%89%8D%E7%AB%AF/
 https://cs0522.github.io/tags/%E5%90%8E%E7%AB%AF/
-https://cs0522.github.io/tags/C/
-https://cs0522.github.io/tags/Linux/
 https://cs0522.github.io/tags/Hexo/
 https://cs0522.github.io/tags/Volantis/
 https://cs0522.github.io/tags/Blog/
+https://cs0522.github.io/tags/C/
+https://cs0522.github.io/tags/Linux/
 https://cs0522.github.io/tags/Git/
 https://cs0522.github.io/tags/GitHub/
 https://cs0522.github.io/tags/Ubuntu/
