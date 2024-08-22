@@ -1,5 +1,12 @@
-https://cs0522.github.io/notes/NVMe/n-nvmeof-01/
 https://cs0522.github.io/practices/p-note/
+https://cs0522.github.io/practices/p-tree-minDepth-L111/
+https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-maxDepth-L104/
+https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-nextRightPointers-L116/
+https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-maxOfLevel-L515/
+https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-NaryLevelTraversal-L429/
+https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-avgOfLevel-L637/
+https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-rightSide-L199/
+https://cs0522.github.io/notes/NVMe/n-nvmeof-01/
 https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-levelTraversalII-L107/
 https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-levelTraversal-L102/
 https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-iterTraversal/
@@ -39,8 +46,8 @@ https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E6%BB%91%E5%8A%A8%E7%AA%9
 https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5/p-array-spiralMatrix-l59/
 https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-2sum-l1/
 https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-3sum-l15/
-https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-4sum-l18/
 https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-4sum-l454/
+https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-4sum-l18/
 https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-anagram-l242/
 https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-basic/
 https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-findAnagram-l438/
@@ -49,8 +56,8 @@ https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E5%8F%8C%E6%8C%87%E9%92%8
 https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E5%8F%8C%E6%8C%87%E9%92%88/p-array-doubleP-l283/
 https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E5%8F%8C%E6%8C%87%E9%92%88/p-array-doubleP-l844/
 https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E5%8F%8C%E6%8C%87%E9%92%88/p-array-doubleP-l977/
-https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/p-array-erfen-l69/
 https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/p-array-erfen-l34/
+https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/p-array-erfen-l69/
 https://cs0522.github.io/docs/d-linux-instruction/
 https://cs0522.github.io/docs/d-python-used-codes/
 https://cs0522.github.io/notes/n-performance-stats/
@@ -102,11 +109,11 @@ https://cs0522.github.io/tags/SpringBoot/
 https://cs0522.github.io/tags/WebSite/
 https://cs0522.github.io/tags/%E5%89%8D%E7%AB%AF/
 https://cs0522.github.io/tags/%E5%90%8E%E7%AB%AF/
+https://cs0522.github.io/tags/C/
+https://cs0522.github.io/tags/Linux/
 https://cs0522.github.io/tags/Hexo/
 https://cs0522.github.io/tags/Volantis/
 https://cs0522.github.io/tags/Blog/
-https://cs0522.github.io/tags/C/
-https://cs0522.github.io/tags/Linux/
 https://cs0522.github.io/tags/Git/
 https://cs0522.github.io/tags/GitHub/
 https://cs0522.github.io/tags/Ubuntu/

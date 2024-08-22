@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://cs0522.github.io/notes/NVMe/n-nvmeof-01/</loc>
+    <loc>https://cs0522.github.io/practices/p-note/</loc>
     
     <lastmod>2024-08-22</lastmod>
     
@@ -11,9 +11,72 @@
   </url>
   
   <url>
-    <loc>https://cs0522.github.io/practices/p-note/</loc>
+    <loc>https://cs0522.github.io/practices/p-tree-minDepth-L111/</loc>
     
-    <lastmod>2024-08-21</lastmod>
+    <lastmod>2024-08-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-maxDepth-L104/</loc>
+    
+    <lastmod>2024-08-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-nextRightPointers-L116/</loc>
+    
+    <lastmod>2024-08-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-maxOfLevel-L515/</loc>
+    
+    <lastmod>2024-08-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-NaryLevelTraversal-L429/</loc>
+    
+    <lastmod>2024-08-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-avgOfLevel-L637/</loc>
+    
+    <lastmod>2024-08-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://cs0522.github.io/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/p-tree-rightSide-L199/</loc>
+    
+    <lastmod>2024-08-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://cs0522.github.io/notes/NVMe/n-nvmeof-01/</loc>
+    
+    <lastmod>2024-08-22</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -371,7 +434,7 @@
   </url>
   
   <url>
-    <loc>https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-4sum-l18/</loc>
+    <loc>https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-4sum-l454/</loc>
     
     <lastmod>2024-08-18</lastmod>
     
@@ -380,7 +443,7 @@
   </url>
   
   <url>
-    <loc>https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-4sum-l454/</loc>
+    <loc>https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-4sum-l18/</loc>
     
     <lastmod>2024-08-18</lastmod>
     
@@ -461,7 +524,7 @@
   </url>
   
   <url>
-    <loc>https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/p-array-erfen-l69/</loc>
+    <loc>https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/p-array-erfen-l34/</loc>
     
     <lastmod>2024-08-18</lastmod>
     
@@ -470,7 +533,7 @@
   </url>
   
   <url>
-    <loc>https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/p-array-erfen-l34/</loc>
+    <loc>https://cs0522.github.io/practices/%E6%95%B0%E7%BB%84-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/p-array-erfen-l69/</loc>
     
     <lastmod>2024-08-18</lastmod>
     
@@ -924,6 +987,20 @@
   </url>
   
   <url>
+    <loc>https://cs0522.github.io/tags/C/</loc>
+    <lastmod>2024-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://cs0522.github.io/tags/Linux/</loc>
+    <lastmod>2024-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://cs0522.github.io/tags/Hexo/</loc>
     <lastmod>2024-08-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -939,20 +1016,6 @@
   
   <url>
     <loc>https://cs0522.github.io/tags/Blog/</loc>
-    <lastmod>2024-08-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://cs0522.github.io/tags/C/</loc>
-    <lastmod>2024-08-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://cs0522.github.io/tags/Linux/</loc>
     <lastmod>2024-08-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
