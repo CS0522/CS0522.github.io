@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <!-- SEO相关 -->
   
-  <link rel="canonical" href="https://CS0522.github.io/notes/nvme/n-nvmeof-02/"/>
+  <link rel="canonical" href="https://CS0522.github.io/en/notes/存储/n-nvmeof-02/"/>
   <!-- 渲染优化 -->
     <meta http-equiv='x-dns-prefetch-control' content='on' />
       <link rel='dns-prefetch' href='https://unpkg.com'>
@@ -34,18 +34,21 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>【学习笔记】NVMe-oF 学习（二）：NVMe over RDMA 环境部署 - 诚实同学的博客</title>
-  <meta name="keywords" content="NVMe,个人博客, 计算机, 学习">
-  <meta desc name="description" content="Patience is key in life. - Chen Shi - 诚实同学的博客">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="【学习笔记】NVMe-oF 学习（二）：NVMe over RDMA 环境部署">
-<meta property="og:url" content="https://cs0522.github.io/notes/NVMe/n-nvmeof-02/index.html">
+  <title>【学习笔记-存储】NVMeoF（二）：NVMe over RDMA 环境部署 - 诚实同学的博客</title>
+  <meta name="keywords" content="存储,NVMe,个人博客, 计算机, 学习">
+  <meta desc name="description" content="NVMe over RDMA 环境部署记录。 - Chen Shi - 诚实同学的博客">
+  
+<meta property="og:type" content="article">
+<meta property="og:title" content="【学习笔记-存储】NVMeoF（二）：NVMe over RDMA 环境部署">
+<meta property="og:url" content="https://cs0522.github.io/en/notes/%E5%AD%98%E5%82%A8/n-nvmeof-02/index.html">
 <meta property="og:site_name" content="诚实同学的博客">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:description" content="NVMe over RDMA 环境部署记录。">
+<meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-08-25T08:42:26.000Z">
-<meta property="article:modified_time" content="2024-08-25T08:43:03.603Z">
+<meta property="article:modified_time" content="2024-08-27T09:49:40.077Z">
 <meta property="article:author" content="Chen Shi">
+<meta property="article:tag" content="存储">
 <meta property="article:tag" content="NVMe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
@@ -1716,9 +1719,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 		'}'+
 	'</style>'+
     '<div class="kill-ie">'+
-        `<span class="kill-t"><b>抱歉，您的浏览器无法访问本站</b></span><br/>`+
-        `<span class="kill-c">微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</span><br/>`+
-        `<a target="_blank" rel="noopener" href="https://blogs.windows.com/windowsexperience/2021/05/19/the-future-of-internet-explorer-on-windows-10-is-in-microsoft-edge/"><strong>了解详情 ></strong></a>`+
+        `<span class="kill-t"><b>Sorry, your browser cannot access this site</b></span><br/>`+
+        `<span class="kill-c">Microsoft has terminated support for Internet Explorer (IE) 10 and earlier versions in 2016. <br/>There are great security risks to continue using it. Please use contemporary mainstream browsers to access.</span><br/>`+
+        `<a target="_blank" rel="noopener" href="https://blogs.windows.com/windowsexperience/2021/05/19/the-future-of-internet-explorer-on-windows-10-is-in-microsoft-edge/"><strong>Learn more ></strong></a>`+
     '</div>');
 </script>
 
@@ -1746,9 +1749,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 		}
 	</style>
     <div class="kill-noscript">
-        <span class="kill-t"><b>抱歉，您的浏览器无法访问本站</b></span><br/>
-        <span class="kill-c">本页面需要浏览器支持（启用）JavaScript</span><br/>
-        <a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=启用JavaScript"><strong>了解详情 ></strong></a>
+        <span class="kill-t"><b>Sorry, your browser cannot access this site</b></span><br/>
+        <span class="kill-c">This page requires browser support (enable) JavaScript</span><br/>
+        <a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=启用JavaScript"><strong>Learn more ></strong></a>
     </div>
 </noscript>
 
@@ -1763,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1724575437537),
+    lastupdate: new Date(1724752252014),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2527,7 +2530,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 <div id="l_main" class=''>
   <article itemscope itemtype="http://schema.org/Article" class="article post white-box reveal md blur article-type-post" id="post" itemscope itemprop="blogPost">
-  <link itemprop="mainEntityOfPage" href="https://cs0522.github.io/notes/NVMe/n-nvmeof-02/">
+  <link itemprop="mainEntityOfPage" href="https://cs0522.github.io/notes/存储/n-nvmeof-02/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="诚实同学的博客">
   </span>
@@ -2548,7 +2551,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title" itemprop="name headline">
-        【学习笔记】NVMe-oF 学习（二）：NVMe over RDMA 环境部署
+        【学习笔记-存储】NVMeoF（二）：NVMe over RDMA 环境部署
       </h1>
       <div class='new-meta-box'>
         
@@ -2567,14 +2570,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             
   <div class='new-meta-item category'>
     <i class="fa-solid fa-folder-open fa-fw" aria-hidden="true"></i>
-    <a class="category-link" href="/categories/notes/">学习笔记</a><span class="sep"></span><a class="category-link" href="/categories/notes/NVMe/">NVMe</a>
+    <a class="category-link" href="/categories/notes/">学习笔记</a><span class="sep"></span><a class="category-link" href="/categories/notes/%E5%AD%98%E5%82%A8/">存储</a>
     
       <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
         <a href="/categories/notes/" itemprop="url"><span itemprop="name">学习笔记</span></a>
       </span>
     
       <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/notes/NVMe/" itemprop="url"><span itemprop="name">NVMe</span></a>
+        <a href="/categories/notes/%E5%AD%98%E5%82%A8/" itemprop="url"><span itemprop="name">存储</span></a>
       </span>
     
   </div>
@@ -2586,7 +2589,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2024-08-25T16:42:26+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2024年8月25日</p>
+    <p>发布于：Aug 25, 2024</p>
   </a>
 </div>
 
@@ -2597,13 +2600,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：0 字</p>
+      <p>1.1k words</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>时长：1 分钟</p>
+      <p>6 min</p>
     </a>
   </div>
 
@@ -2620,9 +2623,79 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <span id="more"></span>
+    <p>NVMe over RDMA 环境部署记录。</p>
+<span id="more"></span>
+<blockquote>
+<p>前提虚拟机环境要求：<br />
+1. Ubuntu 22.04<br />
+2. Ubuntu 虚拟机的磁盘配置为 <code>NVMe</code><br />
+3. clone 为两份虚拟机，一份为 <code>Host</code> 端，一份为 <code>Target</code> 端</p>
+</blockquote>
+<div class="story post-story"><h2 id="自动部署软件栈-sh-脚本">1. 自动部署软件栈 sh 脚本</h2>
+<p>以 root 权限运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sh ./rdma-setup.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rdma-setup.sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"><span class="comment"># rdma startup</span></span><br><span class="line"><span class="comment"># run with root</span></span><br><span class="line"><span class="comment"># DOING:</span></span><br><span class="line"><span class="comment"># 1. Install tools</span></span><br><span class="line"><span class="comment"># 2. Setup rdma &amp; nvme</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># install </span></span><br><span class="line"><span class="comment"># apt-get install vim open-vm-tools open-vm-tools-desktop net-tools nvme-cli fio</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># rdma user space tools</span></span><br><span class="line"><span class="comment"># apt-get install libibverbs1 ibverbs-utils librdmacm1 libibumad3 ibverbs-providers rdma-core</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># rdma test tool</span></span><br><span class="line"><span class="comment"># apt-get install perftest</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># get local IP address</span></span><br><span class="line">local_ip=`ifconfig -a | grep inet | grep -v 127.0.0.1 | grep -v inet6 | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span> | <span class="built_in">tr</span> -d <span class="string">&quot;addr:&quot;</span>`</span><br><span class="line"><span class="built_in">echo</span> local_ip=<span class="string">&quot;<span class="variable">$&#123;local_ip&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># get device name</span></span><br><span class="line">net_dev=`ifconfig | grep -w BROADCAST | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | sed <span class="string">&#x27;s/://g&#x27;</span>`</span><br><span class="line"><span class="built_in">echo</span> net_dev=<span class="string">&quot;<span class="variable">$&#123;net_dev&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># modprobe RXE NIC</span></span><br><span class="line">modprobe rdma_rxe</span><br><span class="line">rdma <span class="built_in">link</span> add rxe_0 <span class="built_in">type</span> rxe netdev <span class="variable">$&#123;net_dev&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># modprobe nvme</span></span><br><span class="line">modprobe nvmet</span><br><span class="line">modprobe nvmet-rdma</span><br><span class="line">modprobe nvme-rdma</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. config nvme subsystem</span></span><br><span class="line">subsys_name=<span class="string">&quot;nvme-rdma-test&quot;</span></span><br><span class="line"><span class="built_in">echo</span> subsys_name=<span class="string">&quot;<span class="variable">$&#123;subsys_name&#125;</span>&quot;</span></span><br><span class="line"><span class="built_in">mkdir</span> /sys/kernel/config/nvmet/subsystems/<span class="string">&quot;<span class="variable">$&#123;subsys_name&#125;</span>&quot;</span></span><br><span class="line"><span class="built_in">cd</span> /sys/kernel/config/nvmet/subsystems/<span class="string">&quot;<span class="variable">$&#123;subsys_name&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. allow any host to be connected to this target</span></span><br><span class="line"><span class="built_in">echo</span> 1 &gt; attr_allow_any_host</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. create a namespace，example: nsid=10</span></span><br><span class="line">nsid=10</span><br><span class="line"><span class="built_in">echo</span> nsid=<span class="string">&quot;<span class="variable">$&#123;nsid&#125;</span>&quot;</span></span><br><span class="line"><span class="built_in">mkdir</span> namespaces/<span class="string">&quot;<span class="variable">$&#123;nsid&#125;</span>&quot;</span></span><br><span class="line"><span class="built_in">cd</span> namespaces/<span class="string">&quot;<span class="variable">$&#123;nsid&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. set the path to the NVMe device</span></span><br><span class="line"><span class="built_in">echo</span> -n /dev/nvme0n1&gt; device_path</span><br><span class="line"><span class="built_in">echo</span> 1 &gt; <span class="built_in">enable</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. create the following directory with an NVMe port</span></span><br><span class="line">portid=1</span><br><span class="line"><span class="built_in">echo</span> portid=<span class="string">&quot;<span class="variable">$&#123;portid&#125;</span>&quot;</span></span><br><span class="line"><span class="built_in">mkdir</span> /sys/kernel/config/nvmet/ports/<span class="string">&quot;<span class="variable">$&#123;portid&#125;</span>&quot;</span></span><br><span class="line"><span class="built_in">cd</span> /sys/kernel/config/nvmet/ports/<span class="string">&quot;<span class="variable">$&#123;portid&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 6. set ip address to traddr</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$&#123;local_ip&#125;</span>&quot;</span> &gt; addr_traddr</span><br><span class="line"></span><br><span class="line"><span class="comment"># 7. set rdma as a transport type，addr_trsvcid is unique.</span></span><br><span class="line"><span class="built_in">echo</span> rdma &gt; addr_trtype</span><br><span class="line"><span class="built_in">echo</span> 4420 &gt; addr_trsvcid</span><br><span class="line"></span><br><span class="line"><span class="comment"># 8. set ipv4 as the Address family</span></span><br><span class="line"><span class="built_in">echo</span> ipv4 &gt; addr_adrfam</span><br><span class="line"></span><br><span class="line"><span class="comment"># 9. create a soft link</span></span><br><span class="line"><span class="built_in">ln</span> -s /sys/kernel/config/nvmet/subsystems/<span class="string">&quot;<span class="variable">$&#123;subsys_name&#125;</span>&quot;</span> /sys/kernel/config/nvmet/ports/<span class="string">&quot;<span class="variable">$&#123;portid&#125;</span>&quot;</span>/subsystems/<span class="string">&quot;<span class="variable">$&#123;subsys_name&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 10. Check dmesg to make sure that the NVMe target is listening on the port</span></span><br><span class="line">dmesg -T | grep <span class="string">&quot;enabling port&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 11. output info &lt; ip/port&gt;</span></span><br><span class="line"><span class="comment">#  XXX  nvmet_rdma: enabling port 1 (192.168.225.131:4420)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 12. check the status of nvme</span></span><br><span class="line">lsblk | grep nvme</span><br><span class="line"><span class="comment"># nvme0n1</span></span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-nvmeof-02/run-sh.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-nvmeof-02/run-sh.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+</div><div class="story post-story"><h2 id="手动部署rdma">2. 手动部署——RDMA</h2>
+<h3 id="确认内核是否支持">2.1. 确认内核是否支持</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /boot/config-$(<span class="built_in">uname</span> -r) | grep RXE</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># CONFIG_RDMA_RXE=m</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># if not m or y, then cannot support RXE</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装环境依赖工具">2.2. 安装环境依赖、工具</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apt-get install vim open-vm-tools open-vm-tools-desktop net-tools nvme-cli fio</span><br><span class="line"></span><br><span class="line">apt-get install libibverbs1 ibverbs-utils librdmacm1 libibumad3 ibverbs-providers rdma-core</span><br><span class="line"></span><br><span class="line">apt-get install perftest</span><br></pre></td></tr></table></figure>
+<h3 id="获取-ip-地址nic-设备名">2.3. 获取 IP 地址、NIC 设备名</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ifconfig -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># ens33: ......</span></span><br><span class="line"><span class="comment"># inet: 192.168.159.140</span></span><br><span class="line"><span class="comment"># ......</span></span><br><span class="line"><span class="comment"># net_dev = ens33</span></span><br><span class="line"><span class="comment"># local_ip = 192.168.159.140</span></span><br></pre></td></tr></table></figure>
+<h3 id="配置-rxe-网卡">2.4. 配置 RXE 网卡</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 加载内核驱动</span></span><br><span class="line">modprobe rdma_rxe</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用户态配置</span></span><br><span class="line">sudo rdma <span class="built_in">link</span> add rxe_0 <span class="built_in">type</span> rxe netdev ens33</span><br><span class="line"><span class="comment"># rxe_0: RDMA 设备名，可任意取名</span></span><br><span class="line"><span class="comment"># ens33: 网卡名，会发生变化，根据机器 ifconfig 的结果为准</span></span><br></pre></td></tr></table></figure>
+<h3 id="rdma-配置结果检验">2.5. RDMA 配置结果检验</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">rdma <span class="built_in">link</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># example output: </span></span><br><span class="line"><span class="comment"># link rxe_0/1 state ACTIVE physical_state LINK_UP netdev ens33</span></span><br><span class="line"></span><br><span class="line">ibv_devinfo -d rxe_0</span><br><span class="line"><span class="comment"># example output: </span></span><br><span class="line"><span class="comment"># hca_id: rxe_0</span></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"><span class="comment"># port: 1</span></span><br><span class="line"><span class="comment">#       state: PORT_ACTIVE</span></span><br><span class="line"><span class="comment">#       ......</span></span><br></pre></td></tr></table></figure>
+</div><div class="story post-story"><h2 id="手动部署nvme">3. 手动部署——NVMe</h2>
+<h3 id="加载-nvme-相关内核">3.1. 加载 NVMe 相关内核</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">modprobe nvmet</span><br><span class="line">modprobe nvmet-rdma</span><br><span class="line">modprobe nvme-rdma</span><br></pre></td></tr></table></figure>
+<h3 id="配置-nvme-subsystem">3.2. 配置 nvme subsystem</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># subsys_name 可替换</span></span><br><span class="line"><span class="built_in">mkdir</span> /sys/kernel/config/nvmet/subsystems/&lt;subsys_name&gt;</span><br><span class="line"><span class="built_in">cd</span> /sys/kernel/config/nvmet/subsystems/&lt;subsys_name&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="allow-any-host-to-be-connected-to-this-target">3.3. Allow any host to be connected to this target</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; attr_allow_any_host</span><br></pre></td></tr></table></figure>
+<h3 id="create-a-namespaceexample-nsid10">3.4. Create a namespace，example: nsid=10</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nsid 可替换</span></span><br><span class="line"><span class="built_in">mkdir</span> namespaces/&lt;nsid&gt;</span><br><span class="line"><span class="built_in">cd</span> namespaces/&lt;nsid&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="set-the-path-to-the-nvme-device">3.5. Set the path to the NVMe device</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -n /dev/nvme0n1&gt; device_path</span><br><span class="line"><span class="built_in">echo</span> 1 &gt; <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
+<h3 id="create-the-following-directory-with-an-nvme-port">3.6. Create the following directory with an NVMe port</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># portid 可替换</span></span><br><span class="line"><span class="built_in">mkdir</span> /sys/kernel/config/nvmet/ports/&lt;portid&gt;</span><br><span class="line"><span class="built_in">cd</span> /sys/kernel/config/nvmet/ports/&lt;portid&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="set-ip-address-to-traddr">3.7. Set ip address to traddr</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># local_ip 为 ifconfig 中的结果</span></span><br><span class="line"><span class="built_in">echo</span> &lt;local_ip&gt; &gt; addr_traddr</span><br></pre></td></tr></table></figure>
+<h3 id="set-rdma-as-a-transport-typeaddr_trsvcid-is-unique">3.8. Set rdma as a transport type，addr_trsvcid is unique</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> rdma &gt; addr_trtype</span><br><span class="line"><span class="built_in">echo</span> 4420 &gt; addr_trsvcid</span><br></pre></td></tr></table></figure>
+<h3 id="set-ipv4-as-the-address-family">3.9. Set ipv4 as the Address family</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> ipv4 &gt; addr_adrfam</span><br></pre></td></tr></table></figure>
+<h3 id="create-a-soft-link">3.10. create a soft link</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># subsys_name、portid 可替换</span></span><br><span class="line"><span class="built_in">ln</span> -s /sys/kernel/config/nvmet/subsystems/&lt;subsys_name&gt; /sys/kernel/config/nvmet/ports/&lt;portid&gt;/subsystems/&lt;subsys_name&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="check-dmesg-to-make-sure-that-the-nvme-target-is-listening-on-the-port">3.11. Check dmesg to make sure that the NVMe target is listening on the port</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dmesg -T | grep <span class="string">&quot;enabling port&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># output: </span></span><br><span class="line"><span class="comment"># nvmet_rdma: enabling port 1 (192.168.225.131:4420)</span></span><br></pre></td></tr></table></figure>
+<h3 id="check-the-status-of-nvme">3.12. Check the status of NVMe</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lsblk | grep nvme</span><br><span class="line"><span class="comment"># nvme0n1</span></span><br></pre></td></tr></table></figure>
+</div><div class="story post-story"><h2 id="nvme-over-rdma-环境验证">4. NVMe over RDMA 环境验证</h2>
+<p><strong>虚拟机重启后需要重新配置 RDMA 部分</strong></p>
+<p><code>Host</code> 端执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ib_send_bw -d rxe_0</span><br></pre></td></tr></table></figure>
+<p><code>Target</code> 端执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ib_send_bw -d rxe_0 &lt;server_ip&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># ib_send_bw -d rxe_0 192.168.159.141</span></span><br></pre></td></tr></table></figure>
+<p><code>Target</code> 端执行后，两端的运行输出如下：</p>
+<p><code>Host</code> 端：</p>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-nvmeof-02/server-verify-rdma.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-nvmeof-02/server-verify-rdma.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+<p><code>Target</code> 端：</p>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-nvmeof-02/client-verify-rdma.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-nvmeof-02/client-verify-rdma.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+<p>在 <code>Target</code> 端发现 <code>Host</code> 端的 NVMe 设备：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nvme discover -t rdma -q &lt;subsys_name&gt; -a &lt;server_ip&gt; -s 4420</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-nvmeof-02/client-discover-nvmeof.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-nvmeof-02/client-discover-nvmeof.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+<p>在 <code>Target</code> 端连接 <code>Host</code> 端的 NVMe 设备：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nvme connect -t rdma -q &lt;subsys_name&gt; -n &lt;subsys_name&gt; -a &lt;server_ip&gt; -s 4420</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-nvmeof-02/client-connect-nvmeof.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-nvmeof-02/client-connect-nvmeof.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+<p>断开连接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nvme disconnect -n &lt;subsys_name&gt;</span><br></pre></td></tr></table></figure>
 
-
+</div>
   </div>
   
   
@@ -2646,10 +2719,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-08-25T16:43:03+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-08-27T17:49:40+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：2024年8月25日</p>
+    <p>最后更新于：Aug 27, 2024</p>
   </a>
 </div>
 
@@ -2658,8 +2731,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/NVMe/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>NVMe</p></a></div>
-  <span hidden itemprop="keywords">NVMe</span>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E5%AD%98%E5%82%A8/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>存储</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/NVMe/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>NVMe</p></a></div>
+  <span hidden itemprop="keywords">存储 NVMe</span>
 
 
         
@@ -2679,7 +2752,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cs0522.github.io/notes/NVMe/n-nvmeof-02/&title=【学习笔记】NVMe-oF 学习（二）：NVMe over RDMA 环境部署 - 诚实同学的博客&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-nvmeof-02/&title=【学习笔记-存储】NVMeoF（二）：NVMe over RDMA 环境部署 - 诚实同学的博客&summary=NVMe over RDMA 环境部署记录。"
           
           >
           
@@ -2691,7 +2764,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://cs0522.github.io/notes/NVMe/n-nvmeof-02/&title=【学习笔记】NVMe-oF 学习（二）：NVMe over RDMA 环境部署 - 诚实同学的博客&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-nvmeof-02/&title=【学习笔记-存储】NVMeoF（二）：NVMe over RDMA 环境部署 - 诚实同学的博客&summary=NVMe over RDMA 环境部署记录。"
           
           >
           
@@ -2703,7 +2776,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://cs0522.github.io/notes/NVMe/n-nvmeof-02/&title=【学习笔记】NVMe-oF 学习（二）：NVMe over RDMA 环境部署 - 诚实同学的博客&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-nvmeof-02/&title=【学习笔记-存储】NVMeoF（二）：NVMe over RDMA 环境部署 - 诚实同学的博客&summary=NVMe over RDMA 环境部署记录。"
           
           >
           
@@ -2735,6 +2808,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
     <div class="prev-next">
+      
+        <a class='prev' href='/notes/%E5%AD%98%E5%82%A8/n-ceph-01/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【学习笔记-存储】ceph（一）</p>
+          <p class='content'>
+
+</p>
+        </a>
       
       
         <a class='next' href='/practices/p-tree-minDepth-L111/'>
@@ -2789,7 +2869,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>96 篇</div>
+          <div>98 篇</div>
         </div>
       
 
@@ -2804,7 +2884,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>82.5k 字</div>
+          <div>83.6k 字</div>
         </div>
       
 
@@ -2829,7 +2909,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2024-08-25 日</div>
+          <div id="last-update-show">2024-08-27 日</div>
         </div>
       
     </div>
@@ -2846,9 +2926,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
 
 
-  <div class="">
-    <!-- pjax占位 -->
-  </div>
+  <section class="widget toc-wrapper desktop mobile " id="toc-div" >
+    
+  <header>
+    
+      <i class="fa-solid fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E8%BD%AF%E4%BB%B6%E6%A0%88-sh-%E8%84%9A%E6%9C%AC"><span class="toc-number">1.</span> <span class="toc-text">1. 自动部署软件栈 sh 脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E9%83%A8%E7%BD%B2rdma"><span class="toc-number">2.</span> <span class="toc-text">2. 手动部署——RDMA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AE%E8%AE%A4%E5%86%85%E6%A0%B8%E6%98%AF%E5%90%A6%E6%94%AF%E6%8C%81"><span class="toc-number">2.1.</span> <span class="toc-text">2.1. 确认内核是否支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83%E4%BE%9D%E8%B5%96%E5%B7%A5%E5%85%B7"><span class="toc-number">2.2.</span> <span class="toc-text">2.2. 安装环境依赖、工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96-ip-%E5%9C%B0%E5%9D%80nic-%E8%AE%BE%E5%A4%87%E5%90%8D"><span class="toc-number">2.3.</span> <span class="toc-text">2.3. 获取 IP 地址、NIC 设备名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-rxe-%E7%BD%91%E5%8D%A1"><span class="toc-number">2.4.</span> <span class="toc-text">2.4. 配置 RXE 网卡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rdma-%E9%85%8D%E7%BD%AE%E7%BB%93%E6%9E%9C%E6%A3%80%E9%AA%8C"><span class="toc-number">2.5.</span> <span class="toc-text">2.5. RDMA 配置结果检验</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E9%83%A8%E7%BD%B2nvme"><span class="toc-number">3.</span> <span class="toc-text">3. 手动部署——NVMe</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD-nvme-%E7%9B%B8%E5%85%B3%E5%86%85%E6%A0%B8"><span class="toc-number">3.1.</span> <span class="toc-text">3.1. 加载 NVMe 相关内核</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-nvme-subsystem"><span class="toc-number">3.2.</span> <span class="toc-text">3.2. 配置 nvme subsystem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#allow-any-host-to-be-connected-to-this-target"><span class="toc-number">3.3.</span> <span class="toc-text">3.3. Allow any host to be connected to this target</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#create-a-namespaceexample-nsid10"><span class="toc-number">3.4.</span> <span class="toc-text">3.4. Create a namespace，example: nsid&#x3D;10</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#set-the-path-to-the-nvme-device"><span class="toc-number">3.5.</span> <span class="toc-text">3.5. Set the path to the NVMe device</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#create-the-following-directory-with-an-nvme-port"><span class="toc-number">3.6.</span> <span class="toc-text">3.6. Create the following directory with an NVMe port</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#set-ip-address-to-traddr"><span class="toc-number">3.7.</span> <span class="toc-text">3.7. Set ip address to traddr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#set-rdma-as-a-transport-typeaddr_trsvcid-is-unique"><span class="toc-number">3.8.</span> <span class="toc-text">3.8. Set rdma as a transport type，addr_trsvcid is unique</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#set-ipv4-as-the-address-family"><span class="toc-number">3.9.</span> <span class="toc-text">3.9. Set ipv4 as the Address family</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#create-a-soft-link"><span class="toc-number">3.10.</span> <span class="toc-text">3.10. create a soft link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#check-dmesg-to-make-sure-that-the-nvme-target-is-listening-on-the-port"><span class="toc-number">3.11.</span> <span class="toc-text">3.11. Check dmesg to make sure that the NVMe target is listening on the port</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#check-the-status-of-nvme"><span class="toc-number">3.12.</span> <span class="toc-text">3.12. Check the status of NVMe</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nvme-over-rdma-%E7%8E%AF%E5%A2%83%E9%AA%8C%E8%AF%81"><span class="toc-number">4.</span> <span class="toc-text">4. NVMe over RDMA 环境验证</span></a></li></ol>
+    </div>
+  </section>
 
   
 
@@ -3669,7 +3759,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -3988,7 +4078,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/NVMe/","name":"NVMe"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/notes/NVMe/n-nvmeof-02/","name":"【学习笔记】NVMe-oF 学习（二）：NVMe over RDMA 环境部署"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记】NVMe-oF 学习（二）：NVMe over RDMA 环境部署","description":"Patience is key in life.","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/NVMe/n-nvmeof-02/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/NVMe/n-nvmeof-02/","wordCount":0,"datePublished":"2024-08-25T08:42:26.000Z","dateModified":"2024-08-25T08:43:03.603Z","articleSection":"学习笔记","keywords":"NVMe","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/notes/存储/n-nvmeof-02/","name":"【学习笔记-存储】NVMeoF（二）：NVMe over RDMA 环境部署"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】NVMeoF（二）：NVMe over RDMA 环境部署","description":"NVMe over RDMA 环境部署记录。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-nvmeof-02/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-nvmeof-02/","wordCount":22,"datePublished":"2024-08-25T08:42:26.000Z","dateModified":"2024-08-27T09:49:40.077Z","articleSection":"学习笔记","keywords":"存储,NVMe","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
