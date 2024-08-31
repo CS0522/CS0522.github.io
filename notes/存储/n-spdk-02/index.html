@@ -5,8 +5,8 @@
   <meta name="Volantis" content="5.8.0">
   <meta charset="utf-8">
   <!-- SEO相关 -->
-  <meta name="robots" content="noindex,follow">
-  <link rel="canonical" href="https://CS0522.github.io/tags/spdk/"/>
+  
+  <link rel="canonical" href="https://CS0522.github.io/notes/存储/n-spdk-02/"/>
   <!-- 渲染优化 -->
     <meta http-equiv='x-dns-prefetch-control' content='on' />
       <link rel='dns-prefetch' href='https://unpkg.com'>
@@ -34,19 +34,22 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>标签：SPDK - 诚实同学的博客</title>
-  <meta name="keywords" content="个人博客, 计算机, 学习">
-  <meta desc name="description" content="Patience is key in life. - Chen Shi - 诚实同学的博客">
+  <title>【学习笔记-存储】spdk（二）：spdk 安装与部署 - 诚实同学的博客</title>
+  <meta name="keywords" content="存储,spdk,个人博客, 计算机, 学习">
+  <meta desc name="description" content="记录 spdk 的安装和部署过程。 - Chen Shi - 诚实同学的博客">
   
-<meta property="og:type" content="website">
-<meta property="og:title" content="诚实同学的博客">
-<meta property="og:url" content="https://cs0522.github.io/tags/SPDK/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【学习笔记-存储】spdk（二）：spdk 安装与部署">
+<meta property="og:url" content="https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-02/index.html">
 <meta property="og:site_name" content="诚实同学的博客">
-<meta property="og:description" content="Patience is key in life.">
+<meta property="og:description" content="记录 spdk 的安装和部署过程。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+<meta property="article:published_time" content="2024-08-29T07:46:24.000Z">
+<meta property="article:modified_time" content="2024-08-31T16:18:07.163Z">
 <meta property="article:author" content="Chen Shi">
-<meta property="article:tag" content="个人博客, 计算机, 学习">
+<meta property="article:tag" content="存储">
+<meta property="article:tag" content="spdk">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
   <style>
@@ -1763,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1724752252014),
+    lastupdate: new Date(1725121193800),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2448,7 +2451,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
       <!-- see: /layout/_partial/scripts/_ctrl/coverCtrl.ejs -->
-      <div id="none" class='cover-wrapper  search' style="display: none;">
+      <div id="none" class='cover-wrapper post search' style="display: none;">
         
   <div id="parallax-window"></div>
 
@@ -2525,25 +2528,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="safearea">
         <div class="body-wrapper">
           
-
 <div id="l_main" class=''>
-  
-    
-      
-  <section class="post-list">
-    
-      
-        
-          
-        
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://cs0522.github.io/notes/存储/n-spdk-01/">
+  <article itemscope itemtype="http://schema.org/Article" class="article post white-box reveal md blur article-type-post" id="post" itemscope itemprop="blogPost">
+  <link itemprop="mainEntityOfPage" href="https://cs0522.github.io/notes/存储/n-spdk-02/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="诚实同学的博客">
   </span>
@@ -2552,72 +2539,252 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <meta itemprop="description" content="Patience is key in life.">
   </span>
   
-  
+
+
   
     <span hidden>
       <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
     </span>
   
-  
+  <div class="article-meta" id="top">
     
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/notes/%E5%AD%98%E5%82%A8/n-spdk-01/"  itemprop="url">
-        【学习笔记-存储】SPDK（一）
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
     
-      
+    
+      <h1 class="title" itemprop="name headline">
+        【学习笔记-存储】spdk（二）：spdk 安装与部署
+      </h1>
+      <div class='new-meta-box'>
         
+          
+            
+<div class='new-meta-item author' itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a itemprop="url" class='author' target="_blank" href="https://github.com/CS0522/" rel="nofollow noopener">
+    <img itemprop="image" src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/userphoto/01.jpg" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/userphoto/01.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    <p itemprop="name">Chen Shi</p>
+  </a>
+</div>
 
-
-      
+          
+        
+          
+            
+  <div class='new-meta-item category'>
+    <i class="fa-solid fa-folder-open fa-fw" aria-hidden="true"></i>
+    <a class="category-link" href="/categories/notes/">学习笔记</a><span class="sep"></span><a class="category-link" href="/categories/notes/%E5%AD%98%E5%82%A8/">存储</a>
+    
+      <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/notes/" itemprop="url"><span itemprop="name">学习笔记</span></a>
+      </span>
+    
+      <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/notes/%E5%AD%98%E5%82%A8/" itemprop="url"><span itemprop="name">存储</span></a>
+      </span>
     
   </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2024-08-27T13:10:46+08:00">2024-08-27</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/notes/">学习笔记</a><span class="sep"></span><a class="category-link" href="/categories/notes/%E5%AD%98%E5%82%A8/">存储</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/notes/" itemprop="url"><span itemprop="name">学习笔记</span></a>
-            </span>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/notes/%E5%AD%98%E5%82%A8/" itemprop="url"><span itemprop="name">存储</span></a>
-            </span>
+
+
           
         
+          
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2024-08-29T15:46:24+08:00">
+  <a class='notlink'>
+    <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2024年8月29日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item wordcount">
+    <a class='notlink'>
+      <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
+      <p>字数：553 字</p>
+    </a>
+  </div>
+  <div class="new-meta-item readtime">
+    <a class='notlink'>
+      <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
+      <p>时长：2 分钟</p>
+    </a>
+  </div>
+
+
+          
+        
+        <!-- Custom Files topMeta begin-->
+        
+        <!-- Custom Files topMeta end-->
       </div>
+    
+  </div>
+
+
+  <div id="layoutHelper-page-plugins"></div>
+  <div id="post-body" itemprop="articleBody">
+    <p>记录 spdk 的安装和部署过程。</p>
+<span id="more"></span>
+<div class="story post-story"><h2 id="文件准备">文件准备</h2>
+<p>需要下载的文件：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://codeload.github.com/spdk/spdk/zip/refs/heads/v24.05.x">spdk-24.05.x.zip</a></li>
+<li><a target="_blank" rel="noopener" href="https://codeload.github.com/intel/isa-l_crypto/zip/08297dc3e76d65e1bad83a9c9f9e49059cf806b5">isa-l_crypto-08297dc3e76d65e1bad83a9c9f9e49059cf806b5.zip</a></li>
+<li><a target="_blank" rel="noopener" href="https://codeload.github.com/nutanix/libvfio-user/zip/a646db0b7d65c774a0b9415ea582735e7c2d2eb6">libvfio-user-a646db0b7d65c774a0b9415ea582735e7c2d2eb6.zip</a></li>
+<li><a target="_blank" rel="noopener" href="https://codeload.github.com/spdk/dpdk/zip/08f3a46de70afff49f55d175de690b5ad7e4a44d">dpdk-08f3a46de70afff49f55d175de690b5ad7e4a44d.zip</a></li>
+<li><a target="_blank" rel="noopener" href="https://codeload.github.com/xnvme/xnvme/zip/3834fd860d40b6a3608aae11f9ceb017a0c93b29">xnvme-3834fd860d40b6a3608aae11f9ceb017a0c93b29.zip</a></li>
+<li><a target="_blank" rel="noopener" href="https://codeload.github.com/Open-CAS/ocf/zip/d1d6d7cb5f55b616d2aa5123f84ce4ece10fdb0b">ocf-d1d6d7cb5f55b616d2aa5123f84ce4ece10fdb0b.zip</a></li>
+<li><a target="_blank" rel="noopener" href="https://codeload.github.com/spdk/isa-l/zip/6f420b14a1e3e091bc9d15f508a54f82c007483c">isa-l-6f420b14a1e3e091bc9d15f508a54f82c007483c.zip</a></li>
+<li><a target="_blank" rel="noopener" href="https://codeload.github.com/spdk/intel-ipsec-mb/zip/935a3802883249ba3b12e566833994af7991e808">intel-ipsec-mb-935a3802883249ba3b12e566833994af7991e808.zip</a></li>
+</ul>
+</div><div class="story post-story"><h2 id="安装与构建">安装与构建</h2>
+<h3 id="clone-项目源码">clone 项目源码</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pwd: ~/Workspace/spdk-24.05.x</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># clone 源码</span></span><br><span class="line">git <span class="built_in">clone</span> -b v24.05.x git@github.com:spdk/spdk.git</span><br><span class="line"><span class="comment"># 或者直接下载 zip 文件（推荐）</span></span><br><span class="line"><span class="comment"># spdk-24.05.x.zip</span></span><br></pre></td></tr></table></figure>
+<h3 id="更新子模块">更新子模块</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新子模块</span></span><br><span class="line">git submodule update --init</span><br><span class="line"><span class="comment"># 建议手动 clone 子模块（网络原因）</span></span><br><span class="line"><span class="comment"># 1. 根据 Github repo 中 spdk 版本对应的 submodule 版本，下载对应 zip 文件</span></span><br><span class="line"><span class="comment"># spdk-v24.05.x 所需版本：</span></span><br><span class="line"><span class="comment"># dpdk-08f3a46de70afff49f55d175de690b5ad7e4a44d.zip</span></span><br><span class="line"><span class="comment"># intel-ipsec-mb-935a3802883249ba3b12e566833994af7991e808.zip</span></span><br><span class="line"><span class="comment"># isa-l-6f420b14a1e3e091bc9d15f508a54f82c007483c.zip</span></span><br><span class="line"><span class="comment"># isa-l_crypto-08297dc3e76d65e1bad83a9c9f9e49059cf806b5.zip</span></span><br><span class="line"><span class="comment"># libvfio-user-a646db0b7d65c774a0b9415ea582735e7c2d2eb6.zip</span></span><br><span class="line"><span class="comment"># ocf-d1d6d7cb5f55b616d2aa5123f84ce4ece10fdb0b.zip</span></span><br><span class="line"><span class="comment"># xnvme-3834fd860d40b6a3608aae11f9ceb017a0c93b29.zip</span></span><br><span class="line"><span class="comment"># 2. 解压后删掉 &#x27;-xxx&#x27;，复制到 spdk 根目录下</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装依赖">安装依赖</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装各种依赖包</span></span><br><span class="line">sudo ./scripts/pkgdep.sh -r</span><br><span class="line"><span class="comment"># 出于网络原因，可以修改 sh 脚本，添加临时源</span></span><br><span class="line"><span class="comment"># scripts/pkgdep/ubuntu.sh</span></span><br><span class="line">pip3 install ninja -i https://pypi.doubanio.com/simple</span><br><span class="line">pip3 install meson -i https://pypi.doubanio.com/simple</span><br><span class="line">pip3 install pyelftools -i https://pypi.doubanio.com/simple</span><br><span class="line">pip3 install ijson -i https://pypi.doubanio.com/simple</span><br><span class="line">pip3 install python-magic -i https://pypi.doubanio.com/simple</span><br><span class="line">pip3 install grpcio -i https://pypi.doubanio.com/simple</span><br><span class="line">pip3 install grpcio-tools -i https://pypi.doubanio.com/simple</span><br><span class="line">pip3 install pyyaml -i https://pypi.doubanio.com/simple</span><br><span class="line">pip3 install Jinja2 -i https://pypi.doubanio.com/simple</span><br><span class="line">pip3 install tabulate -i https://pypi.doubanio.com/simple</span><br></pre></td></tr></table></figure>
+<h3 id="打上-patch修改代码">打上 patch、修改代码</h3>
+<p>位于 <code>lib/log/log.c</code>。添加和修改以下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib/log.log.c</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">spdk_vlog</span><span class="params">(<span class="keyword">enum</span> spdk_log_level level, <span class="type">const</span> <span class="type">char</span> *file, <span class="type">const</span> <span class="type">int</span> line, <span class="type">const</span> <span class="type">char</span> *func,</span></span><br><span class="line"><span class="params">	  <span class="type">const</span> <span class="type">char</span> *format, va_list ap)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> severity = LOG_INFO;</span><br><span class="line">	<span class="type">char</span> *buf, _buf[MAX_TMPBUF], *ext_buf = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="type">char</span> timestamp[<span class="number">64</span>];</span><br><span class="line">	va_list ap_copy;    <span class="comment">// 添加代码</span></span><br><span class="line">	<span class="type">int</span> rc;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (g_log) &#123;</span><br><span class="line">		g_log(level, file, line, func, format, ap);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (level &gt; g_spdk_log_print_level &amp;&amp; level &gt; g_spdk_log_level) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	severity = spdk_log_to_syslog_level(level);</span><br><span class="line">	<span class="keyword">if</span> (severity &lt; <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	buf = _buf;</span><br><span class="line"></span><br><span class="line">	va_copy(ap_copy, ap);   <span class="comment">// 添加代码</span></span><br><span class="line">	rc = vsnprintf(_buf, <span class="keyword">sizeof</span>(_buf), format, ap);</span><br><span class="line">	<span class="keyword">if</span> (rc &gt; MAX_TMPBUF) &#123;</span><br><span class="line">		<span class="comment">/* The output including the terminating was more than MAX_TMPBUF bytes.</span></span><br><span class="line"><span class="comment">		 * Try allocating memory large enough to hold the output.</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		rc = vasprintf(&amp;ext_buf, format, ap_copy);      <span class="comment">// 修改代码：ap -&gt; ap_copy</span></span><br><span class="line">		<span class="keyword">if</span> (rc &lt; <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="comment">/* Failed to allocate memory. Allow output to be truncated. */</span></span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			buf = ext_buf;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (level &lt;= g_spdk_log_print_level) &#123;</span><br><span class="line">		get_timestamp_prefix(timestamp, <span class="keyword">sizeof</span>(timestamp));</span><br><span class="line">		<span class="keyword">if</span> (file) &#123;</span><br><span class="line">    <span class="comment">// ......</span></span><br></pre></td></tr></table></figure>
+<h3 id="构建项目">构建项目</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建</span></span><br><span class="line">./configure --with-rdma</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<h3 id="执行单元测试">执行单元测试</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">./test/unit/unittest.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 正确结果：</span></span><br><span class="line"><span class="comment"># =====================</span></span><br><span class="line"><span class="comment"># All unit tests passed</span></span><br><span class="line"><span class="comment"># =====================</span></span><br><span class="line"><span class="comment"># WARN: lcov not installed or SPDK built without coverage!</span></span><br><span class="line"><span class="comment"># WARN: neither valgrind nor ASAN is enabled!</span></span><br></pre></td></tr></table></figure>
+
+</div>
+  </div>
+  
+  
+    
+    <div class='footer'>
+       <!-- 参考资料、相关资料等 -->
       
-        <div>
-          <a class='readmore' href='/notes/%E5%AD%98%E5%82%A8/n-spdk-01/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
+       <!-- 相关文章 -->
+      
+      <!-- 版权声明组件 -->
+      
+      <!-- 打赏组件 -->
       
     </div>
   
+  
+    
 
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-01T00:18:07+08:00">
+  <a class='notlink'>
+    <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
+    <p>最后更新于：2024年9月1日</p>
+  </a>
 </div>
 
-          </div>
         
       
-    
-  </section>
+        
+          
   
-    
-  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E5%AD%98%E5%82%A8/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>存储</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/spdk/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>spdk</p></a></div>
+  <span hidden itemprop="keywords">存储 spdk</span>
 
 
+        
+      
+        
+          
+
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
     
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-02/&title=【学习笔记-存储】spdk（二）：spdk 安装与部署 - 诚实同学的博客&summary=记录 spdk 的安装和部署过程。"
+          
+          >
+          
+            <img src="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/logo/128/qq.png" class="lazyload" data-srcset="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/logo/128/qq.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-02/&title=【学习笔记-存储】spdk（二）：spdk 安装与部署 - 诚实同学的博客&summary=记录 spdk 的安装和部署过程。"
+          
+          >
+          
+            <img src="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/logo/128/qzone.png" class="lazyload" data-srcset="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/logo/128/qzone.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-02/&title=【学习笔记-存储】spdk（二）：spdk 安装与部署 - 诚实同学的博客&summary=记录 spdk 的安装和部署过程。"
+          
+          >
+          
+            <img src="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/logo/128/weibo.png" class="lazyload" data-srcset="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/logo/128/weibo.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+    <!-- Custom Files bottomMeta begin -->
+    
+    <!-- Custom Files bottomMeta end -->
+  </div>
+
+
   
+  
+
+  
+    <div class="prev-next">
+      
+      
+        <a class='next' href='/notes/%E5%AD%98%E5%82%A8/n-spdk-01/'>
+          <p class='title'>【学习笔记-存储】spdk（一）基础知识<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>spdk 相关知识了解和学习。
+
+
+</p>
+        </a>
+      
+    </div>
+  
+  <!-- Custom Files postEnd begin-->
+  
+  <!-- Custom Files postEnd end-->
+</article>
+
+
+
+
 </div>
 <aside id='l_side' itemscope itemtype="http://schema.org/WPSideBar">
   
@@ -2626,286 +2793,6 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       
-<section class="widget blogger desktop mobile pjax">
-  <div class='content'>
-    
-      
-        <a class='avatar flat-box rectangle' href='/about/'>
-          <img no-lazy src='https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/userphoto/01.jpg'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-          <h2>Chen Shi</h2>
-        
-        
-          <p>
-DLUT DRISE
-</p>
-<p>
-2024 届本科生
-</p>
-
-        
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="mailto:chenshi020522@outlook.com"
-              class="social fa-solid fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://github.com/CS0522/"
-              class="social fa-brands fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="/images/weixin.png"
-              class="social fa-brands fa-weixin flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="/images/qq.jpg"
-              class="social fa-brands fa-qq flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://space.bilibili.com/37047123/"
-              class="social fa-brands fa-bilibili flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
-
-    
-  
-
-  
-    
-    
-      
-  
-  <section class="widget category desktop pjax">
-    
-  <header>
-    
-      <a href='/blog/categories/'><i class="fa-solid fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <ul class="entry navigation">
-        
-          <li><a class="flat-box"
-            title="/categories/docs/" href="/categories/docs/"
-            active-action="action-categoriesdocs"
-            ><div class='name'>文档小记</div><div class='badge'>(10)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/learnings/" href="/categories/learnings/"
-            active-action="action-categorieslearnings"
-            ><div class='name'>论文随记</div><div class='badge'>(3)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/learnings/ANN/" href="/categories/learnings/ANN/"
-            active-action="action-categorieslearningsANN"
-            ><div class='name'>ANN</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/learnings/%E7%9B%98%E8%8A%82%E8%83%BD/" href="/categories/learnings/%E7%9B%98%E8%8A%82%E8%83%BD/"
-            active-action="action-categorieslearningsE79B98E88A82E883BD"
-            ><div class='name'>盘节能</div><div class='badge'>(2)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/notes/" href="/categories/notes/"
-            active-action="action-categoriesnotes"
-            ><div class='name'>学习笔记</div><div class='badge'>(26)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/notes/C/" href="/categories/notes/C/"
-            active-action="action-categoriesnotesC"
-            ><div class='name'>C++</div><div class='badge'>(2)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/notes/DiskSim/" href="/categories/notes/DiskSim/"
-            active-action="action-categoriesnotesDiskSim"
-            ><div class='name'>DiskSim</div><div class='badge'>(5)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/notes/SimPy/" href="/categories/notes/SimPy/"
-            active-action="action-categoriesnotesSimPy"
-            ><div class='name'>SimPy</div><div class='badge'>(7)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/notes/%E5%AD%98%E5%82%A8/" href="/categories/notes/%E5%AD%98%E5%82%A8/"
-            active-action="action-categoriesnotesE5AD98E582A8"
-            ><div class='name'>存储</div><div class='badge'>(4)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" href="/categories/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"
-            active-action="action-categoriesnotesE8AEBEE8AEA1E6A8A1E5BC8F"
-            ><div class='name'>设计模式</div><div class='badge'>(8)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/practices/" href="/categories/practices/"
-            active-action="action-categoriespractices"
-            ><div class='name'>刷题日记</div><div class='badge'>(59)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/" href="/categories/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/"
-            active-action="action-categoriespracticesE4BA8CE58F89E6A091"
-            ><div class='name'>二叉树</div><div class='badge'>(13)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/" href="/categories/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/"
-            active-action="action-categoriespracticesE59388E5B88CE8A1A8"
-            ><div class='name'>哈希表</div><div class='badge'>(11)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/" href="/categories/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/"
-            active-action="action-categoriespracticesE5AD97E7ACA6E4B8B2"
-            ><div class='name'>字符串</div><div class='badge'>(7)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/practices/%E6%95%B0%E7%BB%84-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" href="/categories/practices/%E6%95%B0%E7%BB%84-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"
-            active-action="action-categoriespracticesE695B0E7BB84-E4BA8CE58886E69FA5E689BE"
-            ><div class='name'>数组 - 二分查找</div><div class='badge'>(3)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/practices/%E6%95%B0%E7%BB%84-%E5%8F%8C%E6%8C%87%E9%92%88/" href="/categories/practices/%E6%95%B0%E7%BB%84-%E5%8F%8C%E6%8C%87%E9%92%88/"
-            active-action="action-categoriespracticesE695B0E7BB84-E58F8CE68C87E99288"
-            ><div class='name'>数组 - 双指针</div><div class='badge'>(5)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/practices/%E6%95%B0%E7%BB%84-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" href="/categories/practices/%E6%95%B0%E7%BB%84-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/"
-            active-action="action-categoriespracticesE695B0E7BB84-E6BB91E58AA8E7AA97E58FA3"
-            ><div class='name'>数组 - 滑动窗口</div><div class='badge'>(2)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/practices/%E6%95%B0%E7%BB%84-%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5/" href="/categories/practices/%E6%95%B0%E7%BB%84-%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5/"
-            active-action="action-categoriespracticesE695B0E7BB84-E89EBAE6978BE79FA9E998B5"
-            ><div class='name'>数组 - 螺旋矩阵</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/practices/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" href="/categories/practices/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/"
-            active-action="action-categoriespracticesE6A088E5928CE9989FE58897"
-            ><div class='name'>栈和队列</div><div class='badge'>(8)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/practices/%E9%93%BE%E8%A1%A8/" href="/categories/practices/%E9%93%BE%E8%A1%A8/"
-            active-action="action-categoriespracticesE993BEE8A1A8"
-            ><div class='name'>链表</div><div class='badge'>(7)</div></a></li>
-        
-      </ul>
-    </div>
-  </section>
-
-
-    
-  
-
-  
-    
-    
-      
-<section class="widget grid desktop mobile pjax">
-  
-  <header>
-    
-      <i class="fa-solid fa-map-signs fa-fw" aria-hidden="true"></i><span class='name'>功能导航</span>
-    
-  </header>
-
-
-  <div class='content'>
-    <div class="grid navigation fixed">
-      
-        <a class="flat-box" href="/tags/"
-          
-          
-          active-action="action-tags">
-          
-            <i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i>
-          
-          标签
-        </a>
-      
-        <a class="flat-box" href="/archives/"
-          
-          
-          active-action="action-archives">
-          
-            <i class="fa-solid fa-archive fa-fw" aria-hidden="true"></i>
-          
-          归档
-        </a>
-      
-        <a class="flat-box" href="/about/"
-          
-          
-          active-action="action-about">
-          
-            <i class="fa-solid fa-info-circle fa-fw" aria-hidden="true"></i>
-          
-          关于我
-        </a>
-      
-    </div>
-  </div>
-</section>
-
-    
-  
-
-  
-    
-    
-      
-  
-  <section class="widget tagcloud desktop mobile pjax">
-    
-  <header>
-    
-      <a href='tags/'><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i><span class='name'>标签</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <a href="/tags/ANN/" style="font-size: 14px; color: #999">ANN</a> <a href="/tags/Atlantis-JMVT/" style="font-size: 14px; color: #999">Atlantis JMVT</a> <a href="/tags/Blog/" style="font-size: 14px; color: #999">Blog</a> <a href="/tags/C/" style="font-size: 24px; color: #555">C++</a> <a href="/tags/CMake/" style="font-size: 14px; color: #999">CMake</a> <a href="/tags/DiskSim/" style="font-size: 18.17px; color: #7d7d7d">DiskSim</a> <a href="/tags/Git/" style="font-size: 14px; color: #999">Git</a> <a href="/tags/GitHub/" style="font-size: 14px; color: #999">GitHub</a> <a href="/tags/HNSW/" style="font-size: 14px; color: #999">HNSW</a> <a href="/tags/Hexo/" style="font-size: 14px; color: #999">Hexo</a> <a href="/tags/Linux/" style="font-size: 20.67px; color: #6c6c6c">Linux</a> <a href="/tags/NVMe/" style="font-size: 14.83px; color: #939393">NVMe</a> <a href="/tags/Node-js/" style="font-size: 14px; color: #999">Node.js</a> <a href="/tags/Python/" style="font-size: 19.83px; color: #717171">Python</a> <a href="/tags/RAID/" style="font-size: 14px; color: #999">RAID</a> <a href="/tags/SPDK/" style="font-size: 14px; color: #999">SPDK</a> <a href="/tags/SSH/" style="font-size: 14px; color: #999">SSH</a> <a href="/tags/SimPy/" style="font-size: 19px; color: #777">SimPy</a> <a href="/tags/SpringBoot/" style="font-size: 14px; color: #999">SpringBoot</a> <a href="/tags/Ubuntu/" style="font-size: 14.83px; color: #939393">Ubuntu</a> <a href="/tags/VSCode/" style="font-size: 14px; color: #999">VSCode</a> <a href="/tags/Volantis/" style="font-size: 14px; color: #999">Volantis</a> <a href="/tags/Vue/" style="font-size: 14.83px; color: #939393">Vue</a> <a href="/tags/WebSite/" style="font-size: 14px; color: #999">WebSite</a> <a href="/tags/anaconda/" style="font-size: 14px; color: #999">anaconda</a> <a href="/tags/ceph/" style="font-size: 14px; color: #999">ceph</a> <a href="/tags/matplotlib/" style="font-size: 14px; color: #999">matplotlib</a> <a href="/tags/mmap/" style="font-size: 14px; color: #999">mmap</a> <a href="/tags/npm/" style="font-size: 14px; color: #999">npm</a> <a href="/tags/nvm/" style="font-size: 14px; color: #999">nvm</a> <a href="/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" style="font-size: 15.67px; color: #8e8e8e">二分查找</a> <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 22.33px; color: #606060">二叉树</a> <a href="/tags/%E5%88%B7%E9%A2%98/" style="font-size: 23.17px; color: #5b5b5b">刷题</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 14px; color: #999">前端</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/" style="font-size: 17.33px; color: #828282">双指针</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 14px; color: #999">后端</a> <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/" style="font-size: 21.5px; color: #666">哈希表</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="font-size: 19px; color: #777">字符串</a> <a href="/tags/%E5%AD%98%E5%82%A8/" style="font-size: 16.5px; color: #888">存储</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/" style="font-size: 14px; color: #999">数据迁移</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 21.5px; color: #666">数组</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 19.83px; color: #717171">栈和队列</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 14.83px; color: #939393">滑动窗口</a> <a href="/tags/%E7%9B%98%E8%8A%82%E8%83%BD/" style="font-size: 14.83px; color: #939393">盘节能</a> <a href="/tags/%E8%83%BD%E6%BA%90%E6%AF%94%E4%BE%8B/" style="font-size: 14px; color: #999">能源比例</a> <a href="/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" style="font-size: 14px; color: #999">虚拟内存</a> <a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 14px; color: #999">虚拟化</a> <a href="/tags/%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5/" style="font-size: 14px; color: #999">螺旋矩阵</a> <a href="/tags/%E8%AE%BA%E6%96%87/" style="font-size: 15.67px; color: #8e8e8e">论文</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 19.83px; color: #717171">设计模式</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 19px; color: #777">链表</a>
-    </div>
-  </section>
-
-
     
   
 
@@ -2927,7 +2814,7 @@ DLUT DRISE
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>98 篇</div>
+          <div>99 篇</div>
         </div>
       
 
@@ -2942,7 +2829,7 @@ DLUT DRISE
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>83.6k 字</div>
+          <div>84.2k 字</div>
         </div>
       
 
@@ -2967,7 +2854,7 @@ DLUT DRISE
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2024-08-27 日</div>
+          <div id="last-update-show">2024-09-01 日</div>
         </div>
       
     </div>
@@ -2980,10 +2867,46 @@ DLUT DRISE
 
 <div class="widget-sticky pjax">
 
+  
+  
+
+
+  <section class="widget toc-wrapper desktop mobile " id="toc-div" >
+    
+  <header>
+    
+      <i class="fa-solid fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">文件准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E6%9E%84%E5%BB%BA"><span class="toc-number">2.</span> <span class="toc-text">安装与构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#clone-%E9%A1%B9%E7%9B%AE%E6%BA%90%E7%A0%81"><span class="toc-number">2.1.</span> <span class="toc-text">clone 项目源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E5%AD%90%E6%A8%A1%E5%9D%97"><span class="toc-number">2.2.</span> <span class="toc-text">更新子模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="toc-number">2.3.</span> <span class="toc-text">安装依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E4%B8%8A-patch%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81"><span class="toc-number">2.4.</span> <span class="toc-text">打上 patch、修改代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.5.</span> <span class="toc-text">构建项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="toc-number">2.6.</span> <span class="toc-text">执行单元测试</span></a></li></ol></li></ol>
+    </div>
+  </section>
+
+  
+
 </div>
 
 
 <!-- 没有 pjax 占位会报错 万恶的 pjax -->
+
+  <div class="pjax">
+    <!-- pjax占位 -->
+  </div>
+
+  <div class="pjax">
+    <!-- pjax占位 -->
+  </div>
+
+  <div class="pjax">
+    <!-- pjax占位 -->
+  </div>
+
+  <div class="pjax">
+    <!-- pjax占位 -->
+  </div>
 
   <div class="pjax">
     <!-- pjax占位 -->
@@ -3007,13 +2930,14 @@ DLUT DRISE
 </aside>
 
 
+
           <!--此文件用来存放一些不方便取值的变量-->
 <!--思路大概是将值藏到重加载的区域内-->
 
 <pjax>
 <script>
   window.pdata={}
-  pdata.ispage=false;
+  pdata.ispage=true;
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   pdata.commentConfig={};
@@ -3780,7 +3704,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4099,7 +4023,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/tags/SPDK/","name":"SPDK"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","description":"Patience is key in life.","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"wordCount":0,"image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/notes/存储/n-spdk-02/","name":"【学习笔记-存储】spdk（二）：spdk 安装与部署"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】spdk（二）：spdk 安装与部署","description":"记录 spdk 的安装和部署过程。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-02/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-02/","wordCount":17,"datePublished":"2024-08-29T07:46:24.000Z","dateModified":"2024-08-31T16:18:07.163Z","articleSection":"学习笔记","keywords":"存储,spdk","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
