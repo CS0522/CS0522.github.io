@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <!-- SEO相关 -->
   
-  <link rel="canonical" href="https://CS0522.github.io/en/notes/存储/n-ceph-01/"/>
+  <link rel="canonical" href="https://CS0522.github.io/en/notes/存储/n-spdk-03/"/>
   <!-- 渲染优化 -->
     <meta http-equiv='x-dns-prefetch-control' content='on' />
       <link rel='dns-prefetch' href='https://unpkg.com'>
@@ -34,20 +34,22 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>【学习笔记-存储】ceph（一） - 诚实同学的博客</title>
-  <meta name="keywords" content="存储,ceph,个人博客, 计算机, 学习">
-  <meta desc name="description" content="Patience is key in life. - Chen Shi - 诚实同学的博客">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="【学习笔记-存储】ceph（一）">
-<meta property="og:url" content="https://cs0522.github.io/en/notes/%E5%AD%98%E5%82%A8/n-ceph-01/index.html">
+  <title>【学习笔记-存储】SPDK（三）：SPDK 测试 - 诚实同学的博客</title>
+  <meta name="keywords" content="存储,SPDK,个人博客, 计算机, 学习">
+  <meta desc name="description" content="SPDK 性能简单测试。 - Chen Shi - 诚实同学的博客">
+  
+<meta property="og:type" content="article">
+<meta property="og:title" content="【学习笔记-存储】SPDK（三）：SPDK 测试">
+<meta property="og:url" content="https://cs0522.github.io/en/notes/%E5%AD%98%E5%82%A8/n-spdk-03/index.html">
 <meta property="og:site_name" content="诚实同学的博客">
+<meta property="og:description" content="SPDK 性能简单测试。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-<meta property="article:published_time" content="2024-08-27T05:10:36.000Z">
-<meta property="article:modified_time" content="2024-08-27T05:11:38.076Z">
+<meta property="article:published_time" content="2024-09-01T11:35:45.000Z">
+<meta property="article:modified_time" content="2024-09-01T11:36:37.424Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="存储">
-<meta property="article:tag" content="ceph">
+<meta property="article:tag" content="SPDK">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
   <style>
@@ -1764,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1725184034364),
+    lastupdate: new Date(1725207321409),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2528,7 +2530,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 <div id="l_main" class=''>
   <article itemscope itemtype="http://schema.org/Article" class="article post white-box reveal md blur article-type-post" id="post" itemscope itemprop="blogPost">
-  <link itemprop="mainEntityOfPage" href="https://cs0522.github.io/notes/存储/n-ceph-01/">
+  <link itemprop="mainEntityOfPage" href="https://cs0522.github.io/notes/存储/n-spdk-03/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="诚实同学的博客">
   </span>
@@ -2549,7 +2551,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title" itemprop="name headline">
-        【学习笔记-存储】ceph（一）
+        【学习笔记-存储】SPDK（三）：SPDK 测试
       </h1>
       <div class='new-meta-box'>
         
@@ -2584,10 +2586,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
         
           
-            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2024-08-27T13:10:36+08:00">
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2024-09-01T19:35:45+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：Aug 27, 2024</p>
+    <p>发布于：Sep 1, 2024</p>
   </a>
 </div>
 
@@ -2598,7 +2600,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>0 words</p>
+      <p>9 words</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2621,9 +2623,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <span id="more"></span>
+    <p>SPDK 性能简单测试。</p>
+<span id="more"></span>
+<div class="story post-story"><h2 id="perf">perf</h2>
+</div><div class="story post-story"><h2 id="fio">fio</h2>
 
-
+</div>
   </div>
   
   
@@ -2647,10 +2652,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-08-27T13:11:38+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-01T19:36:37+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：Aug 27, 2024</p>
+    <p>最后更新于：Sep 1, 2024</p>
   </a>
 </div>
 
@@ -2659,8 +2664,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E5%AD%98%E5%82%A8/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>存储</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/ceph/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>ceph</p></a></div>
-  <span hidden itemprop="keywords">存储 ceph</span>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E5%AD%98%E5%82%A8/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>存储</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/SPDK/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>SPDK</p></a></div>
+  <span hidden itemprop="keywords">存储 SPDK</span>
 
 
         
@@ -2680,7 +2685,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-ceph-01/&title=【学习笔记-存储】ceph（一） - 诚实同学的博客&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/&title=【学习笔记-存储】SPDK（三）：SPDK 测试 - 诚实同学的博客&summary=SPDK 性能简单测试。"
           
           >
           
@@ -2692,7 +2697,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-ceph-01/&title=【学习笔记-存储】ceph（一） - 诚实同学的博客&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/&title=【学习笔记-存储】SPDK（三）：SPDK 测试 - 诚实同学的博客&summary=SPDK 性能简单测试。"
           
           >
           
@@ -2704,7 +2709,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-ceph-01/&title=【学习笔记-存储】ceph（一） - 诚实同学的博客&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/&title=【学习笔记-存储】SPDK（三）：SPDK 测试 - 诚实同学的博客&summary=SPDK 性能简单测试。"
           
           >
           
@@ -2737,25 +2742,20 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/notes/%E5%AD%98%E5%82%A8/n-spdk-01/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【学习笔记-存储】SPDK（一）初识 SPDK 框架</p>
-          <p class='content'>了解 SPDK。
-
-简介
-SPDK 存储性能开发套件（Storage Performance Development Kit）—— 针对于支持 NVMe 协议的 SSD 设备。
-是 Intel ...</p>
-        </a>
       
-      
-        <a class='next' href='/notes/%E5%AD%98%E5%82%A8/n-nvmeof-02/'>
-          <p class='title'>【学习笔记-存储】NVMeoF（二）：NVMe over RDMA 环境部署<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>NVMe over RDMA 环境部署记录。
+        <a class='next' href='/notes/%E5%AD%98%E5%82%A8/n-spdk-02/'>
+          <p class='title'>【学习笔记-存储】SPDK（二）：SPDK 安装与部署<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>记录 spdk 的安装和部署过程。
 
+环境准备
 
-前提虚拟机环境要求：
-1. Ubuntu 22.04
-2. Ubuntu 虚拟机的磁盘配置为 NVMe
-3. clone 为两份虚拟机，一份为 ...</p>
+Ubuntu 22.04 虚拟机
+2 块虚拟硬盘：
+
+SATA：用于安装 Ubuntu
+NVMe：用于绑定 spdk
+
+NVMe 硬盘不需要挂载...</p>
         </a>
       
     </div>
@@ -2812,7 +2812,7 @@ SPDK 存储性能开发套件（Storage Performance Development Kit）—— 针
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>85.4k 字</div>
+          <div>85.7k 字</div>
         </div>
       
 
@@ -2837,7 +2837,7 @@ SPDK 存储性能开发套件（Storage Performance Development Kit）—— 针
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2024-09-01 日</div>
+          <div id="last-update-show">2024-09-02 日</div>
         </div>
       
     </div>
@@ -2854,9 +2854,19 @@ SPDK 存储性能开发套件（Storage Performance Development Kit）—— 针
   
 
 
-  <div class="">
-    <!-- pjax占位 -->
-  </div>
+  <section class="widget toc-wrapper desktop mobile " id="toc-div" >
+    
+  <header>
+    
+      <i class="fa-solid fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#perf"><span class="toc-number">1.</span> <span class="toc-text">perf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fio"><span class="toc-number">2.</span> <span class="toc-text">fio</span></a></li></ol>
+    </div>
+  </section>
 
   
 
@@ -3688,7 +3698,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4007,7 +4017,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/notes/存储/n-ceph-01/","name":"【学习笔记-存储】ceph（一）"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】ceph（一）","description":"Patience is key in life.","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-ceph-01/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-ceph-01/","wordCount":0,"datePublished":"2024-08-27T05:10:36.000Z","dateModified":"2024-08-27T05:11:38.076Z","articleSection":"学习笔记","keywords":"存储,ceph","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/notes/存储/n-spdk-03/","name":"【学习笔记-存储】SPDK（三）：SPDK 测试"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（三）：SPDK 测试","description":"SPDK 性能简单测试。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/","wordCount":12,"datePublished":"2024-09-01T11:35:45.000Z","dateModified":"2024-09-01T11:36:37.424Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

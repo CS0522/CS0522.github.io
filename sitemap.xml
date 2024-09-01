@@ -11,6 +11,15 @@
   </url>
   
   <url>
+    <loc>https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/</loc>
+    
+    <lastmod>2024-09-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-02/</loc>
     
     <lastmod>2024-09-01</lastmod>
@@ -23,15 +32,6 @@
     <loc>https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-nvmeof-02/</loc>
     
     <lastmod>2024-08-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-ceph-01/</loc>
-    
-    <lastmod>2024-08-27</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1005,6 +1005,20 @@
   </url>
   
   <url>
+    <loc>https://cs0522.github.io/tags/C/</loc>
+    <lastmod>2024-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://cs0522.github.io/tags/Linux/</loc>
+    <lastmod>2024-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://cs0522.github.io/tags/Hexo/</loc>
     <lastmod>2024-09-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -1020,20 +1034,6 @@
   
   <url>
     <loc>https://cs0522.github.io/tags/Blog/</loc>
-    <lastmod>2024-09-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://cs0522.github.io/tags/C/</loc>
-    <lastmod>2024-09-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://cs0522.github.io/tags/Linux/</loc>
     <lastmod>2024-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1159,6 +1159,13 @@
   </url>
   
   <url>
+    <loc>https://cs0522.github.io/tags/DiskSim/</loc>
+    <lastmod>2024-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://cs0522.github.io/tags/RAID/</loc>
     <lastmod>2024-09-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -1173,28 +1180,14 @@
   </url>
   
   <url>
-    <loc>https://cs0522.github.io/tags/%E5%AD%98%E5%82%A8/</loc>
-    <lastmod>2024-09-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://cs0522.github.io/tags/ceph/</loc>
-    <lastmod>2024-09-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://cs0522.github.io/tags/DiskSim/</loc>
-    <lastmod>2024-09-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://cs0522.github.io/tags/SimPy/</loc>
+    <lastmod>2024-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://cs0522.github.io/tags/%E5%AD%98%E5%82%A8/</loc>
     <lastmod>2024-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1336,6 +1329,13 @@
   </url>
   
   <url>
+    <loc>https://cs0522.github.io/categories/learnings/%E7%9B%98%E8%8A%82%E8%83%BD/</loc>
+    <lastmod>2024-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://cs0522.github.io/categories/learnings/ANN/</loc>
     <lastmod>2024-09-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -1343,7 +1343,7 @@
   </url>
   
   <url>
-    <loc>https://cs0522.github.io/categories/learnings/%E7%9B%98%E8%8A%82%E8%83%BD/</loc>
+    <loc>https://cs0522.github.io/categories/notes/DiskSim/</loc>
     <lastmod>2024-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1365,13 +1365,6 @@
   
   <url>
     <loc>https://cs0522.github.io/categories/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2024-09-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://cs0522.github.io/categories/notes/DiskSim/</loc>
     <lastmod>2024-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
