@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1725121193800),
+    lastupdate: new Date(1725184034364),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2596,7 +2596,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>418 words</p>
+      <p>420 words</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2628,45 +2628,82 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h3 id="windows">Windows</h3>
 <ul>
 <li><p>Install <code>OpenSSH Client</code> and <code>OpenSSH Server</code> (not necessary)</p></li>
-<li><p>Powershell (Admin) input<br />
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Start-Service sshd</span><br></pre></td></tr></table></figure></p></li>
-<li><p>Command Prompt input<br />
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh Frank@localhost</span><br></pre></td></tr></table></figure> and connect successfully, but it needs password;</p></li>
-<li><p>For no-password, use Git to generate rsa key<br />
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure> and get files <code>id_rsa</code> and <code>id_rsa.pub</code> under dir <code>~/.ssh</code></p></li>
+<li><p>Powershell (Admin) input</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">Start-Service</span> sshd</a></code></pre></div></li>
+<li><p>Command Prompt input</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">ssh</span> Frank@localhost</a></code></pre></div>
+<p>and connect successfully, but it needs password;</p></li>
+<li><p>For no-password, use Git to generate rsa key</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">ssh-keygen</span> -t rsa</a></code></pre></div>
+<p>and get files <code>id_rsa</code> and <code>id_rsa.pub</code> under dir <code>~/.ssh</code></p></li>
 <li><p>Copy the content in the <code>id_rsa.pub</code> to <code>~/.ssh/authorized_keys</code> which is on the server</p></li>
-<li><p>Create a file called <code>config</code> under the <code>.ssh/</code>, in the <code>config</code> file<br />
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host [anynameuwant]</span><br><span class="line">HostName [host ip or domain]</span><br><span class="line">User [username on server]</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile [.ssh/id_rsa]</span><br></pre></td></tr></table></figure></p></li>
-<li><p>Finally, Command Prompt input<br />
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh [anynameuwant]</span><br></pre></td></tr></table></figure> and it will connect successfully without password if u have done all above correctly.</p></li>
+<li><p>Create a file called <code>config</code> under the <code>.ssh/</code>, in the <code>config</code> file</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ex">Host</span> [anynameuwant]</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="ex">HostName</span> [host ip or domain]</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="ex">User</span> [username on server]</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="ex">PreferredAuthentications</span> publickey</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="ex">IdentityFile</span> [.ssh/id_rsa]</a></code></pre></div></li>
+<li><p>Finally, Command Prompt input</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">ssh</span> [anynameuwant]</a></code></pre></div>
+<p>and it will connect successfully without password if u have done all above correctly.</p></li>
 </ul>
 <h3 id="linux">Linux</h3>
 <ul>
-<li>Almost the same as Windows, but has a more convenient way to copy <code>id_rsa.pub</code>. Terminal input<br />
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id -i [~/.ssh/id_rsa.pub] [user]@[server]</span><br></pre></td></tr></table></figure></li>
+<li><p>Almost the same as Windows, but has a more convenient way to copy <code>id_rsa.pub</code>. Terminal input</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="ex">ssh-copy-id</span> -i [~/.ssh/id_rsa.pub] [user]@[server]</a></code></pre></div></li>
 </ul>
 </div><div class="story post-story"><h2 id="server-side">Server Side</h2>
 <blockquote>
 <p>The most essential thing is to pay attention to the authority of the dir <code>.ssh</code>. Use <code>chmod</code> command.</p>
 </blockquote>
 <ul>
-<li><p>Install <code>openSSH</code><br />
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install openssh-server</span><br></pre></td></tr></table></figure> and start it:<br />
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh start</span><br></pre></td></tr></table></figure></p></li>
-<li><p>Use <code>vim</code> and open <code>/etc/ssh/sshd_config</code>, add following contents <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AuthorizedKeysFile .ssh/authorized_keys </span><br><span class="line">  </span><br><span class="line">PubkeyAuthentication <span class="built_in">yes</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>Install <code>openSSH</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="fu">sudo</span> apt install openssh-server</a></code></pre></div>
+<p>and start it:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="ex">/etc/init.d/ssh</span> start</a></code></pre></div></li>
+<li><p>Use <code>vim</code> and open <code>/etc/ssh/sshd_config</code>, add following contents</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1">  <span class="ex">AuthorizedKeysFile</span> .ssh/authorized_keys </a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">  <span class="ex">PubkeyAuthentication</span> yes</a></code></pre></div></li>
 <li><p>Generate <code>.ssh</code> directory by using <code>ssh-keygen</code></p></li>
-<li><p>If no <code>authorized_keys</code> file, generate one (and need to change authority in following steps)<br />
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></p></li>
-<li><p>将<code>服务器自己的公钥</code> 和 <code>远程登录机器对应的公钥</code> 复制到 <code>authorized_keys</code> 文件中<br />
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/[id_rsa name].pub &gt;&gt; ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></p></li>
-<li><p>Finally change authority<br />
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">～: 750,  </span><br><span class="line">`~/.ssh: 700,  </span><br><span class="line">`~/.ssh/*: 600,  </span><br><span class="line">`~/.ssh/config: 700,</span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> 700 ~/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 600 .ssh/authorized_keys</span><br></pre></td></tr></table></figure></p></li>
+<li><p>If no <code>authorized_keys</code> file, generate one (and need to change authority in following steps)</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="fu">touch</span> ~/.ssh/authorized_keys</a></code></pre></div></li>
+<li><p>将<code>服务器自己的公钥</code> 和 <code>远程登录机器对应的公钥</code> 复制到 <code>authorized_keys</code> 文件中</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="fu">cat</span> ~/.ssh/[id_rsa name].pub <span class="op">&gt;&gt;</span> ~/.ssh/authorized_keys</a></code></pre></div></li>
+<li><p>Finally change authority</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1">～: <span class="ex">750</span>,  </a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">`</span><span class="ex">~</span>/.ssh: <span class="ex">700</span>,  </a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw">`</span><span class="ex">~/.ssh</span>/*<span class="bu">:</span> 600,  </a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="kw">`</span><span class="ex">~/.ssh</span>/config: <span class="ex">700</span>,</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="fu">chmod</span> 700 ~/.ssh</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="fu">chmod</span> 600 .ssh/authorized_keys</a></code></pre></div></li>
 <li><p>Theoretically it works</p></li>
 </ul>
 <hr />
 <h3 id="管理会话-screen">管理会话 —— screen</h3>
 <p>管理会话，SSH 时断开连接也不中断正在运行的进程，重新连接 SSH 后可以恢复。</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 screen</span></span><br><span class="line">sudo apt install screen</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建 screen</span></span><br><span class="line">screen -S &lt;name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入 screen</span></span><br><span class="line">screen -r &lt;name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 退出当前 screen</span></span><br><span class="line"><span class="comment"># 在当前 screen 下</span></span><br><span class="line">Ctrl+A，Ctrl+D  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示 screen list</span></span><br><span class="line">​​​​​​​screen -<span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除指定 screen</span></span><br><span class="line"><span class="comment"># 在当前 screen 下</span></span><br><span class="line">Ctrl+D</span><br><span class="line"><span class="comment"># 不在当前 screen 下</span></span><br><span class="line">​​​​​​​screen -S &lt;name&gt; -X quit</span><br></pre></td></tr></table></figure></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># 安装 screen</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="fu">sudo</span> apt install screen</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="co"># 新建 screen</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="ex">screen</span> -S <span class="op">&lt;</span>name<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="co"># 进入 screen</span></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="ex">screen</span> -r <span class="op">&lt;</span>name<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb13-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co"># 退出当前 screen</span></a>
+<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co"># 在当前 screen 下</span></a>
+<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="ex">Ctrl+A</span>，Ctrl+D  </a>
+<a class="sourceLine" id="cb13-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co"># 显示 screen list</span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15">​​​​​​​<span class="ex">screen</span> -ls</a>
+<a class="sourceLine" id="cb13-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb13-17" data-line-number="17"><span class="co"># 删除指定 screen</span></a>
+<a class="sourceLine" id="cb13-18" data-line-number="18"><span class="co"># 在当前 screen 下</span></a>
+<a class="sourceLine" id="cb13-19" data-line-number="19"><span class="ex">Ctrl+D</span></a>
+<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="co"># 不在当前 screen 下</span></a>
+<a class="sourceLine" id="cb13-21" data-line-number="21">​​​​​​​<span class="ex">screen</span> -S <span class="op">&lt;</span>name<span class="op">&gt;</span> -X quit</a></code></pre></div>
 
 </div>
   </div>
@@ -2791,7 +2828,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 Ubuntu14.04 x64 以下
 测试通过：Ubuntu14.04 x64，Ubuntu10.04 x86
-老版本需要更换官方源 1#...</p>
+老版本需要更换官方源
+# ...</p>
         </a>
       
       
@@ -2801,7 +2839,7 @@ Ubuntu14.04 x64 以下
 
 安装 Node
 安装 nvm 工具
-1curl https:# raw.githubusercontent.com/creationix/nvm/ma...</p>
+curl https:# raw.githubusercontent.com/creationix/nvm/mas...</p>
         </a>
       
     </div>
@@ -2858,7 +2896,7 @@ Ubuntu14.04 x64 以下
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>84.2k 字</div>
+          <div>85.4k 字</div>
         </div>
       
 
@@ -3709,6 +3747,17 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
   <script>
 
+  volantis.css("https://unpkg.com/highlight.js@11.10.0/styles/vs2015.css");
+
+
+  volantis.js("https://gcore.jsdelivr.net/gh/highlightjs/cdn-release@11/build/highlight.min.js").then(()=>{
+    volantis.requestAnimationFrame(hljs.highlightAll)
+  })
+  volantis.pjax.push(()=>{
+    document.querySelectorAll('pre code').forEach((block) => {
+      hljs.highlightElement(block);
+    });
+  },"highlightjs")
 
 
   function pjax_highlightjs_copyCode(){
@@ -3733,7 +3782,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 
