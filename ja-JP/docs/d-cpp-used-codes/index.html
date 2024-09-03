@@ -46,7 +46,7 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-06-29T13:46:07.000Z">
-<meta property="article:modified_time" content="2024-07-21T03:22:58.897Z">
+<meta property="article:modified_time" content="2024-09-03T08:12:26.355Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="Linux">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1725334347669),
+    lastupdate: new Date(1725355844043),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2596,13 +2596,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：1.6k 字</p>
+      <p>字数：1.9k 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>时长：7 分钟</p>
+      <p>时长：9 分钟</p>
     </a>
   </div>
 
@@ -2892,6 +2892,59 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a class="sourceLine" id="cb16-18" data-line-number="18"><span class="co">// result</span></a>
 <a class="sourceLine" id="cb16-19" data-line-number="19"><span class="co">// print: ~B()</span></a>
 <a class="sourceLine" id="cb16-20" data-line-number="20"><span class="co">//        ~A()</span></a></code></pre></div>
+</div><div class="story post-story"><h2 id="barrier-方式的无锁线程同步">barrier 方式的无锁线程同步</h2>
+<p><code>Linux</code> 中提供了多种同步机制，其中使用 <code>barrier</code> 是多线程之间进行同步的方法之一。</p>
+<p>假设多个线程约定一个栅栏，只有当所有的线程都达到这个栅栏时，栅栏才会放行，否则到达此处的线程将被阻塞。</p>
+<p>在代码中，当所有 <code>thread</code> 都执行到 <code>barrier_wait()</code> 后，才继续执行后续代码。</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="pp">#include </span><span class="im">&lt;time.h&gt;</span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="pp">#include </span><span class="im">&lt;pthread.h&gt;</span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="dt">pthread_barrier_t</span> barrier;</a>
+<a class="sourceLine" id="cb17-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="dt">void</span>* initor(<span class="dt">void</span>* args) &#123;</a>
+<a class="sourceLine" id="cb17-11" data-line-number="11">    printf(<span class="st">&quot;---------------thread init work(</span><span class="sc">%d</span><span class="st">)--------------</span><span class="sc">\n</span><span class="st">&quot;</span>, time(NULL));</a>
+<a class="sourceLine" id="cb17-12" data-line-number="12">    <span class="co">//模拟初始化工作。</span></a>
+<a class="sourceLine" id="cb17-13" data-line-number="13">    sleep(<span class="dv">3</span>);</a>
+<a class="sourceLine" id="cb17-14" data-line-number="14">    <span class="co">//到达栅栏</span></a>
+<a class="sourceLine" id="cb17-15" data-line-number="15">    pthread_barrier_wait(&amp;barrier);</a>
+<a class="sourceLine" id="cb17-16" data-line-number="16">    printf(<span class="st">&quot;--------------thread start work(</span><span class="sc">%d</span><span class="st">)--------------</span><span class="sc">\n</span><span class="st">&quot;</span>, time(NULL));</a>
+<a class="sourceLine" id="cb17-17" data-line-number="17">    sleep(<span class="dv">3</span>);</a>
+<a class="sourceLine" id="cb17-18" data-line-number="18">    printf(<span class="st">&quot;--------------thread stop work(</span><span class="sc">%d</span><span class="st">)--------------</span><span class="sc">\n</span><span class="st">&quot;</span>, time(NULL));</a>
+<a class="sourceLine" id="cb17-19" data-line-number="19">    <span class="cf">return</span> NULL;</a>
+<a class="sourceLine" id="cb17-20" data-line-number="20">&#125;</a>
+<a class="sourceLine" id="cb17-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb17-22" data-line-number="22"><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span>* argv[]) &#123;</a>
+<a class="sourceLine" id="cb17-23" data-line-number="23">    <span class="co">//初始化栅栏，该栅栏等待两个线程到达时放行</span></a>
+<a class="sourceLine" id="cb17-24" data-line-number="24">    pthread_barrier_init(&amp;barrier, NULL, <span class="dv">2</span>);</a>
+<a class="sourceLine" id="cb17-25" data-line-number="25">    printf(<span class="st">&quot;**************main thread barrier init done****************</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb17-26" data-line-number="26">    <span class="dt">pthread_t</span> pid;</a>
+<a class="sourceLine" id="cb17-27" data-line-number="27">    pthread_create(&amp;pid, NULL, &amp;initor, NULL);</a>
+<a class="sourceLine" id="cb17-28" data-line-number="28">    printf(<span class="st">&quot;**************main waiting(</span><span class="sc">%d</span><span class="st">)********************</span><span class="sc">\n</span><span class="st">&quot;</span>, time(NULL));</a>
+<a class="sourceLine" id="cb17-29" data-line-number="29">    <span class="co">//主线程到达，被阻塞，当初始化线程到达栅栏时才放行。</span></a>
+<a class="sourceLine" id="cb17-30" data-line-number="30">    pthread_barrier_wait(&amp;barrier);</a>
+<a class="sourceLine" id="cb17-31" data-line-number="31">    printf(<span class="st">&quot;***************main after barrier wait(</span><span class="sc">%d</span><span class="st">)***************</span><span class="sc">\n</span><span class="st">&quot;</span>, time(NULL));</a>
+<a class="sourceLine" id="cb17-32" data-line-number="32">    pthread_barrier_destroy(&amp;barrier);</a>
+<a class="sourceLine" id="cb17-33" data-line-number="33">    printf(<span class="st">&quot;***************main start to work(</span><span class="sc">%d</span><span class="st">)****************</span><span class="sc">\n</span><span class="st">&quot;</span>, time(NULL));</a>
+<a class="sourceLine" id="cb17-34" data-line-number="34">    sleep(<span class="dv">10</span>);</a>
+<a class="sourceLine" id="cb17-35" data-line-number="35">    pthread_join(pid, NULL);</a>
+<a class="sourceLine" id="cb17-36" data-line-number="36">    printf(<span class="st">&quot;***************thread complete(</span><span class="sc">%d</span><span class="st">)***************</span><span class="sc">\n</span><span class="st">&quot;</span>, time(NULL));</a>
+<a class="sourceLine" id="cb17-37" data-line-number="37"></a>
+<a class="sourceLine" id="cb17-38" data-line-number="38">    system(<span class="st">&quot;pause&quot;</span>);</a>
+<a class="sourceLine" id="cb17-39" data-line-number="39">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb17-40" data-line-number="40">&#125;</a></code></pre></div>
+<p>输出结果：</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="ex">**************main</span> thread barrier init done****************</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="ex">**************main</span> waiting(1725351103)<span class="ex">********************</span></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="ex">---------------thread</span> init work(1725351103)<span class="ex">--------------</span> </a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="ex">--------------thread</span> start work(1725351106)<span class="ex">--------------</span></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="ex">***************main</span> after barrier wait(1725351106)<span class="ex">***************</span></a>
+<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="ex">***************main</span> start to work(1725351106)<span class="ex">****************</span>    </a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="ex">--------------thread</span> stop work(1725351109)<span class="ex">--------------</span></a>
+<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="ex">***************thread</span> complete(1725351116)<span class="ex">***************</span></a></code></pre></div>
 </div><div class="story post-story"><h2 id="section"></h2>
 
 </div>
@@ -2918,10 +2971,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-07-21T11:22:58+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-03T16:12:26+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：2024年7月21日</p>
+    <p>最后更新于：2024年9月3日</p>
   </a>
 </div>
 
@@ -3080,7 +3133,7 @@ https://we...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>86.5k 字</div>
+          <div>87.1k 字</div>
         </div>
       
 
@@ -3132,7 +3185,7 @@ https://we...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#const-char-string-%E4%B8%8E-char-%E7%9A%84%E8%BD%AC%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">const char, string 与 char 的转化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%8F%E5%B0%91-vector-%E5%A2%9E%E5%8A%A0%E5%85%83%E7%B4%A0%E7%9A%84%E5%BC%80%E9%94%80"><span class="toc-number">2.</span> <span class="toc-text">减少 vector 增加元素的开销</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-number">3.</span> <span class="toc-text">获取文件描述符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96-ivecs-%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">读取 ivecs 数据文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96-bvecs-%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">读取 bvecs 数据文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mmap-%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E8%AF%BB%E5%8F%96%E5%A4%A7%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-number">6.</span> <span class="toc-text">mmap 内存映射读取大文件的一部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF"><span class="toc-number">7.</span> <span class="toc-text">打印错误信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">8.</span> <span class="toc-text">创建虚拟内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%B8%AD%E5%88%9B%E5%BB%BA-vector-%E6%95%B0%E7%BB%84"><span class="toc-number">9.</span> <span class="toc-text">虚拟内存中创建 vector 数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#placement-new"><span class="toc-number">10.</span> <span class="toc-text">placement new</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E5%B7%B2%E8%AE%BF%E9%97%AE%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="toc-number">11.</span> <span class="toc-text">保存已访问的数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0-vector%E9%80%9A%E8%BF%87%E5%85%B6%E4%BB%96-stl-%E5%AE%B9%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%80%E4%B8%AA-vector"><span class="toc-number">12.</span> <span class="toc-text">构造 vector：通过其他 STL 容器初始化一个 vector</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F"><span class="toc-number">13.</span> <span class="toc-text">获取文件大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E4%B8%AD%E7%88%B6%E7%B1%BB%E6%9E%90%E6%9E%84%E8%B0%83%E7%94%A8%E5%AD%90%E7%B1%BB%E6%9E%90%E6%9E%84"><span class="toc-number">14.</span> <span class="toc-text">多态中父类析构调用子类析构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section"><span class="toc-number">15.</span> <span class="toc-text"></span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#const-char-string-%E4%B8%8E-char-%E7%9A%84%E8%BD%AC%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">const char, string 与 char 的转化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%8F%E5%B0%91-vector-%E5%A2%9E%E5%8A%A0%E5%85%83%E7%B4%A0%E7%9A%84%E5%BC%80%E9%94%80"><span class="toc-number">2.</span> <span class="toc-text">减少 vector 增加元素的开销</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-number">3.</span> <span class="toc-text">获取文件描述符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96-ivecs-%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">读取 ivecs 数据文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96-bvecs-%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">读取 bvecs 数据文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mmap-%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E8%AF%BB%E5%8F%96%E5%A4%A7%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-number">6.</span> <span class="toc-text">mmap 内存映射读取大文件的一部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF"><span class="toc-number">7.</span> <span class="toc-text">打印错误信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">8.</span> <span class="toc-text">创建虚拟内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%B8%AD%E5%88%9B%E5%BB%BA-vector-%E6%95%B0%E7%BB%84"><span class="toc-number">9.</span> <span class="toc-text">虚拟内存中创建 vector 数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#placement-new"><span class="toc-number">10.</span> <span class="toc-text">placement new</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E5%B7%B2%E8%AE%BF%E9%97%AE%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="toc-number">11.</span> <span class="toc-text">保存已访问的数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0-vector%E9%80%9A%E8%BF%87%E5%85%B6%E4%BB%96-stl-%E5%AE%B9%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%80%E4%B8%AA-vector"><span class="toc-number">12.</span> <span class="toc-text">构造 vector：通过其他 STL 容器初始化一个 vector</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F"><span class="toc-number">13.</span> <span class="toc-text">获取文件大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E4%B8%AD%E7%88%B6%E7%B1%BB%E6%9E%90%E6%9E%84%E8%B0%83%E7%94%A8%E5%AD%90%E7%B1%BB%E6%9E%90%E6%9E%84"><span class="toc-number">14.</span> <span class="toc-text">多态中父类析构调用子类析构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#barrier-%E6%96%B9%E5%BC%8F%E7%9A%84%E6%97%A0%E9%94%81%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5"><span class="toc-number">15.</span> <span class="toc-text">barrier 方式的无锁线程同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section"><span class="toc-number">16.</span> <span class="toc-text"></span></a></li></ol>
     </div>
   </section>
 
@@ -3966,7 +4019,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4285,7 +4338,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/docs/","name":"文档小记"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/ja-JP/docs/d-cpp-used-codes/","name":"【文档小记】记录 C++ 中使用过的有用代码"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【文档小记】记录 C++ 中使用过的有用代码","description":"记录 C++ 中使用过的有用代码，以后应该还用的上。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/docs/d-cpp-used-codes/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/docs/d-cpp-used-codes/","wordCount":26,"datePublished":"2024-06-29T13:46:07.000Z","dateModified":"2024-07-21T03:22:58.897Z","articleSection":"文档小记","keywords":"C++,Linux","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/docs/","name":"文档小记"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/ja-JP/docs/d-cpp-used-codes/","name":"【文档小记】记录 C++ 中使用过的有用代码"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【文档小记】记录 C++ 中使用过的有用代码","description":"记录 C++ 中使用过的有用代码，以后应该还用的上。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/docs/d-cpp-used-codes/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/docs/d-cpp-used-codes/","wordCount":26,"datePublished":"2024-06-29T13:46:07.000Z","dateModified":"2024-09-03T08:12:26.355Z","articleSection":"文档小记","keywords":"C++,Linux","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

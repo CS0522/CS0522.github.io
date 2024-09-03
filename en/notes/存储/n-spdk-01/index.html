@@ -46,7 +46,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-08-27T05:10:46.000Z">
-<meta property="article:modified_time" content="2024-09-01T16:14:45.229Z">
+<meta property="article:modified_time" content="2024-09-03T07:55:46.228Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="存储">
 <meta property="article:tag" content="SPDK">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1725334347669),
+    lastupdate: new Date(1725355844043),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2600,13 +2600,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>1k words</p>
+      <p>1.1k words</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>3 min</p>
+      <p>4 min</p>
     </a>
   </div>
 
@@ -2628,6 +2628,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <div class="story post-story"><h2 id="简介">简介</h2>
 <p>SPDK 存储性能开发套件（Storage Performance Development Kit）—— 针对于支持 NVMe 协议的 SSD 设备。</p>
 <p>是 Intel 发布的，提供了一整套工具和库，以实现高性能、扩展性强、全用户态的存储应用程序。它是继 DPDK 之后，Intel 在存储领域推出的又一项颠覆性技术，旨在大幅缩减存储 I/O 栈的软件开销，从而提升存储性能，可以说它就是为了存储性能而生。</p>
+<p>SPDK 的基础是<strong>用户态、轮询、异步、无锁 NVMe 驱动</strong>。这提供了从用户空间应用程序直接访问 SSD 的零拷贝、高度并行的访问。</p>
 <hr />
 </div><div class="story post-story"><h2 id="spdk-引入目的和优势">SPDK 引入目的和优势</h2>
 <p>详见：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/bandaoyu/p/16752023.html">为什么用 SPDK？</a></p>
@@ -2702,7 +2703,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h3 id="tests">./tests</h3>
 <p>测试文件，单元测试、函数功能测试。</p>
 <hr />
-</div><div class="story post-story"><h2 id="未完待续">未完待续</h2>
+</div><div class="story post-story"><h2 id="spdk-hello_world-示例分析">SPDK hello_world 示例分析</h2>
+<p>源代码位于 <code>examples/nvme/hello_world</code> 下，可执行文件位于 <code>build/examples/hello_world</code> 下。通过 <code>hello_world</code> 入门 SPDK 的运行流程，了解 SPDK 用户态驱动的主要工作流程和方式。</p>
+<p>参考文章 <a target="_blank" rel="noopener" href="https://blog.csdn.net/wade1010/article/details/128782710">spdk 入门 hello_world 源码解析</a></p>
 
 </div>
   </div>
@@ -2728,10 +2731,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-02T00:14:45+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-03T15:55:46+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：Sep 2, 2024</p>
+    <p>最后更新于：Sep 3, 2024</p>
   </a>
 </div>
 
@@ -2896,7 +2899,7 @@ dev...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>86.5k 字</div>
+          <div>87.1k 字</div>
         </div>
       
 
@@ -2948,7 +2951,7 @@ dev...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spdk-%E5%BC%95%E5%85%A5%E7%9B%AE%E7%9A%84%E5%92%8C%E4%BC%98%E5%8A%BF"><span class="toc-number">2.</span> <span class="toc-text">SPDK 引入目的和优势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spdk-%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="toc-number">3.</span> <span class="toc-text">SPDK 关键技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spdk-%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84"><span class="toc-number">4.</span> <span class="toc-text">SPDK 软件架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%95%E5%B1%82%E9%A9%B1%E5%8A%A8%E5%B1%82drivers"><span class="toc-number">4.1.</span> <span class="toc-text">底层：驱动层（Drivers）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E5%B1%82%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1%E5%B1%82storage-services"><span class="toc-number">4.2.</span> <span class="toc-text">中间层：存储服务层（Storage Services）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E5%B1%82%E5%AD%98%E5%82%A8%E5%8D%8F%E8%AE%AE%E5%B1%82storage-protocols"><span class="toc-number">4.3.</span> <span class="toc-text">上层：存储协议层（Storage Protocols）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spdk-%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-number">5.</span> <span class="toc-text">SPDK 项目结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#app%E6%A0%B8%E5%BF%83"><span class="toc-number">5.1.</span> <span class="toc-text">.&#x2F;app（核心）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lib%E6%A0%B8%E5%BF%83"><span class="toc-number">5.2.</span> <span class="toc-text">.&#x2F;lib（核心）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#module%E6%A0%B8%E5%BF%83"><span class="toc-number">5.3.</span> <span class="toc-text">.&#x2F;module（核心）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#examples"><span class="toc-number">5.4.</span> <span class="toc-text">.&#x2F;examples</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scripts"><span class="toc-number">5.5.</span> <span class="toc-text">.&#x2F;scripts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tests"><span class="toc-number">5.6.</span> <span class="toc-text">.&#x2F;tests</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AA%E5%AE%8C%E5%BE%85%E7%BB%AD"><span class="toc-number">6.</span> <span class="toc-text">未完待续</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spdk-%E5%BC%95%E5%85%A5%E7%9B%AE%E7%9A%84%E5%92%8C%E4%BC%98%E5%8A%BF"><span class="toc-number">2.</span> <span class="toc-text">SPDK 引入目的和优势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spdk-%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="toc-number">3.</span> <span class="toc-text">SPDK 关键技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spdk-%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84"><span class="toc-number">4.</span> <span class="toc-text">SPDK 软件架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%95%E5%B1%82%E9%A9%B1%E5%8A%A8%E5%B1%82drivers"><span class="toc-number">4.1.</span> <span class="toc-text">底层：驱动层（Drivers）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E5%B1%82%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1%E5%B1%82storage-services"><span class="toc-number">4.2.</span> <span class="toc-text">中间层：存储服务层（Storage Services）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E5%B1%82%E5%AD%98%E5%82%A8%E5%8D%8F%E8%AE%AE%E5%B1%82storage-protocols"><span class="toc-number">4.3.</span> <span class="toc-text">上层：存储协议层（Storage Protocols）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spdk-%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-number">5.</span> <span class="toc-text">SPDK 项目结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#app%E6%A0%B8%E5%BF%83"><span class="toc-number">5.1.</span> <span class="toc-text">.&#x2F;app（核心）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lib%E6%A0%B8%E5%BF%83"><span class="toc-number">5.2.</span> <span class="toc-text">.&#x2F;lib（核心）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#module%E6%A0%B8%E5%BF%83"><span class="toc-number">5.3.</span> <span class="toc-text">.&#x2F;module（核心）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#examples"><span class="toc-number">5.4.</span> <span class="toc-text">.&#x2F;examples</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scripts"><span class="toc-number">5.5.</span> <span class="toc-text">.&#x2F;scripts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tests"><span class="toc-number">5.6.</span> <span class="toc-text">.&#x2F;tests</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spdk-hello_world-%E7%A4%BA%E4%BE%8B%E5%88%86%E6%9E%90"><span class="toc-number">6.</span> <span class="toc-text">SPDK hello_world 示例分析</span></a></li></ol>
     </div>
   </section>
 
@@ -3782,7 +3785,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4101,7 +4104,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/notes/存储/n-spdk-01/","name":"【学习笔记-存储】SPDK（一）初识 SPDK 框架"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（一）初识 SPDK 框架","description":"了解 SPDK。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-01/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-01/","wordCount":8,"datePublished":"2024-08-27T05:10:46.000Z","dateModified":"2024-09-01T16:14:45.229Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/notes/存储/n-spdk-01/","name":"【学习笔记-存储】SPDK（一）初识 SPDK 框架"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（一）初识 SPDK 框架","description":"了解 SPDK。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-01/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-01/","wordCount":8,"datePublished":"2024-08-27T05:10:46.000Z","dateModified":"2024-09-03T07:55:46.228Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
