@@ -46,7 +46,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-09-01T11:35:45.000Z">
-<meta property="article:modified_time" content="2024-09-03T08:01:24.617Z">
+<meta property="article:modified_time" content="2024-09-05T16:46:32.171Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="存储">
 <meta property="article:tag" content="SPDK">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1725357559612),
+    lastupdate: new Date(1725554967593),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2600,13 +2600,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>108 words</p>
+      <p>2.1k words</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>1 min</p>
+      <p>9 min</p>
     </a>
   </div>
 
@@ -2623,11 +2623,303 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <p>SPDK 自带的性能测试应用 spdk_nvme_perf 的源代码 perf.c 的粗浅分析，进一步熟悉 SPDK 用户态驱动的主要工作流程和方式。</p>
+    <p>SPDK 自带的性能测试应用 <code>spdk_nvme_perf</code> 的源代码 <code>perf.c</code> 的粗浅分析，进一步熟悉 SPDK 用户态驱动的主要工作流程和方式。</p>
 <span id="more"></span>
 <div class="story post-story"><h2 id="简介">简介</h2>
 <p>perf 是 SPDK 用来测试 NVMe SSD 性能的工具，最新版本的 SPDK 中 perf 源代码在 <code>spdk/app/spdk_nvme_perf/</code> 路径下。perf 主要用来测试 NVMe SSD 的 IOPS，Bandwidth 和 Latency，它既可以测本地的 target，也可以测远端的 target。</p>
-</div><div class="story post-story"><h2 id="section"></h2>
+</div><div class="story post-story"><h2 id="perf-的-main-函数主流程">perf 的 main() 函数主流程</h2>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/perf-main.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/perf-main.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+<hr />
+</div><div class="story post-story"><h2 id="perf-的宏定义全局变量定义的结构体">perf 的宏定义、全局变量、定义的结构体</h2>
+<!-- TODO -->
+<hr />
+</div><div class="story post-story"><h2 id="一perf-环境初始化部分">（一）perf 环境初始化部分</h2>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/perf-01-env-init.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/perf-01-env-init.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+<h3 id="初始化-opts-参数默认值">初始化 opts 参数默认值</h3>
+<pre><code>--&gt; lib/env_dpdk/init.c: spdk_env_opts_init(&amp;opts);</code></pre>
+<p>这部分的功能比较简单，用于初始化 <code>spdk_env_opts</code> 结构体的默认选项，包括共享内存标识符、内存大小、主核心、内存通道数、基本虚拟地址等。</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">spdk_env_opts_init(<span class="kw">struct</span> spdk_env_opts *opts)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">&#123;</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="cf">if</span> (!opts) &#123;</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">        <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    &#125;</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">memset(opts, <span class="dv">0</span>, <span class="kw">sizeof</span>(*opts));</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">    opts-&gt;name = SPDK_ENV_DPDK_DEFAULT_NAME;</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">    opts-&gt;core_mask = SPDK_ENV_DPDK_DEFAULT_CORE_MASK;</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">    opts-&gt;shm_id = SPDK_ENV_DPDK_DEFAULT_SHM_ID;</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">    opts-&gt;mem_size = SPDK_ENV_DPDK_DEFAULT_MEM_SIZE;</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">    opts-&gt;main_core = SPDK_ENV_DPDK_DEFAULT_MAIN_CORE;</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">    opts-&gt;mem_channel = SPDK_ENV_DPDK_DEFAULT_MEM_CHANNEL;</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">    opts-&gt;base_virtaddr = SPDK_ENV_DPDK_DEFAULT_BASE_VIRTADDR;</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">&#125;</a></code></pre></div>
+<p><code>spdk_env_opts</code> 结构体有以下几个域，其他域的初始化赋值应该在后续执行函数中：</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">struct</span> spdk_env_opts &#123;</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">    <span class="dt">const</span> <span class="dt">char</span>      *name;                          <span class="co">// 通常用于标识当前运行的程序或实例。</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="dt">const</span> <span class="dt">char</span>      *core_mask;                     <span class="co">// 指定哪个 CPU 核心可以用于运行 SPDK 任务，使用 CPU 核心掩码表示。</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="dt">const</span> <span class="dt">char</span>      *lcore_map;                     <span class="co">// 逻辑核心映射，描述了各个逻辑核心的映射关系，提供细粒度核心调度控制。</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="dt">int</span>             shm_id;                         <span class="co">// 用于在多个进程之间共享数据。</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="dt">int</span>             mem_channel;                    <span class="co">// 指定要使用的内存通道的数量，根据系统的内存架构优化性能。</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">    <span class="dt">int</span>             main_core;                      <span class="co">// 根据系统的内存架构优化性能。</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">    <span class="dt">int</span>             mem_size;                       <span class="co">// SPDK 将为其使用分配的内存大小。</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">    <span class="dt">bool</span>            no_pci;                         <span class="co">// 是否禁用 PCI 设备支持。是则不初始化 PCI 设备。</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">    <span class="dt">bool</span>            hugepage_single_segments;       <span class="co">// 是否使用单段大页进行内存分配。</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">    <span class="dt">bool</span>            unlink_hugepage;                <span class="co">// 是否在程序退出时卸载大页面。</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">    <span class="dt">bool</span>            no_huge;                        <span class="co">// 是否禁用使用大页内存。</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">    <span class="dt">size_t</span>          num_pci_addr;                   <span class="co">// PCI 地址的数量，通常用于描述需要管理或使用的 PCI 设备数量。</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">    <span class="dt">const</span> <span class="dt">char</span>      *hugedir;                       <span class="co">// 用于指定大页文件的存储位置。</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">    <span class="kw">struct</span> spdk_pci_addr    *pci_blocked;           <span class="co">// 用于描述哪些 PCI 设备在 SPDK 运行时不允许使用。</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">    <span class="kw">struct</span> spdk_pci_addr    *pci_allowed;           <span class="co">// 指定可以使用的 PCI 设备列表。</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">    <span class="dt">const</span> <span class="dt">char</span>      *iova_mode;                     </a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">    <span class="dt">uint64_t</span>        base_virtaddr;                  <span class="co">// 基础虚拟地址，用于 SPDK 从该地址开始分配内存。</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">    <span class="co">/** Opaque context for use of the env implementation. */</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">    <span class="dt">void</span>            *env_context;                   <span class="co">// 环境实现的上下文，通常用于存储环境特定的信息。</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">    <span class="dt">const</span> <span class="dt">char</span>      *vf_token;                      <span class="co">// 虚拟功能的标识符，指定虚拟功能设备。</span></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23">&#125;;</a></code></pre></div>
+<p>在这个函数执行完毕后，<code>main()</code> 中初始化了 <code>opts-&gt;name</code> 以及 <code>opts-&gt;pci_allowed</code> 的值：</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb4-1" data-line-number="1">opts.name = <span class="st">&quot;perf&quot;</span>;</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">opts.pci_allowed = g_allowed_pci_addr;</a></code></pre></div>
+<h3 id="解析-args">解析 args</h3>
+<pre><code>--&gt; perf.c: parse_args(argc, argv, &amp;opts);
+----&gt; dpdk/lib/eal/windows/getopt.c: getopt_long(argc, argv, PERF_GETOPT_SHORT, g_perf_cmdline_opts, &amp;long_idx);
+----&gt; perf.c: add_trid(optarg);
+------&gt; nvme.c: spdk_nvme_transport_id_parse(trid, trid_str);
+--------&gt; nvme.c: spdk_nvme_transport_id_parse_trtype(&amp;trid-&gt;trtype, val)</code></pre>
+<p>进入 <code>parse_args()</code> 函数中，其中通过 <code>while ((op = getopt_long(argc, argv, PERF_GETOPT_SHORT, g_perf_cmdline_opts, &amp;long_idx)) != -1)</code>，也就是 <code>getopt_long()</code> 函数循环读取参数、为 <code>opts</code> 初始化赋值，其中，<code>g_perf_cmdline_opts</code> 为全局定义的 <code>option</code> 结构体的数组，<code>struct option g_perf_cmdline_opts[] = &#123;option1, option2, ...&#125;</code>。</p>
+<p>以 <a href="/notes/%E5%AD%98%E5%82%A8/n-spdk-02/" title="【学习笔记-存储】SPDK（二）：SPDK NVMe over RDMA 部署">【学习笔记-存储】SPDK（二）：SPDK NVMe over RDMA 部署</a> 中的 <code>spdk_nvme_perf</code> 测试示例为例，调用的参数为：<code>./build/bin/spdk_nvme_perf -r 'trtype:rdma adrfam:IPv4 traddr:192.168.159.142 trsvcid:4420' -q 256 -o 4096 -w randread -t 100</code>，其中的指定参数为 <code>-r</code>，<code>-q</code>，<code>-o</code>，<code>-w</code>，<code>-t</code>：</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="dt">static</span> <span class="dt">const</span> <span class="kw">struct</span> option g_perf_cmdline_opts[] = &#123;</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">...,</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">// 传输层协议</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="pp">#define PERF_TRANSPORT  &#39;r&#39;</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">    &#123;<span class="st">&quot;transport&quot;</span>,           required_argument,  NULL, PERF_TRANSPORT&#125;,</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">// io 队列深度。给定时间内，可以同时发出的 io 请求的数量</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="pp">#define PERF_IO_DEPTH   &#39;q&#39;</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">    &#123;<span class="st">&quot;io-depth&quot;</span>,            required_argument,  NULL, PERF_IO_DEPTH&#125;,</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">// io 请求数据大小</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="pp">#define PERF_IO_SIZE    &#39;o&#39;</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13">    &#123;<span class="st">&quot;io-size&quot;</span>,         required_argument,  NULL, PERF_IO_SIZE&#125;,</a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">// 顺序读/写、随机读/写等工作负载</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="pp">#define PERF_IO_PATTERN &#39;w&#39;</span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17">    &#123;<span class="st">&quot;io-pattern&quot;</span>,          required_argument,  NULL, PERF_IO_PATTERN&#125;,</a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">// 测试时间</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="pp">#define PERF_TIME   &#39;t&#39;</span></a>
+<a class="sourceLine" id="cb6-21" data-line-number="21">    &#123;<span class="st">&quot;time&quot;</span>,            required_argument,  NULL, PERF_TIME&#125;,</a>
+<a class="sourceLine" id="cb6-22" data-line-number="22">&#125;</a></code></pre></div>
+<p>以设置 <code>trtype</code> 属性为 <code>RDMA</code> 为例子。</p>
+<p>与 <code>rdma</code> 字样相关的是 <code>PERF_TRANSPORT</code>，在 while 循环中找到处理 <code>PERF_TRANSPORT</code> 的函数：</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="cf">case</span> PERF_TRANSPORT:</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">            <span class="cf">if</span> (add_trid(optarg)) &#123;</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">                usage(argv[<span class="dv">0</span>]);</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">                <span class="cf">return</span> <span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">            &#125;</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">            <span class="cf">break</span>;</a></code></pre></div>
+<p>进入 <code>add_trid()</code> 函数：</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="dt">static</span> <span class="dt">int</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">add_trid(<span class="dt">const</span> <span class="dt">char</span> *trid_str)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">&#123;</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">    <span class="co">// 表示一个 NVMe 传输标识符条目 (trid) 的信息s</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">    <span class="kw">struct</span> trid_entry *trid_entry;</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">    <span class="co">// trtype 是 spdk_nvme_transport_id 结构体中的域</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">    <span class="kw">struct</span> spdk_nvme_transport_id *trid;</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">    <span class="dt">char</span> *ns;</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">    <span class="dt">char</span> *hostnqn;</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">    trid_entry = calloc(<span class="dv">1</span>, <span class="kw">sizeof</span>(*trid_entry));</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">    <span class="cf">if</span> (trid_entry == NULL) &#123;</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">        <span class="cf">return</span> <span class="dv">-1</span>;</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">    &#125;</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">    trid = &amp;trid_entry-&gt;trid;</a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">    trid-&gt;trtype = SPDK_NVME_TRANSPORT_PCIE;</a>
+<a class="sourceLine" id="cb8-18" data-line-number="18">    snprintf(trid-&gt;subnqn, <span class="kw">sizeof</span>(trid-&gt;subnqn), <span class="st">&quot;%s&quot;</span>, SPDK_NVMF_DISCOVERY_NQN);</a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20">    <span class="co">// 解析 trid</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21">    <span class="cf">if</span> (spdk_nvme_transport_id_parse(trid, trid_str) != <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb8-22" data-line-number="22">        fprintf(stderr, <span class="st">&quot;Invalid transport ID format &#39;%s&#39;</span><span class="sc">\n</span><span class="st">&quot;</span>, trid_str);</a>
+<a class="sourceLine" id="cb8-23" data-line-number="23">        free(trid_entry);</a>
+<a class="sourceLine" id="cb8-24" data-line-number="24">        <span class="cf">return</span> <span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb8-25" data-line-number="25">    &#125;</a>
+<a class="sourceLine" id="cb8-26" data-line-number="26">    ...</a>
+<a class="sourceLine" id="cb8-27" data-line-number="27">&#125;</a></code></pre></div>
+<p>进入 <code>spdk_nvme_transport_id_parse(trid, trid_str)</code> 函数：</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">spdk_nvme_transport_id_parse(<span class="kw">struct</span> spdk_nvme_transport_id *trid, <span class="dt">const</span> <span class="dt">char</span> *str)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">&#123;</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">    ...</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">    <span class="cf">if</span> (strcasecmp(key, <span class="st">&quot;trtype&quot;</span>) == <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">        <span class="cf">if</span> (spdk_nvme_transport_id_populate_trstring(trid, val) != <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">            SPDK_ERRLOG(<span class="st">&quot;invalid transport &#39;%s&#39;</span><span class="sc">\n</span><span class="st">&quot;</span>, val);</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">            <span class="cf">return</span> -EINVAL;</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">        &#125;</a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">        <span class="cf">if</span> (spdk_nvme_transport_id_parse_trtype(&amp;trid-&gt;trtype, val) != <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">            SPDK_ERRLOG(<span class="st">&quot;Unknown trtype &#39;%s&#39;</span><span class="sc">\n</span><span class="st">&quot;</span>, val);</a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">            <span class="cf">return</span> -EINVAL;</a>
+<a class="sourceLine" id="cb9-14" data-line-number="14">        &#125;</a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">    &#125;</a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17">    ...</a>
+<a class="sourceLine" id="cb9-18" data-line-number="18">&#125;</a></code></pre></div>
+<p>进入 <code>spdk_nvme_transport_id_parse_trtype(&amp;trid-&gt;trtype, val)</code> 函数：</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">spdk_nvme_transport_id_parse_trtype(<span class="kw">enum</span> spdk_nvme_transport_type *trtype, <span class="dt">const</span> <span class="dt">char</span> *str)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">&#123;</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">    <span class="cf">if</span> (trtype == NULL || str == NULL) &#123;</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">        <span class="cf">return</span> -EINVAL;</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">    &#125;</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">    <span class="cf">if</span> (strcasecmp(str, <span class="st">&quot;PCIe&quot;</span>) == <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">        *trtype = SPDK_NVME_TRANSPORT_PCIE;</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">    &#125; <span class="cf">else</span> <span class="cf">if</span> (strcasecmp(str, <span class="st">&quot;RDMA&quot;</span>) == <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb10-11" data-line-number="11">        *trtype = SPDK_NVME_TRANSPORT_RDMA;</a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">    &#125; <span class="cf">else</span> <span class="cf">if</span> (strcasecmp(str, <span class="st">&quot;FC&quot;</span>) == <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb10-13" data-line-number="13">        *trtype = SPDK_NVME_TRANSPORT_FC;</a>
+<a class="sourceLine" id="cb10-14" data-line-number="14">    &#125; <span class="cf">else</span> <span class="cf">if</span> (strcasecmp(str, <span class="st">&quot;TCP&quot;</span>) == <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb10-15" data-line-number="15">        *trtype = SPDK_NVME_TRANSPORT_TCP;</a>
+<a class="sourceLine" id="cb10-16" data-line-number="16">    &#125; <span class="cf">else</span> <span class="cf">if</span> (strcasecmp(str, <span class="st">&quot;VFIOUSER&quot;</span>) == <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb10-17" data-line-number="17">        *trtype = SPDK_NVME_TRANSPORT_VFIOUSER;</a>
+<a class="sourceLine" id="cb10-18" data-line-number="18">    &#125; <span class="cf">else</span> &#123;</a>
+<a class="sourceLine" id="cb10-19" data-line-number="19">        *trtype = SPDK_NVME_TRANSPORT_CUSTOM;</a>
+<a class="sourceLine" id="cb10-20" data-line-number="20">    &#125;</a>
+<a class="sourceLine" id="cb10-21" data-line-number="21">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb10-22" data-line-number="22">&#125;</a></code></pre></div>
+<p>最终设置了 <code>transport type</code> 为 <code>RDMA</code>。</p>
+<p>到此设置 <code>trtype</code> 结束，其他参数初始化过程类似。</p>
+<h3 id="初始化运行环境">初始化运行环境</h3>
+<pre><code>--&gt; lib/env_dpdk/init.c: spdk_env_init(&amp;opts);
+----&gt; openssl/ssl.h: OPENSSL_init_ssl(OPENSSL_INIT_LOAD_CONFIG, settings);
+----&gt; lib/env_dpdk/init.c: build_eal_cmdline(opts);
+------&gt; lib/env_dpdk/init.c: push_arg(args, opts-&gt;..);
+----&gt; lib/env_dpdk/init.c: rte_eal_init(g_eal_cmdline_argcount, dpdk_args);
+----&gt; lib/env_dpdk/init.c: spdk_env_dpdk_post_init(...);
+------&gt; lib/env_dpdk/pic.c: pci_env_init();
+------&gt; lib/env_dpdk/memory.c: mem_map_init(...);
+------&gt; lib/env_dpdk/memory.c: vtophys_init();</code></pre>
+<p>初始化 spdk 和 dpdk 环境。</p>
+<p>进入 <code>spdk_env_init(&amp;opts)</code> 函数中，其中代码流程大致如下：</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="dt">char</span> **g_eal_cmdline = NULL;</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="dt">int</span> g_eal_cmdline_argcount = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="dt">bool</span> g_external_init = true;</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="dt">int</span> spdk_env_init(<span class="dt">const</span> <span class="kw">struct</span> spdk_env_opts *opts)</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">&#123;</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">    <span class="co">// dpdk 参数</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">    <span class="dt">char</span> **dpdk_args = NULL;</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">    <span class="dt">char</span> *args_print = NULL, *args_tmp = NULL;</a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">    OPENSSL_INIT_SETTINGS *settings;</a>
+<a class="sourceLine" id="cb12-11" data-line-number="11">    <span class="dt">int</span> i, rc;</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">    <span class="co">// FreeBSD always uses legacy memory model</span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">    <span class="dt">bool</span> legacy_mem;</a>
+<a class="sourceLine" id="cb12-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15">    <span class="co">// 这里 g_external_init 初始化默认为 true</span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16">    <span class="co">// 如果已经初始化过，则 g_external_init == false；</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17">    <span class="co">// 没有初始化过，则 g_external_init == true</span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18">    <span class="cf">if</span> (g_external_init == false) &#123;</a>
+<a class="sourceLine" id="cb12-19" data-line-number="19">        <span class="co">// 重新初始化 pci</span></a>
+<a class="sourceLine" id="cb12-20" data-line-number="20">        pci_env_reinit();</a>
+<a class="sourceLine" id="cb12-21" data-line-number="21">        <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb12-22" data-line-number="22">    &#125;</a>
+<a class="sourceLine" id="cb12-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb12-24" data-line-number="24">    <span class="co">// 开始初始化 spdk</span></a>
+<a class="sourceLine" id="cb12-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb12-26" data-line-number="26">    <span class="co">// openssl 安全套接字</span></a>
+<a class="sourceLine" id="cb12-27" data-line-number="27">    settings = OPENSSL_INIT_new();</a>
+<a class="sourceLine" id="cb12-28" data-line-number="28">    <span class="co">// 初始化 openssl</span></a>
+<a class="sourceLine" id="cb12-29" data-line-number="29">    rc = OPENSSL_init_ssl(OPENSSL_INIT_LOAD_CONFIG, settings);</a>
+<a class="sourceLine" id="cb12-30" data-line-number="30">    OPENSSL_INIT_free(settings);</a>
+<a class="sourceLine" id="cb12-31" data-line-number="31"></a>
+<a class="sourceLine" id="cb12-32" data-line-number="32">    <span class="co">// 通过 opts 中的选项构建 eal</span></a>
+<a class="sourceLine" id="cb12-33" data-line-number="33">    <span class="co">// eal：环境抽象层，负责为应用间接访问底层的资源</span></a>
+<a class="sourceLine" id="cb12-34" data-line-number="34">    rc = build_eal_cmdline(opts);</a>
+<a class="sourceLine" id="cb12-35" data-line-number="35"></a>
+<a class="sourceLine" id="cb12-36" data-line-number="36">    dpdk_args = calloc(g_eal_cmdline_argcount, <span class="kw">sizeof</span>(<span class="dt">char</span> *));</a>
+<a class="sourceLine" id="cb12-37" data-line-number="37">    <span class="co">// 将 g_eal_cmdline 的内容复制到 dpdk_args 中</span></a>
+<a class="sourceLine" id="cb12-38" data-line-number="38">    memcpy(dpdk_args, g_eal_cmdline, <span class="kw">sizeof</span>(<span class="dt">char</span> *) * g_eal_cmdline_argcount);</a>
+<a class="sourceLine" id="cb12-39" data-line-number="39"></a>
+<a class="sourceLine" id="cb12-40" data-line-number="40">    <span class="co">// 初始化 dpdk，使用之前准备的参数</span></a>
+<a class="sourceLine" id="cb12-41" data-line-number="41">    rc = rte_eal_init(g_eal_cmdline_argcount, dpdk_args);</a>
+<a class="sourceLine" id="cb12-42" data-line-number="42"></a>
+<a class="sourceLine" id="cb12-43" data-line-number="43">    <span class="co">// 设置 legacy_mem 为 true/false</span></a>
+<a class="sourceLine" id="cb12-44" data-line-number="44"></a>
+<a class="sourceLine" id="cb12-45" data-line-number="45">    <span class="co">// 初始化后的相关处理</span></a>
+<a class="sourceLine" id="cb12-46" data-line-number="46">    rc = spdk_env_dpdk_post_init(legacy_mem);</a>
+<a class="sourceLine" id="cb12-47" data-line-number="47">    <span class="co">// 如果成功，将 g_external_init 设置为 false</span></a>
+<a class="sourceLine" id="cb12-48" data-line-number="48">    <span class="co">// 如果已经初始化过，则 g_external_init == false</span></a>
+<a class="sourceLine" id="cb12-49" data-line-number="49">    <span class="cf">if</span> (rc == <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb12-50" data-line-number="50">        g_external_init = false;</a>
+<a class="sourceLine" id="cb12-51" data-line-number="51">    &#125;</a>
+<a class="sourceLine" id="cb12-52" data-line-number="52"></a>
+<a class="sourceLine" id="cb12-53" data-line-number="53">    <span class="cf">return</span> rc;</a>
+<a class="sourceLine" id="cb12-54" data-line-number="54">&#125;</a></code></pre></div>
+<p>进入到 <code>build_eal_cmdline(opts)</code> 函数中，其函数的主要作用就是构建 EAL 命令行参数用于初始化 dpdk，其中调用 <code>push_arg()</code> 将命令行参数处理后添加到 <code>args</code> 链表尾部，然后赋值给全局的 <code>g_eal_cmdline</code>。</p>
+<p>EAL 是 dpdk 的环境抽象层，负责为应用间接访问底层的资源。</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="dt">static</span> <span class="dt">int</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">build_eal_cmdline(<span class="dt">const</span> <span class="kw">struct</span> spdk_env_opts *opts)</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">&#123;</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">    <span class="dt">int</span> argcount = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">    <span class="dt">char</span> **args;</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">    <span class="dt">bool</span> no_huge;</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8">    args = NULL;</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">    no_huge = opts-&gt;no_huge || (opts-&gt;env_context &amp;&amp; strstr(opts-&gt;env_context, <span class="st">&quot;--no-huge&quot;</span>) != NULL);</a>
+<a class="sourceLine" id="cb13-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb13-11" data-line-number="11">    <span class="co">/* set the program name */</span></a>
+<a class="sourceLine" id="cb13-12" data-line-number="12">    args = push_arg(args, &amp;argcount, _sprintf_alloc(<span class="st">&quot;%s&quot;</span>, opts-&gt;name));</a>
+<a class="sourceLine" id="cb13-13" data-line-number="13">    <span class="cf">if</span> (args == NULL) &#123;</a>
+<a class="sourceLine" id="cb13-14" data-line-number="14">        <span class="cf">return</span> <span class="dv">-1</span>;</a>
+<a class="sourceLine" id="cb13-15" data-line-number="15">    &#125;</a>
+<a class="sourceLine" id="cb13-16" data-line-number="16">    ...</a>
+<a class="sourceLine" id="cb13-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb13-18" data-line-number="18">    g_eal_cmdline = args;</a>
+<a class="sourceLine" id="cb13-19" data-line-number="19">    g_eal_cmdline_argcount = argcount;</a>
+<a class="sourceLine" id="cb13-20" data-line-number="20">    <span class="cf">return</span> argcount;</a>
+<a class="sourceLine" id="cb13-21" data-line-number="21">&#125;</a></code></pre></div>
+<p>上面的函数执行完后，将 <code>g_eal_cmdline</code> 的内容复制到 <code>dpdk_args</code> 中，然后执行 dpdk 的初始化操作 <code>rte_eal_init(g_eal_cmdline_argcount, dpdk_args)</code>，这个函数还没细看，看起来应该是初始化 dpdk 的组件，然后创建和加载 threads 并绑核操作。</p>
+<p>最后是 dpdk 初始化完成后的后续处理操作函数 <code>spdk_env_dpdk_post_init(legacy_mem)</code>，进入该函数中：</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="dt">int</span> spdk_env_dpdk_post_init(<span class="dt">bool</span> legacy_mem)</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">&#123;</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">    <span class="dt">int</span> rc;</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">    rc = pci_env_init();</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">    <span class="cf">if</span> (rc &lt; <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">        SPDK_ERRLOG(<span class="st">&quot;pci_env_init() failed</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8">        <span class="cf">return</span> rc;</a>
+<a class="sourceLine" id="cb14-9" data-line-number="9">    &#125;</a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11">    rc = mem_map_init(legacy_mem);</a>
+<a class="sourceLine" id="cb14-12" data-line-number="12">    <span class="cf">if</span> (rc &lt; <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb14-13" data-line-number="13">        SPDK_ERRLOG(<span class="st">&quot;Failed to allocate mem_map</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb14-14" data-line-number="14">        <span class="cf">return</span> rc;</a>
+<a class="sourceLine" id="cb14-15" data-line-number="15">    &#125;</a>
+<a class="sourceLine" id="cb14-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb14-17" data-line-number="17">    rc = vtophys_init();</a>
+<a class="sourceLine" id="cb14-18" data-line-number="18">    <span class="cf">if</span> (rc &lt; <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb14-19" data-line-number="19">        SPDK_ERRLOG(<span class="st">&quot;Failed to initialize vtophys</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb14-20" data-line-number="20">        <span class="cf">return</span> rc;</a>
+<a class="sourceLine" id="cb14-21" data-line-number="21">    &#125;</a>
+<a class="sourceLine" id="cb14-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb14-23" data-line-number="23">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb14-24" data-line-number="24">&#125;</a></code></pre></div>
+<p>其中执行了 <code>pci_env_init()</code>、<code>mem_map_init(legacy_mem)</code>、<code>vtophys_init()</code> 等 dpdk 的初始化函数，其中涉及到 pci 驱动注册等细节还没有看，不过不在这篇浅析的范围内。</p>
+<p>最后如果初始化成功，将 <code>g_external_init</code> 置为 <code>false</code>。对于全局变量 <code>g_external_init</code>，如果 spdk 环境已经初始化过，则 <code>g_external_init = false</code>；没有初始化过，则 <code>g_external_init = true</code>。</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb15-1" data-line-number="1">...</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="cf">if</span> (rc == <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">    g_external_init = false;</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">&#125;</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="cf">return</span> rc;</a></code></pre></div>
+<p>到此 <code>spdk_env_init(&amp;opts)</code> 的执行结束。</p>
+<hr />
+</div><div class="story post-story"><h2 id="二perf-设备发现和注册">（二）perf 设备发现和注册</h2>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+<h3 id="section"></h3>
 
 </div>
   </div>
@@ -2653,10 +2945,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-03T16:01:24+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-06T00:46:32+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：Sep 3, 2024</p>
+    <p>最后更新于：Sep 6, 2024</p>
   </a>
 </div>
 
@@ -2810,7 +3102,7 @@ dev...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>87.4k 字</div>
+          <div>89.5k 字</div>
         </div>
       
 
@@ -2835,7 +3127,7 @@ dev...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2024-09-03 日</div>
+          <div id="last-update-show">2024-09-06 日</div>
         </div>
       
     </div>
@@ -2862,7 +3154,7 @@ dev...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section"><span class="toc-number">2.</span> <span class="toc-text"></span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perf-%E7%9A%84-main-%E5%87%BD%E6%95%B0%E4%B8%BB%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">perf 的 main() 函数主流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perf-%E7%9A%84%E5%AE%8F%E5%AE%9A%E4%B9%89%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%AE%9A%E4%B9%89%E7%9A%84%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">3.</span> <span class="toc-text">perf 的宏定义、全局变量、定义的结构体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80perf-%E7%8E%AF%E5%A2%83%E5%88%9D%E5%A7%8B%E5%8C%96%E9%83%A8%E5%88%86"><span class="toc-number">4.</span> <span class="toc-text">（一）perf 环境初始化部分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96-opts-%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="toc-number">4.1.</span> <span class="toc-text">初始化 opts 参数默认值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90-args"><span class="toc-number">4.2.</span> <span class="toc-text">解析 args</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="toc-number">4.3.</span> <span class="toc-text">初始化运行环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8Cperf-%E8%AE%BE%E5%A4%87%E5%8F%91%E7%8E%B0%E5%92%8C%E6%B3%A8%E5%86%8C"><span class="toc-number">5.</span> <span class="toc-text">（二）perf 设备发现和注册</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#section"><span class="toc-number">5.1.</span> <span class="toc-text"></span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -3696,7 +3988,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4015,7 +4307,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/notes/存储/n-spdk-03/","name":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析","description":"SPDK 自带的性能测试应用 spdk_nvme_perf 的源代码 perf.c 的粗浅分析，进一步熟悉 SPDK 用户态驱动的主要工作流程和方式。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/","wordCount":75,"datePublished":"2024-09-01T11:35:45.000Z","dateModified":"2024-09-03T08:01:24.617Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/notes/存储/n-spdk-03/","name":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析","description":"SPDK 自带的性能测试应用 spdk_nvme_perf 的源代码 perf.c 的粗浅分析，进一步熟悉 SPDK 用户态驱动的主要工作流程和方式。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/","wordCount":75,"datePublished":"2024-09-01T11:35:45.000Z","dateModified":"2024-09-05T16:46:32.171Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
