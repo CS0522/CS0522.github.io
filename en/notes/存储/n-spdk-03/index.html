@@ -46,7 +46,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-09-01T11:35:45.000Z">
-<meta property="article:modified_time" content="2024-09-07T14:06:32.812Z">
+<meta property="article:modified_time" content="2024-09-08T10:01:44.704Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="存储">
 <meta property="article:tag" content="SPDK">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1725718045393),
+    lastupdate: new Date(1725792682718),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2600,13 +2600,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>5k words</p>
+      <p>6.4k words</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>23 min</p>
+      <p>31 min</p>
     </a>
   </div>
 
@@ -2999,8 +2999,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 ------------&gt; TAILQ_FOREACH_SAFE(ctrlr, &amp;probe_ctx-&gt;init_ctrlrs, tailq, ctrlr_tmp)
 &#123;
 --------------&gt; nvme.c: nvme_ctrlr_poll_internal(ctrlr, probe_ctx);
-----------------&gt; nvme_ctrlr.c: nvme_ctrlr_process_init(ctrlr);
-------------------&gt; TODO
+----------------&gt; (TODO) nvme_ctrlr.c: nvme_ctrlr_process_init(ctrlr);
 ----------------&gt; STAILQ_INIT(&amp;ctrlr-&gt;io_producers);
 ----------------&gt; TAILQ_REMOVE(&amp;probe_ctx-&gt;init_ctrlrs, ctrlr, tailq);
 ----------------&gt; TAILQ_INSERT_TAIL(&amp;g_nvme_attached_ctrlrs, ctrlr, tailq);
@@ -3167,7 +3166,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a class="sourceLine" id="cb24-28" data-line-number="28"></a>
 <a class="sourceLine" id="cb24-29" data-line-number="29">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb24-30" data-line-number="30">&#125;</a></code></pre></div>
-<p>进入到 <code>nvme_transport_ctrlr_scan(probe_ctx, direct_connect);</code> 函数中：</p>
+<p>可以看出 <code>nvme_probe_internal(probe_ctx, false)</code> 函数中，通过调用了 <code>nvme_transport_ctrlr_scan(probe_ctx, direct_connect)</code> 函数，将扫描到的 controllers 都挂在了 probe_ctx-&gt;init_ctrlrs 尾队列中。进入到 <code>nvme_transport_ctrlr_scan(probe_ctx, direct_connect);</code> 函数中：</p>
 <p>TODO</p>
 <p>最后 <code>nvme_probe_internal(probe_ctx, direct_connect)</code> 函数执行结束，返回 <code>spdk_nvme_probe_async(trid, cb_ctx, probe_cb, attach_cb, remove_cb)</code> 函数，<code>spdk_nvme_probe_async()</code> 也执行完毕，向上返回 <code>probe_ctx</code> 探测上下文信息，此时函数调用返回到上一级的 <code>spdk_nvme_probe(&amp;trid_entry-&gt;trid, trid_entry, probe_cb, attach_cb, NULL)</code> 函数，执行最后的 <code>nvme_init_controllers(probe_ctx)</code> 函数，根据上面存储的 <code>probe_ctx</code> 上下文，进行 nvme controllers 初始化。进入到 <code>nvme_init_controllers(probe_ctx)</code> 函数中：</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="dt">static</span> <span class="dt">int</span></a>
@@ -3266,104 +3265,380 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a class="sourceLine" id="cb27-47" data-line-number="47">        probe_ctx-&gt;attach_cb(probe_ctx-&gt;cb_ctx, &amp;ctrlr-&gt;trid, ctrlr, &amp;ctrlr-&gt;opts);</a>
 <a class="sourceLine" id="cb27-48" data-line-number="48">    &#125;</a>
 <a class="sourceLine" id="cb27-49" data-line-number="49">&#125;</a></code></pre></div>
-<p>首先执行了 <code>nvme_ctrlr_process_init(ctrlr)</code> 函数，</p>
-<p>TODO</p>
-<p>中间执行了一些控制器在不同队列中进行切换的操作，最后执行 <code>attach_cb</code> 回调函数，<code>attach_cb(probe_ctx-&gt;cb_ctx, &amp;ctrlr-&gt;trid, ctrlr, &amp;ctrlr-&gt;opts)</code> 位于 <code>perf.c</code> 中，进入该函数：</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="co">// attach_cb 回调函数</span></a>
-<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="dt">static</span> <span class="dt">void</span></a>
-<a class="sourceLine" id="cb28-3" data-line-number="3">attach_cb(<span class="dt">void</span> *cb_ctx, <span class="dt">const</span> <span class="kw">struct</span> spdk_nvme_transport_id *trid,</a>
-<a class="sourceLine" id="cb28-4" data-line-number="4">      <span class="kw">struct</span> spdk_nvme_ctrlr *ctrlr, <span class="dt">const</span> <span class="kw">struct</span> spdk_nvme_ctrlr_opts *opts)</a>
-<a class="sourceLine" id="cb28-5" data-line-number="5">&#123;</a>
-<a class="sourceLine" id="cb28-6" data-line-number="6">    <span class="kw">struct</span> trid_entry   *trid_entry = cb_ctx;</a>
-<a class="sourceLine" id="cb28-7" data-line-number="7">    <span class="kw">struct</span> spdk_pci_addr    pci_addr;</a>
-<a class="sourceLine" id="cb28-8" data-line-number="8">    <span class="kw">struct</span> spdk_pci_device  *pci_dev;</a>
-<a class="sourceLine" id="cb28-9" data-line-number="9">    <span class="kw">struct</span> spdk_pci_id  pci_id;</a>
-<a class="sourceLine" id="cb28-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb28-11" data-line-number="11">    <span class="co">// rdma 等执行 if 内代码块</span></a>
-<a class="sourceLine" id="cb28-12" data-line-number="12">    <span class="cf">if</span> (trid-&gt;trtype != SPDK_NVME_TRANSPORT_PCIE) &#123;</a>
-<a class="sourceLine" id="cb28-13" data-line-number="13">        printf(<span class="st">&quot;Attached to NVMe over Fabrics controller at %s:%s: %s</span><span class="sc">\n</span><span class="st">&quot;</span>,</a>
-<a class="sourceLine" id="cb28-14" data-line-number="14">               trid-&gt;traddr, trid-&gt;trsvcid,</a>
-<a class="sourceLine" id="cb28-15" data-line-number="15">               trid-&gt;subnqn);</a>
-<a class="sourceLine" id="cb28-16" data-line-number="16">    &#125; </a>
-<a class="sourceLine" id="cb28-17" data-line-number="17">    <span class="co">// pcie 执行 else 内代码块</span></a>
-<a class="sourceLine" id="cb28-18" data-line-number="18">    <span class="cf">else</span> &#123;</a>
-<a class="sourceLine" id="cb28-19" data-line-number="19">        ...</a>
-<a class="sourceLine" id="cb28-20" data-line-number="20">    &#125;</a>
-<a class="sourceLine" id="cb28-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb28-22" data-line-number="22">    register_ctrlr(ctrlr, trid_entry);</a>
-<a class="sourceLine" id="cb28-23" data-line-number="23">&#125;</a></code></pre></div>
+<p>首先执行了 <code>nvme_ctrlr_process_init(ctrlr)</code> 函数，这个函数用来处理 controller 各种初始化状态，检查当前初始化步骤是否已完成或已超时。在初始化过程中，此函数将被反复调用，直到 controller 准备就绪。进入该函数中：</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="co">// 首先 controller 包含以下状态：</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="dt">static</span> <span class="dt">const</span> <span class="dt">char</span> *</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3">nvme_ctrlr_state_string(<span class="kw">enum</span> nvme_ctrlr_state state)</a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">&#123;</a>
+<a class="sourceLine" id="cb28-5" data-line-number="5">    <span class="cf">switch</span> (state) &#123;</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">    <span class="cf">case</span> NVME_CTRLR_STATE_INIT_DELAY:</a>
+<a class="sourceLine" id="cb28-7" data-line-number="7">        <span class="cf">return</span> <span class="st">&quot;delay init&quot;</span>;</a>
+<a class="sourceLine" id="cb28-8" data-line-number="8">    <span class="cf">case</span> NVME_CTRLR_STATE_CONNECT_ADMINQ:</a>
+<a class="sourceLine" id="cb28-9" data-line-number="9">        <span class="cf">return</span> <span class="st">&quot;connect adminq&quot;</span>;</a>
+<a class="sourceLine" id="cb28-10" data-line-number="10">    <span class="cf">case</span> NVME_CTRLR_STATE_WAIT_FOR_CONNECT_ADMINQ:</a>
+<a class="sourceLine" id="cb28-11" data-line-number="11">        <span class="cf">return</span> <span class="st">&quot;wait for connect adminq&quot;</span>;</a>
+<a class="sourceLine" id="cb28-12" data-line-number="12">    <span class="cf">case</span> NVME_CTRLR_STATE_READ_VS:</a>
+<a class="sourceLine" id="cb28-13" data-line-number="13">        <span class="cf">return</span> <span class="st">&quot;read vs&quot;</span>;</a>
+<a class="sourceLine" id="cb28-14" data-line-number="14">    <span class="cf">case</span> NVME_CTRLR_STATE_READ_VS_WAIT_FOR_VS:</a>
+<a class="sourceLine" id="cb28-15" data-line-number="15">        <span class="cf">return</span> <span class="st">&quot;read vs wait for vs&quot;</span>;</a>
+<a class="sourceLine" id="cb28-16" data-line-number="16">    <span class="cf">case</span> NVME_CTRLR_STATE_READ_CAP:</a>
+<a class="sourceLine" id="cb28-17" data-line-number="17">        <span class="cf">return</span> <span class="st">&quot;read cap&quot;</span>;</a>
+<a class="sourceLine" id="cb28-18" data-line-number="18">    <span class="cf">case</span> NVME_CTRLR_STATE_READ_CAP_WAIT_FOR_CAP:</a>
+<a class="sourceLine" id="cb28-19" data-line-number="19">        <span class="cf">return</span> <span class="st">&quot;read cap wait for cap&quot;</span>;</a>
+<a class="sourceLine" id="cb28-20" data-line-number="20">    <span class="cf">case</span> NVME_CTRLR_STATE_CHECK_EN:</a>
+<a class="sourceLine" id="cb28-21" data-line-number="21">        <span class="cf">return</span> <span class="st">&quot;check en&quot;</span>;</a>
+<a class="sourceLine" id="cb28-22" data-line-number="22">    <span class="cf">case</span> NVME_CTRLR_STATE_CHECK_EN_WAIT_FOR_CC:</a>
+<a class="sourceLine" id="cb28-23" data-line-number="23">        <span class="cf">return</span> <span class="st">&quot;check en wait for cc&quot;</span>;</a>
+<a class="sourceLine" id="cb28-24" data-line-number="24">    <span class="cf">case</span> NVME_CTRLR_STATE_DISABLE_WAIT_FOR_READY_1:</a>
+<a class="sourceLine" id="cb28-25" data-line-number="25">        <span class="cf">return</span> <span class="st">&quot;disable and wait for CSTS.RDY = 1&quot;</span>;</a>
+<a class="sourceLine" id="cb28-26" data-line-number="26">    <span class="cf">case</span> NVME_CTRLR_STATE_DISABLE_WAIT_FOR_READY_1_WAIT_FOR_CSTS:</a>
+<a class="sourceLine" id="cb28-27" data-line-number="27">        <span class="cf">return</span> <span class="st">&quot;disable and wait for CSTS.RDY = 1 reg&quot;</span>;</a>
+<a class="sourceLine" id="cb28-28" data-line-number="28">    <span class="cf">case</span> NVME_CTRLR_STATE_SET_EN_0:</a>
+<a class="sourceLine" id="cb28-29" data-line-number="29">        <span class="cf">return</span> <span class="st">&quot;set CC.EN = 0&quot;</span>;</a>
+<a class="sourceLine" id="cb28-30" data-line-number="30">    <span class="cf">case</span> NVME_CTRLR_STATE_SET_EN_0_WAIT_FOR_CC:</a>
+<a class="sourceLine" id="cb28-31" data-line-number="31">        <span class="cf">return</span> <span class="st">&quot;set CC.EN = 0 wait for cc&quot;</span>;</a>
+<a class="sourceLine" id="cb28-32" data-line-number="32">    <span class="cf">case</span> NVME_CTRLR_STATE_DISABLE_WAIT_FOR_READY_0:</a>
+<a class="sourceLine" id="cb28-33" data-line-number="33">        <span class="cf">return</span> <span class="st">&quot;disable and wait for CSTS.RDY = 0&quot;</span>;</a>
+<a class="sourceLine" id="cb28-34" data-line-number="34">    <span class="cf">case</span> NVME_CTRLR_STATE_DISABLE_WAIT_FOR_READY_0_WAIT_FOR_CSTS:</a>
+<a class="sourceLine" id="cb28-35" data-line-number="35">        <span class="cf">return</span> <span class="st">&quot;disable and wait for CSTS.RDY = 0 reg&quot;</span>;</a>
+<a class="sourceLine" id="cb28-36" data-line-number="36">    <span class="cf">case</span> NVME_CTRLR_STATE_DISABLED:</a>
+<a class="sourceLine" id="cb28-37" data-line-number="37">        <span class="cf">return</span> <span class="st">&quot;controller is disabled&quot;</span>;</a>
+<a class="sourceLine" id="cb28-38" data-line-number="38">    <span class="cf">case</span> NVME_CTRLR_STATE_ENABLE:</a>
+<a class="sourceLine" id="cb28-39" data-line-number="39">        <span class="cf">return</span> <span class="st">&quot;enable controller by writing CC.EN = 1&quot;</span>;</a>
+<a class="sourceLine" id="cb28-40" data-line-number="40">    <span class="cf">case</span> NVME_CTRLR_STATE_ENABLE_WAIT_FOR_CC:</a>
+<a class="sourceLine" id="cb28-41" data-line-number="41">        <span class="cf">return</span> <span class="st">&quot;enable controller by writing CC.EN = 1 reg&quot;</span>;</a>
+<a class="sourceLine" id="cb28-42" data-line-number="42">    <span class="cf">case</span> NVME_CTRLR_STATE_ENABLE_WAIT_FOR_READY_1:</a>
+<a class="sourceLine" id="cb28-43" data-line-number="43">        <span class="cf">return</span> <span class="st">&quot;wait for CSTS.RDY = 1&quot;</span>;</a>
+<a class="sourceLine" id="cb28-44" data-line-number="44">    <span class="cf">case</span> NVME_CTRLR_STATE_ENABLE_WAIT_FOR_READY_1_WAIT_FOR_CSTS:</a>
+<a class="sourceLine" id="cb28-45" data-line-number="45">        <span class="cf">return</span> <span class="st">&quot;wait for CSTS.RDY = 1 reg&quot;</span>;</a>
+<a class="sourceLine" id="cb28-46" data-line-number="46">    <span class="cf">case</span> NVME_CTRLR_STATE_RESET_ADMIN_QUEUE:</a>
+<a class="sourceLine" id="cb28-47" data-line-number="47">        <span class="cf">return</span> <span class="st">&quot;reset admin queue&quot;</span>;</a>
+<a class="sourceLine" id="cb28-48" data-line-number="48">    <span class="cf">case</span> NVME_CTRLR_STATE_IDENTIFY:</a>
+<a class="sourceLine" id="cb28-49" data-line-number="49">        <span class="cf">return</span> <span class="st">&quot;identify controller&quot;</span>;</a>
+<a class="sourceLine" id="cb28-50" data-line-number="50">    <span class="cf">case</span> NVME_CTRLR_STATE_WAIT_FOR_IDENTIFY:</a>
+<a class="sourceLine" id="cb28-51" data-line-number="51">        <span class="cf">return</span> <span class="st">&quot;wait for identify controller&quot;</span>;</a>
+<a class="sourceLine" id="cb28-52" data-line-number="52">    <span class="cf">case</span> NVME_CTRLR_STATE_CONFIGURE_AER:</a>
+<a class="sourceLine" id="cb28-53" data-line-number="53">        <span class="cf">return</span> <span class="st">&quot;configure AER&quot;</span>;</a>
+<a class="sourceLine" id="cb28-54" data-line-number="54">    <span class="cf">case</span> NVME_CTRLR_STATE_WAIT_FOR_CONFIGURE_AER:</a>
+<a class="sourceLine" id="cb28-55" data-line-number="55">        <span class="cf">return</span> <span class="st">&quot;wait for configure aer&quot;</span>;</a>
+<a class="sourceLine" id="cb28-56" data-line-number="56">    <span class="cf">case</span> NVME_CTRLR_STATE_SET_KEEP_ALIVE_TIMEOUT:</a>
+<a class="sourceLine" id="cb28-57" data-line-number="57">        <span class="cf">return</span> <span class="st">&quot;set keep alive timeout&quot;</span>;</a>
+<a class="sourceLine" id="cb28-58" data-line-number="58">    <span class="cf">case</span> NVME_CTRLR_STATE_WAIT_FOR_KEEP_ALIVE_TIMEOUT:</a>
+<a class="sourceLine" id="cb28-59" data-line-number="59">        <span class="cf">return</span> <span class="st">&quot;wait for set keep alive timeout&quot;</span>;</a>
+<a class="sourceLine" id="cb28-60" data-line-number="60">    <span class="cf">case</span> NVME_CTRLR_STATE_IDENTIFY_IOCS_SPECIFIC:</a>
+<a class="sourceLine" id="cb28-61" data-line-number="61">        <span class="cf">return</span> <span class="st">&quot;identify controller iocs specific&quot;</span>;</a>
+<a class="sourceLine" id="cb28-62" data-line-number="62">    <span class="cf">case</span> NVME_CTRLR_STATE_WAIT_FOR_IDENTIFY_IOCS_SPECIFIC:</a>
+<a class="sourceLine" id="cb28-63" data-line-number="63">        <span class="cf">return</span> <span class="st">&quot;wait for identify controller iocs specific&quot;</span>;</a>
+<a class="sourceLine" id="cb28-64" data-line-number="64">    <span class="cf">case</span> NVME_CTRLR_STATE_GET_ZNS_CMD_EFFECTS_LOG:</a>
+<a class="sourceLine" id="cb28-65" data-line-number="65">        <span class="cf">return</span> <span class="st">&quot;get zns cmd and effects log page&quot;</span>;</a>
+<a class="sourceLine" id="cb28-66" data-line-number="66">    <span class="cf">case</span> NVME_CTRLR_STATE_WAIT_FOR_GET_ZNS_CMD_EFFECTS_LOG:</a>
+<a class="sourceLine" id="cb28-67" data-line-number="67">        <span class="cf">return</span> <span class="st">&quot;wait for get zns cmd and effects log page&quot;</span>;</a>
+<a class="sourceLine" id="cb28-68" data-line-number="68">    <span class="cf">case</span> NVME_CTRLR_STATE_SET_NUM_QUEUES:</a>
+<a class="sourceLine" id="cb28-69" data-line-number="69">        <span class="cf">return</span> <span class="st">&quot;set number of queues&quot;</span>;</a>
+<a class="sourceLine" id="cb28-70" data-line-number="70">    <span class="cf">case</span> NVME_CTRLR_STATE_WAIT_FOR_SET_NUM_QUEUES:</a>
+<a class="sourceLine" id="cb28-71" data-line-number="71">        <span class="cf">return</span> <span class="st">&quot;wait for set number of queues&quot;</span>;</a>
+<a class="sourceLine" id="cb28-72" data-line-number="72">    <span class="cf">case</span> NVME_CTRLR_STATE_IDENTIFY_ACTIVE_NS:</a>
+<a class="sourceLine" id="cb28-73" data-line-number="73">        <span class="cf">return</span> <span class="st">&quot;identify active ns&quot;</span>;</a>
+<a class="sourceLine" id="cb28-74" data-line-number="74">    <span class="cf">case</span> NVME_CTRLR_STATE_WAIT_FOR_IDENTIFY_ACTIVE_NS:</a>
+<a class="sourceLine" id="cb28-75" data-line-number="75">        <span class="cf">return</span> <span class="st">&quot;wait for identify active ns&quot;</span>;</a>
+<a class="sourceLine" id="cb28-76" data-line-number="76">    <span class="cf">case</span> NVME_CTRLR_STATE_IDENTIFY_NS:</a>
+<a class="sourceLine" id="cb28-77" data-line-number="77">        <span class="cf">return</span> <span class="st">&quot;identify ns&quot;</span>;</a>
+<a class="sourceLine" id="cb28-78" data-line-number="78">    <span class="cf">case</span> NVME_CTRLR_STATE_WAIT_FOR_IDENTIFY_NS:</a>
+<a class="sourceLine" id="cb28-79" data-line-number="79">        <span class="cf">return</span> <span class="st">&quot;wait for identify ns&quot;</span>;</a>
+<a class="sourceLine" id="cb28-80" data-line-number="80">    <span class="cf">case</span> NVME_CTRLR_STATE_IDENTIFY_ID_DESCS:</a>
+<a class="sourceLine" id="cb28-81" data-line-number="81">        <span class="cf">return</span> <span class="st">&quot;identify namespace id descriptors&quot;</span>;</a>
+<a class="sourceLine" id="cb28-82" data-line-number="82">    <span class="cf">case</span> NVME_CTRLR_STATE_WAIT_FOR_IDENTIFY_ID_DESCS:</a>
+<a class="sourceLine" id="cb28-83" data-line-number="83">        <span class="cf">return</span> <span class="st">&quot;wait for identify namespace id descriptors&quot;</span>;</a>
+<a class="sourceLine" id="cb28-84" data-line-number="84">    <span class="cf">case</span> NVME_CTRLR_STATE_IDENTIFY_NS_IOCS_SPECIFIC:</a>
+<a class="sourceLine" id="cb28-85" data-line-number="85">        <span class="cf">return</span> <span class="st">&quot;identify ns iocs specific&quot;</span>;</a>
+<a class="sourceLine" id="cb28-86" data-line-number="86">    <span class="cf">case</span> NVME_CTRLR_STATE_WAIT_FOR_IDENTIFY_NS_IOCS_SPECIFIC:</a>
+<a class="sourceLine" id="cb28-87" data-line-number="87">        <span class="cf">return</span> <span class="st">&quot;wait for identify ns iocs specific&quot;</span>;</a>
+<a class="sourceLine" id="cb28-88" data-line-number="88">    <span class="cf">case</span> NVME_CTRLR_STATE_SET_SUPPORTED_LOG_PAGES:</a>
+<a class="sourceLine" id="cb28-89" data-line-number="89">        <span class="cf">return</span> <span class="st">&quot;set supported log pages&quot;</span>;</a>
+<a class="sourceLine" id="cb28-90" data-line-number="90">    <span class="cf">case</span> NVME_CTRLR_STATE_SET_SUPPORTED_INTEL_LOG_PAGES:</a>
+<a class="sourceLine" id="cb28-91" data-line-number="91">        <span class="cf">return</span> <span class="st">&quot;set supported INTEL log pages&quot;</span>;</a>
+<a class="sourceLine" id="cb28-92" data-line-number="92">    <span class="cf">case</span> NVME_CTRLR_STATE_WAIT_FOR_SUPPORTED_INTEL_LOG_PAGES:</a>
+<a class="sourceLine" id="cb28-93" data-line-number="93">        <span class="cf">return</span> <span class="st">&quot;wait for supported INTEL log pages&quot;</span>;</a>
+<a class="sourceLine" id="cb28-94" data-line-number="94">    <span class="cf">case</span> NVME_CTRLR_STATE_SET_SUPPORTED_FEATURES:</a>
+<a class="sourceLine" id="cb28-95" data-line-number="95">        <span class="cf">return</span> <span class="st">&quot;set supported features&quot;</span>;</a>
+<a class="sourceLine" id="cb28-96" data-line-number="96">    <span class="cf">case</span> NVME_CTRLR_STATE_SET_DB_BUF_CFG:</a>
+<a class="sourceLine" id="cb28-97" data-line-number="97">        <span class="cf">return</span> <span class="st">&quot;set doorbell buffer config&quot;</span>;</a>
+<a class="sourceLine" id="cb28-98" data-line-number="98">    <span class="cf">case</span> NVME_CTRLR_STATE_WAIT_FOR_DB_BUF_CFG:</a>
+<a class="sourceLine" id="cb28-99" data-line-number="99">        <span class="cf">return</span> <span class="st">&quot;wait for doorbell buffer config&quot;</span>;</a>
+<a class="sourceLine" id="cb28-100" data-line-number="100">    <span class="cf">case</span> NVME_CTRLR_STATE_SET_HOST_ID:</a>
+<a class="sourceLine" id="cb28-101" data-line-number="101">        <span class="cf">return</span> <span class="st">&quot;set host ID&quot;</span>;</a>
+<a class="sourceLine" id="cb28-102" data-line-number="102">    <span class="cf">case</span> NVME_CTRLR_STATE_WAIT_FOR_HOST_ID:</a>
+<a class="sourceLine" id="cb28-103" data-line-number="103">        <span class="cf">return</span> <span class="st">&quot;wait for set host ID&quot;</span>;</a>
+<a class="sourceLine" id="cb28-104" data-line-number="104">    <span class="cf">case</span> NVME_CTRLR_STATE_TRANSPORT_READY:</a>
+<a class="sourceLine" id="cb28-105" data-line-number="105">        <span class="cf">return</span> <span class="st">&quot;transport ready&quot;</span>;</a>
+<a class="sourceLine" id="cb28-106" data-line-number="106">    <span class="cf">case</span> NVME_CTRLR_STATE_READY:</a>
+<a class="sourceLine" id="cb28-107" data-line-number="107">        <span class="cf">return</span> <span class="st">&quot;ready&quot;</span>;</a>
+<a class="sourceLine" id="cb28-108" data-line-number="108">    <span class="cf">case</span> NVME_CTRLR_STATE_ERROR:</a>
+<a class="sourceLine" id="cb28-109" data-line-number="109">        <span class="cf">return</span> <span class="st">&quot;error&quot;</span>;</a>
+<a class="sourceLine" id="cb28-110" data-line-number="110">    <span class="cf">case</span> NVME_CTRLR_STATE_DISCONNECTED:</a>
+<a class="sourceLine" id="cb28-111" data-line-number="111">        <span class="cf">return</span> <span class="st">&quot;disconnected&quot;</span>;</a>
+<a class="sourceLine" id="cb28-112" data-line-number="112">    &#125;</a>
+<a class="sourceLine" id="cb28-113" data-line-number="113">    <span class="cf">return</span> <span class="st">&quot;unknown&quot;</span>;</a>
+<a class="sourceLine" id="cb28-114" data-line-number="114">&#125;;</a>
+<a class="sourceLine" id="cb28-115" data-line-number="115"></a>
+<a class="sourceLine" id="cb28-116" data-line-number="116"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb28-117" data-line-number="117">nvme_ctrlr_process_init(<span class="kw">struct</span> spdk_nvme_ctrlr *ctrlr)</a>
+<a class="sourceLine" id="cb28-118" data-line-number="118">&#123;</a>
+<a class="sourceLine" id="cb28-119" data-line-number="119">    <span class="dt">uint32_t</span> ready_timeout_in_ms;</a>
+<a class="sourceLine" id="cb28-120" data-line-number="120">    <span class="dt">uint64_t</span> ticks;</a>
+<a class="sourceLine" id="cb28-121" data-line-number="121">    <span class="dt">int</span> rc = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb28-122" data-line-number="122"></a>
+<a class="sourceLine" id="cb28-123" data-line-number="123">    ticks = spdk_get_ticks();</a>
+<a class="sourceLine" id="cb28-124" data-line-number="124"></a>
+<a class="sourceLine" id="cb28-125" data-line-number="125">    <span class="co">/*</span></a>
+<a class="sourceLine" id="cb28-126" data-line-number="126"><span class="co">     * May need to avoid accessing any register on the target controller</span></a>
+<a class="sourceLine" id="cb28-127" data-line-number="127"><span class="co">     * for a while. Return early without touching the FSM.</span></a>
+<a class="sourceLine" id="cb28-128" data-line-number="128"><span class="co">     * Check sleep_timeout_tsc &gt; 0 for unit test.</span></a>
+<a class="sourceLine" id="cb28-129" data-line-number="129"><span class="co">     */</span></a>
+<a class="sourceLine" id="cb28-130" data-line-number="130">    <span class="cf">if</span> ((ctrlr-&gt;sleep_timeout_tsc &gt; <span class="dv">0</span>) &amp;&amp;</a>
+<a class="sourceLine" id="cb28-131" data-line-number="131">        (ticks &lt;= ctrlr-&gt;sleep_timeout_tsc)) &#123;</a>
+<a class="sourceLine" id="cb28-132" data-line-number="132">        <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb28-133" data-line-number="133">    &#125;</a>
+<a class="sourceLine" id="cb28-134" data-line-number="134">    ctrlr-&gt;sleep_timeout_tsc = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb28-135" data-line-number="135"></a>
+<a class="sourceLine" id="cb28-136" data-line-number="136">    ready_timeout_in_ms = nvme_ctrlr_get_ready_timeout(ctrlr);</a>
+<a class="sourceLine" id="cb28-137" data-line-number="137"></a>
+<a class="sourceLine" id="cb28-138" data-line-number="138">    <span class="co">/*</span></a>
+<a class="sourceLine" id="cb28-139" data-line-number="139"><span class="co">     * Check if the current initialization step is done or has timed out.</span></a>
+<a class="sourceLine" id="cb28-140" data-line-number="140"><span class="co">     */</span></a>
+<a class="sourceLine" id="cb28-141" data-line-number="141">    <span class="cf">switch</span> (ctrlr-&gt;state) &#123;</a>
+<a class="sourceLine" id="cb28-142" data-line-number="142">    <span class="cf">case</span> NVME_CTRLR_STATE_INIT_DELAY:</a>
+<a class="sourceLine" id="cb28-143" data-line-number="143">        ...</a>
+<a class="sourceLine" id="cb28-144" data-line-number="144">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb28-145" data-line-number="145">    <span class="cf">case</span> ...:</a>
+<a class="sourceLine" id="cb28-146" data-line-number="146">    ...</a>
+<a class="sourceLine" id="cb28-147" data-line-number="147">    <span class="cf">case</span> NVME_CTRLR_STATE_TRANSPORT_READY:</a>
+<a class="sourceLine" id="cb28-148" data-line-number="148">        rc = nvme_transport_ctrlr_ready(ctrlr);</a>
+<a class="sourceLine" id="cb28-149" data-line-number="149">        <span class="cf">if</span> (rc) &#123;</a>
+<a class="sourceLine" id="cb28-150" data-line-number="150">            NVME_CTRLR_ERRLOG(ctrlr, <span class="st">&quot;Transport controller ready step failed: rc %d</span><span class="sc">\n</span><span class="st">&quot;</span>, rc);</a>
+<a class="sourceLine" id="cb28-151" data-line-number="151">            nvme_ctrlr_set_state(ctrlr, NVME_CTRLR_STATE_ERROR, NVME_TIMEOUT_INFINITE);</a>
+<a class="sourceLine" id="cb28-152" data-line-number="152">        &#125; <span class="cf">else</span> &#123;</a>
+<a class="sourceLine" id="cb28-153" data-line-number="153">            nvme_ctrlr_set_state(ctrlr, NVME_CTRLR_STATE_READY, NVME_TIMEOUT_INFINITE);</a>
+<a class="sourceLine" id="cb28-154" data-line-number="154">        &#125;</a>
+<a class="sourceLine" id="cb28-155" data-line-number="155">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb28-156" data-line-number="156"></a>
+<a class="sourceLine" id="cb28-157" data-line-number="157">    <span class="cf">case</span> NVME_CTRLR_STATE_READY:</a>
+<a class="sourceLine" id="cb28-158" data-line-number="158">        NVME_CTRLR_DEBUGLOG(ctrlr, <span class="st">&quot;Ctrlr already in ready state</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb28-159" data-line-number="159">        <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb28-160" data-line-number="160">    &#125;</a>
+<a class="sourceLine" id="cb28-161" data-line-number="161">&#125;</a></code></pre></div>
+<p>处理 controller 初始化状态之后，再执行了一些控制器在不同队列中进行切换的操作，最后执行 <code>attach_cb</code> 回调函数，<code>attach_cb(probe_ctx-&gt;cb_ctx, &amp;ctrlr-&gt;trid, ctrlr, &amp;ctrlr-&gt;opts)</code> 位于 <code>perf.c</code> 中，进入该函数：</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="co">// attach_cb 回调函数</span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="dt">static</span> <span class="dt">void</span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3">attach_cb(<span class="dt">void</span> *cb_ctx, <span class="dt">const</span> <span class="kw">struct</span> spdk_nvme_transport_id *trid,</a>
+<a class="sourceLine" id="cb29-4" data-line-number="4">      <span class="kw">struct</span> spdk_nvme_ctrlr *ctrlr, <span class="dt">const</span> <span class="kw">struct</span> spdk_nvme_ctrlr_opts *opts)</a>
+<a class="sourceLine" id="cb29-5" data-line-number="5">&#123;</a>
+<a class="sourceLine" id="cb29-6" data-line-number="6">    <span class="kw">struct</span> trid_entry   *trid_entry = cb_ctx;</a>
+<a class="sourceLine" id="cb29-7" data-line-number="7">    <span class="kw">struct</span> spdk_pci_addr    pci_addr;</a>
+<a class="sourceLine" id="cb29-8" data-line-number="8">    <span class="kw">struct</span> spdk_pci_device  *pci_dev;</a>
+<a class="sourceLine" id="cb29-9" data-line-number="9">    <span class="kw">struct</span> spdk_pci_id  pci_id;</a>
+<a class="sourceLine" id="cb29-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb29-11" data-line-number="11">    <span class="co">// rdma 等执行 if 内代码块</span></a>
+<a class="sourceLine" id="cb29-12" data-line-number="12">    <span class="cf">if</span> (trid-&gt;trtype != SPDK_NVME_TRANSPORT_PCIE) &#123;</a>
+<a class="sourceLine" id="cb29-13" data-line-number="13">        printf(<span class="st">&quot;Attached to NVMe over Fabrics controller at %s:%s: %s</span><span class="sc">\n</span><span class="st">&quot;</span>,</a>
+<a class="sourceLine" id="cb29-14" data-line-number="14">               trid-&gt;traddr, trid-&gt;trsvcid,</a>
+<a class="sourceLine" id="cb29-15" data-line-number="15">               trid-&gt;subnqn);</a>
+<a class="sourceLine" id="cb29-16" data-line-number="16">    &#125; </a>
+<a class="sourceLine" id="cb29-17" data-line-number="17">    <span class="co">// pcie 执行 else 内代码块</span></a>
+<a class="sourceLine" id="cb29-18" data-line-number="18">    <span class="cf">else</span> &#123;</a>
+<a class="sourceLine" id="cb29-19" data-line-number="19">        ...</a>
+<a class="sourceLine" id="cb29-20" data-line-number="20">    &#125;</a>
+<a class="sourceLine" id="cb29-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb29-22" data-line-number="22">    register_ctrlr(ctrlr, trid_entry);</a>
+<a class="sourceLine" id="cb29-23" data-line-number="23">&#125;</a></code></pre></div>
 <p>执行 <code>register_ctrlr(ctrlr, trid_entry)</code> 函数，初始化并注册一个新的 NVMe 控制器，并根据传入的 trid_entry 配置信息处理相关的命名空间 ns。</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">struct</span> trid_entry &#123;</a>
-<a class="sourceLine" id="cb29-2" data-line-number="2">    <span class="kw">struct</span> spdk_nvme_transport_id   trid;</a>
-<a class="sourceLine" id="cb29-3" data-line-number="3">    <span class="dt">uint16_t</span>            nsid;</a>
-<a class="sourceLine" id="cb29-4" data-line-number="4">    <span class="dt">char</span>                hostnqn[SPDK_NVMF_NQN_MAX_LEN + <span class="dv">1</span>];</a>
-<a class="sourceLine" id="cb29-5" data-line-number="5">    TAILQ_ENTRY(trid_entry)     tailq;</a>
-<a class="sourceLine" id="cb29-6" data-line-number="6">&#125;;</a>
-<a class="sourceLine" id="cb29-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="dt">static</span> <span class="dt">void</span></a>
-<a class="sourceLine" id="cb29-9" data-line-number="9">register_ctrlr(<span class="kw">struct</span> spdk_nvme_ctrlr *ctrlr, <span class="kw">struct</span> trid_entry *trid_entry)</a>
-<a class="sourceLine" id="cb29-10" data-line-number="10">&#123;</a>
-<a class="sourceLine" id="cb29-11" data-line-number="11">    <span class="kw">struct</span> spdk_nvme_ns *ns;</a>
-<a class="sourceLine" id="cb29-12" data-line-number="12">    <span class="kw">struct</span> ctrlr_entry *entry = malloc(<span class="kw">sizeof</span>(<span class="kw">struct</span> ctrlr_entry));</a>
-<a class="sourceLine" id="cb29-13" data-line-number="13">    <span class="dt">uint32_t</span> nsid;</a>
-<a class="sourceLine" id="cb29-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb29-15" data-line-number="15">    ...</a>
-<a class="sourceLine" id="cb29-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb29-17" data-line-number="17">    <span class="co">// 为控制器生成一个 name</span></a>
-<a class="sourceLine" id="cb29-18" data-line-number="18">    build_nvme_name(entry-&gt;name, <span class="kw">sizeof</span>(entry-&gt;name), ctrlr);</a>
-<a class="sourceLine" id="cb29-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb29-20" data-line-number="20">    entry-&gt;ctrlr = ctrlr;</a>
-<a class="sourceLine" id="cb29-21" data-line-number="21">    entry-&gt;trtype = trid_entry-&gt;trid.trtype;</a>
-<a class="sourceLine" id="cb29-22" data-line-number="22">    <span class="co">// perf.c: register_controllers() 函数中，</span></a>
-<a class="sourceLine" id="cb29-23" data-line-number="23">    <span class="co">// 实际上到这一步，才将 controller 加入到全局 g_controllers 队列中</span></a>
-<a class="sourceLine" id="cb29-24" data-line-number="24">    TAILQ_INSERT_TAIL(&amp;g_controllers, entry, link);</a>
-<a class="sourceLine" id="cb29-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb29-26" data-line-number="26">    <span class="co">// 延迟跟踪功能，通过 parse_args() 解析命令行参数</span></a>
-<a class="sourceLine" id="cb29-27" data-line-number="27">    ...</a>
-<a class="sourceLine" id="cb29-28" data-line-number="28"></a>
-<a class="sourceLine" id="cb29-29" data-line-number="29">    <span class="co">// 如果 nsid 为 0，则会遍历该控制器的所有活动命名空间，</span></a>
-<a class="sourceLine" id="cb29-30" data-line-number="30">    <span class="co">// 并逐一调用 register_ns() 进行注册。</span></a>
-<a class="sourceLine" id="cb29-31" data-line-number="31">    <span class="cf">if</span> (trid_entry-&gt;nsid == <span class="dv">0</span>) &#123;</a>
-<a class="sourceLine" id="cb29-32" data-line-number="32">        <span class="cf">for</span> (nsid = spdk_nvme_ctrlr_get_first_active_ns(ctrlr);</a>
-<a class="sourceLine" id="cb29-33" data-line-number="33">             nsid != <span class="dv">0</span>; nsid = spdk_nvme_ctrlr_get_next_active_ns(ctrlr, nsid)) &#123;</a>
-<a class="sourceLine" id="cb29-34" data-line-number="34">            ns = spdk_nvme_ctrlr_get_ns(ctrlr, nsid);</a>
-<a class="sourceLine" id="cb29-35" data-line-number="35">            <span class="cf">if</span> (ns == NULL) &#123;</a>
-<a class="sourceLine" id="cb29-36" data-line-number="36">                <span class="cf">continue</span>;</a>
-<a class="sourceLine" id="cb29-37" data-line-number="37">            &#125;</a>
-<a class="sourceLine" id="cb29-38" data-line-number="38">            register_ns(ctrlr, ns);</a>
-<a class="sourceLine" id="cb29-39" data-line-number="39">        &#125;</a>
-<a class="sourceLine" id="cb29-40" data-line-number="40">    &#125; <span class="cf">else</span> &#123;</a>
-<a class="sourceLine" id="cb29-41" data-line-number="41">        ns = spdk_nvme_ctrlr_get_ns(ctrlr, trid_entry-&gt;nsid);</a>
-<a class="sourceLine" id="cb29-42" data-line-number="42"></a>
-<a class="sourceLine" id="cb29-43" data-line-number="43">        <span class="co">// 注册命名空间</span></a>
-<a class="sourceLine" id="cb29-44" data-line-number="44">        register_ns(ctrlr, ns);</a>
-<a class="sourceLine" id="cb29-45" data-line-number="45">    &#125;</a>
-<a class="sourceLine" id="cb29-46" data-line-number="46">&#125;</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">struct</span> trid_entry &#123;</a>
+<a class="sourceLine" id="cb30-2" data-line-number="2">    <span class="kw">struct</span> spdk_nvme_transport_id   trid;</a>
+<a class="sourceLine" id="cb30-3" data-line-number="3">    <span class="dt">uint16_t</span>            nsid;</a>
+<a class="sourceLine" id="cb30-4" data-line-number="4">    <span class="dt">char</span>                hostnqn[SPDK_NVMF_NQN_MAX_LEN + <span class="dv">1</span>];</a>
+<a class="sourceLine" id="cb30-5" data-line-number="5">    TAILQ_ENTRY(trid_entry)     tailq;</a>
+<a class="sourceLine" id="cb30-6" data-line-number="6">&#125;;</a>
+<a class="sourceLine" id="cb30-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb30-8" data-line-number="8"><span class="dt">static</span> <span class="dt">void</span></a>
+<a class="sourceLine" id="cb30-9" data-line-number="9">register_ctrlr(<span class="kw">struct</span> spdk_nvme_ctrlr *ctrlr, <span class="kw">struct</span> trid_entry *trid_entry)</a>
+<a class="sourceLine" id="cb30-10" data-line-number="10">&#123;</a>
+<a class="sourceLine" id="cb30-11" data-line-number="11">    <span class="kw">struct</span> spdk_nvme_ns *ns;</a>
+<a class="sourceLine" id="cb30-12" data-line-number="12">    <span class="kw">struct</span> ctrlr_entry *entry = malloc(<span class="kw">sizeof</span>(<span class="kw">struct</span> ctrlr_entry));</a>
+<a class="sourceLine" id="cb30-13" data-line-number="13">    <span class="dt">uint32_t</span> nsid;</a>
+<a class="sourceLine" id="cb30-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb30-15" data-line-number="15">    ...</a>
+<a class="sourceLine" id="cb30-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb30-17" data-line-number="17">    <span class="co">// 为控制器生成一个 name</span></a>
+<a class="sourceLine" id="cb30-18" data-line-number="18">    build_nvme_name(entry-&gt;name, <span class="kw">sizeof</span>(entry-&gt;name), ctrlr);</a>
+<a class="sourceLine" id="cb30-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb30-20" data-line-number="20">    entry-&gt;ctrlr = ctrlr;</a>
+<a class="sourceLine" id="cb30-21" data-line-number="21">    entry-&gt;trtype = trid_entry-&gt;trid.trtype;</a>
+<a class="sourceLine" id="cb30-22" data-line-number="22">    <span class="co">// perf.c: register_controllers() 函数中，</span></a>
+<a class="sourceLine" id="cb30-23" data-line-number="23">    <span class="co">// 实际上到这一步，才将 controller 加入到全局 g_controllers 队列中</span></a>
+<a class="sourceLine" id="cb30-24" data-line-number="24">    TAILQ_INSERT_TAIL(&amp;g_controllers, entry, link);</a>
+<a class="sourceLine" id="cb30-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb30-26" data-line-number="26">    <span class="co">// 延迟跟踪功能，通过 parse_args() 解析命令行参数</span></a>
+<a class="sourceLine" id="cb30-27" data-line-number="27">    ...</a>
+<a class="sourceLine" id="cb30-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb30-29" data-line-number="29">    <span class="co">// 如果 nsid 为 0，则会遍历该控制器的所有活动命名空间，</span></a>
+<a class="sourceLine" id="cb30-30" data-line-number="30">    <span class="co">// 并逐一调用 register_ns() 进行注册。</span></a>
+<a class="sourceLine" id="cb30-31" data-line-number="31">    <span class="cf">if</span> (trid_entry-&gt;nsid == <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb30-32" data-line-number="32">        <span class="cf">for</span> (nsid = spdk_nvme_ctrlr_get_first_active_ns(ctrlr);</a>
+<a class="sourceLine" id="cb30-33" data-line-number="33">             nsid != <span class="dv">0</span>; nsid = spdk_nvme_ctrlr_get_next_active_ns(ctrlr, nsid)) &#123;</a>
+<a class="sourceLine" id="cb30-34" data-line-number="34">            ns = spdk_nvme_ctrlr_get_ns(ctrlr, nsid);</a>
+<a class="sourceLine" id="cb30-35" data-line-number="35">            <span class="cf">if</span> (ns == NULL) &#123;</a>
+<a class="sourceLine" id="cb30-36" data-line-number="36">                <span class="cf">continue</span>;</a>
+<a class="sourceLine" id="cb30-37" data-line-number="37">            &#125;</a>
+<a class="sourceLine" id="cb30-38" data-line-number="38">            register_ns(ctrlr, ns);</a>
+<a class="sourceLine" id="cb30-39" data-line-number="39">        &#125;</a>
+<a class="sourceLine" id="cb30-40" data-line-number="40">    &#125; <span class="cf">else</span> &#123;</a>
+<a class="sourceLine" id="cb30-41" data-line-number="41">        ns = spdk_nvme_ctrlr_get_ns(ctrlr, trid_entry-&gt;nsid);</a>
+<a class="sourceLine" id="cb30-42" data-line-number="42"></a>
+<a class="sourceLine" id="cb30-43" data-line-number="43">        <span class="co">// 注册命名空间</span></a>
+<a class="sourceLine" id="cb30-44" data-line-number="44">        register_ns(ctrlr, ns);</a>
+<a class="sourceLine" id="cb30-45" data-line-number="45">    &#125;</a>
+<a class="sourceLine" id="cb30-46" data-line-number="46">&#125;</a></code></pre></div>
 <p>注册命名空间，调用 <code>register_ns(ctrlr, ns)</code> 函数，进入该函数：</p>
 <p>TODO</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode c"><code class="sourceCode c"></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"></code></pre></div>
 <p>最后 <code>nvme_ctrlr_poll_internal(ctrlr, probe_ctx)</code> 函数执行结束，返回上一级。</p>
 <p><code>spdk_nvme_probe_poll_async(probe_ctx)</code> 函数执行结束，返回上一级。</p>
 <p><code>nvme_init_controllers(probe_ctx)</code> 函数执行结束，返回上一级。</p>
 <p><code>spdk_nvme_probe(&amp;trid_entry-&gt;trid, trid_entry, probe_cb, attach_cb, NULL)</code> 函数执行结束，返回到 <code>perf.c</code> 中的 <code>register_controllers()</code> 函数中。</p>
 <p><code>register_controllers()</code> 函数执行结束，<code>perf.c</code> 中的 <code>main()</code> 函数继续执行，在进行下一步前，进行了一些全局资源的检查：</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="cf">if</span> (g_warn) &#123;</a>
-<a class="sourceLine" id="cb31-2" data-line-number="2">    printf(<span class="st">&quot;WARNING: Some requested NVMe devices were skipped</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
-<a class="sourceLine" id="cb31-3" data-line-number="3">&#125;</a>
-<a class="sourceLine" id="cb31-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="cf">if</span> (g_num_namespaces == <span class="dv">0</span>) &#123;</a>
-<a class="sourceLine" id="cb31-6" data-line-number="6">    fprintf(stderr, <span class="st">&quot;No valid NVMe controllers or AIO or URING devices found</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
-<a class="sourceLine" id="cb31-7" data-line-number="7">    <span class="cf">goto</span> cleanup;</a>
-<a class="sourceLine" id="cb31-8" data-line-number="8">&#125;</a>
-<a class="sourceLine" id="cb31-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb31-10" data-line-number="10"><span class="cf">if</span> (g_num_workers &gt; <span class="dv">1</span> &amp;&amp; g_quiet_count &gt; <span class="dv">1</span>) &#123;</a>
-<a class="sourceLine" id="cb31-11" data-line-number="11">    fprintf(stderr, <span class="st">&quot;Error message rate-limiting enabled across multiple threads.</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
-<a class="sourceLine" id="cb31-12" data-line-number="12">    fprintf(stderr, <span class="st">&quot;Error suppression count may not be exact.</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
-<a class="sourceLine" id="cb31-13" data-line-number="13">&#125;</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="cf">if</span> (g_warn) &#123;</a>
+<a class="sourceLine" id="cb32-2" data-line-number="2">    printf(<span class="st">&quot;WARNING: Some requested NVMe devices were skipped</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb32-3" data-line-number="3">&#125;</a>
+<a class="sourceLine" id="cb32-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb32-5" data-line-number="5"><span class="cf">if</span> (g_num_namespaces == <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb32-6" data-line-number="6">    fprintf(stderr, <span class="st">&quot;No valid NVMe controllers or AIO or URING devices found</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb32-7" data-line-number="7">    <span class="cf">goto</span> cleanup;</a>
+<a class="sourceLine" id="cb32-8" data-line-number="8">&#125;</a>
+<a class="sourceLine" id="cb32-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb32-10" data-line-number="10"><span class="cf">if</span> (g_num_workers &gt; <span class="dv">1</span> &amp;&amp; g_quiet_count &gt; <span class="dv">1</span>) &#123;</a>
+<a class="sourceLine" id="cb32-11" data-line-number="11">    fprintf(stderr, <span class="st">&quot;Error message rate-limiting enabled across multiple threads.</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb32-12" data-line-number="12">    fprintf(stderr, <span class="st">&quot;Error suppression count may not be exact.</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb32-13" data-line-number="13">&#125;</a></code></pre></div>
 <hr />
 </div><div class="story post-story"><h2 id="三多线程的任务执行">（三）多线程的任务执行</h2>
 <p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
-<h3 id="section"></h3>
+<h3 id="轮询-controllers-状态数据流">轮询 controllers 状态（数据流）</h3>
+<p>函数调用栈：</p>
+<pre><code>--&gt; pthread_create(&amp;thread_id, NULL, &amp;nvme_poll_ctrlrs, NULL);
+----&gt; perf.c: nvme_poll_ctrlrs();
+------&gt; pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, &amp;oldstate);
+------&gt; TAILQ_FOREACH(entry, &amp;g_controllers, link)
+&#123;
+--------&gt; nvme_ctrlr.c: spdk_nvme_ctrlr_process_admin_completions(entry-&gt;ctrlr);
+----------&gt; nvme_ctrlr.c: nvme_ctrlr_keep_alive(ctrlr);
+------------&gt; nvme_internal.h: nvme_allocate_request_null(ctrlr-&gt;adminq, nvme_keep_alive_completion, NULL);
+--------------&gt; nvme_internal.h: nvme_allocate_request_contig(qpair, NULL, 0, cb_fn, cb_arg);
+----------------&gt; nvme_internal.h: nvme_allocate_request(qpair, &amp;payload, payload_size, 0, cb_fn, cb_arg);
+------------------&gt; STAILQ_FIRST(&amp;qpair-&gt;free_req);
+------------------&gt; TAILQ_REMOVE_HEAD(&amp;qpair-&gt;free_req, stailq);
+------------------&gt; NVME_INIT_REQUEST(req, cb_fn, cb_arg, *payload, payload_size, md_size);
+------------&gt; nvme_ctrlr.c: nvme_ctrlr_submit_admin_request(ctrlr, req);
+--------------&gt; nvme_qpair.c: nvme_qpair_submit_request(ctrlr-&gt;adminq, req);
+----------------&gt; 与下文数据流的过程类似，此处略
+----------&gt; nvme_ctrlr.c: nvme_io_msg_process(ctrlr);
+------------&gt; nvme_qpair.c: spdk_nvme_qpair_process_completions(ctrlr-&gt;external_io_msgs_qpair, 0);
+--------------&gt; 与下文数据流的过程类似，此处略
+----------&gt; nvme_qpair.c: spdk_nvme_qpair_process_completions(ctrlr-&gt;adminq, 0);
+------------&gt; 与下文数据流的过程类似，此处略
+&#125;
+------&gt; pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, &amp;oldstate);</code></pre>
+<h3 id="连接-worker-thread-和-namespace控制流">连接 worker thread 和 namespace（控制流）</h3>
+<p>函数调用栈：</p>
+<pre><code>--&gt; perf.c: associate_workers_with_ns();</code></pre>
+<p>进入到 <code>associate_workers_with_ns()</code> 函数中：</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="dt">static</span> <span class="dt">int</span></a>
+<a class="sourceLine" id="cb35-2" data-line-number="2">associate_workers_with_ns(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb35-3" data-line-number="3">&#123;</a>
+<a class="sourceLine" id="cb35-4" data-line-number="4">    <span class="kw">struct</span> ns_entry     *entry = TAILQ_FIRST(&amp;g_namespaces);</a>
+<a class="sourceLine" id="cb35-5" data-line-number="5">    <span class="kw">struct</span> worker_thread    *worker = TAILQ_FIRST(&amp;g_workers);</a>
+<a class="sourceLine" id="cb35-6" data-line-number="6">    <span class="dt">int</span>         i, count;</a>
+<a class="sourceLine" id="cb35-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb35-8" data-line-number="8">    <span class="co">/* Each core contains single worker, and namespaces are associated as follows:</span></a>
+<a class="sourceLine" id="cb35-9" data-line-number="9"><span class="co">     * --use-every-core not specified (default):</span></a>
+<a class="sourceLine" id="cb35-10" data-line-number="10"><span class="co">     * 2) equal workers and namespaces - each worker associated with single namespace</span></a>
+<a class="sourceLine" id="cb35-11" data-line-number="11"><span class="co">     * 3) more workers than namespaces - each namespace is associated with one or more workers</span></a>
+<a class="sourceLine" id="cb35-12" data-line-number="12"><span class="co">     * 4) more namespaces than workers - each worker is associated with one or more namespaces</span></a>
+<a class="sourceLine" id="cb35-13" data-line-number="13"><span class="co">     * --use-every-core option enabled - every worker is associated with all namespaces</span></a>
+<a class="sourceLine" id="cb35-14" data-line-number="14"><span class="co">     */</span></a>
+<a class="sourceLine" id="cb35-15" data-line-number="15">    <span class="cf">if</span> (g_use_every_core) &#123;</a>
+<a class="sourceLine" id="cb35-16" data-line-number="16">        TAILQ_FOREACH(worker, &amp;g_workers, link) &#123;</a>
+<a class="sourceLine" id="cb35-17" data-line-number="17">            TAILQ_FOREACH(entry, &amp;g_namespaces, link) &#123;</a>
+<a class="sourceLine" id="cb35-18" data-line-number="18">                <span class="cf">if</span> (allocate_ns_worker(entry, worker) != <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb35-19" data-line-number="19">                    <span class="cf">return</span> <span class="dv">-1</span>;</a>
+<a class="sourceLine" id="cb35-20" data-line-number="20">                &#125;</a>
+<a class="sourceLine" id="cb35-21" data-line-number="21">            &#125;</a>
+<a class="sourceLine" id="cb35-22" data-line-number="22">        &#125;</a>
+<a class="sourceLine" id="cb35-23" data-line-number="23">        <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb35-24" data-line-number="24">    &#125;</a>
+<a class="sourceLine" id="cb35-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb35-26" data-line-number="26">    <span class="co">// 选择数目多的那个（ns 或者 worker thread）</span></a>
+<a class="sourceLine" id="cb35-27" data-line-number="27">    count = g_num_namespaces &gt; g_num_workers ? g_num_namespaces : g_num_workers;</a>
+<a class="sourceLine" id="cb35-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb35-29" data-line-number="29">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; count; i++) &#123;</a>
+<a class="sourceLine" id="cb35-30" data-line-number="30">        <span class="cf">if</span> (entry == NULL) &#123;</a>
+<a class="sourceLine" id="cb35-31" data-line-number="31">            <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb35-32" data-line-number="32">        &#125;</a>
+<a class="sourceLine" id="cb35-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb35-34" data-line-number="34">        <span class="cf">if</span> (allocate_ns_worker(entry, worker) != <span class="dv">0</span>) &#123;</a>
+<a class="sourceLine" id="cb35-35" data-line-number="35">            <span class="cf">return</span> <span class="dv">-1</span>;</a>
+<a class="sourceLine" id="cb35-36" data-line-number="36">        &#125;</a>
+<a class="sourceLine" id="cb35-37" data-line-number="37"></a>
+<a class="sourceLine" id="cb35-38" data-line-number="38">        <span class="co">// 如果当 worker thread（ns）分配完，</span></a>
+<a class="sourceLine" id="cb35-39" data-line-number="39">        <span class="co">// 但 ns（worker thread）还有剩，</span></a>
+<a class="sourceLine" id="cb35-40" data-line-number="40">        <span class="co">// 则已分配完的 worker thread（ns）</span></a>
+<a class="sourceLine" id="cb35-41" data-line-number="41">        <span class="co">// 从其链表头部再分配，</span></a>
+<a class="sourceLine" id="cb35-42" data-line-number="42">        <span class="co">// 因此链表头部的 worker thread（ns）会分得更多 ns（worker thread） </span></a>
+<a class="sourceLine" id="cb35-43" data-line-number="43"></a>
+<a class="sourceLine" id="cb35-44" data-line-number="44">        worker = TAILQ_NEXT(worker, link);</a>
+<a class="sourceLine" id="cb35-45" data-line-number="45">        <span class="cf">if</span> (worker == NULL) &#123;</a>
+<a class="sourceLine" id="cb35-46" data-line-number="46">            worker = TAILQ_FIRST(&amp;g_workers);</a>
+<a class="sourceLine" id="cb35-47" data-line-number="47">        &#125;</a>
+<a class="sourceLine" id="cb35-48" data-line-number="48"></a>
+<a class="sourceLine" id="cb35-49" data-line-number="49">        entry = TAILQ_NEXT(entry, link);</a>
+<a class="sourceLine" id="cb35-50" data-line-number="50">        <span class="cf">if</span> (entry == NULL) &#123;</a>
+<a class="sourceLine" id="cb35-51" data-line-number="51">            entry = TAILQ_FIRST(&amp;g_namespaces);</a>
+<a class="sourceLine" id="cb35-52" data-line-number="52">        &#125;</a>
+<a class="sourceLine" id="cb35-53" data-line-number="53"></a>
+<a class="sourceLine" id="cb35-54" data-line-number="54">    &#125;</a>
+<a class="sourceLine" id="cb35-55" data-line-number="55"></a>
+<a class="sourceLine" id="cb35-56" data-line-number="56">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb35-57" data-line-number="57">&#125;</a></code></pre></div>
+<h3 id="init-barrier-线程同步控制流">init barrier 线程同步（控制流）</h3>
+<p>执行 <code>pthread_barrier_init(&amp;g_worker_sync_barrier, NULL, g_num_workers)</code> 函数。当当所有 thread 都执行到 <code>barrier_wait()</code> 后，才继续执行后续代码。作用是实现无锁的线程同步。</p>
+<h3 id="绑核分配-worker_fn-任务控制流-数据流">绑核、分配 worker_fn 任务（控制流 + 数据流）</h3>
+<p>函数调用栈：</p>
+<pre><code>--&gt; TAILQ_FOREACH(worker, &amp;g_workers, link)
+&#123;
+----&gt; lib/env_dpdk/threads.c: spdk_env_thread_launch_pinned(worker-&gt;lcore, work_fn, worker);
+------&gt; dpdk/lib/eal/common/eal_common_launch.c: rte_eal_remote_launch(fn, arg, core);
+------&gt; perf.c: work_fn();
+--------&gt; TAILQ_FOREACH(ns_ctx, &amp;worker-&gt;ns_ctx, link)
+&#123;
+----------&gt; perf.c: init_ns_worker_ctx(ns_ctx);
+
+&#125;
+--------&gt; pthread_barrier_wait(&amp;g_worker_sync_barrier);
+--------&gt; TAILQ_FOREACH(ns_ctx, &amp;worker-&gt;ns_ctx, link)
+&#123;
+----------&gt; submit_io(ns_ctx, g_queue_depth);
+------------&gt; TODO
+&#125;
+--------&gt; TAILQ_FOREACH(ns_ctx, &amp;worker-&gt;ns_ctx, link)
+&#123;
+----------&gt; TAILQ_SWAP(&amp;swap, &amp;ns_ctx-&gt;queued_tasks, perf_task, link);
+----------&gt; task = TAILQ_FIRST(&amp;swap);
+----------&gt; TAILQ_REMOVE(&amp;swap, task, link);
+----------&gt; perf.c: submit_single_io(task);
+------------&gt; TODO
+----------&gt; perf.c: nvme_check_io(ns_ctx);
+------------&gt; TODO
+&#125;
+&#125;</code></pre>
 
 </div>
   </div>
@@ -3389,10 +3664,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-07T22:06:32+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-08T18:01:44+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：Sep 7, 2024</p>
+    <p>最后更新于：Sep 8, 2024</p>
   </a>
 </div>
 
@@ -3546,7 +3821,7 @@ dev...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>92.6k 字</div>
+          <div>94k 字</div>
         </div>
       
 
@@ -3571,7 +3846,7 @@ dev...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2024-09-07 日</div>
+          <div id="last-update-show">2024-09-08 日</div>
         </div>
       
     </div>
@@ -3598,7 +3873,7 @@ dev...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perf-%E7%9A%84-main-%E5%87%BD%E6%95%B0%E4%B8%BB%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">perf 的 main() 函数主流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perf-%E7%9A%84%E5%AE%8F%E5%AE%9A%E4%B9%89%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%AE%9A%E4%B9%89%E7%9A%84%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">3.</span> <span class="toc-text">perf 的宏定义、全局变量、定义的结构体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E7%8E%AF%E5%A2%83%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">（一）环境初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96-opts-%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">4.1.</span> <span class="toc-text">初始化 opts 参数默认值（控制流）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90-args%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">4.2.</span> <span class="toc-text">解析 args（控制流）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">4.3.</span> <span class="toc-text">初始化运行环境（控制流）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E8%AE%BE%E5%A4%87%E5%8F%91%E7%8E%B0%E5%92%8C%E6%B3%A8%E5%86%8C"><span class="toc-number">5.</span> <span class="toc-text">（二）设备发现和注册</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C-worker-%E7%BA%BF%E7%A8%8B%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">5.1.</span> <span class="toc-text">注册 worker 线程（控制流）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A2%E6%B5%8B%E5%B9%B6%E5%88%9D%E5%A7%8B%E5%8C%96-nvme-controllers%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">5.2.</span> <span class="toc-text">探测并初始化 NVMe controllers（控制流）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C"><span class="toc-number">6.</span> <span class="toc-text">（三）多线程的任务执行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#section"><span class="toc-number">6.1.</span> <span class="toc-text"></span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perf-%E7%9A%84-main-%E5%87%BD%E6%95%B0%E4%B8%BB%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">perf 的 main() 函数主流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perf-%E7%9A%84%E5%AE%8F%E5%AE%9A%E4%B9%89%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%AE%9A%E4%B9%89%E7%9A%84%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">3.</span> <span class="toc-text">perf 的宏定义、全局变量、定义的结构体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E7%8E%AF%E5%A2%83%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">（一）环境初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96-opts-%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">4.1.</span> <span class="toc-text">初始化 opts 参数默认值（控制流）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90-args%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">4.2.</span> <span class="toc-text">解析 args（控制流）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">4.3.</span> <span class="toc-text">初始化运行环境（控制流）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E8%AE%BE%E5%A4%87%E5%8F%91%E7%8E%B0%E5%92%8C%E6%B3%A8%E5%86%8C"><span class="toc-number">5.</span> <span class="toc-text">（二）设备发现和注册</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C-worker-%E7%BA%BF%E7%A8%8B%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">5.1.</span> <span class="toc-text">注册 worker 线程（控制流）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A2%E6%B5%8B%E5%B9%B6%E5%88%9D%E5%A7%8B%E5%8C%96-nvme-controllers%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">5.2.</span> <span class="toc-text">探测并初始化 NVMe controllers（控制流）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C"><span class="toc-number">6.</span> <span class="toc-text">（三）多线程的任务执行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AE%E8%AF%A2-controllers-%E7%8A%B6%E6%80%81%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="toc-number">6.1.</span> <span class="toc-text">轮询 controllers 状态（数据流）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5-worker-thread-%E5%92%8C-namespace%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">6.2.</span> <span class="toc-text">连接 worker thread 和 namespace（控制流）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#init-barrier-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">6.3.</span> <span class="toc-text">init barrier 线程同步（控制流）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%91%E6%A0%B8%E5%88%86%E9%85%8D-worker_fn-%E4%BB%BB%E5%8A%A1%E6%8E%A7%E5%88%B6%E6%B5%81-%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="toc-number">6.4.</span> <span class="toc-text">绑核、分配 worker_fn 任务（控制流 + 数据流）</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -4432,7 +4707,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4751,7 +5026,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/notes/存储/n-spdk-03/","name":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析","description":"SPDK 自带的性能测试应用 spdk_nvme_perf 的源代码 perf.c 的粗浅分析，进一步熟悉 SPDK 用户态驱动的主要工作流程和方式。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/","wordCount":75,"datePublished":"2024-09-01T11:35:45.000Z","dateModified":"2024-09-07T14:06:32.812Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/notes/存储/n-spdk-03/","name":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析","description":"SPDK 自带的性能测试应用 spdk_nvme_perf 的源代码 perf.c 的粗浅分析，进一步熟悉 SPDK 用户态驱动的主要工作流程和方式。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/","wordCount":75,"datePublished":"2024-09-01T11:35:45.000Z","dateModified":"2024-09-08T10:01:44.704Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
