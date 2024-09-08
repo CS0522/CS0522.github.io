@@ -1159,6 +1159,13 @@
   </url>
   
   <url>
+    <loc>https://cs0522.github.io/tags/DiskSim/</loc>
+    <lastmod>2024-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://cs0522.github.io/tags/RAID/</loc>
     <lastmod>2024-09-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -1173,20 +1180,6 @@
   </url>
   
   <url>
-    <loc>https://cs0522.github.io/tags/DiskSim/</loc>
-    <lastmod>2024-09-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://cs0522.github.io/tags/SimPy/</loc>
-    <lastmod>2024-09-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://cs0522.github.io/tags/%E5%AD%98%E5%82%A8/</loc>
     <lastmod>2024-09-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -1195,6 +1188,13 @@
   
   <url>
     <loc>https://cs0522.github.io/tags/NVMe/</loc>
+    <lastmod>2024-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://cs0522.github.io/tags/SimPy/</loc>
     <lastmod>2024-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1329,13 +1329,6 @@
   </url>
   
   <url>
-    <loc>https://cs0522.github.io/categories/learnings/ANN/</loc>
-    <lastmod>2024-09-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://cs0522.github.io/categories/learnings/%E7%9B%98%E8%8A%82%E8%83%BD/</loc>
     <lastmod>2024-09-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -1343,7 +1336,7 @@
   </url>
   
   <url>
-    <loc>https://cs0522.github.io/categories/notes/%E5%AD%98%E5%82%A8/</loc>
+    <loc>https://cs0522.github.io/categories/learnings/ANN/</loc>
     <lastmod>2024-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1357,7 +1350,7 @@
   </url>
   
   <url>
-    <loc>https://cs0522.github.io/categories/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <loc>https://cs0522.github.io/categories/notes/%E5%AD%98%E5%82%A8/</loc>
     <lastmod>2024-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1365,6 +1358,13 @@
   
   <url>
     <loc>https://cs0522.github.io/categories/notes/SimPy/</loc>
+    <lastmod>2024-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://cs0522.github.io/categories/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2024-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1385,7 +1385,7 @@
   </url>
   
   <url>
-    <loc>https://cs0522.github.io/categories/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/</loc>
+    <loc>https://cs0522.github.io/categories/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/</loc>
     <lastmod>2024-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1393,6 +1393,13 @@
   
   <url>
     <loc>https://cs0522.github.io/categories/practices/%E6%95%B0%E7%BB%84-%E5%8F%8C%E6%8C%87%E9%92%88/</loc>
+    <lastmod>2024-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://cs0522.github.io/categories/practices/%E4%BA%8C%E5%8F%89%E6%A0%91/</loc>
     <lastmod>2024-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1435,13 +1442,6 @@
   
   <url>
     <loc>https://cs0522.github.io/categories/practices/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</loc>
-    <lastmod>2024-09-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://cs0522.github.io/categories/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/</loc>
     <lastmod>2024-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
