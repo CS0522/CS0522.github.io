@@ -46,7 +46,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-08-29T07:46:24.000Z">
-<meta property="article:modified_time" content="2024-09-02T16:49:00.992Z">
+<meta property="article:modified_time" content="2024-09-11T06:10:59.907Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="存储">
 <meta property="article:tag" content="SPDK">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1725967118575),
+    lastupdate: new Date(1726053000610),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2600,13 +2600,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>1.7k words</p>
+      <p>1.8k words</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>8 min</p>
+      <p>9 min</p>
     </a>
   </div>
 
@@ -2827,88 +2827,96 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co"># Type        BDF      Vendor Device   NUMA      Driver        Device     Block devices</span></a>
 <a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co"># NVMe   0000:0b:00.0   15ad   07f0  unknown  uio_pci_generic     -         -</span></a></code></pre></div>
 <p>这个 BDF <code>0000:0b:00.0</code> 可能会变化，需要记住。</p>
-<h3 id="创建-nvme-盘启动-tgt-并监听">创建 NVMe 盘、启动 tgt 并监听</h3>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># 具体参数代表含义还没完全弄清，可以通过 --help 查询</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co"># 1. 启动 nvmf_tgt 并监听</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="ex">build/bin/nvmf_tgt</span> <span class="kw">&amp;</span> <span class="ex">scripts/rpc.py</span> nvmf_create_transport -t RDMA -u 8192 -i 131072 -c 8192</a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co"># 2. 将 NVMe 控制器附加到 SPDK 的块设备层</span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co"># 0000:0b:00.0 是上文的 BDF</span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="ex">./scripts/rpc.py</span> bdev_nvme_attach_controller -b NVMe1 -t PCIe -a 0000:0b:00.0</a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co"># output:</span></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co"># NVMe1n1</span></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co"># 3. 创建 subsystem</span></a>
-<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co"># cnode1、SPDK00000000000001 可以自定义</span></a>
-<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="ex">./scripts/rpc.py</span> nvmf_create_subsystem nqn.2016-06.io.spdk:cnode1 -a -s SPDK00000000000001 -d SPDK_Controller1</a>
-<a class="sourceLine" id="cb14-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co"># 4. 添加 namespace</span></a>
-<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="ex">./scripts/rpc.py</span> nvmf_subsystem_add_ns nqn.2016-06.io.spdk:cnode1 NVMe1n1</a>
-<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co"># NVMe1n1 是 2 中的输出</span></a>
-<a class="sourceLine" id="cb14-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co"># 5. 添加监听</span></a>
-<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="co"># -a 是本机 ip，-s 是端口，可修改</span></a>
-<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="ex">./scripts/rpc.py</span> nvmf_subsystem_add_listener nqn.2016-06.io.spdk:cnode1 -t rdma -a 192.168.159.142 -s 4420</a></code></pre></div>
+<h3 id="给-spdk-分配大页">给 SPDK 分配大页</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="bu">echo</span> 32768 <span class="kw">|</span> <span class="fu">tee</span> /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co"># output:</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co"># 32768</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="fu">mkdir</span> /dev/hugepages_2mb</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="fu">mount</span> -t hugetlbfs none /dev/hugepages_2mb -o pagesize=2MB</a></code></pre></div>
+<h3 id="启动-tgt-并监听">启动 tgt 并监听</h3>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># 具体参数代表含义还没完全弄清，可以通过 --help 查询</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co"># 1. 启动 nvmf_tgt 并监听</span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="ex">build/bin/nvmf_tgt</span> <span class="kw">&amp;</span> <span class="ex">scripts/rpc.py</span> nvmf_create_transport -t RDMA -u 8192 -i 131072 -c 8192</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co"># 2. 将 NVMe 控制器附加到 SPDK 的块设备层</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co"># 0000:0b:00.0 是上文的 BDF</span></a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="ex">./scripts/rpc.py</span> bdev_nvme_attach_controller -b NVMe1 -t PCIe -a 0000:0b:00.0</a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co"># output:</span></a>
+<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co"># NVMe1n1</span></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co"># 3. 创建 subsystem</span></a>
+<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co"># cnode1、SPDK00000000000001 可以自定义</span></a>
+<a class="sourceLine" id="cb15-14" data-line-number="14"><span class="ex">./scripts/rpc.py</span> nvmf_create_subsystem nqn.2016-06.io.spdk:cnode1 -a -s SPDK00000000000001 -d SPDK_Controller1</a>
+<a class="sourceLine" id="cb15-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb15-16" data-line-number="16"><span class="co"># 4. 添加 namespace</span></a>
+<a class="sourceLine" id="cb15-17" data-line-number="17"><span class="ex">./scripts/rpc.py</span> nvmf_subsystem_add_ns nqn.2016-06.io.spdk:cnode1 NVMe1n1</a>
+<a class="sourceLine" id="cb15-18" data-line-number="18"><span class="co"># NVMe1n1 是 2 中的输出</span></a>
+<a class="sourceLine" id="cb15-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb15-20" data-line-number="20"><span class="co"># 5. 添加监听</span></a>
+<a class="sourceLine" id="cb15-21" data-line-number="21"><span class="co"># -a 是本机 ip，-s 是端口，可修改</span></a>
+<a class="sourceLine" id="cb15-22" data-line-number="22"><span class="ex">./scripts/rpc.py</span> nvmf_subsystem_add_listener nqn.2016-06.io.spdk:cnode1 -t rdma -a 192.168.159.142 -s 4420</a></code></pre></div>
 <hr />
 </div><div class="story post-story"><h2 id="配置-spdk-nvme-over-rdma-host-端">配置 SPDK NVMe over RDMA Host 端</h2>
 <p>Host 端 ip：<code>192.168.159.143</code>。</p>
 <h3 id="运行-nvmeof-setup.sh-脚本部署-rdma-soft-roce-1">运行 nvmeof-setup.sh 脚本部署 RDMA Soft-RoCE</h3>
 <h3 id="spdk-初始化">SPDK 初始化</h3>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="ex">./scripts/setup.sh</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co"># 正确结果：</span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co"># 0000:0b:00.0 (15ad 07f0): nvme -&gt; uio_pci_generic</span></a></code></pre></div>
-<h3 id="发现-target-并连接">发现 Target 并连接</h3>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># 发现</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="ex">nvme</span> discover -t rdma -a 192.168.159.142 -s 4420</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co"># output: </span></a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co"># =====Discovery Log Entry 0======</span></a>
-<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="co"># trtype:  rdma</span></a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co"># adrfam:  ipv4</span></a>
-<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co"># subtype: nvme subsystem</span></a>
-<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co"># treq:    not required</span></a>
-<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="co"># portid:  0</span></a>
-<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co"># trsvcid: 4420</span></a>
-<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="co"># subnqn:  nqn.2016-06.io.spdk:cnode1</span></a>
-<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co"># traddr:  192.168.159.142</span></a>
-<a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co"># rdma_prtype: not specified</span></a>
-<a class="sourceLine" id="cb16-14" data-line-number="14"><span class="co"># rdma_qptype: connected</span></a>
-<a class="sourceLine" id="cb16-15" data-line-number="15"><span class="co"># rdma_cms:    rdma-cm</span></a>
-<a class="sourceLine" id="cb16-16" data-line-number="16"><span class="co"># rdma_pkey: 0x0000</span></a>
-<a class="sourceLine" id="cb16-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb16-18" data-line-number="18"><span class="co"># 连接</span></a>
-<a class="sourceLine" id="cb16-19" data-line-number="19"><span class="ex">nvme</span> connect -t rdma -n <span class="st">&quot;nqn.2016-06.io.spdk:cnode1&quot;</span> -a 192.168.159.142 -s 4420</a>
-<a class="sourceLine" id="cb16-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb16-21" data-line-number="21"><span class="co"># 查看设备</span></a>
-<a class="sourceLine" id="cb16-22" data-line-number="22"><span class="ex">nvme</span> list</a>
-<a class="sourceLine" id="cb16-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb16-24" data-line-number="24"><span class="ex">lsblk</span></a>
-<a class="sourceLine" id="cb16-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb16-26" data-line-number="26"><span class="co"># 都可以看到连接的 nvme 设备</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="ex">./scripts/setup.sh</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co"># 正确结果：</span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co"># 0000:0b:00.0 (15ad 07f0): nvme -&gt; uio_pci_generic</span></a></code></pre></div>
+<h3 id="发现-target-并连接与-spdk-无关">发现 Target 并连接（与 SPDK 无关）</h3>
+<p>这一步执行的是 <code>nvme-cli</code> 的命令，需要经过 kernel 驱动，而 SPDK 是用户态驱动。可以直接跳过这一步直接运行 SPDK 的应用程序。</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># 发现</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="ex">nvme</span> discover -t rdma -a 192.168.159.142 -s 4420</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="co"># output: </span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="co"># =====Discovery Log Entry 0======</span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co"># trtype:  rdma</span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co"># adrfam:  ipv4</span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co"># subtype: nvme subsystem</span></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co"># treq:    not required</span></a>
+<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co"># portid:  0</span></a>
+<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co"># trsvcid: 4420</span></a>
+<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co"># subnqn:  nqn.2016-06.io.spdk:cnode1</span></a>
+<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="co"># traddr:  192.168.159.142</span></a>
+<a class="sourceLine" id="cb17-13" data-line-number="13"><span class="co"># rdma_prtype: not specified</span></a>
+<a class="sourceLine" id="cb17-14" data-line-number="14"><span class="co"># rdma_qptype: connected</span></a>
+<a class="sourceLine" id="cb17-15" data-line-number="15"><span class="co"># rdma_cms:    rdma-cm</span></a>
+<a class="sourceLine" id="cb17-16" data-line-number="16"><span class="co"># rdma_pkey: 0x0000</span></a>
+<a class="sourceLine" id="cb17-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb17-18" data-line-number="18"><span class="co"># 连接</span></a>
+<a class="sourceLine" id="cb17-19" data-line-number="19"><span class="ex">nvme</span> connect -t rdma -n <span class="st">&quot;nqn.2016-06.io.spdk:cnode1&quot;</span> -a 192.168.159.142 -s 4420</a>
+<a class="sourceLine" id="cb17-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb17-21" data-line-number="21"><span class="co"># 查看设备</span></a>
+<a class="sourceLine" id="cb17-22" data-line-number="22"><span class="ex">nvme</span> list</a>
+<a class="sourceLine" id="cb17-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb17-24" data-line-number="24"><span class="ex">lsblk</span></a>
+<a class="sourceLine" id="cb17-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb17-26" data-line-number="26"><span class="co"># 都可以看到连接的 nvme 设备</span></a></code></pre></div>
 <h3 id="简单测试">简单测试</h3>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># 用 spdk 自带的 perf 进行测试</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="ex">./build/bin/spdk_nvme_perf</span> -r <span class="st">&#39;trtype:rdma adrfam:IPv4 traddr:192.168.159.142 trsvcid:4420&#39;</span> -q 256 -o 4096 -w randread -t 100</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="co"># output:</span></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co"># ===== spdk_nvme_perf start =====</span></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co"># Initializing NVMe Controllers</span></a>
-<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co"># Attached to NVMe over Fabrics controller at 192.168.159.142:4420: nqn.2016-06.io.spdk:cnode1</span></a>
-<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co"># Controller IO queue size 128, less than required.</span></a>
-<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co"># Consider using lower queue depth or smaller IO size, because IO requests may be queued at the NVMe driver.</span></a>
-<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co"># Associating RDMA (addr:192.168.159.142 subnqn:nqn.2016-06.io.spdk:cnode1) NSID 1 with lcore 0</span></a>
-<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co"># Initialization complete. Launching workers.</span></a>
-<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="co"># ========================================================</span></a>
-<a class="sourceLine" id="cb17-13" data-line-number="13"><span class="co">#                                                                                                                     Latency(us)</span></a>
-<a class="sourceLine" id="cb17-14" data-line-number="14"><span class="co">#Device Information                                                               :       IOPS      MiB/s    Average        min        max</span></a>
-<a class="sourceLine" id="cb17-15" data-line-number="15"><span class="co">#RDMA (addr:192.168.159.142 subnqn:nqn.2016-06.io.spdk:cnode1) NSID 1 from core  0:    6091.58      23.80   42033.57    3583.64   87966.63</span></a>
-<a class="sourceLine" id="cb17-16" data-line-number="16"><span class="co">#========================================================</span></a>
-<a class="sourceLine" id="cb17-17" data-line-number="17"><span class="co">#Total                                                                            :    6091.58      23.80   42033.57    3583.64   87966.63</span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># 用 spdk 自带的 perf 进行测试</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="ex">./build/bin/spdk_nvme_perf</span> -r <span class="st">&#39;trtype:rdma adrfam:IPv4 traddr:192.168.159.142 trsvcid:4420&#39;</span> -q 256 -o 4096 -w randread -t 100</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="co"># output:</span></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="co"># ===== spdk_nvme_perf start =====</span></a>
+<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="co"># Initializing NVMe Controllers</span></a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="co"># Attached to NVMe over Fabrics controller at 192.168.159.142:4420: nqn.2016-06.io.spdk:cnode1</span></a>
+<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="co"># Controller IO queue size 128, less than required.</span></a>
+<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="co"># Consider using lower queue depth or smaller IO size, because IO requests may be queued at the NVMe driver.</span></a>
+<a class="sourceLine" id="cb18-10" data-line-number="10"><span class="co"># Associating RDMA (addr:192.168.159.142 subnqn:nqn.2016-06.io.spdk:cnode1) NSID 1 with lcore 0</span></a>
+<a class="sourceLine" id="cb18-11" data-line-number="11"><span class="co"># Initialization complete. Launching workers.</span></a>
+<a class="sourceLine" id="cb18-12" data-line-number="12"><span class="co"># ========================================================</span></a>
+<a class="sourceLine" id="cb18-13" data-line-number="13"><span class="co">#                                                                                                                     Latency(us)</span></a>
+<a class="sourceLine" id="cb18-14" data-line-number="14"><span class="co">#Device Information                                                               :       IOPS      MiB/s    Average        min        max</span></a>
+<a class="sourceLine" id="cb18-15" data-line-number="15"><span class="co">#RDMA (addr:192.168.159.142 subnqn:nqn.2016-06.io.spdk:cnode1) NSID 1 from core  0:    6091.58      23.80   42033.57    3583.64   87966.63</span></a>
+<a class="sourceLine" id="cb18-16" data-line-number="16"><span class="co">#========================================================</span></a>
+<a class="sourceLine" id="cb18-17" data-line-number="17"><span class="co">#Total                                                                            :    6091.58      23.80   42033.57    3583.64   87966.63</span></a></code></pre></div>
 <p>测试结果图：</p>
 <p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-02/spdk-nvmeof-perftest.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-02/spdk-nvmeof-perftest.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
-<p>但不知道为什么我的测试结果性能很低，可能是因为虚拟机的缘故？</p>
-<h3 id="取消连接">取消连接</h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="ex">nvme</span> disconnect -n <span class="st">&quot;nqn.2016-06.io.spdk:cnode1&quot;</span></a></code></pre></div>
+<p>这里测试结果的值较低，可能是因为虚拟机的缘故？</p>
+<h3 id="取消连接与-spdk-无关">取消连接（与 SPDK 无关）</h3>
+<p>如果执行了前面的 <code>nvme connect</code> 命令连接设备，则这里执行 <code>nvme disconnect</code> 命令取消连接。</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="ex">nvme</span> disconnect -n <span class="st">&quot;nqn.2016-06.io.spdk:cnode1&quot;</span></a></code></pre></div>
 
 </div>
   </div>
@@ -2934,10 +2942,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-03T00:49:00+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-11T14:10:59+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：Sep 3, 2024</p>
+    <p>最后更新于：Sep 11, 2024</p>
   </a>
 </div>
 
@@ -3096,7 +3104,7 @@ SPDK 存储性能开发套件（Storage Performance Development Kit）—— 针
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>95.7k 字</div>
+          <div>95.8k 字</div>
         </div>
       
 
@@ -3121,7 +3129,7 @@ SPDK 存储性能开发套件（Storage Performance Development Kit）—— 针
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2024-09-10 日</div>
+          <div id="last-update-show">2024-09-11 日</div>
         </div>
       
     </div>
@@ -3148,7 +3156,7 @@ SPDK 存储性能开发套件（Storage Performance Development Kit）—— 针
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">文件准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E6%9E%84%E5%BB%BA"><span class="toc-number">3.</span> <span class="toc-text">安装与构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#clone-%E9%A1%B9%E7%9B%AE%E6%BA%90%E7%A0%81"><span class="toc-number">3.1.</span> <span class="toc-text">clone 项目源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E5%AD%90%E6%A8%A1%E5%9D%97"><span class="toc-number">3.2.</span> <span class="toc-text">更新子模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="toc-number">3.3.</span> <span class="toc-text">安装依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E4%B8%8A-patch%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81"><span class="toc-number">3.4.</span> <span class="toc-text">打上 patch、修改代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">3.5.</span> <span class="toc-text">构建项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="toc-number">3.6.</span> <span class="toc-text">执行单元测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%91%E5%AE%9A-nvme-%E8%AE%BE%E5%A4%87"><span class="toc-number">3.7.</span> <span class="toc-text">绑定 NVMe 设备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%96%E6%B6%88%E7%BB%91%E5%AE%9A"><span class="toc-number">3.8.</span> <span class="toc-text">取消绑定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2-rdma-soft-roce"><span class="toc-number">4.</span> <span class="toc-text">部署 RDMA Soft-RoCE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-spdk-nvme-over-rdma-target-%E7%AB%AF"><span class="toc-number">5.</span> <span class="toc-text">配置 SPDK NVMe over RDMA Target 端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C-nvmeof-setup.sh-%E8%84%9A%E6%9C%AC%E9%83%A8%E7%BD%B2-rdma-soft-roce"><span class="toc-number">5.1.</span> <span class="toc-text">运行 nvmeof-setup.sh 脚本部署 RDMA Soft-RoCE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%91%E5%AE%9A-nvme-ssd-%E8%AE%BE%E5%A4%87"><span class="toc-number">5.2.</span> <span class="toc-text">绑定 NVMe SSD 设备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-nvme-%E7%9B%98%E5%90%AF%E5%8A%A8-tgt-%E5%B9%B6%E7%9B%91%E5%90%AC"><span class="toc-number">5.3.</span> <span class="toc-text">创建 NVMe 盘、启动 tgt 并监听</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-spdk-nvme-over-rdma-host-%E7%AB%AF"><span class="toc-number">6.</span> <span class="toc-text">配置 SPDK NVMe over RDMA Host 端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C-nvmeof-setup.sh-%E8%84%9A%E6%9C%AC%E9%83%A8%E7%BD%B2-rdma-soft-roce-1"><span class="toc-number">6.1.</span> <span class="toc-text">运行 nvmeof-setup.sh 脚本部署 RDMA Soft-RoCE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spdk-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">6.2.</span> <span class="toc-text">SPDK 初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E7%8E%B0-target-%E5%B9%B6%E8%BF%9E%E6%8E%A5"><span class="toc-number">6.3.</span> <span class="toc-text">发现 Target 并连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E6%B5%8B%E8%AF%95"><span class="toc-number">6.4.</span> <span class="toc-text">简单测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%96%E6%B6%88%E8%BF%9E%E6%8E%A5"><span class="toc-number">6.5.</span> <span class="toc-text">取消连接</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">文件准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E6%9E%84%E5%BB%BA"><span class="toc-number">3.</span> <span class="toc-text">安装与构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#clone-%E9%A1%B9%E7%9B%AE%E6%BA%90%E7%A0%81"><span class="toc-number">3.1.</span> <span class="toc-text">clone 项目源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E5%AD%90%E6%A8%A1%E5%9D%97"><span class="toc-number">3.2.</span> <span class="toc-text">更新子模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="toc-number">3.3.</span> <span class="toc-text">安装依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E4%B8%8A-patch%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81"><span class="toc-number">3.4.</span> <span class="toc-text">打上 patch、修改代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">3.5.</span> <span class="toc-text">构建项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="toc-number">3.6.</span> <span class="toc-text">执行单元测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%91%E5%AE%9A-nvme-%E8%AE%BE%E5%A4%87"><span class="toc-number">3.7.</span> <span class="toc-text">绑定 NVMe 设备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%96%E6%B6%88%E7%BB%91%E5%AE%9A"><span class="toc-number">3.8.</span> <span class="toc-text">取消绑定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2-rdma-soft-roce"><span class="toc-number">4.</span> <span class="toc-text">部署 RDMA Soft-RoCE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-spdk-nvme-over-rdma-target-%E7%AB%AF"><span class="toc-number">5.</span> <span class="toc-text">配置 SPDK NVMe over RDMA Target 端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C-nvmeof-setup.sh-%E8%84%9A%E6%9C%AC%E9%83%A8%E7%BD%B2-rdma-soft-roce"><span class="toc-number">5.1.</span> <span class="toc-text">运行 nvmeof-setup.sh 脚本部署 RDMA Soft-RoCE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%91%E5%AE%9A-nvme-ssd-%E8%AE%BE%E5%A4%87"><span class="toc-number">5.2.</span> <span class="toc-text">绑定 NVMe SSD 设备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%99-spdk-%E5%88%86%E9%85%8D%E5%A4%A7%E9%A1%B5"><span class="toc-number">5.3.</span> <span class="toc-text">给 SPDK 分配大页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8-tgt-%E5%B9%B6%E7%9B%91%E5%90%AC"><span class="toc-number">5.4.</span> <span class="toc-text">启动 tgt 并监听</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-spdk-nvme-over-rdma-host-%E7%AB%AF"><span class="toc-number">6.</span> <span class="toc-text">配置 SPDK NVMe over RDMA Host 端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C-nvmeof-setup.sh-%E8%84%9A%E6%9C%AC%E9%83%A8%E7%BD%B2-rdma-soft-roce-1"><span class="toc-number">6.1.</span> <span class="toc-text">运行 nvmeof-setup.sh 脚本部署 RDMA Soft-RoCE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spdk-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">6.2.</span> <span class="toc-text">SPDK 初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E7%8E%B0-target-%E5%B9%B6%E8%BF%9E%E6%8E%A5%E4%B8%8E-spdk-%E6%97%A0%E5%85%B3"><span class="toc-number">6.3.</span> <span class="toc-text">发现 Target 并连接（与 SPDK 无关）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E6%B5%8B%E8%AF%95"><span class="toc-number">6.4.</span> <span class="toc-text">简单测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%96%E6%B6%88%E8%BF%9E%E6%8E%A5%E4%B8%8E-spdk-%E6%97%A0%E5%85%B3"><span class="toc-number">6.5.</span> <span class="toc-text">取消连接（与 SPDK 无关）</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -3982,7 +3990,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4301,7 +4309,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/notes/存储/n-spdk-02/","name":"【学习笔记-存储】SPDK（二）：SPDK NVMe over RDMA 部署"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（二）：SPDK NVMe over RDMA 部署","description":"记录 SPDK NVMe over RDMA 的部署过程。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-02/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-02/","wordCount":29,"datePublished":"2024-08-29T07:46:24.000Z","dateModified":"2024-09-02T16:49:00.992Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/notes/存储/n-spdk-02/","name":"【学习笔记-存储】SPDK（二）：SPDK NVMe over RDMA 部署"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（二）：SPDK NVMe over RDMA 部署","description":"记录 SPDK NVMe over RDMA 的部署过程。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-02/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-02/","wordCount":29,"datePublished":"2024-08-29T07:46:24.000Z","dateModified":"2024-09-11T06:10:59.907Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
