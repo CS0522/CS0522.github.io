@@ -46,7 +46,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-09-01T11:35:45.000Z">
-<meta property="article:modified_time" content="2024-09-17T18:02:15.302Z">
+<meta property="article:modified_time" content="2024-09-18T15:33:53.401Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="存储">
 <meta property="article:tag" content="SPDK">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1726624398253),
+    lastupdate: new Date(1726713742518),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2600,13 +2600,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>566 words</p>
+      <p>957 words</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>2 min</p>
+      <p>4 min</p>
     </a>
   </div>
 
@@ -2666,27 +2666,30 @@ register_workers():
 register_controllers():
     TAILQ_FOREACH(trid_entry, &amp;g_trid_list, tailq) &#123;
         spdk_nvme_probe(&amp;trid_entry-&gt;trid, trid_entry, probe_cb, attach_cb, NULL):
-            probe_ctx = spdk_nvme_probe_async(...):
+            probe_ctx = spdk_nvme_probe_async(...): // 注意异步执行
                 nvme_driver_init();
                 probe_ctx = calloc(...);
                 nvme_probe_ctx_init(probe_ctx, ...):
                     TAILQ_INIT(&amp;probe_ctx-&gt;init_ctrlrs);
                 nvme_probe_internal(probe_ctx, false):
                     nvme_rdma.c: nvme_fabric_ctrlr_scan(probe_ctx, ...):
-                        (该函数调用见后文、这里面的函数调用创建 nvme_ctrlr、获取了 subnqn 等)
+                        (该函数调用见后文、构造 ctrlr 函数)
             nvme_init_controllers(probe_ctx):
-                spdk_nvme_probe_poll_async(probe_ctx):
-                    TAILQ_FOREACH_SAFE(ctrlr, &amp;probe_ctx-&gt;init_ctrlrs, ...) &#123;
-                        nvme_ctrlr_poll_internal(ctrlr, probe_ctx):
-                            nvme_ctrlr_process_init(ctrlr):
-                                (该函数调用见后文、这里面的函数调用获取了 ns)
-                            TAILQ_REMOVE(&amp;probe_ctx-&gt;init_ctrlrs, ctrlr, ...);
-                            TAILQ_INSERT_TAIL(&amp;g_nvme_attached_ctrlrs, ctrlr, tailq);
-                            perf.c: attach_cb(...):
-                                register_ctrlr(ctrlr, trid_entry):
-                                    TAILQ_INSERT_TAIL(&amp;g_controllers, ctrlr_entry, ...);
-                                    (该函数剩余的函数调用见后文)
-                    &#125;
+                while (true) &#123; // 注意这里有一个无限 while 循环，意味着 nvme_ctrlr_process_init() 在一直循环执行
+                    spdk_nvme_probe_poll_async(probe_ctx): // 注意异步执行
+                        TAILQ_FOREACH_SAFE(ctrlr, &amp;probe_ctx-&gt;init_ctrlrs, ...) &#123;
+                            nvme_ctrlr_poll_internal(ctrlr, probe_ctx):
+                                *** 处理 ctrlr 状态转移 ***
+                                nvme_ctrlr_process_init(ctrlr):
+                                    (该函数调用见后文、处理状态转移函数)
+                                TAILQ_REMOVE(&amp;probe_ctx-&gt;init_ctrlrs, ctrlr, ...);
+                                TAILQ_INSERT_TAIL(&amp;g_nvme_attached_ctrlrs, ctrlr,   tailq);
+                                perf.c: attach_cb(...):
+                                    register_ctrlr(ctrlr, trid_entry):
+                                        TAILQ_INSERT_TAIL(&amp;g_controllers,   ctrlr_entry, ...);
+                                        (该函数剩余的函数调用见后文)
+                        &#125;
+                &#125;
     &#125;</code></pre>
 <hr />
 </div><div class="story post-story"><h2 id="二控制流初始化---fabric_ctrlr_scan">（二）控制流（初始化 - fabric_ctrlr_scan）</h2>
@@ -2696,23 +2699,84 @@ register_controllers():
 <p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
 <p>函数调用栈：</p>
 <pre><code>nvme_rdma.c: nvme_fabric_ctrlr_scan(probe_ctx, ...):
-    </code></pre>
+    spdk_nvme_ctrlr_get_default_ctrlr_opts(&amp;discovery_opts, ...):
+        SET_FIELD(...);
+    *** discovery_ctrlr 识别过程、没有获得 ns、subnqn 等过程 ***
+    discovery_ctrlr = nvme_rdma_ctrlr_construct(&amp;probe_ctx-&gt;trid, &amp;discovery_opts, ...):
+        ... // 构造 rdma_ctrlr 设置部分字段、建立事件通道等
+        nvme_ctrlr_construct(&amp;rctrlr-&gt;ctrlr):
+            nvme_ctrlr_set_state(ctrlr, NVME_CTRLR_STATE_INIT, NVME_TIMEOUT_INFINITE);
+            ... // 设置 discovery_ctrlr 部分字段
+            TAILQ_INIT(&amp;ctrlr-&gt;active_io_qpairs);
+            TAILQ_INIT(&amp;ctrlr-&gt;active_procs);
+            RB_INIT(&amp;ctrlr-&gt;ns);
+        rctrlr-&gt;ctrlr.adminq = nvme_rdma_ctrlr_create_qpair(&amp;rctrlr-&gt;ctrlr, ..., async = true):
+            nvme_qpair_init(qpair, qid, ctrlr, qprio, num_requests, async):
+                ... // 设置 qpair 部分字段
+                qpair-&gt;ctrlr = ctrlr;
+                qpair-&gt;trtype = ctrlr-&gt;trid.trtype;
+                qpair-&gt;async = async;
+                STAILQ_INIT(&amp;qpair-&gt;free_req);
+                for &#123;
+                    STAILQ_INSERT_HEAD(&amp;qpair-&gt;free_req, req, stailq);
+                &#125;
+        nvme_ctrlr_add_process(&amp;rctrlr-&gt;ctrlr, 0):
+            ... // 设置 discovery ctrlr_proc 字段
+            TAILQ_INSERT_TAIL(&amp;ctrlr-&gt;active_procs, ctrlr_proc, tailq);
+    while (discovery_ctrlr-&gt;state != NVME_CTRLR_STATE_READY) &#123;
+        nvme_ctrlr_process_init(discovery_ctrlr):
+            TODO discovery_ctrlr 如何跳过 io 初始化直接到 READY？
+            (该函数调用见后文、处理状态转移函数)
+    &#125;
+    nvme_ctrlr_cmd_identify(discovery_ctrlr, ..., &amp;discovery_ctrlr-&gt;cdata, ...);
+    nvme_wait_for_completion(discovery_ctrlr-&gt;adminq, ...);
+    *** io ctrlr 识别过程、完整流程 ***
+    nvme_fabric_ctrlr_discover(discovery_ctrlr, probe_ctx): 
+        while &#123;
+            nvme_fabric_get_discovery_log_page(discovery_ctrlr, buffer, ...):
+                spdk_nvme_ctrlr_cmd_get_log_page(...);
+                nvme_wait_for_completion(discovery_ctrlr-&gt;adminq, status);
+            for &#123;
+                nvme_fabric_discover_probe(log_page_entry++, probe_ctx, discovery_ctrlr-&gt;trid.priority):
+                    ... // 通过 log_page_entry 设置 trid
+                    nvme_ctrlr_probe(&amp;trid, probe_ctx, NULL):
+                        spdk_nvme_ctrlr_get_default_ctrlr_opts(&amp;discovery_opts, ...):
+                            SET_FIELD(...);
+                        *** 这里构建了 io ctrlr ***
+                        ctrlr = nvme_rdma_ctrlr_construct(trid, &amp;opts, devhandle = NULL)
+                            ... // 构造 rdma_ctrlr 设置部分字段、建立事件通道等
+                            nvme_ctrlr_construct(&amp;rctrlr-&gt;ctrlr):
+                                nvme_ctrlr_set_state(ctrlr, NVME_CTRLR_STATE_INIT, NVME_TIMEOUT_INFINITE);
+                                ... // 设置 ctrlr 部分字段
+                                TAILQ_INIT(&amp;ctrlr-&gt;active_io_qpairs);
+                                TAILQ_INIT(&amp;ctrlr-&gt;active_procs);
+                                RB_INIT(&amp;ctrlr-&gt;ns);
+                            rctrlr-&gt;ctrlr.adminq = nvme_rdma_ctrlr_create_qpair(&amp;rctrlr-&gt;ctrlr, ..., async = true):
+                                nvme_qpair_init(qpair, qid, ctrlr, qprio, num_requests, async):
+                                    ... // 设置 qpair 部分字段
+                                    qpair-&gt;ctrlr = ctrlr;
+                                    qpair-&gt;trtype = ctrlr-&gt;trid.trtype;
+                                    qpair-&gt;async = async;
+                                    STAILQ_INIT(&amp;qpair-&gt;free_req);
+                                    for &#123;
+                                        STAILQ_INSERT_HEAD(&amp;qpair-&gt;free_req, req, stailq);
+                                    &#125;
+                            nvme_ctrlr_add_process(&amp;rctrlr-&gt;ctrlr, 0):
+                                ... // 设置 ctrlr_proc 字段
+                                TAILQ_INSERT_TAIL(&amp;ctrlr-&gt;active_procs, ctrlr_proc, tailq);
+                                &#125;
+                        nvme_qpair_set_state(ctrlr-&gt;adminq, NVME_QPAIR_ENABLED);
+                        TAILQ_INSERT_TAIL(&amp;probe_ctx-&gt;init_ctrlrs, ctrlr, tailq);
+        &#125;</code></pre>
 <hr />
 </div><div class="story post-story"><h2 id="三控制流初始化---ctrlr_process_init">（三）控制流（初始化 - ctrlr_process_init）</h2>
 <p>流程图：</p>
 <p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
 <p>函数调用栈：</p>
-<pre><code>nvme_ctrlr_process_init(ctrlr):
-    _nvme_ctrlr_identify_active_ns(ctrlr):
-        ctx = nvme_active_ns_ctx_create(ctrlr, _nvme_active_ns_ctx_deleter); (绑定 deleter)
-        nvme_ctrlr_identify_active_ns_async(ctx):
-            nvme_ctrlr_cmd_identify(ctrlr, ..., nvme_ctrlr_identify_active_ns_async_done, ctx); (_done 函数为回调)
-            nvme_ctrlr_identify_active_ns_async_done():
-                _nvme_active_ns_ctx_deleter(): (函数指针)
-                    nvme_ctrlr_identify_active_ns_swap(ctrlr, ctx-&gt;new_ns_list, ...):
-                        nvme_ctrlr_construct_namespace(ctrlr, nsid):
-                            spdk_nvme_ctrlr_get_ns(ctrlr, nsid):
-                                RB_INSERT(nvme_ns_tree, &amp;ctrlr-&gt;ns, ns);</code></pre>
+<pre><code> *** This function will be called repeatedly during initialization 
+ *** until the controller is ready.
+nvme_ctrlr_process_init(ctrlr):
+    </code></pre>
 <hr />
 </div><div class="story post-story"><h2 id="控制流初始化---register_ns">（）控制流（初始化 - register_ns）</h2>
 <p>流程图：</p>
@@ -2755,7 +2819,7 @@ register_controllers():
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-18T02:02:15+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-18T23:33:53+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>最后更新于：Sep 18, 2024</p>
@@ -2845,6 +2909,19 @@ register_controllers():
   
     <div class="prev-next">
       
+        <a class='prev' href='/notes/%E5%AD%98%E5%82%A8/n-spdk-04/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【学习笔记-存储】SPDK（四）：补充知识记录</p>
+          <p class='content'>记录在看 perf 代码中学习到的 NVMe、NVMe-oF、RDMA、SPDK 相关知识点。
+
+
+参考介绍 NVMe
+
+NVMe
+NVMe Specifications
+
+NVM Expres...</p>
+        </a>
+      
       
         <a class='next' href='/notes/%E5%AD%98%E5%82%A8/n-spdk-02/'>
           <p class='title'>【学习笔记-存储】SPDK（二）：SPDK NVMe over RDMA 部署<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
@@ -2897,7 +2974,7 @@ dev...</p>
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>99 篇</div>
+          <div>100 篇</div>
         </div>
       
 
@@ -2912,7 +2989,7 @@ dev...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>88.4k 字</div>
+          <div>89.3k 字</div>
         </div>
       
 
@@ -2937,7 +3014,7 @@ dev...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2024-09-18 日</div>
+          <div id="last-update-show">2024-09-19 日</div>
         </div>
       
     </div>
@@ -3798,7 +3875,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4117,7 +4194,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/notes/存储/n-spdk-03/","name":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析","description":"SPDK 自带的性能测试应用 spdk_nvme_perf 的源代码 perf.c 的粗浅分析，进一步熟悉 SPDK 用户态驱动的主要工作流程和方式。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/","wordCount":75,"datePublished":"2024-09-01T11:35:45.000Z","dateModified":"2024-09-17T18:02:15.302Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/notes/存储/n-spdk-03/","name":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析","description":"SPDK 自带的性能测试应用 spdk_nvme_perf 的源代码 perf.c 的粗浅分析，进一步熟悉 SPDK 用户态驱动的主要工作流程和方式。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/","wordCount":75,"datePublished":"2024-09-01T11:35:45.000Z","dateModified":"2024-09-18T15:33:53.401Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
