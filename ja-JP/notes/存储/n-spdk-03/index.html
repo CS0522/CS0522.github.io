@@ -46,7 +46,7 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-09-01T11:35:45.000Z">
-<meta property="article:modified_time" content="2024-09-20T04:22:45.356Z">
+<meta property="article:modified_time" content="2024-09-20T09:58:28.551Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="存储">
 <meta property="article:tag" content="SPDK">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1726806289309),
+    lastupdate: new Date(1726835063252),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2600,13 +2600,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：2.1k 字</p>
+      <p>字数：2.2k 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>时长：10 分钟</p>
+      <p>时长：11 分钟</p>
     </a>
   </div>
 
@@ -2928,76 +2928,91 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a class="sourceLine" id="cb4-50" data-line-number="50">                <span class="co">// 1. 创建 io qpair</span></a>
 <a class="sourceLine" id="cb4-51" data-line-number="51">                ns_ctx-&gt;u.nvme.qpair[i] = spdk_nvme_ctrlr_alloc_io_qpair(ns_entry-&gt;u.nvme.ctrlr, &amp;opts, ...):</a>
 <a class="sourceLine" id="cb4-52" data-line-number="52">                    qpair = nvme_ctrlr_create_io_qpair(ctrlr, &amp;opts):</a>
-<a class="sourceLine" id="cb4-53" data-line-number="53">                        TODO</a>
-<a class="sourceLine" id="cb4-54" data-line-number="54">                <span class="co">// create_only = true</span></a>
-<a class="sourceLine" id="cb4-55" data-line-number="55">                <span class="co">// 2. qpair 添加 poll groups</span></a>
-<a class="sourceLine" id="cb4-56" data-line-number="56">                spdk_nvme_poll_group_add(nvme_poll_group, qpair): <span class="co">// io_qpair 添加到 nvme_poll_group、transport_poll_group</span></a>
-<a class="sourceLine" id="cb4-57" data-line-number="57">                    <span class="cf">while</span> (transport) &#123;</a>
-<a class="sourceLine" id="cb4-58" data-line-number="58">                        tgroup = nvme_transport_poll_group_create(transport): <span class="co">// 创建 transport_poll_group</span></a>
-<a class="sourceLine" id="cb4-59" data-line-number="59">                            nvme_rdma_poll_group_create():</a>
-<a class="sourceLine" id="cb4-60" data-line-number="60">                                STAILQ_INIT(&amp;rdma_poll_group-&gt;pollers);</a>
-<a class="sourceLine" id="cb4-61" data-line-number="61">                                TAILQ_INIT(&amp;rdma_poll_group-&gt;connecting_qpairs);</a>
-<a class="sourceLine" id="cb4-62" data-line-number="62">                                TAILQ_INIT(&amp;rdma_poll_group-&gt;active_qpairs);</a>
-<a class="sourceLine" id="cb4-63" data-line-number="63">                                <span class="cf">return</span> rdma_poll_group-&gt;transport_poll_group;</a>
-<a class="sourceLine" id="cb4-64" data-line-number="64">                            STAILQ_INIT(&amp;group-&gt;connected_qpairs);</a>
-<a class="sourceLine" id="cb4-65" data-line-number="65">                            STAILQ_INIT(&amp;group-&gt;disconnected_qpairs);</a>
-<a class="sourceLine" id="cb4-66" data-line-number="66">                        tgroup-&gt;group = nvme_poll_group; <span class="co">// transport_poll_group 关联 nvme_poll_group</span></a>
-<a class="sourceLine" id="cb4-67" data-line-number="67">                        STAILQ_INSERT_TAIL(&amp;nvme_poll_group-&gt;tgroups, tgroup, link);</a>
-<a class="sourceLine" id="cb4-68" data-line-number="68">                    &#125;</a>
-<a class="sourceLine" id="cb4-69" data-line-number="69">                    nvme_transport_poll_group_add(tgroup, qpair):</a>
-<a class="sourceLine" id="cb4-70" data-line-number="70">                        qpair-&gt;poll_group = tgroup; <span class="co">// qpair 关联 transport_poll_group</span></a>
-<a class="sourceLine" id="cb4-71" data-line-number="71">                        nvme_rdma_poll_group_add(tgroup, qpair):</a>
-<a class="sourceLine" id="cb4-72" data-line-number="72">                            <span class="co">// do nothing</span></a>
-<a class="sourceLine" id="cb4-73" data-line-number="73">                            <span class="co">// 这里 rdma_poll_group 没有与 qpair 关联，在后面 rdma_poll_group 与 rdma_qpair 关联</span></a>
-<a class="sourceLine" id="cb4-74" data-line-number="74">                <span class="co">// 3. 连接 io qpair</span></a>
-<a class="sourceLine" id="cb4-75" data-line-number="75">                spdk_nvme_ctrlr_connect_io_qpair(entry-&gt;u.nvme.ctrlr, qpair):</a>
-<a class="sourceLine" id="cb4-76" data-line-number="76">                    nvme_transport_ctrlr_connect_qpair(ctrlr, qpair):</a>
-<a class="sourceLine" id="cb4-77" data-line-number="77">                        nvme_qpair_set_state(qpair, NVME_QPAIR_CONNECTING); <span class="co">// 这里设置了 qpair 状态为正在连接</span></a>
-<a class="sourceLine" id="cb4-78" data-line-number="78">                        nvme_rdma_ctrlr_connect_qpair(ctrlr, qpair): <span class="co">// 函数指针</span></a>
-<a class="sourceLine" id="cb4-79" data-line-number="79">                            ... <span class="co">// 建立 rdma 连接</span></a>
-<a class="sourceLine" id="cb4-80" data-line-number="80">                            rqpair = nvme_rdma_qpair(qpair); <span class="co">// rqpair 为 nvme_rdma_qpair 结构</span></a>
-<a class="sourceLine" id="cb4-81" data-line-number="81">                            rgroup = nvme_rdma_poll_group(qpair-&gt;poll_group); <span class="co">// rgroup 为 nvme_rdma_poll_group 结构</span></a>
-<a class="sourceLine" id="cb4-82" data-line-number="82">                            TAILQ_INSERT_TAIL(&amp;rgroup-&gt;connecting_qpairs, rqpair, link_connecting); <span class="co">// rdma_poll_group 与 rdma_qpair 关联</span></a>
-<a class="sourceLine" id="cb4-83" data-line-number="83">                        nvme_poll_group_connect_qpair(qpair):</a>
-<a class="sourceLine" id="cb4-84" data-line-number="84">                            nvme_transport_poll_group_connect_qpair(qpair):</a>
-<a class="sourceLine" id="cb4-85" data-line-number="85">                                nvme_rdma_poll_group_connect_qpair(qpair):</a>
-<a class="sourceLine" id="cb4-86" data-line-number="86">                                    <span class="co">// do nothing</span></a>
-<a class="sourceLine" id="cb4-87" data-line-number="87">                                    <span class="co">// 这里 rdma_poll_group 没有连接 rqair</span></a>
-<a class="sourceLine" id="cb4-88" data-line-number="88">                                    <span class="co">// rqpair 在什么时候从 rgroup-&gt;connecting_qpairs 中移除并加入到 rgroup-&gt;active_qpairs？</span></a>
-<a class="sourceLine" id="cb4-89" data-line-number="89">                                STAILQ_INSERT_TAIL(&amp;tgroup-&gt;connected_qpairs, qpair, poll_group_stailq);</a>
-<a class="sourceLine" id="cb4-90" data-line-number="90">                        <span class="co">// qpair-&gt;async = true</span></a>
-<a class="sourceLine" id="cb4-91" data-line-number="91">                <span class="co">// 4. </span></a>
-<a class="sourceLine" id="cb4-92" data-line-number="92">                <span class="cf">while</span> &#123;</a>
-<a class="sourceLine" id="cb4-93" data-line-number="93">                    <span class="co">// Poll for completions on all qpairs in this poll group</span></a>
-<a class="sourceLine" id="cb4-94" data-line-number="94">                    spdk_nvme_poll_group_process_completions(group, <span class="dv">0</span>, perf_disconnect_cb):</a>
-<a class="sourceLine" id="cb4-95" data-line-number="95">                        TODO</a>
-<a class="sourceLine" id="cb4-96" data-line-number="96">                    spdk_nvme_poll_group_all_connected(group):</a>
-<a class="sourceLine" id="cb4-97" data-line-number="97">                        TODO</a>
-<a class="sourceLine" id="cb4-98" data-line-number="98">                &#125;</a>
-<a class="sourceLine" id="cb4-99" data-line-number="99">            &#125;</a>
-<a class="sourceLine" id="cb4-100" data-line-number="100">    &#125;</a>
-<a class="sourceLine" id="cb4-101" data-line-number="101">    pthread_barrier_wait(&amp;g_worker_sync_barrier); <span class="co">// 线程同步</span></a>
-<a class="sourceLine" id="cb4-102" data-line-number="102">    TAILQ_FOREACH(ns_ctx, &amp;worker-&gt;ns_ctx, link) &#123;</a>
-<a class="sourceLine" id="cb4-103" data-line-number="103">        <span class="co">// 发送数据流，见后文</span></a>
-<a class="sourceLine" id="cb4-104" data-line-number="104">    &#125;</a>
-<a class="sourceLine" id="cb4-105" data-line-number="105">    <span class="cf">while</span> (!g_exit) &#123;</a>
-<a class="sourceLine" id="cb4-106" data-line-number="106">        TAILQ_FOREACH(ns_ctx, &amp;worker-&gt;ns_ctx, link) &#123;</a>
-<a class="sourceLine" id="cb4-107" data-line-number="107">            <span class="co">// 接收数据流，见后文</span></a>
-<a class="sourceLine" id="cb4-108" data-line-number="108">            ... <span class="co">// 计时、信息统计</span></a>
-<a class="sourceLine" id="cb4-109" data-line-number="109">        &#125;</a>
-<a class="sourceLine" id="cb4-110" data-line-number="110">        ... <span class="co">// 遍历完一次队列之后就检查时间，如果超过指定的时间就退出，否则继续</span></a>
-<a class="sourceLine" id="cb4-111" data-line-number="111">    &#125;</a>
-<a class="sourceLine" id="cb4-112" data-line-number="112">    ... <span class="co">// 计时、信息统计、ns_ctx 清理</span></a>
-<a class="sourceLine" id="cb4-113" data-line-number="113"><span class="co">// 回到主线程 main()：</span></a>
-<a class="sourceLine" id="cb4-114" data-line-number="114">spdk_env_thread_wait_all();</a>
-<a class="sourceLine" id="cb4-115" data-line-number="115">print_stats(); <span class="co">// 打印信息统计</span></a>
-<a class="sourceLine" id="cb4-116" data-line-number="116">pthread_barrier_destroy(&amp;g_worker_sync_barrier);</a>
-<a class="sourceLine" id="cb4-117" data-line-number="117">... <span class="co">// cleanup</span></a>
-<a class="sourceLine" id="cb4-118" data-line-number="118">unregister_trids();</a>
-<a class="sourceLine" id="cb4-119" data-line-number="119">unregister_namespaces();</a>
-<a class="sourceLine" id="cb4-120" data-line-number="120">unregister_controllers();</a>
-<a class="sourceLine" id="cb4-121" data-line-number="121">unregister_workers();</a>
-<a class="sourceLine" id="cb4-122" data-line-number="122">spdk_env_fini();</a></code></pre></div>
+<a class="sourceLine" id="cb4-53" data-line-number="53">                        qid = spdk_nvme_ctrlr_alloc_qid(ctrlr);</a>
+<a class="sourceLine" id="cb4-54" data-line-number="54">                        qpair = nvme_rdma_ctrlr_create_io_qpair(ctrlr, qid, opts): <span class="co">// 函数指针</span></a>
+<a class="sourceLine" id="cb4-55" data-line-number="55">                            nvme_rdma_ctrlr_create_qpair(ctrlr, qid, ..., opts-&gt;async_mode = true):</a>
+<a class="sourceLine" id="cb4-56" data-line-number="56">                                ... <span class="co">// 与前文 fabric_ctrlr_scan 创建 adminq 类似</span></a>
+<a class="sourceLine" id="cb4-57" data-line-number="57">                        TAILQ_INSERT_TAIL(&amp;ctrlr-&gt;active_io_qpairs, qpair, tailq);</a>
+<a class="sourceLine" id="cb4-58" data-line-number="58">                        nvme_ctrlr_proc_add_io_qpair(qpair);</a>
+<a class="sourceLine" id="cb4-59" data-line-number="59">                <span class="co">// create_only = true</span></a>
+<a class="sourceLine" id="cb4-60" data-line-number="60">                <span class="co">// 2. qpair 添加 poll groups</span></a>
+<a class="sourceLine" id="cb4-61" data-line-number="61">                spdk_nvme_poll_group_add(nvme_poll_group, qpair): <span class="co">// io_qpair 添加到 nvme_poll_group、transport_poll_group</span></a>
+<a class="sourceLine" id="cb4-62" data-line-number="62">                    <span class="cf">while</span> (transport) &#123;</a>
+<a class="sourceLine" id="cb4-63" data-line-number="63">                        tgroup = nvme_transport_poll_group_create(transport): <span class="co">// 创建 transport_poll_group</span></a>
+<a class="sourceLine" id="cb4-64" data-line-number="64">                            nvme_rdma_poll_group_create():  <span class="co">// 创建 rdma_poll_group</span></a>
+<a class="sourceLine" id="cb4-65" data-line-number="65">                                STAILQ_INIT(&amp;rdma_poll_group-&gt;pollers);</a>
+<a class="sourceLine" id="cb4-66" data-line-number="66">                                TAILQ_INIT(&amp;rdma_poll_group-&gt;connecting_qpairs);</a>
+<a class="sourceLine" id="cb4-67" data-line-number="67">                                TAILQ_INIT(&amp;rdma_poll_group-&gt;active_qpairs);</a>
+<a class="sourceLine" id="cb4-68" data-line-number="68">                                <span class="cf">return</span> rdma_poll_group-&gt;transport_poll_group;</a>
+<a class="sourceLine" id="cb4-69" data-line-number="69">                            STAILQ_INIT(&amp;group-&gt;connected_qpairs);</a>
+<a class="sourceLine" id="cb4-70" data-line-number="70">                            STAILQ_INIT(&amp;group-&gt;disconnected_qpairs);</a>
+<a class="sourceLine" id="cb4-71" data-line-number="71">                        tgroup-&gt;group = nvme_poll_group; <span class="co">// transport_poll_group 关联 nvme_poll_group</span></a>
+<a class="sourceLine" id="cb4-72" data-line-number="72">                        STAILQ_INSERT_TAIL(&amp;nvme_poll_group-&gt;tgroups, tgroup, link);</a>
+<a class="sourceLine" id="cb4-73" data-line-number="73">                    &#125;</a>
+<a class="sourceLine" id="cb4-74" data-line-number="74">                    nvme_transport_poll_group_add(tgroup, qpair):</a>
+<a class="sourceLine" id="cb4-75" data-line-number="75">                        qpair-&gt;poll_group = tgroup; <span class="co">// qpair 关联 transport_poll_group</span></a>
+<a class="sourceLine" id="cb4-76" data-line-number="76">                        nvme_rdma_poll_group_add(tgroup, qpair):</a>
+<a class="sourceLine" id="cb4-77" data-line-number="77">                            <span class="co">// do nothing</span></a>
+<a class="sourceLine" id="cb4-78" data-line-number="78">                            <span class="co">// 这里 rdma_poll_group 没有与 qpair 关联，在后面 rdma_poll_group 与 rdma_qpair 关联</span></a>
+<a class="sourceLine" id="cb4-79" data-line-number="79">                <span class="co">// 3. 连接 io qpair</span></a>
+<a class="sourceLine" id="cb4-80" data-line-number="80">                spdk_nvme_ctrlr_connect_io_qpair(entry-&gt;u.nvme.ctrlr, qpair):</a>
+<a class="sourceLine" id="cb4-81" data-line-number="81">                    nvme_transport_ctrlr_connect_qpair(ctrlr, qpair):</a>
+<a class="sourceLine" id="cb4-82" data-line-number="82">                        nvme_qpair_set_state(qpair, NVME_QPAIR_CONNECTING); <span class="co">// 这里设置了 qpair 状态为正在连接</span></a>
+<a class="sourceLine" id="cb4-83" data-line-number="83">                        nvme_rdma_ctrlr_connect_qpair(ctrlr, qpair): <span class="co">// 函数指针</span></a>
+<a class="sourceLine" id="cb4-84" data-line-number="84">                            ... <span class="co">// 建立 rdma 连接</span></a>
+<a class="sourceLine" id="cb4-85" data-line-number="85">                            rqpair = nvme_rdma_qpair(qpair); <span class="co">// rqpair 为 nvme_rdma_qpair 结构</span></a>
+<a class="sourceLine" id="cb4-86" data-line-number="86">                            rgroup = nvme_rdma_poll_group(qpair-&gt;poll_group); <span class="co">// rgroup 为 nvme_rdma_poll_group 结构</span></a>
+<a class="sourceLine" id="cb4-87" data-line-number="87">                            TAILQ_INSERT_TAIL(&amp;rgroup-&gt;connecting_qpairs, rqpair, link_connecting); <span class="co">// rdma_poll_group 与 rdma_qpair 关联</span></a>
+<a class="sourceLine" id="cb4-88" data-line-number="88">                        nvme_poll_group_connect_qpair(qpair):</a>
+<a class="sourceLine" id="cb4-89" data-line-number="89">                            nvme_transport_poll_group_connect_qpair(qpair):</a>
+<a class="sourceLine" id="cb4-90" data-line-number="90">                                nvme_rdma_poll_group_connect_qpair(qpair):</a>
+<a class="sourceLine" id="cb4-91" data-line-number="91">                                    <span class="co">// do nothing</span></a>
+<a class="sourceLine" id="cb4-92" data-line-number="92">                                    <span class="co">// 这里 rdma_poll_group 没有连接 rqair</span></a>
+<a class="sourceLine" id="cb4-93" data-line-number="93">                                    <span class="co">// rqpair 在什么时候从 rgroup-&gt;connecting_qpairs 中移除并加入到 rgroup-&gt;active_qpairs？</span></a>
+<a class="sourceLine" id="cb4-94" data-line-number="94">                                STAILQ_INSERT_TAIL(&amp;tgroup-&gt;connected_qpairs, qpair, poll_group_stailq);</a>
+<a class="sourceLine" id="cb4-95" data-line-number="95">                        <span class="co">// qpair-&gt;async = true</span></a>
+<a class="sourceLine" id="cb4-96" data-line-number="96">                <span class="co">// 4. </span></a>
+<a class="sourceLine" id="cb4-97" data-line-number="97">                <span class="cf">while</span> &#123;</a>
+<a class="sourceLine" id="cb4-98" data-line-number="98">                    <span class="co">// poll for completions on all qpairs in this poll group</span></a>
+<a class="sourceLine" id="cb4-99" data-line-number="99">                    spdk_nvme_poll_group_process_completions(group, <span class="dv">0</span>, perf_disconnect_cb):</a>
+<a class="sourceLine" id="cb4-100" data-line-number="100">                        STAILQ_FOREACH(tgroup, &amp;group-&gt;tgroups, link) &#123;</a>
+<a class="sourceLine" id="cb4-101" data-line-number="101">                            nvme_transport_poll_group_process_completions(tgroup, ..., disconnected_qpair_cb):</a>
+<a class="sourceLine" id="cb4-102" data-line-number="102">                                nvme_rdma_poll_group_process_completions(tgroup, ..., disconnected_qpair_cb): <span class="co">// 函数指针</span></a>
+<a class="sourceLine" id="cb4-103" data-line-number="103">                                    TAILQ_FOREACH_SAFE(rqpair, &amp;group-&gt;connecting_qpairs, ...) &#123;</a>
+<a class="sourceLine" id="cb4-104" data-line-number="104">                                        nvme_rdma_ctrlr_connect_qpair_poll(rqpair-&gt;qpair-&gt;ctrlr, rqpair-&gt;qpair):</a>
+<a class="sourceLine" id="cb4-105" data-line-number="105">                                            TODO</a>
+<a class="sourceLine" id="cb4-106" data-line-number="106">                                        TAILQ_REMOVE(&amp;group-&gt;connecting_qpairs, rqpair, ...);</a>
+<a class="sourceLine" id="cb4-107" data-line-number="107">                                        nvme_qpair_resubmit_requests(rqpair-&gt;qpair, rqpair-&gt;num_entries):</a>
+<a class="sourceLine" id="cb4-108" data-line-number="108">                                            TODO</a>
+<a class="sourceLine" id="cb4-109" data-line-number="109">                                    &#125;</a>
+<a class="sourceLine" id="cb4-110" data-line-number="110">                        &#125;</a>
+<a class="sourceLine" id="cb4-111" data-line-number="111">                    spdk_nvme_poll_group_all_connected(group):</a>
+<a class="sourceLine" id="cb4-112" data-line-number="112">                        ... <span class="co">// 检查是否都 connected，否则 while 循环继续</span></a>
+<a class="sourceLine" id="cb4-113" data-line-number="113">                &#125;</a>
+<a class="sourceLine" id="cb4-114" data-line-number="114">            &#125;</a>
+<a class="sourceLine" id="cb4-115" data-line-number="115">    &#125;</a>
+<a class="sourceLine" id="cb4-116" data-line-number="116">    pthread_barrier_wait(&amp;g_worker_sync_barrier); <span class="co">// 线程同步</span></a>
+<a class="sourceLine" id="cb4-117" data-line-number="117">    TAILQ_FOREACH(ns_ctx, &amp;worker-&gt;ns_ctx, link) &#123;</a>
+<a class="sourceLine" id="cb4-118" data-line-number="118">        <span class="co">// 发送数据流，见后文</span></a>
+<a class="sourceLine" id="cb4-119" data-line-number="119">    &#125;</a>
+<a class="sourceLine" id="cb4-120" data-line-number="120">    <span class="cf">while</span> (!g_exit) &#123;</a>
+<a class="sourceLine" id="cb4-121" data-line-number="121">        TAILQ_FOREACH(ns_ctx, &amp;worker-&gt;ns_ctx, link) &#123;</a>
+<a class="sourceLine" id="cb4-122" data-line-number="122">            <span class="co">// 接收数据流，见后文</span></a>
+<a class="sourceLine" id="cb4-123" data-line-number="123">            ... <span class="co">// 计时、信息统计</span></a>
+<a class="sourceLine" id="cb4-124" data-line-number="124">        &#125;</a>
+<a class="sourceLine" id="cb4-125" data-line-number="125">        ... <span class="co">// 遍历完一次队列之后就检查时间，如果超过指定的时间就退出，否则继续</span></a>
+<a class="sourceLine" id="cb4-126" data-line-number="126">    &#125;</a>
+<a class="sourceLine" id="cb4-127" data-line-number="127">    ... <span class="co">// 计时、信息统计、ns_ctx 清理</span></a>
+<a class="sourceLine" id="cb4-128" data-line-number="128"><span class="co">// 回到主线程 main()：</span></a>
+<a class="sourceLine" id="cb4-129" data-line-number="129">spdk_env_thread_wait_all();</a>
+<a class="sourceLine" id="cb4-130" data-line-number="130">print_stats(); <span class="co">// 打印信息统计</span></a>
+<a class="sourceLine" id="cb4-131" data-line-number="131">pthread_barrier_destroy(&amp;g_worker_sync_barrier);</a>
+<a class="sourceLine" id="cb4-132" data-line-number="132">... <span class="co">// cleanup</span></a>
+<a class="sourceLine" id="cb4-133" data-line-number="133">unregister_trids();</a>
+<a class="sourceLine" id="cb4-134" data-line-number="134">unregister_namespaces();</a>
+<a class="sourceLine" id="cb4-135" data-line-number="135">unregister_controllers();</a>
+<a class="sourceLine" id="cb4-136" data-line-number="136">unregister_workers();</a>
+<a class="sourceLine" id="cb4-137" data-line-number="137">spdk_env_fini();</a></code></pre></div>
 <hr />
 </div><div class="story post-story"><h2 id="五数据流发送">（五）数据流（发送）</h2>
 <p>流程图：</p>
@@ -3036,7 +3051,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-20T12:22:45+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-20T17:58:28+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>最后更新于：2024年9月20日</p>
@@ -3206,7 +3221,7 @@ dev...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>90.4k 字</div>
+          <div>90.5k 字</div>
         </div>
       
 
@@ -4092,7 +4107,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4411,7 +4426,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/ja-JP/notes/存储/n-spdk-03/","name":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析","description":"SPDK 自带的性能测试应用 spdk_nvme_perf 的源代码 perf.c 的粗浅分析，进一步熟悉 SPDK 用户态驱动的主要工作流程和方式。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/","wordCount":75,"datePublished":"2024-09-01T11:35:45.000Z","dateModified":"2024-09-20T04:22:45.356Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/ja-JP/notes/存储/n-spdk-03/","name":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析","description":"SPDK 自带的性能测试应用 spdk_nvme_perf 的源代码 perf.c 的粗浅分析，进一步熟悉 SPDK 用户态驱动的主要工作流程和方式。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/","wordCount":75,"datePublished":"2024-09-01T11:35:45.000Z","dateModified":"2024-09-20T09:58:28.551Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
