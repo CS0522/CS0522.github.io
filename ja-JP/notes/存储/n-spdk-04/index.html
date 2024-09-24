@@ -46,7 +46,7 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-09-18T11:23:39.000Z">
-<meta property="article:modified_time" content="2024-09-21T16:11:11.482Z">
+<meta property="article:modified_time" content="2024-09-24T04:35:15.519Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="存储">
 <meta property="article:tag" content="SPDK">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1727094103430),
+    lastupdate: new Date(1727155941286),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2600,13 +2600,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：774 字</p>
+      <p>字数：1.2k 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>时长：3 分钟</p>
+      <p>时长：4 分钟</p>
     </a>
   </div>
 
@@ -2625,10 +2625,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="post-body" itemprop="articleBody">
     <p>记录在看 perf 代码中学习到的 NVMe、NVMe-oF、RDMA、SPDK 相关知识点。</p>
 <span id="more"></span>
+<div class="story post-story"><h2 id="nvme">NVMe</h2>
 <blockquote>
 <p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/BGONE/article/details/123467570">介绍 NVMe</a></p>
 </blockquote>
-<div class="story post-story"><h2 id="nvme">NVMe</h2>
 <h3 id="nvme-specifications">NVMe Specifications</h3>
 <ul>
 <li><p>NVM Express Base Specification 定义了主机软件通过各种基于内存的传输和基于消息的传输与非易失性内存子系统通信的协议。</p></li>
@@ -2669,6 +2669,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <p>用于接收来自 NVMe 驱动器的命令完成通知。当命令在驱动器中完成时，相关的信息会被放入完成队列。</p>
 <p>NVMe 中这两个队列为 qpair。每个命名空间可以有多个队列（通常最大为 64K），这使得 NVMe 在处理高并发读写请求时非常高效。</p>
+<hr />
+<h3 id="sglsge">SGL/SGE</h3>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/55142568">SGL 和 SGE</a></p>
 </div><div class="story post-story"><h2 id="rdma">RDMA</h2>
 <h3 id="sqrqcq">SQ、RQ、CQ</h3>
 <ul>
@@ -2684,6 +2687,25 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <p>用于存放已完成操作的信息。当一个发送或接收操作完成时，相关的信息会被放入完成队列，应用程序可以通过检查完成队列来了解操作的状态。</p>
 <p>RDMA 中 SQ 和 RQ 为 qpair，CQ 不属于 qpair。</p>
+<h3 id="通信机制">通信机制</h3>
+<p>参考 <a target="_blank" rel="noopener" href="https://blog.csdn.net/lianghuaju/article/details/140240461">基本操作类型 Send/Recv、Write、Read 机制和通信过程</a></p>
+<p>参考 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/649468433">初识 RDMA 技术</a></p>
+<p>RDMA 分为 <code>基于 Memory</code> 和 <code>基于 Messaging</code> 两种操作：</p>
+<ul>
+<li><p>基于 Memory</p>
+<ul>
+<li><p>RDMA Read：从远程主机读取部分内存。调用者指定远程虚拟地址，像本地内存地址一样用来拷贝。在执行 RDMA 读操作之前，远程主机必须提供适当的权限来访问它的内存。一旦权限设置完成， RDMA 读操作就可以在对远程主机没有任何通知的条件下执行。不管是 RDMA 读还是 RDMA 写，远程主机都不会意识到操作正在执行（除了权限和相关资源的准备操作）。</p></li>
+<li><p>RDMA Write：与 RDMA Read 类似，只是数据写到远端主机中。RDMA 写操作在执行时不通知远程主机。然而带即时数的 RDMA 写操作会将即时数通知给远程主机。</p></li>
+<li><p>RDMA Atomic：包括原子取、原子加、原子比较和原子交换，属于 RDMA 原子操作的扩展。</p></li>
+</ul></li>
+<li><p>基于 Messaging</p>
+<ul>
+<li><p>RDMA Send：发送操作允许把数据发送到远程 QP 的接收队列里。接收端必须已经事先注册好了用来接收数据的缓冲区。发送者无法控制数据在远程主机中的放置位置。可选择是否使用即时数，一个 4 位的即时数可以和数据缓冲一起被传送。这个即时数发送到接收端是作为接收的通知，不包含在数据缓冲之中。</p></li>
+<li><p>RDMA Receive：这是与发送操作相对应的操作。接收主机被告知接收到数据缓冲，还可能附带一个即时数。接收端应用程序负责接收缓冲区的维护和发布。</p></li>
+</ul></li>
+</ul>
+<p>通信过程见参考文章。</p>
+</div><div class="story post-story"><h2 id="nvme-of">NVMe-oF</h2>
 <h3 id="section"></h3>
 
 </div>
@@ -2710,10 +2732,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-22T00:11:11+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-24T12:35:15+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：2024年9月22日</p>
+    <p>最后更新于：2024年9月24日</p>
   </a>
 </div>
 
@@ -2805,8 +2827,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           <p class='title'>【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
           <p class='content'>SPDK 自带的性能测试应用 spdk_nvme_perf 的源代码 perf.c 的粗浅分析，进一步熟悉 SPDK 用户态驱动的主要工作流程和方式。
 
-简介
-perf 是 SPDK 用来测试 ...</p>
+在看代码的过程中有些不懂的地方在网上查资...</p>
         </a>
       
     </div>
@@ -2863,7 +2884,7 @@ perf 是 SPDK 用来测试 ...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>92.6k 字</div>
+          <div>93.1k 字</div>
         </div>
       
 
@@ -2888,7 +2909,7 @@ perf 是 SPDK 用来测试 ...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2024-09-23 日</div>
+          <div id="last-update-show">2024-09-24 日</div>
         </div>
       
     </div>
@@ -2915,7 +2936,7 @@ perf 是 SPDK 用来测试 ...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#nvme"><span class="toc-number">1.</span> <span class="toc-text">NVMe</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#nvme-specifications"><span class="toc-number">1.1.</span> <span class="toc-text">NVMe Specifications</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nvme-%E6%8E%A7%E5%88%B6%E5%99%A8%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">NVMe 控制器类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#identify-data-structure"><span class="toc-number">1.3.</span> <span class="toc-text">Identify data structure</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sqcq"><span class="toc-number">1.4.</span> <span class="toc-text">SQ、CQ</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rdma"><span class="toc-number">2.</span> <span class="toc-text">RDMA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sqrqcq"><span class="toc-number">2.1.</span> <span class="toc-text">SQ、RQ、CQ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section"><span class="toc-number">2.2.</span> <span class="toc-text"></span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#nvme"><span class="toc-number">1.</span> <span class="toc-text">NVMe</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#nvme-specifications"><span class="toc-number">1.1.</span> <span class="toc-text">NVMe Specifications</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nvme-%E6%8E%A7%E5%88%B6%E5%99%A8%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">NVMe 控制器类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#identify-data-structure"><span class="toc-number">1.3.</span> <span class="toc-text">Identify data structure</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sqcq"><span class="toc-number">1.4.</span> <span class="toc-text">SQ、CQ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sglsge"><span class="toc-number">1.5.</span> <span class="toc-text">SGL&#x2F;SGE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rdma"><span class="toc-number">2.</span> <span class="toc-text">RDMA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sqrqcq"><span class="toc-number">2.1.</span> <span class="toc-text">SQ、RQ、CQ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1%E6%9C%BA%E5%88%B6"><span class="toc-number">2.2.</span> <span class="toc-text">通信机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nvme-of"><span class="toc-number">3.</span> <span class="toc-text">NVMe-oF</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#section"><span class="toc-number">3.1.</span> <span class="toc-text"></span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -3749,7 +3770,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4068,7 +4089,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/ja-JP/notes/存储/n-spdk-04/","name":"【学习笔记-存储】SPDK（四）：补充知识记录"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（四）：补充知识记录","description":"记录在看 perf 代码中学习到的 NVMe、NVMe-oF、RDMA、SPDK 相关知识点。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-04/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-04/","wordCount":47,"datePublished":"2024-09-18T11:23:39.000Z","dateModified":"2024-09-21T16:11:11.482Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/ja-JP/notes/存储/n-spdk-04/","name":"【学习笔记-存储】SPDK（四）：补充知识记录"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（四）：补充知识记录","description":"记录在看 perf 代码中学习到的 NVMe、NVMe-oF、RDMA、SPDK 相关知识点。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-04/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-04/","wordCount":47,"datePublished":"2024-09-18T11:23:39.000Z","dateModified":"2024-09-24T04:35:15.519Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
