@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-09-01T11:35:45.000Z">
-<meta property="article:modified_time" content="2024-09-24T06:42:53.241Z">
+<meta property="article:modified_time" content="2024-09-25T15:45:27.474Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="存储">
 <meta property="article:tag" content="SPDK">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1727160185632),
+    lastupdate: new Date(1727279214511),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2632,24 +2632,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/perf-main.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/perf-main.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
 <hr />
 </div><div class="story post-story"><h2 id="perf-资源关系图">perf 资源关系图</h2>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/resource-relationship.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/resource-relationship.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
 <hr />
-<p>TODO</p>
-<ol type="1">
-<li><p>函数调用栈 + 控制流程图 + 数据流程图，按照不同流程图分章节跟进重要函数中去；</p></li>
-<li><p>资源关系图，所有用到的重要资源，如 <code>spdk_nvme_ctrlr</code>、<code>spdk_nvme_ns</code> 数据结构等，理清他们的关系，类似于 UML 类图；</p></li>
-<li><p>controller 状态转移图；</p></li>
-<li><p>监控数据发送和接收、传输性能的逻辑。</p></li>
-</ol>
 <p>函数调用栈说明：</p>
 <ul>
 <li><p>相同缩进表示同一层的函数执行；不同缩进表示存在函数内调用另一个函数。</p></li>
 <li><p>花括号表示循环体。</p></li>
 <li><p>函数结尾 <code>;</code> 表示该函数结束；<code>:</code> 表示进入该函数，接下来存在函数调用。</p></li>
 </ul>
+<p>所有函数的调用可以利用 SPDK 的 debug，通过 <code>-G</code> 参数开启，不过没有函数的调用层次。</p>
 <hr />
 </div><div class="story post-story"><h2 id="一控制流初始化">（一）控制流（初始化）</h2>
 <p>流程图：</p>
-<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/dev-stream-init.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/dev-stream-init.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
 <p>函数调用栈：</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb1-1" data-line-number="1">spdk_env_opts_init(&amp;opts);</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">parse_args(...):</a>
@@ -2704,10 +2699,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a class="sourceLine" id="cb1-51" data-line-number="51">    &#125;</a></code></pre></div>
 <hr />
 </div><div class="story post-story"><h2 id="二控制流初始化---fabric_ctrlr_scan">（二）控制流（初始化 - fabric_ctrlr_scan）</h2>
-<p>初始化过程中 Controller 状态转移图：</p>
-<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
 <p>流程图：</p>
-<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/dev-stream-fabric-ctrlr-scan.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/dev-stream-fabric-ctrlr-scan.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
 <p>函数调用栈：</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb2-1" data-line-number="1">nvme_rdma.c: nvme_fabric_ctrlr_scan(probe_ctx, ...):</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">    spdk_nvme_ctrlr_get_default_ctrlr_opts(&amp;discovery_opts, ...):</a>
@@ -2722,72 +2715,77 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a class="sourceLine" id="cb2-11" data-line-number="11">            TAILQ_INIT(&amp;ctrlr-&gt;active_procs);</a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">            RB_INIT(&amp;ctrlr-&gt;ns);</a>
 <a class="sourceLine" id="cb2-13" data-line-number="13">        rctrlr-&gt;ctrlr.adminq = nvme_rdma_ctrlr_create_qpair(&amp;rctrlr-&gt;ctrlr, ..., async = true):</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">            nvme_qpair_init(qpair, qid, ctrlr, qprio, num_requests, async):</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">                ... <span class="co">// 设置 qpair 部分字段</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">                qpair-&gt;ctrlr = ctrlr;</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">                qpair-&gt;trtype = ctrlr-&gt;trid.trtype;</a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">                qpair-&gt;async = async;</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">                STAILQ_INIT(&amp;qpair-&gt;free_req);</a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">                <span class="cf">for</span> &#123;</a>
-<a class="sourceLine" id="cb2-21" data-line-number="21">                    STAILQ_INSERT_HEAD(&amp;qpair-&gt;free_req, req, stailq);</a>
-<a class="sourceLine" id="cb2-22" data-line-number="22">                &#125;</a>
-<a class="sourceLine" id="cb2-23" data-line-number="23">        nvme_ctrlr_add_process(&amp;rctrlr-&gt;ctrlr, <span class="dv">0</span>):</a>
-<a class="sourceLine" id="cb2-24" data-line-number="24">            ... <span class="co">// 设置 discovery ctrlr_proc 字段</span></a>
-<a class="sourceLine" id="cb2-25" data-line-number="25">            TAILQ_INSERT_TAIL(&amp;ctrlr-&gt;active_procs, ctrlr_proc, tailq);</a>
-<a class="sourceLine" id="cb2-26" data-line-number="26">    <span class="cf">while</span> (discovery_ctrlr-&gt;state != NVME_CTRLR_STATE_READY) &#123;</a>
-<a class="sourceLine" id="cb2-27" data-line-number="27">        nvme_ctrlr_process_init(discovery_ctrlr):</a>
-<a class="sourceLine" id="cb2-28" data-line-number="28">            <span class="co">// 该函数调用见后文、处理状态转移函数</span></a>
-<a class="sourceLine" id="cb2-29" data-line-number="29">    &#125;</a>
-<a class="sourceLine" id="cb2-30" data-line-number="30">    nvme_ctrlr_cmd_identify(discovery_ctrlr, ..., &amp;discovery_ctrlr-&gt;cdata, ...);</a>
-<a class="sourceLine" id="cb2-31" data-line-number="31">    nvme_wait_for_completion(discovery_ctrlr-&gt;adminq, ...);</a>
-<a class="sourceLine" id="cb2-32" data-line-number="32">    <span class="co">/** io ctrlr 识别过程、完整流程 **/</span></a>
-<a class="sourceLine" id="cb2-33" data-line-number="33">    nvme_fabric_ctrlr_discover(discovery_ctrlr, probe_ctx): </a>
-<a class="sourceLine" id="cb2-34" data-line-number="34">        <span class="cf">while</span> &#123;</a>
-<a class="sourceLine" id="cb2-35" data-line-number="35">            nvme_fabric_get_discovery_log_page(discovery_ctrlr, buffer, ...):</a>
-<a class="sourceLine" id="cb2-36" data-line-number="36">                spdk_nvme_ctrlr_cmd_get_log_page(...);</a>
-<a class="sourceLine" id="cb2-37" data-line-number="37">                nvme_wait_for_completion(discovery_ctrlr-&gt;adminq, status);</a>
-<a class="sourceLine" id="cb2-38" data-line-number="38">            <span class="cf">for</span> &#123;</a>
-<a class="sourceLine" id="cb2-39" data-line-number="39">                nvme_fabric_discover_probe(log_page_entry++, probe_ctx, discovery_ctrlr-&gt;trid.priority):</a>
-<a class="sourceLine" id="cb2-40" data-line-number="40">                    ... <span class="co">// 通过 log_page_entry 设置 trid</span></a>
-<a class="sourceLine" id="cb2-41" data-line-number="41">                    nvme_ctrlr_probe(&amp;trid, probe_ctx, NULL):</a>
-<a class="sourceLine" id="cb2-42" data-line-number="42">                        spdk_nvme_ctrlr_get_default_ctrlr_opts(&amp;discovery_opts, ...):</a>
-<a class="sourceLine" id="cb2-43" data-line-number="43">                            SET_FIELD(...);</a>
-<a class="sourceLine" id="cb2-44" data-line-number="44">                        <span class="co">/** 这里构建了 io ctrlr **/</span></a>
-<a class="sourceLine" id="cb2-45" data-line-number="45">                        ctrlr = nvme_rdma_ctrlr_construct(trid, &amp;opts, devhandle = NULL):</a>
-<a class="sourceLine" id="cb2-46" data-line-number="46">                            rctrlr = spdk_zmalloc(...);</a>
-<a class="sourceLine" id="cb2-47" data-line-number="47">                            ... <span class="co">// 获取 rdma 设备、设备属性等，设置 rctrlr 部分字段</span></a>
-<a class="sourceLine" id="cb2-48" data-line-number="48">                            nvme_ctrlr_construct(&amp;rctrlr-&gt;ctrlr):</a>
-<a class="sourceLine" id="cb2-49" data-line-number="49">                                nvme_ctrlr_set_state(ctrlr, NVME_CTRLR_STATE_INIT, NVME_TIMEOUT_INFINITE);</a>
-<a class="sourceLine" id="cb2-50" data-line-number="50">                                ... <span class="co">// 设置 ctrlr 部分字段</span></a>
-<a class="sourceLine" id="cb2-51" data-line-number="51">                                TAILQ_INIT(&amp;ctrlr-&gt;active_io_qpairs);</a>
-<a class="sourceLine" id="cb2-52" data-line-number="52">                                TAILQ_INIT(&amp;ctrlr-&gt;active_procs);</a>
-<a class="sourceLine" id="cb2-53" data-line-number="53">                                RB_INIT(&amp;ctrlr-&gt;ns);</a>
-<a class="sourceLine" id="cb2-54" data-line-number="54">                            ... <span class="co">// rctrlr 初始化 cm_events 队列</span></a>
-<a class="sourceLine" id="cb2-55" data-line-number="55">                            <span class="co">// 以下两步在建立 rdma cm 通道，在后面建立 rdma qpairs 连接时用到</span></a>
-<a class="sourceLine" id="cb2-56" data-line-number="56">                            rctrlr-&gt;cm_channel = rdma_create_event_channel();</a>
-<a class="sourceLine" id="cb2-57" data-line-number="57">                            flag = fcntl(rctrlr-&gt;cm_channel-&gt;fd, F_GETFL);</a>
-<a class="sourceLine" id="cb2-58" data-line-number="58">                            <span class="co">// 创建 admin qpair，qid = 0 为 admin queue</span></a>
-<a class="sourceLine" id="cb2-59" data-line-number="59">                            rctrlr-&gt;ctrlr.adminq = nvme_rdma_ctrlr_create_qpair(&amp;rctrlr-&gt;ctrlr, qid = <span class="dv">0</span>, ..., async = true):</a>
-<a class="sourceLine" id="cb2-60" data-line-number="60">                                nvme_qpair_init(qpair, qid, ctrlr, qprio, num_requests, async):</a>
-<a class="sourceLine" id="cb2-61" data-line-number="61">                                    ... <span class="co">// 设置 qpair 部分字段</span></a>
-<a class="sourceLine" id="cb2-62" data-line-number="62">                                    qpair-&gt;ctrlr = ctrlr;</a>
-<a class="sourceLine" id="cb2-63" data-line-number="63">                                    qpair-&gt;trtype = ctrlr-&gt;trid.trtype;</a>
-<a class="sourceLine" id="cb2-64" data-line-number="64">                                    qpair-&gt;async = async;</a>
-<a class="sourceLine" id="cb2-65" data-line-number="65">                                    STAILQ_INIT(&amp;qpair-&gt;free_req);</a>
-<a class="sourceLine" id="cb2-66" data-line-number="66">                                    <span class="cf">for</span> &#123;</a>
-<a class="sourceLine" id="cb2-67" data-line-number="67">                                        STAILQ_INSERT_HEAD(&amp;qpair-&gt;free_req, req, stailq);</a>
-<a class="sourceLine" id="cb2-68" data-line-number="68">                                    &#125;</a>
-<a class="sourceLine" id="cb2-69" data-line-number="69">                            nvme_ctrlr_add_process(&amp;rctrlr-&gt;ctrlr, <span class="dv">0</span>):</a>
-<a class="sourceLine" id="cb2-70" data-line-number="70">                                ... <span class="co">// 设置 ctrlr_proc 字段</span></a>
-<a class="sourceLine" id="cb2-71" data-line-number="71">                                TAILQ_INSERT_TAIL(&amp;ctrlr-&gt;active_procs, ctrlr_proc, tailq);</a>
-<a class="sourceLine" id="cb2-72" data-line-number="72">                                &#125;</a>
-<a class="sourceLine" id="cb2-73" data-line-number="73">                        nvme_qpair_set_state(ctrlr-&gt;adminq, NVME_QPAIR_ENABLED);</a>
-<a class="sourceLine" id="cb2-74" data-line-number="74">                        TAILQ_INSERT_TAIL(&amp;probe_ctx-&gt;init_ctrlrs, ctrlr, tailq);</a>
-<a class="sourceLine" id="cb2-75" data-line-number="75">        &#125;</a></code></pre></div>
+<a class="sourceLine" id="cb2-14" data-line-number="14">            rqpair-&gt;state = NVME_RDMA_QPAIR_STATE_INVALID; <span class="co">// 创建了 rqpair、设置状态为 INVALID</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">            qpair = &amp;rqpair-&gt;qpair;</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">            nvme_qpair_init(qpair, qid, ctrlr, qprio, num_requests, async):</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">                ... <span class="co">// 设置 qpair 部分字段</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">                qpair-&gt;ctrlr = ctrlr;</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">                qpair-&gt;trtype = ctrlr-&gt;trid.trtype;</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">                qpair-&gt;async = async;</a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">                STAILQ_INIT(&amp;qpair-&gt;free_req);</a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">                <span class="cf">for</span> &#123;</a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">                    STAILQ_INSERT_HEAD(&amp;qpair-&gt;free_req, req, stailq);</a>
+<a class="sourceLine" id="cb2-24" data-line-number="24">                &#125;</a>
+<a class="sourceLine" id="cb2-25" data-line-number="25">        nvme_ctrlr_add_process(&amp;rctrlr-&gt;ctrlr, <span class="dv">0</span>):</a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">            ... <span class="co">// 设置 discovery ctrlr_proc 字段</span></a>
+<a class="sourceLine" id="cb2-27" data-line-number="27">            TAILQ_INSERT_TAIL(&amp;ctrlr-&gt;active_procs, ctrlr_proc, tailq);</a>
+<a class="sourceLine" id="cb2-28" data-line-number="28">    <span class="cf">while</span> (discovery_ctrlr-&gt;state != NVME_CTRLR_STATE_READY) &#123;</a>
+<a class="sourceLine" id="cb2-29" data-line-number="29">        nvme_ctrlr_process_init(discovery_ctrlr):</a>
+<a class="sourceLine" id="cb2-30" data-line-number="30">            <span class="co">// 该函数调用见后文、处理状态转移函数</span></a>
+<a class="sourceLine" id="cb2-31" data-line-number="31">    &#125;</a>
+<a class="sourceLine" id="cb2-32" data-line-number="32">    nvme_ctrlr_cmd_identify(discovery_ctrlr, ..., &amp;discovery_ctrlr-&gt;cdata, ...);</a>
+<a class="sourceLine" id="cb2-33" data-line-number="33">    nvme_wait_for_completion(discovery_ctrlr-&gt;adminq, ...);</a>
+<a class="sourceLine" id="cb2-34" data-line-number="34">    <span class="co">/** io ctrlr 识别过程、完整流程 **/</span></a>
+<a class="sourceLine" id="cb2-35" data-line-number="35">    nvme_fabric_ctrlr_discover(discovery_ctrlr, probe_ctx): </a>
+<a class="sourceLine" id="cb2-36" data-line-number="36">        <span class="cf">while</span> &#123;</a>
+<a class="sourceLine" id="cb2-37" data-line-number="37">            nvme_fabric_get_discovery_log_page(discovery_ctrlr, buffer, ...):</a>
+<a class="sourceLine" id="cb2-38" data-line-number="38">                spdk_nvme_ctrlr_cmd_get_log_page(...);</a>
+<a class="sourceLine" id="cb2-39" data-line-number="39">                nvme_wait_for_completion(discovery_ctrlr-&gt;adminq, status);</a>
+<a class="sourceLine" id="cb2-40" data-line-number="40">            <span class="cf">for</span> &#123;</a>
+<a class="sourceLine" id="cb2-41" data-line-number="41">                nvme_fabric_discover_probe(log_page_entry++, probe_ctx, discovery_ctrlr-&gt;trid.priority):</a>
+<a class="sourceLine" id="cb2-42" data-line-number="42">                    ... <span class="co">// 通过 log_page_entry 设置 trid</span></a>
+<a class="sourceLine" id="cb2-43" data-line-number="43">                    nvme_ctrlr_probe(&amp;trid, probe_ctx, NULL):</a>
+<a class="sourceLine" id="cb2-44" data-line-number="44">                        spdk_nvme_ctrlr_get_default_ctrlr_opts(&amp;discovery_opts, ...):</a>
+<a class="sourceLine" id="cb2-45" data-line-number="45">                            SET_FIELD(...);</a>
+<a class="sourceLine" id="cb2-46" data-line-number="46">                        <span class="co">/** 这里构建了 io ctrlr **/</span></a>
+<a class="sourceLine" id="cb2-47" data-line-number="47">                        ctrlr = nvme_rdma_ctrlr_construct(trid, &amp;opts, devhandle = NULL):</a>
+<a class="sourceLine" id="cb2-48" data-line-number="48">                            rctrlr = spdk_zmalloc(...);</a>
+<a class="sourceLine" id="cb2-49" data-line-number="49">                            ... <span class="co">// 获取 rdma 设备、设备属性等，设置 rctrlr 部分字段</span></a>
+<a class="sourceLine" id="cb2-50" data-line-number="50">                            nvme_ctrlr_construct(&amp;rctrlr-&gt;ctrlr):</a>
+<a class="sourceLine" id="cb2-51" data-line-number="51">                                nvme_ctrlr_set_state(ctrlr, NVME_CTRLR_STATE_INIT, NVME_TIMEOUT_INFINITE);</a>
+<a class="sourceLine" id="cb2-52" data-line-number="52">                                ... <span class="co">// 设置 ctrlr 部分字段</span></a>
+<a class="sourceLine" id="cb2-53" data-line-number="53">                                TAILQ_INIT(&amp;ctrlr-&gt;active_io_qpairs);</a>
+<a class="sourceLine" id="cb2-54" data-line-number="54">                                TAILQ_INIT(&amp;ctrlr-&gt;active_procs);</a>
+<a class="sourceLine" id="cb2-55" data-line-number="55">                                RB_INIT(&amp;ctrlr-&gt;ns);</a>
+<a class="sourceLine" id="cb2-56" data-line-number="56">                            ... <span class="co">// rctrlr 初始化 cm_events 队列</span></a>
+<a class="sourceLine" id="cb2-57" data-line-number="57">                            <span class="co">// 以下两步在建立 rdma cm 通道，在后面建立 rdma qpairs 连接时用到</span></a>
+<a class="sourceLine" id="cb2-58" data-line-number="58">                            rctrlr-&gt;cm_channel = rdma_create_event_channel();</a>
+<a class="sourceLine" id="cb2-59" data-line-number="59">                            flag = fcntl(rctrlr-&gt;cm_channel-&gt;fd, F_GETFL);</a>
+<a class="sourceLine" id="cb2-60" data-line-number="60">                            <span class="co">// 创建 admin qpair，qid = 0 为 admin queue</span></a>
+<a class="sourceLine" id="cb2-61" data-line-number="61">                            rctrlr-&gt;ctrlr.adminq = nvme_rdma_ctrlr_create_qpair(&amp;rctrlr-&gt;ctrlr, qid = <span class="dv">0</span>, ..., async = true):</a>
+<a class="sourceLine" id="cb2-62" data-line-number="62">                                rqpair-&gt;state = NVME_RDMA_QPAIR_STATE_INVALID; <span class="co">// 创建了 rqpair、设置状态为 INVALID</span></a>
+<a class="sourceLine" id="cb2-63" data-line-number="63">                                qpair = &amp;rqpair-&gt;qpair;</a>
+<a class="sourceLine" id="cb2-64" data-line-number="64">                                nvme_qpair_init(qpair, qid, ctrlr, qprio, num_requests, async):</a>
+<a class="sourceLine" id="cb2-65" data-line-number="65">                                    ... <span class="co">// 设置 qpair 部分字段</span></a>
+<a class="sourceLine" id="cb2-66" data-line-number="66">                                    qpair-&gt;ctrlr = ctrlr;</a>
+<a class="sourceLine" id="cb2-67" data-line-number="67">                                    qpair-&gt;trtype = ctrlr-&gt;trid.trtype;</a>
+<a class="sourceLine" id="cb2-68" data-line-number="68">                                    qpair-&gt;async = async;</a>
+<a class="sourceLine" id="cb2-69" data-line-number="69">                                    STAILQ_INIT(&amp;qpair-&gt;free_req);</a>
+<a class="sourceLine" id="cb2-70" data-line-number="70">                                    <span class="cf">for</span> &#123;</a>
+<a class="sourceLine" id="cb2-71" data-line-number="71">                                        STAILQ_INSERT_HEAD(&amp;qpair-&gt;free_req, req, stailq);</a>
+<a class="sourceLine" id="cb2-72" data-line-number="72">                                    &#125;</a>
+<a class="sourceLine" id="cb2-73" data-line-number="73">                            nvme_ctrlr_add_process(&amp;rctrlr-&gt;ctrlr, <span class="dv">0</span>):</a>
+<a class="sourceLine" id="cb2-74" data-line-number="74">                                ... <span class="co">// 设置 ctrlr_proc 字段</span></a>
+<a class="sourceLine" id="cb2-75" data-line-number="75">                                TAILQ_INSERT_TAIL(&amp;ctrlr-&gt;active_procs, ctrlr_proc, tailq);</a>
+<a class="sourceLine" id="cb2-76" data-line-number="76">                                &#125;</a>
+<a class="sourceLine" id="cb2-77" data-line-number="77">                        nvme_qpair_set_state(ctrlr-&gt;adminq, NVME_QPAIR_ENABLED);</a>
+<a class="sourceLine" id="cb2-78" data-line-number="78">                        TAILQ_INSERT_TAIL(&amp;probe_ctx-&gt;init_ctrlrs, ctrlr, tailq);</a>
+<a class="sourceLine" id="cb2-79" data-line-number="79">        &#125;</a></code></pre></div>
 <hr />
 </div><div class="story post-story"><h2 id="三控制流初始化---ctrlr_process_init">（三）控制流（初始化 - ctrlr_process_init）</h2>
+<p>Controller 状态转移过程。</p>
 <p>流程图：</p>
-<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/dev-stream-ctrlr-process-init.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/dev-stream-ctrlr-process-init.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
 <p>函数调用栈：</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb3-1" data-line-number="1"> <span class="co">/** This function will be called repeatedly during initialization </span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">     until the controller is ready. */</span></a>
@@ -2800,7 +2798,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a class="sourceLine" id="cb3-9" data-line-number="9">    spdk_nvme_qpair_process_completions(ctrlr-&gt;adminq, <span class="dv">0</span>):</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10">        nvme_transport_qpair_process_completions(qpair, max_completions):</a>
 <a class="sourceLine" id="cb3-11" data-line-number="11">            nvme_rdma_qpair_process_completions(qpair, max_completions):</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">                TODO</a>
 <a class="sourceLine" id="cb3-13" data-line-number="13">    <span class="cf">switch</span> (ctrlr-&gt;adminq-&gt;state) &#123;</a>
 <a class="sourceLine" id="cb3-14" data-line-number="14">        <span class="co">// QPAIR_CONNECTING:</span></a>
 <a class="sourceLine" id="cb3-15" data-line-number="15">            <span class="cf">break</span>;</a>
@@ -2884,11 +2882,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a class="sourceLine" id="cb3-93" data-line-number="93">    nvme_ctrlr_set_state(ctrlr, NVME_CTRLR_STATE_READY, NVME_TIMEOUT_INFINITE);</a>
 <a class="sourceLine" id="cb3-94" data-line-number="94">    <span class="co">// 状态 NVME_CTRLR_STATE_READY.</span></a>
 <a class="sourceLine" id="cb3-95" data-line-number="95">    <span class="co">// 状态 WAIT_FOR_XXX 统一处理：（通过 callback 执行转换下一个状态操作）</span></a>
-<a class="sourceLine" id="cb3-96" data-line-number="96">    spdk_nvme_qpair_process_completions(ctrlr-&gt;adminq, <span class="dv">0</span>);</a></code></pre></div>
+<a class="sourceLine" id="cb3-96" data-line-number="96">    spdk_nvme_qpair_process_completions(ctrlr-&gt;adminq, <span class="dv">0</span>):</a>
+<a class="sourceLine" id="cb3-97" data-line-number="97">        nvme_transport_qpair_process_completions(qpair, max_completions):</a>
+<a class="sourceLine" id="cb3-98" data-line-number="98">            nvme_rdma_qpair_process_completions(qpair, max_completions):</a>
+<a class="sourceLine" id="cb3-99" data-line-number="99">                TODO</a></code></pre></div>
 <hr />
 </div><div class="story post-story"><h2 id="四控制流任务执行">（四）控制流（任务执行）</h2>
 <p>流程图：</p>
-<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/dev-stream-work-fn.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/dev-stream-work-fn.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
 <p>函数调用栈：</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co">/** 创建轮询线程执行任务 **/</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">pthread_create(&amp;thread_id, NULL, &amp;nvme_poll_ctrlrs, NULL);</a>
@@ -2904,174 +2905,180 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a class="sourceLine" id="cb4-12" data-line-number="12">                            io_msg_producer-&gt;update(ctrlr);</a>
 <a class="sourceLine" id="cb4-13" data-line-number="13">                        &#125;</a>
 <a class="sourceLine" id="cb4-14" data-line-number="14">                    spdk_nvme_qpair_process_completions(ctrlr-&gt;external_io_msgs_qpair, <span class="dv">0</span>):</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">                        <span class="co">// 该函数调用见后文</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">                    count = spdk_ring_dequeue(ctrlr-&gt;external_io_msgs, requests, ...); <span class="co">// 从外部 I/O 消息环中按需排队获取消息，存储在 requests 数组中</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">                    <span class="cf">for</span> (i &lt; count) &#123;</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">                        spdk_nvme_io_msg *io = requests[i];</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">                        io-&gt;fn(io-&gt;ctrlr, io-&gt;nsid, io-&gt;arg); <span class="co">// 调用 io 消息处理函数</span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">                    &#125;</a>
-<a class="sourceLine" id="cb4-21" data-line-number="21">                spdk_nvme_qpair_process_completions(ctrlr-&gt;adminq, <span class="dv">0</span>):</a>
-<a class="sourceLine" id="cb4-22" data-line-number="22">                    <span class="co">// 该函数调用见后文</span></a>
-<a class="sourceLine" id="cb4-23" data-line-number="23">                nvme_ctrlr_complete_queued_async_events(ctrlr); <span class="co">// 如果当前进程在 ctrlr-&gt;active_procs 中，则处理 async_events</span></a>
-<a class="sourceLine" id="cb4-24" data-line-number="24">        &#125;</a>
-<a class="sourceLine" id="cb4-25" data-line-number="25">    &#125;</a>
-<a class="sourceLine" id="cb4-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">// 回到主线程 main()：</span></a>
-<a class="sourceLine" id="cb4-28" data-line-number="28">associate_workers_with_ns():</a>
-<a class="sourceLine" id="cb4-29" data-line-number="29">    <span class="cf">for</span> (max(g_num_namespaces, g_num_workers)) &#123;</a>
-<a class="sourceLine" id="cb4-30" data-line-number="30">        allocate_ns_worker(ns_entry, worker):</a>
-<a class="sourceLine" id="cb4-31" data-line-number="31">            ns_ctx-&gt;entry = entry;</a>
-<a class="sourceLine" id="cb4-32" data-line-number="32">            TAILQ_INSERT_TAIL(&amp;worker-&gt;ns_ctx, ns_ctx, link); <span class="co">// worker_ns_ctx 加入 worker-&gt;ns_ctx 队列中</span></a>
-<a class="sourceLine" id="cb4-33" data-line-number="33">    &#125;</a>
-<a class="sourceLine" id="cb4-34" data-line-number="34">pthread_barrier_init(&amp;g_worker_sync_barrier, NULL, g_num_workers); <span class="co">// barrier 线程同步，当所有 thread 都执行到 barrier_wait() 后，才继续执行后续代码</span></a>
-<a class="sourceLine" id="cb4-35" data-line-number="35">TAILQ_FOREACH(worker, &amp;g_workers, link) &#123;</a>
-<a class="sourceLine" id="cb4-36" data-line-number="36">    <span class="cf">if</span> (worker-&gt;lcore != g_main_core): spdk_env_thread_launch_pinned(worker-&gt;lcore, work_fn, worker); <span class="co">// worker thread 一一对应到 core、每个 core 绑定一个 work_fn</span></a>
-<a class="sourceLine" id="cb4-37" data-line-number="37">&#125;</a>
-<a class="sourceLine" id="cb4-38" data-line-number="38">work_fn(main_worker);</a>
-<a class="sourceLine" id="cb4-39" data-line-number="39"><span class="co">// 每个 core 执行 work_fn</span></a>
-<a class="sourceLine" id="cb4-40" data-line-number="40">work_fn(worker):</a>
-<a class="sourceLine" id="cb4-41" data-line-number="41">    TAILQ_FOREACH(ns_ctx, &amp;worker-&gt;ns_ctx, link) &#123;</a>
-<a class="sourceLine" id="cb4-42" data-line-number="42">        nvme_init_ns_worker_ctx(ns_ctx): <span class="co">// 为每个 ns 分配 io_qpairs</span></a>
-<a class="sourceLine" id="cb4-43" data-line-number="43">            spdk_nvme_ctrlr_get_default_io_qpair_opts(ns_entry-&gt;u.nvme.ctrlr, &amp;opts, <span class="kw">sizeof</span>(opts));</a>
-<a class="sourceLine" id="cb4-44" data-line-number="44">            ctrlr_opts = spdk_nvme_ctrlr_get_opts(ns_entry-&gt;u.nvme.ctrlr);</a>
-<a class="sourceLine" id="cb4-45" data-line-number="45">            ns_ctx-&gt;u.nvme.group = spdk_nvme_poll_group_create(ns_ctx, NULL):  <span class="co">// 创建 nvme_poll_group</span></a>
-<a class="sourceLine" id="cb4-46" data-line-number="46">                group-&gt;ctx = ns_ctx;</a>
-<a class="sourceLine" id="cb4-47" data-line-number="47">                STAILQ_INIT(&amp;group-&gt;tgroups); <span class="co">// tgroup: transport_poll_group</span></a>
-<a class="sourceLine" id="cb4-48" data-line-number="48">            <span class="cf">for</span> (i &lt; ns_ctx-&gt;u.nvme.num_all_qpairs) &#123;</a>
-<a class="sourceLine" id="cb4-49" data-line-number="49">                <span class="co">// u.nvme.qpair 是二维指针</span></a>
-<a class="sourceLine" id="cb4-50" data-line-number="50">                <span class="co">// 1. 创建 io qpair</span></a>
-<a class="sourceLine" id="cb4-51" data-line-number="51">                ns_ctx-&gt;u.nvme.qpair[i] = spdk_nvme_ctrlr_alloc_io_qpair(ns_entry-&gt;u.nvme.ctrlr, &amp;opts, ...):</a>
-<a class="sourceLine" id="cb4-52" data-line-number="52">                    qpair = nvme_ctrlr_create_io_qpair(ctrlr, &amp;opts):</a>
-<a class="sourceLine" id="cb4-53" data-line-number="53">                        qid = spdk_nvme_ctrlr_alloc_qid(ctrlr);</a>
-<a class="sourceLine" id="cb4-54" data-line-number="54">                        qpair = nvme_rdma_ctrlr_create_io_qpair(ctrlr, qid, opts): <span class="co">// 函数指针</span></a>
-<a class="sourceLine" id="cb4-55" data-line-number="55">                            nvme_rdma_ctrlr_create_qpair(ctrlr, qid, ..., opts-&gt;async_mode = true):</a>
-<a class="sourceLine" id="cb4-56" data-line-number="56">                                <span class="co">// 与前文 fabric_ctrlr_scan 创建 adminq 类似</span></a>
-<a class="sourceLine" id="cb4-57" data-line-number="57">                                nvme_qpair_init(qpair, qid, ctrlr, qprio, num_requests, async):</a>
-<a class="sourceLine" id="cb4-58" data-line-number="58">                                    ... <span class="co">// 设置 qpair 部分字段</span></a>
-<a class="sourceLine" id="cb4-59" data-line-number="59">                                    qpair-&gt;ctrlr = ctrlr;</a>
-<a class="sourceLine" id="cb4-60" data-line-number="60">                                    qpair-&gt;trtype = ctrlr-&gt;trid.trtype;</a>
-<a class="sourceLine" id="cb4-61" data-line-number="61">                                    qpair-&gt;async = async;</a>
-<a class="sourceLine" id="cb4-62" data-line-number="62">                                    STAILQ_INIT(&amp;qpair-&gt;free_req);</a>
-<a class="sourceLine" id="cb4-63" data-line-number="63">                                    <span class="cf">for</span> &#123;</a>
-<a class="sourceLine" id="cb4-64" data-line-number="64">                                        STAILQ_INSERT_HEAD(&amp;qpair-&gt;free_req, req, stailq);</a>
-<a class="sourceLine" id="cb4-65" data-line-number="65">                                    &#125;</a>
-<a class="sourceLine" id="cb4-66" data-line-number="66">                        TAILQ_INSERT_TAIL(&amp;ctrlr-&gt;active_io_qpairs, qpair, tailq);</a>
-<a class="sourceLine" id="cb4-67" data-line-number="67">                        nvme_ctrlr_proc_add_io_qpair(qpair): <span class="co">// 与当前 active_proc 关联</span></a>
-<a class="sourceLine" id="cb4-68" data-line-number="68">                            TAILQ_INSERT_TAIL(&amp;active_proc-&gt;allocated_io_qpairs, qpair, per_process_tailq);</a>
-<a class="sourceLine" id="cb4-69" data-line-number="69">                            qpair-&gt;active_proc = active_proc;</a>
-<a class="sourceLine" id="cb4-70" data-line-number="70">                <span class="co">// create_only = true</span></a>
-<a class="sourceLine" id="cb4-71" data-line-number="71">                <span class="co">// 2. qpair 添加 poll groups</span></a>
-<a class="sourceLine" id="cb4-72" data-line-number="72">                spdk_nvme_poll_group_add(nvme_poll_group, qpair): <span class="co">// io_qpair 添加到 nvme_poll_group、transport_poll_group</span></a>
-<a class="sourceLine" id="cb4-73" data-line-number="73">                    <span class="cf">while</span> (transport) &#123;</a>
-<a class="sourceLine" id="cb4-74" data-line-number="74">                        tgroup = nvme_transport_poll_group_create(transport): <span class="co">// 创建 transport_poll_group</span></a>
-<a class="sourceLine" id="cb4-75" data-line-number="75">                            nvme_rdma_poll_group_create():  <span class="co">// 创建 rdma_poll_group</span></a>
-<a class="sourceLine" id="cb4-76" data-line-number="76">                                STAILQ_INIT(&amp;rdma_poll_group-&gt;pollers);</a>
-<a class="sourceLine" id="cb4-77" data-line-number="77">                                TAILQ_INIT(&amp;rdma_poll_group-&gt;connecting_qpairs);</a>
-<a class="sourceLine" id="cb4-78" data-line-number="78">                                TAILQ_INIT(&amp;rdma_poll_group-&gt;active_qpairs);</a>
-<a class="sourceLine" id="cb4-79" data-line-number="79">                                <span class="cf">return</span> rdma_poll_group-&gt;transport_poll_group;</a>
-<a class="sourceLine" id="cb4-80" data-line-number="80">                            STAILQ_INIT(&amp;group-&gt;connected_qpairs);</a>
-<a class="sourceLine" id="cb4-81" data-line-number="81">                            STAILQ_INIT(&amp;group-&gt;disconnected_qpairs);</a>
-<a class="sourceLine" id="cb4-82" data-line-number="82">                        tgroup-&gt;group = nvme_poll_group; <span class="co">// transport_poll_group 关联 nvme_poll_group</span></a>
-<a class="sourceLine" id="cb4-83" data-line-number="83">                        STAILQ_INSERT_TAIL(&amp;nvme_poll_group-&gt;tgroups, tgroup, link);</a>
-<a class="sourceLine" id="cb4-84" data-line-number="84">                    &#125;</a>
-<a class="sourceLine" id="cb4-85" data-line-number="85">                    nvme_transport_poll_group_add(tgroup, qpair):</a>
-<a class="sourceLine" id="cb4-86" data-line-number="86">                        qpair-&gt;poll_group = tgroup; <span class="co">// qpair 关联 transport_poll_group</span></a>
-<a class="sourceLine" id="cb4-87" data-line-number="87">                        nvme_rdma_poll_group_add(tgroup, qpair):</a>
-<a class="sourceLine" id="cb4-88" data-line-number="88">                            <span class="co">// do nothing</span></a>
-<a class="sourceLine" id="cb4-89" data-line-number="89">                            <span class="co">// 这里 rdma_poll_group 没有与 qpair 关联，在后面 rdma_poll_group 与 rdma_qpair 关联</span></a>
-<a class="sourceLine" id="cb4-90" data-line-number="90">                <span class="co">// 3. 连接 io qpair</span></a>
-<a class="sourceLine" id="cb4-91" data-line-number="91">                spdk_nvme_ctrlr_connect_io_qpair(entry-&gt;u.nvme.ctrlr, qpair):</a>
-<a class="sourceLine" id="cb4-92" data-line-number="92">                    nvme_transport_ctrlr_connect_qpair(ctrlr, qpair):</a>
-<a class="sourceLine" id="cb4-93" data-line-number="93">                        nvme_qpair_set_state(qpair, NVME_QPAIR_CONNECTING); <span class="co">// 这里设置了 qpair 状态为正在连接</span></a>
-<a class="sourceLine" id="cb4-94" data-line-number="94">                        nvme_rdma_ctrlr_connect_qpair(ctrlr, qpair): <span class="co">// 函数指针</span></a>
-<a class="sourceLine" id="cb4-95" data-line-number="95">                            <span class="co">// 通过 nvme_qpair、nvme_ctrlr 移动 n 个字节得到</span></a>
-<a class="sourceLine" id="cb4-96" data-line-number="96">                            rqpair = nvme_rdma_qpair(qpair): <span class="co">// rqpair 为 nvme_rdma_qpair 结构</span></a>
-<a class="sourceLine" id="cb4-97" data-line-number="97">                                SPDK_CONTAINEROF(qpair, <span class="kw">struct</span> nvme_rdma_qpair, qpair):</a>
-<a class="sourceLine" id="cb4-98" data-line-number="98">                                    <span class="pp">#define SPDK_CONTAINEROF(ptr, type, member) ((type *)((uintptr_t)ptr - offsetof(type, member))); </span></a>
-<a class="sourceLine" id="cb4-99" data-line-number="99">                                    <span class="co">/* offsetof(...): Offset of member MEMBER in a struct of type TYPE. */</span></a>
-<a class="sourceLine" id="cb4-100" data-line-number="100">                            rctrlr = nvme_rdma_ctrlr(ctrlr); <span class="co">// rctrlr 为 nvme_rdma_ctrlr 结构</span></a>
-<a class="sourceLine" id="cb4-101" data-line-number="101">                            nvme_parse_addr(&amp;dst_addr, ctrlr-&gt;trid.traddr, &amp;port, ...); <span class="co">// 解析 destination_address</span></a>
-<a class="sourceLine" id="cb4-102" data-line-number="102">                            nvme_parse_addr(&amp;src_addr, ctrlr-&gt;opts.src_addr, &amp;src_port, ...); <span class="co">// 解析 source_address</span></a>
-<a class="sourceLine" id="cb4-103" data-line-number="103">                            rdma_create_id(rctrlr-&gt;cm_channel, &amp;rqpair-&gt;cm_id, rqpair, RDMA_PS_TCP); <span class="co">// 分配 communication id</span></a>
-<a class="sourceLine" id="cb4-104" data-line-number="104">                            nvme_rdma_resolve_addr(rqpair, &amp;src_addr, &amp;dst_addr):</a>
-<a class="sourceLine" id="cb4-105" data-line-number="105">                                rdma_set_option(rqpair-&gt;cm_id, ...);</a>
-<a class="sourceLine" id="cb4-106" data-line-number="106">                                rdma_resolve_addr(rqpair-&gt;cm_id, src_addr, dst_addr, ...);</a>
-<a class="sourceLine" id="cb4-107" data-line-number="107">                                <span class="co">// 开始处理 rdma events</span></a>
-<a class="sourceLine" id="cb4-108" data-line-number="108">                                nvme_rdma_process_event_start(rqpair, RDMA_CM_EVENT_ADDR_RESOLVED = <span class="dv">0</span>, nvme_rdma_addr_resolved):</a>
-<a class="sourceLine" id="cb4-109" data-line-number="109">                                    rqpair-&gt;evt_cb = evt_cb; <span class="co">// evt_cb = nvme_rdma_addr_resolved</span></a>
-<a class="sourceLine" id="cb4-110" data-line-number="110">                                    ... <span class="co">// 经过一系列操作，最后是怎么执行回调函数 nvme_rdma_addr_resolved()？</span></a>
-<a class="sourceLine" id="cb4-111" data-line-number="111">                                    <span class="co">/** 这里的 rdma_process_event_start() 调用逻辑见后文 **/</span></a>
-<a class="sourceLine" id="cb4-112" data-line-number="112">                            rqpair-&gt;state = NVME_RDMA_QPAIR_STATE_INITIALIZING; <span class="co">// 注意这里设置了 rqpair 状态，可能用于状态机</span></a>
-<a class="sourceLine" id="cb4-113" data-line-number="113">                            rgroup = nvme_rdma_poll_group(qpair-&gt;poll_group); <span class="co">// rgroup 为 nvme_rdma_poll_group 结构</span></a>
-<a class="sourceLine" id="cb4-114" data-line-number="114">                            TAILQ_INSERT_TAIL(&amp;rgroup-&gt;connecting_qpairs, rqpair, link_connecting); <span class="co">// rdma_poll_group 与 rdma_qpair 关联</span></a>
-<a class="sourceLine" id="cb4-115" data-line-number="115">                        nvme_poll_group_connect_qpair(qpair):</a>
-<a class="sourceLine" id="cb4-116" data-line-number="116">                            nvme_transport_poll_group_connect_qpair(qpair):</a>
-<a class="sourceLine" id="cb4-117" data-line-number="117">                                nvme_rdma_poll_group_connect_qpair(qpair):</a>
-<a class="sourceLine" id="cb4-118" data-line-number="118">                                    <span class="co">// do nothing</span></a>
-<a class="sourceLine" id="cb4-119" data-line-number="119">                                    <span class="co">// 这里 rdma_poll_group 没有连接 rqair</span></a>
-<a class="sourceLine" id="cb4-120" data-line-number="120">                                    <span class="co">// rqpair 在什么时候从 rgroup-&gt;connecting_qpairs 中移除并加入到 rgroup-&gt;active_qpairs？</span></a>
-<a class="sourceLine" id="cb4-121" data-line-number="121">                                    <span class="co">// active_qpairs 是在 submit_request 中才使用，因此作用理解为当 rdma_qpair 有 req 时，加入到 active_qpairs 中</span></a>
-<a class="sourceLine" id="cb4-122" data-line-number="122">                                STAILQ_INSERT_TAIL(&amp;tgroup-&gt;connected_qpairs, qpair, poll_group_stailq);</a>
-<a class="sourceLine" id="cb4-123" data-line-number="123">                        <span class="co">// qpair-&gt;async = true</span></a>
-<a class="sourceLine" id="cb4-124" data-line-number="124">                <span class="co">// 4. poll group 处理 qpairs 完成事件</span></a>
-<a class="sourceLine" id="cb4-125" data-line-number="125">                <span class="cf">while</span> &#123;</a>
-<a class="sourceLine" id="cb4-126" data-line-number="126">                    <span class="co">/** poll for completions on all qpairs in this poll group **/</span></a>
-<a class="sourceLine" id="cb4-127" data-line-number="127">                    <span class="co">// 与 检查 io 数据流 类似，见后文</span></a>
-<a class="sourceLine" id="cb4-128" data-line-number="128">                    spdk_nvme_poll_group_process_completions(group, <span class="dv">0</span>, perf_disconnect_cb):</a>
-<a class="sourceLine" id="cb4-129" data-line-number="129">                        STAILQ_FOREACH(tgroup, &amp;group-&gt;tgroups, link) &#123;</a>
-<a class="sourceLine" id="cb4-130" data-line-number="130">                            nvme_transport_poll_group_process_completions(tgroup, ..., disconnected_qpair_cb):</a>
-<a class="sourceLine" id="cb4-131" data-line-number="131">                                nvme_rdma_poll_group_process_completions(tgroup, ..., disconnected_qpair_cb): <span class="co">// 函数指针</span></a>
-<a class="sourceLine" id="cb4-132" data-line-number="132">                                    TAILQ_FOREACH_SAFE(rqpair, &amp;rgroup-&gt;connecting_qpairs, ...) &#123;</a>
-<a class="sourceLine" id="cb4-133" data-line-number="133">                                        nvme_rdma_ctrlr_connect_qpair_poll(rqpair-&gt;qpair-&gt;ctrlr, rqpair-&gt;qpair):</a>
-<a class="sourceLine" id="cb4-134" data-line-number="134">                                            <span class="co">// </span><span class="al">TODO</span><span class="co"> 这一块没有看懂</span></a>
-<a class="sourceLine" id="cb4-135" data-line-number="135">                                            <span class="co">// rdma_qpair 状态机</span></a>
-<a class="sourceLine" id="cb4-136" data-line-number="136">                                            <span class="co">// 根据不同状态执行不同操作、通过 callback 转移状态、直到状态为 NVME_RDMA_QPAIR_STATE_RUNNING 结束</span></a>
-<a class="sourceLine" id="cb4-137" data-line-number="137">                                            <span class="co">// 在这里可能执行了 rqpair-&gt;evt_cb = nvme_rdma_addr_resolved() 函数</span></a>
-<a class="sourceLine" id="cb4-138" data-line-number="138">                                            <span class="co">// 然后 rdma 解析完 addr 后进行路由</span></a>
-<a class="sourceLine" id="cb4-139" data-line-number="139">                                            <span class="co">// 按以上思路走</span></a>
-<a class="sourceLine" id="cb4-140" data-line-number="140">                                            <span class="co">// rqpair-&gt;state = NVME_RDMA_QPAIR_STATE_INITIALIZING</span></a>
-<a class="sourceLine" id="cb4-141" data-line-number="141">                                            ...</a>
-<a class="sourceLine" id="cb4-142" data-line-number="142">                                        TAILQ_REMOVE(&amp;rgroup-&gt;connecting_qpairs, rqpair, ...);</a>
-<a class="sourceLine" id="cb4-143" data-line-number="143">                                        <span class="co">// submit queued requests</span></a>
-<a class="sourceLine" id="cb4-144" data-line-number="144">                                        nvme_qpair_resubmit_requests(rqpair-&gt;qpair, rqpair-&gt;num_entries):</a>
-<a class="sourceLine" id="cb4-145" data-line-number="145">                                            ... <span class="co">// 与 发送数据流 类似，见后文</span></a>
-<a class="sourceLine" id="cb4-146" data-line-number="146">                                    &#125;</a>
-<a class="sourceLine" id="cb4-147" data-line-number="147">                                    STAILQ_FOREACH_SAFE(qpair, &amp;tgroup-&gt;connected_qpairs, ...) &#123;</a>
-<a class="sourceLine" id="cb4-148" data-line-number="148">                                        nvme_rdma_qpair_process_cm_event(rqpair);</a>
-<a class="sourceLine" id="cb4-149" data-line-number="149">                                            ... <span class="co">// rdma_qpair 状态机</span></a>
-<a class="sourceLine" id="cb4-150" data-line-number="150">                                    &#125;</a>
-<a class="sourceLine" id="cb4-151" data-line-number="151">                                    STAILQ_FOREACH(poller, &amp;rgroup-&gt;pollers, ...) &#123;</a>
-<a class="sourceLine" id="cb4-152" data-line-number="152">                                        nvme_rdma_cq_process_completions(poller-&gt;cq, batch_size, poller, NULL, &amp;rdma_completions); <span class="co">// 处理 rdma cq</span></a>
-<a class="sourceLine" id="cb4-153" data-line-number="153">                                            ... <span class="co">// 与 检查 io 数据流 类似，见后文</span></a>
-<a class="sourceLine" id="cb4-154" data-line-number="154">                                    &#125;</a>
-<a class="sourceLine" id="cb4-155" data-line-number="155">                        &#125;</a>
-<a class="sourceLine" id="cb4-156" data-line-number="156">                    spdk_nvme_poll_group_all_connected(group):</a>
-<a class="sourceLine" id="cb4-157" data-line-number="157">                        ... <span class="co">// 检查是否都 connected，否则 while 循环继续</span></a>
-<a class="sourceLine" id="cb4-158" data-line-number="158">                &#125;</a>
-<a class="sourceLine" id="cb4-159" data-line-number="159">            &#125;</a>
-<a class="sourceLine" id="cb4-160" data-line-number="160">    &#125;</a>
-<a class="sourceLine" id="cb4-161" data-line-number="161">    pthread_barrier_wait(&amp;g_worker_sync_barrier); <span class="co">// 线程同步</span></a>
-<a class="sourceLine" id="cb4-162" data-line-number="162">    TAILQ_FOREACH(ns_ctx, &amp;worker-&gt;ns_ctx, link) &#123;</a>
-<a class="sourceLine" id="cb4-163" data-line-number="163">        submit_io(ns_ctx, g_queue_depth); <span class="co">// 发送数据流，见后文</span></a>
-<a class="sourceLine" id="cb4-164" data-line-number="164">    &#125;</a>
-<a class="sourceLine" id="cb4-165" data-line-number="165">    <span class="cf">while</span> (!g_exit) &#123;</a>
-<a class="sourceLine" id="cb4-166" data-line-number="166">        TAILQ_FOREACH(ns_ctx, &amp;worker-&gt;ns_ctx, link) &#123;</a>
-<a class="sourceLine" id="cb4-167" data-line-number="167">            ns_ctx-&gt;entry-&gt;fn_table-&gt;check_io(ns_ctx); <span class="co">// 检查 io 数据流，见后文</span></a>
-<a class="sourceLine" id="cb4-168" data-line-number="168">            ... <span class="co">// 计时、信息统计</span></a>
-<a class="sourceLine" id="cb4-169" data-line-number="169">        &#125;</a>
-<a class="sourceLine" id="cb4-170" data-line-number="170">        ... <span class="co">// 遍历完一次队列之后就检查时间，如果超过指定的时间就退出，否则继续</span></a>
-<a class="sourceLine" id="cb4-171" data-line-number="171">    &#125;</a>
-<a class="sourceLine" id="cb4-172" data-line-number="172">    ... <span class="co">// 计时、信息统计、ns_ctx 清理</span></a>
-<a class="sourceLine" id="cb4-173" data-line-number="173"><span class="co">// 回到主线程 main()：</span></a>
-<a class="sourceLine" id="cb4-174" data-line-number="174">spdk_env_thread_wait_all();</a>
-<a class="sourceLine" id="cb4-175" data-line-number="175">print_stats(); <span class="co">// 打印信息统计</span></a>
-<a class="sourceLine" id="cb4-176" data-line-number="176">pthread_barrier_destroy(&amp;g_worker_sync_barrier);</a>
-<a class="sourceLine" id="cb4-177" data-line-number="177">... <span class="co">// cleanup</span></a>
-<a class="sourceLine" id="cb4-178" data-line-number="178">unregister_trids();</a>
-<a class="sourceLine" id="cb4-179" data-line-number="179">unregister_namespaces();</a>
-<a class="sourceLine" id="cb4-180" data-line-number="180">unregister_controllers();</a>
-<a class="sourceLine" id="cb4-181" data-line-number="181">unregister_workers();</a>
-<a class="sourceLine" id="cb4-182" data-line-number="182">spdk_env_fini();</a></code></pre></div>
+<a class="sourceLine" id="cb4-15" data-line-number="15">                        nvme_transport_qpair_process_completions(qpair, max_completions):</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">                            nvme_rdma_qpair_process_completions(qpair, max_completions):</a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">                                TODO</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">                    count = spdk_ring_dequeue(ctrlr-&gt;external_io_msgs, requests, ...); <span class="co">// 从外部 I/O 消息环中按需排队获取消息，存储在 requests 数组中</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">                    <span class="cf">for</span> (i &lt; count) &#123;</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">                        spdk_nvme_io_msg *io = requests[i];</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">                        io-&gt;fn(io-&gt;ctrlr, io-&gt;nsid, io-&gt;arg); <span class="co">// 调用 io 消息处理函数</span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">                    &#125;</a>
+<a class="sourceLine" id="cb4-23" data-line-number="23">                spdk_nvme_qpair_process_completions(ctrlr-&gt;adminq, <span class="dv">0</span>):</a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">                    nvme_transport_qpair_process_completions(qpair, max_completions):</a>
+<a class="sourceLine" id="cb4-25" data-line-number="25">                        nvme_rdma_qpair_process_completions(qpair, max_completions):</a>
+<a class="sourceLine" id="cb4-26" data-line-number="26">                                TODO</a>
+<a class="sourceLine" id="cb4-27" data-line-number="27">                <span class="cf">if</span> (active_proc): nvme_ctrlr_complete_queued_async_events(ctrlr); <span class="co">// 如果当前进程在 ctrlr-&gt;active_procs 中，则处理 async_events</span></a>
+<a class="sourceLine" id="cb4-28" data-line-number="28">        &#125;</a>
+<a class="sourceLine" id="cb4-29" data-line-number="29">    &#125;</a>
+<a class="sourceLine" id="cb4-30" data-line-number="30"></a>
+<a class="sourceLine" id="cb4-31" data-line-number="31"><span class="co">// 回到主线程 main()：</span></a>
+<a class="sourceLine" id="cb4-32" data-line-number="32">associate_workers_with_ns():</a>
+<a class="sourceLine" id="cb4-33" data-line-number="33">    <span class="cf">for</span> (max(g_num_namespaces, g_num_workers)) &#123;</a>
+<a class="sourceLine" id="cb4-34" data-line-number="34">        allocate_ns_worker(ns_entry, worker):</a>
+<a class="sourceLine" id="cb4-35" data-line-number="35">            ns_ctx-&gt;entry = entry;</a>
+<a class="sourceLine" id="cb4-36" data-line-number="36">            TAILQ_INSERT_TAIL(&amp;worker-&gt;ns_ctx, ns_ctx, link); <span class="co">// worker_ns_ctx 加入 worker-&gt;ns_ctx 队列中</span></a>
+<a class="sourceLine" id="cb4-37" data-line-number="37">    &#125;</a>
+<a class="sourceLine" id="cb4-38" data-line-number="38">pthread_barrier_init(&amp;g_worker_sync_barrier, NULL, g_num_workers); <span class="co">// barrier 线程同步，当所有 thread 都执行到 barrier_wait() 后，才继续执行后续代码</span></a>
+<a class="sourceLine" id="cb4-39" data-line-number="39">TAILQ_FOREACH(worker, &amp;g_workers, link) &#123;</a>
+<a class="sourceLine" id="cb4-40" data-line-number="40">    <span class="cf">if</span> (worker-&gt;lcore != g_main_core): spdk_env_thread_launch_pinned(worker-&gt;lcore, work_fn, worker); <span class="co">// worker thread 一一对应到 core、每个 core 绑定一个 work_fn</span></a>
+<a class="sourceLine" id="cb4-41" data-line-number="41">&#125;</a>
+<a class="sourceLine" id="cb4-42" data-line-number="42">work_fn(main_worker);</a>
+<a class="sourceLine" id="cb4-43" data-line-number="43"><span class="co">// 每个 core 执行 work_fn</span></a>
+<a class="sourceLine" id="cb4-44" data-line-number="44">work_fn(worker):</a>
+<a class="sourceLine" id="cb4-45" data-line-number="45">    TAILQ_FOREACH(ns_ctx, &amp;worker-&gt;ns_ctx, link) &#123;</a>
+<a class="sourceLine" id="cb4-46" data-line-number="46">        nvme_init_ns_worker_ctx(ns_ctx): <span class="co">// 为每个 ns 分配 io_qpairs</span></a>
+<a class="sourceLine" id="cb4-47" data-line-number="47">            spdk_nvme_ctrlr_get_default_io_qpair_opts(ns_entry-&gt;u.nvme.ctrlr, &amp;opts, <span class="kw">sizeof</span>(opts));</a>
+<a class="sourceLine" id="cb4-48" data-line-number="48">            ctrlr_opts = spdk_nvme_ctrlr_get_opts(ns_entry-&gt;u.nvme.ctrlr);</a>
+<a class="sourceLine" id="cb4-49" data-line-number="49">            ns_ctx-&gt;u.nvme.group = spdk_nvme_poll_group_create(ns_ctx, NULL):  <span class="co">// 创建 nvme_poll_group</span></a>
+<a class="sourceLine" id="cb4-50" data-line-number="50">                group-&gt;ctx = ns_ctx;</a>
+<a class="sourceLine" id="cb4-51" data-line-number="51">                STAILQ_INIT(&amp;group-&gt;tgroups); <span class="co">// tgroup: transport_poll_group</span></a>
+<a class="sourceLine" id="cb4-52" data-line-number="52">            <span class="cf">for</span> (i &lt; ns_ctx-&gt;u.nvme.num_all_qpairs) &#123;</a>
+<a class="sourceLine" id="cb4-53" data-line-number="53">                <span class="co">// u.nvme.qpair 是二维指针</span></a>
+<a class="sourceLine" id="cb4-54" data-line-number="54">                <span class="co">// 1. 创建 io qpair</span></a>
+<a class="sourceLine" id="cb4-55" data-line-number="55">                ns_ctx-&gt;u.nvme.qpair[i] = spdk_nvme_ctrlr_alloc_io_qpair(ns_entry-&gt;u.nvme.ctrlr, &amp;opts, ...):</a>
+<a class="sourceLine" id="cb4-56" data-line-number="56">                    qpair = nvme_ctrlr_create_io_qpair(ctrlr, &amp;opts):</a>
+<a class="sourceLine" id="cb4-57" data-line-number="57">                        qid = spdk_nvme_ctrlr_alloc_qid(ctrlr);</a>
+<a class="sourceLine" id="cb4-58" data-line-number="58">                        qpair = nvme_rdma_ctrlr_create_io_qpair(ctrlr, qid, opts): <span class="co">// 函数指针</span></a>
+<a class="sourceLine" id="cb4-59" data-line-number="59">                            nvme_rdma_ctrlr_create_qpair(ctrlr, qid, ..., opts-&gt;async_mode = true):</a>
+<a class="sourceLine" id="cb4-60" data-line-number="60">                                <span class="co">// 与前文 fabric_ctrlr_scan 创建 adminq 类似</span></a>
+<a class="sourceLine" id="cb4-61" data-line-number="61">                                rqpair-&gt;state = NVME_RDMA_QPAIR_STATE_INVALID; <span class="co">// 创建了 rqpair、设置状态为 INVALID</span></a>
+<a class="sourceLine" id="cb4-62" data-line-number="62">                                qpair = &amp;rqpair-&gt;qpair;</a>
+<a class="sourceLine" id="cb4-63" data-line-number="63">                                nvme_qpair_init(qpair, qid, ctrlr, qprio, num_requests, async):</a>
+<a class="sourceLine" id="cb4-64" data-line-number="64">                                    ... <span class="co">// 设置 qpair 部分字段</span></a>
+<a class="sourceLine" id="cb4-65" data-line-number="65">                                    qpair-&gt;ctrlr = ctrlr;</a>
+<a class="sourceLine" id="cb4-66" data-line-number="66">                                    qpair-&gt;trtype = ctrlr-&gt;trid.trtype;</a>
+<a class="sourceLine" id="cb4-67" data-line-number="67">                                    qpair-&gt;async = async;</a>
+<a class="sourceLine" id="cb4-68" data-line-number="68">                                    STAILQ_INIT(&amp;qpair-&gt;free_req);</a>
+<a class="sourceLine" id="cb4-69" data-line-number="69">                                    <span class="cf">for</span> &#123;</a>
+<a class="sourceLine" id="cb4-70" data-line-number="70">                                        STAILQ_INSERT_HEAD(&amp;qpair-&gt;free_req, req, stailq);</a>
+<a class="sourceLine" id="cb4-71" data-line-number="71">                                    &#125;</a>
+<a class="sourceLine" id="cb4-72" data-line-number="72">                        TAILQ_INSERT_TAIL(&amp;ctrlr-&gt;active_io_qpairs, qpair, tailq);</a>
+<a class="sourceLine" id="cb4-73" data-line-number="73">                        nvme_ctrlr_proc_add_io_qpair(qpair): <span class="co">// 与当前 active_proc 关联</span></a>
+<a class="sourceLine" id="cb4-74" data-line-number="74">                            TAILQ_INSERT_TAIL(&amp;active_proc-&gt;allocated_io_qpairs, qpair, per_process_tailq);</a>
+<a class="sourceLine" id="cb4-75" data-line-number="75">                            qpair-&gt;active_proc = active_proc;</a>
+<a class="sourceLine" id="cb4-76" data-line-number="76">                <span class="co">// create_only = true</span></a>
+<a class="sourceLine" id="cb4-77" data-line-number="77">                <span class="co">// 2. qpair 添加 poll groups</span></a>
+<a class="sourceLine" id="cb4-78" data-line-number="78">                spdk_nvme_poll_group_add(nvme_poll_group, qpair): <span class="co">// io_qpair 添加到 nvme_poll_group、transport_poll_group</span></a>
+<a class="sourceLine" id="cb4-79" data-line-number="79">                    <span class="cf">while</span> (transport) &#123;</a>
+<a class="sourceLine" id="cb4-80" data-line-number="80">                        tgroup = nvme_transport_poll_group_create(transport): <span class="co">// 创建 transport_poll_group</span></a>
+<a class="sourceLine" id="cb4-81" data-line-number="81">                            nvme_rdma_poll_group_create():  <span class="co">// 创建 rdma_poll_group</span></a>
+<a class="sourceLine" id="cb4-82" data-line-number="82">                                STAILQ_INIT(&amp;rdma_poll_group-&gt;pollers);</a>
+<a class="sourceLine" id="cb4-83" data-line-number="83">                                TAILQ_INIT(&amp;rdma_poll_group-&gt;connecting_qpairs);</a>
+<a class="sourceLine" id="cb4-84" data-line-number="84">                                TAILQ_INIT(&amp;rdma_poll_group-&gt;active_qpairs);</a>
+<a class="sourceLine" id="cb4-85" data-line-number="85">                                <span class="cf">return</span> rdma_poll_group-&gt;transport_poll_group;</a>
+<a class="sourceLine" id="cb4-86" data-line-number="86">                            STAILQ_INIT(&amp;group-&gt;connected_qpairs);</a>
+<a class="sourceLine" id="cb4-87" data-line-number="87">                            STAILQ_INIT(&amp;group-&gt;disconnected_qpairs);</a>
+<a class="sourceLine" id="cb4-88" data-line-number="88">                        tgroup-&gt;group = nvme_poll_group; <span class="co">// transport_poll_group 关联 nvme_poll_group</span></a>
+<a class="sourceLine" id="cb4-89" data-line-number="89">                        STAILQ_INSERT_TAIL(&amp;nvme_poll_group-&gt;tgroups, tgroup, link);</a>
+<a class="sourceLine" id="cb4-90" data-line-number="90">                    &#125;</a>
+<a class="sourceLine" id="cb4-91" data-line-number="91">                    nvme_transport_poll_group_add(tgroup, qpair):</a>
+<a class="sourceLine" id="cb4-92" data-line-number="92">                        qpair-&gt;poll_group = tgroup; <span class="co">// qpair 关联 transport_poll_group</span></a>
+<a class="sourceLine" id="cb4-93" data-line-number="93">                        nvme_rdma_poll_group_add(tgroup, qpair):</a>
+<a class="sourceLine" id="cb4-94" data-line-number="94">                            <span class="co">// do nothing</span></a>
+<a class="sourceLine" id="cb4-95" data-line-number="95">                            <span class="co">// 这里 rdma_poll_group 没有与 qpair 关联，在后面 rdma_poll_group 与 rdma_qpair 关联</span></a>
+<a class="sourceLine" id="cb4-96" data-line-number="96">                <span class="co">// 3. 连接 io qpair</span></a>
+<a class="sourceLine" id="cb4-97" data-line-number="97">                spdk_nvme_ctrlr_connect_io_qpair(entry-&gt;u.nvme.ctrlr, qpair):</a>
+<a class="sourceLine" id="cb4-98" data-line-number="98">                    nvme_transport_ctrlr_connect_qpair(ctrlr, qpair):</a>
+<a class="sourceLine" id="cb4-99" data-line-number="99">                        nvme_qpair_set_state(qpair, NVME_QPAIR_CONNECTING); <span class="co">// 这里设置了 qpair 状态为正在连接</span></a>
+<a class="sourceLine" id="cb4-100" data-line-number="100">                        nvme_rdma_ctrlr_connect_qpair(ctrlr, qpair): <span class="co">// 函数指针</span></a>
+<a class="sourceLine" id="cb4-101" data-line-number="101">                            <span class="co">// 通过 nvme_qpair、nvme_ctrlr 移动 n 个字节得到</span></a>
+<a class="sourceLine" id="cb4-102" data-line-number="102">                            rqpair = nvme_rdma_qpair(qpair): <span class="co">// rqpair 为 nvme_rdma_qpair</span></a>
+<a class="sourceLine" id="cb4-103" data-line-number="103">                                SPDK_CONTAINEROF(qpair, <span class="kw">struct</span> nvme_rdma_qpair, qpair):</a>
+<a class="sourceLine" id="cb4-104" data-line-number="104">                                    <span class="pp">#define SPDK_CONTAINEROF(ptr, type, member) ((type *)((uintptr_t)ptr - offsetof(type, member))); </span></a>
+<a class="sourceLine" id="cb4-105" data-line-number="105">                                    <span class="co">/* offsetof(...): Offset of member MEMBER in a struct of type TYPE. */</span></a>
+<a class="sourceLine" id="cb4-106" data-line-number="106">                            rctrlr = nvme_rdma_ctrlr(ctrlr); <span class="co">// rctrlr 为 nvme_rdma_ctrlr</span></a>
+<a class="sourceLine" id="cb4-107" data-line-number="107">                            nvme_parse_addr(&amp;dst_addr, ctrlr-&gt;trid.traddr, &amp;port, ...); <span class="co">// 解析 destination_address</span></a>
+<a class="sourceLine" id="cb4-108" data-line-number="108">                            nvme_parse_addr(&amp;src_addr, ctrlr-&gt;opts.src_addr, &amp;src_port, ...); <span class="co">// 解析 source_address</span></a>
+<a class="sourceLine" id="cb4-109" data-line-number="109">                            rdma_create_id(rctrlr-&gt;cm_channel, &amp;rqpair-&gt;cm_id, rqpair, RDMA_PS_TCP); <span class="co">// 分配 communication id</span></a>
+<a class="sourceLine" id="cb4-110" data-line-number="110">                            nvme_rdma_resolve_addr(rqpair, &amp;src_addr, &amp;dst_addr):</a>
+<a class="sourceLine" id="cb4-111" data-line-number="111">                                rdma_set_option(rqpair-&gt;cm_id, ...);</a>
+<a class="sourceLine" id="cb4-112" data-line-number="112">                                rdma_resolve_addr(rqpair-&gt;cm_id, src_addr, dst_addr, ...);</a>
+<a class="sourceLine" id="cb4-113" data-line-number="113">                                <span class="co">// 开始处理 rdma events</span></a>
+<a class="sourceLine" id="cb4-114" data-line-number="114">                                nvme_rdma_process_event_start(rqpair, RDMA_CM_EVENT_ADDR_RESOLVED = <span class="dv">0</span>, nvme_rdma_addr_resolved):</a>
+<a class="sourceLine" id="cb4-115" data-line-number="115">                                    rqpair-&gt;evt_cb = evt_cb; <span class="co">// evt_cb = nvme_rdma_addr_resolved</span></a>
+<a class="sourceLine" id="cb4-116" data-line-number="116">                                    ... <span class="co">// 经过一系列操作，最后是怎么执行回调函数 nvme_rdma_addr_resolved()？</span></a>
+<a class="sourceLine" id="cb4-117" data-line-number="117">                                    <span class="co">/** 这里的 rdma_process_event_start() 调用逻辑见后文 **/</span></a>
+<a class="sourceLine" id="cb4-118" data-line-number="118">                            rqpair-&gt;state = NVME_RDMA_QPAIR_STATE_INITIALIZING; <span class="co">// 注意这里设置了 rqpair 状态，可能用于状态机</span></a>
+<a class="sourceLine" id="cb4-119" data-line-number="119">                            rgroup = nvme_rdma_poll_group(qpair-&gt;poll_group); <span class="co">// rgroup 为 nvme_rdma_poll_group</span></a>
+<a class="sourceLine" id="cb4-120" data-line-number="120">                            TAILQ_INSERT_TAIL(&amp;rgroup-&gt;connecting_qpairs, rqpair, link_connecting); <span class="co">// rdma_poll_group 与 rdma_qpair 关联</span></a>
+<a class="sourceLine" id="cb4-121" data-line-number="121">                        nvme_poll_group_connect_qpair(qpair):</a>
+<a class="sourceLine" id="cb4-122" data-line-number="122">                            nvme_transport_poll_group_connect_qpair(qpair):</a>
+<a class="sourceLine" id="cb4-123" data-line-number="123">                                nvme_rdma_poll_group_connect_qpair(qpair):</a>
+<a class="sourceLine" id="cb4-124" data-line-number="124">                                    <span class="co">// do nothing</span></a>
+<a class="sourceLine" id="cb4-125" data-line-number="125">                                    <span class="co">// 这里 rdma_poll_group 没有连接 rqair</span></a>
+<a class="sourceLine" id="cb4-126" data-line-number="126">                                    <span class="co">// rqpair 在什么时候从 rgroup-&gt;connecting_qpairs 中移除并加入到 rgroup-&gt;active_qpairs？</span></a>
+<a class="sourceLine" id="cb4-127" data-line-number="127">                                    <span class="co">// active_qpairs 是在 submit_request 中才使用，因此作用理解为当 rdma_qpair 有 req 时，加入到 active_qpairs 中</span></a>
+<a class="sourceLine" id="cb4-128" data-line-number="128">                                STAILQ_INSERT_TAIL(&amp;tgroup-&gt;connected_qpairs, qpair, poll_group_stailq);</a>
+<a class="sourceLine" id="cb4-129" data-line-number="129">                        <span class="co">// qpair-&gt;async = true</span></a>
+<a class="sourceLine" id="cb4-130" data-line-number="130">                <span class="co">// 4. poll group 处理 qpairs 完成事件</span></a>
+<a class="sourceLine" id="cb4-131" data-line-number="131">                <span class="cf">while</span> &#123;</a>
+<a class="sourceLine" id="cb4-132" data-line-number="132">                    <span class="co">/** poll for completions on all qpairs in this poll group **/</span></a>
+<a class="sourceLine" id="cb4-133" data-line-number="133">                    <span class="co">// 与 检查 io 数据流 类似，见后文</span></a>
+<a class="sourceLine" id="cb4-134" data-line-number="134">                    spdk_nvme_poll_group_process_completions(group, <span class="dv">0</span>, perf_disconnect_cb):</a>
+<a class="sourceLine" id="cb4-135" data-line-number="135">                        STAILQ_FOREACH(tgroup, &amp;group-&gt;tgroups, link) &#123;</a>
+<a class="sourceLine" id="cb4-136" data-line-number="136">                            nvme_transport_poll_group_process_completions(tgroup, ..., disconnected_qpair_cb):</a>
+<a class="sourceLine" id="cb4-137" data-line-number="137">                                nvme_rdma_poll_group_process_completions(tgroup, ..., disconnected_qpair_cb): <span class="co">// 函数指针</span></a>
+<a class="sourceLine" id="cb4-138" data-line-number="138">                                    TAILQ_FOREACH_SAFE(rqpair, &amp;rgroup-&gt;connecting_qpairs, ...) &#123;</a>
+<a class="sourceLine" id="cb4-139" data-line-number="139">                                        nvme_rdma_ctrlr_connect_qpair_poll(rqpair-&gt;qpair-&gt;ctrlr, rqpair-&gt;qpair):</a>
+<a class="sourceLine" id="cb4-140" data-line-number="140">                                            <span class="co">// </span><span class="al">TODO</span><span class="co"> 这一块没有看懂</span></a>
+<a class="sourceLine" id="cb4-141" data-line-number="141">                                            <span class="co">// rdma_qpair 状态机</span></a>
+<a class="sourceLine" id="cb4-142" data-line-number="142">                                            <span class="co">// 根据不同状态执行不同操作、通过 callback 转移状态、直到状态为 NVME_RDMA_QPAIR_STATE_RUNNING 结束</span></a>
+<a class="sourceLine" id="cb4-143" data-line-number="143">                                            <span class="co">// 在这里可能执行了 rqpair-&gt;evt_cb = nvme_rdma_addr_resolved() 函数</span></a>
+<a class="sourceLine" id="cb4-144" data-line-number="144">                                            <span class="co">// 然后 rdma 解析完 addr 后进行路由</span></a>
+<a class="sourceLine" id="cb4-145" data-line-number="145">                                            <span class="co">// 按以上思路走</span></a>
+<a class="sourceLine" id="cb4-146" data-line-number="146">                                            <span class="co">// rqpair-&gt;state = NVME_RDMA_QPAIR_STATE_INITIALIZING</span></a>
+<a class="sourceLine" id="cb4-147" data-line-number="147">                                            ...</a>
+<a class="sourceLine" id="cb4-148" data-line-number="148">                                        TAILQ_REMOVE(&amp;rgroup-&gt;connecting_qpairs, rqpair, ...);</a>
+<a class="sourceLine" id="cb4-149" data-line-number="149">                                        <span class="co">// submit queued requests</span></a>
+<a class="sourceLine" id="cb4-150" data-line-number="150">                                        nvme_qpair_resubmit_requests(rqpair-&gt;qpair, rqpair-&gt;num_entries):</a>
+<a class="sourceLine" id="cb4-151" data-line-number="151">                                            ... <span class="co">// 与 发送数据流 类似，见后文</span></a>
+<a class="sourceLine" id="cb4-152" data-line-number="152">                                    &#125;</a>
+<a class="sourceLine" id="cb4-153" data-line-number="153">                                    STAILQ_FOREACH_SAFE(qpair, &amp;tgroup-&gt;connected_qpairs, ...) &#123;</a>
+<a class="sourceLine" id="cb4-154" data-line-number="154">                                        nvme_rdma_qpair_process_cm_event(rqpair);</a>
+<a class="sourceLine" id="cb4-155" data-line-number="155">                                            ... <span class="co">// rdma_qpair 状态机</span></a>
+<a class="sourceLine" id="cb4-156" data-line-number="156">                                    &#125;</a>
+<a class="sourceLine" id="cb4-157" data-line-number="157">                                    STAILQ_FOREACH(poller, &amp;rgroup-&gt;pollers, ...) &#123;</a>
+<a class="sourceLine" id="cb4-158" data-line-number="158">                                        nvme_rdma_cq_process_completions(poller-&gt;cq, batch_size, poller, NULL, &amp;rdma_completions); <span class="co">// 处理 rdma cq</span></a>
+<a class="sourceLine" id="cb4-159" data-line-number="159">                                            ... <span class="co">// 与 检查 io 数据流 类似，见后文</span></a>
+<a class="sourceLine" id="cb4-160" data-line-number="160">                                    &#125;</a>
+<a class="sourceLine" id="cb4-161" data-line-number="161">                        &#125;</a>
+<a class="sourceLine" id="cb4-162" data-line-number="162">                    spdk_nvme_poll_group_all_connected(group):</a>
+<a class="sourceLine" id="cb4-163" data-line-number="163">                        ... <span class="co">// 检查是否都 connected，否则 while 循环继续</span></a>
+<a class="sourceLine" id="cb4-164" data-line-number="164">                &#125;</a>
+<a class="sourceLine" id="cb4-165" data-line-number="165">            &#125;</a>
+<a class="sourceLine" id="cb4-166" data-line-number="166">    &#125;</a>
+<a class="sourceLine" id="cb4-167" data-line-number="167">    pthread_barrier_wait(&amp;g_worker_sync_barrier); <span class="co">// 线程同步</span></a>
+<a class="sourceLine" id="cb4-168" data-line-number="168">    TAILQ_FOREACH(ns_ctx, &amp;worker-&gt;ns_ctx, link) &#123;</a>
+<a class="sourceLine" id="cb4-169" data-line-number="169">        submit_io(ns_ctx, g_queue_depth); <span class="co">// 发送数据流，见后文</span></a>
+<a class="sourceLine" id="cb4-170" data-line-number="170">    &#125;</a>
+<a class="sourceLine" id="cb4-171" data-line-number="171">    <span class="cf">while</span> (!g_exit) &#123;</a>
+<a class="sourceLine" id="cb4-172" data-line-number="172">        TAILQ_FOREACH(ns_ctx, &amp;worker-&gt;ns_ctx, link) &#123;</a>
+<a class="sourceLine" id="cb4-173" data-line-number="173">            ns_ctx-&gt;entry-&gt;fn_table-&gt;check_io(ns_ctx); <span class="co">// 检查 io 数据流，见后文</span></a>
+<a class="sourceLine" id="cb4-174" data-line-number="174">            ... <span class="co">// 计时、信息统计</span></a>
+<a class="sourceLine" id="cb4-175" data-line-number="175">        &#125;</a>
+<a class="sourceLine" id="cb4-176" data-line-number="176">        ... <span class="co">// 遍历完一次队列之后就检查时间，如果超过指定的时间就退出，否则继续</span></a>
+<a class="sourceLine" id="cb4-177" data-line-number="177">    &#125;</a>
+<a class="sourceLine" id="cb4-178" data-line-number="178">    ... <span class="co">// 计时、信息统计、ns_ctx 清理</span></a>
+<a class="sourceLine" id="cb4-179" data-line-number="179"><span class="co">// 回到主线程 main()：</span></a>
+<a class="sourceLine" id="cb4-180" data-line-number="180">spdk_env_thread_wait_all();</a>
+<a class="sourceLine" id="cb4-181" data-line-number="181">print_stats(); <span class="co">// 打印信息统计</span></a>
+<a class="sourceLine" id="cb4-182" data-line-number="182">pthread_barrier_destroy(&amp;g_worker_sync_barrier);</a>
+<a class="sourceLine" id="cb4-183" data-line-number="183">... <span class="co">// cleanup</span></a>
+<a class="sourceLine" id="cb4-184" data-line-number="184">unregister_trids();</a>
+<a class="sourceLine" id="cb4-185" data-line-number="185">unregister_namespaces();</a>
+<a class="sourceLine" id="cb4-186" data-line-number="186">unregister_controllers();</a>
+<a class="sourceLine" id="cb4-187" data-line-number="187">unregister_workers();</a>
+<a class="sourceLine" id="cb4-188" data-line-number="188">spdk_env_fini();</a></code></pre></div>
 <hr />
 </div><div class="story post-story"><h2 id="五控制流建立-rdma-层连接">（五）控制流（建立 RDMA 层连接）</h2>
 <p>流程图：</p>
@@ -3087,7 +3094,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <hr />
 </div><div class="story post-story"><h2 id="六数据流发送">（六）数据流（发送）</h2>
 <p>流程图：</p>
-<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/data-stream-send.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/data-stream-send.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
 <p>函数调用栈：</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">/* Submit initial I/O for each namespace. */</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">submit_io(ns_ctx, g_queue_depth):</a>
@@ -3123,7 +3130,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a class="sourceLine" id="cb6-32" data-line-number="32">                                            req-&gt;cmd.cid = rdma_req-&gt;id;</a>
 <a class="sourceLine" id="cb6-33" data-line-number="33">                                            ... <span class="co">// 配置 rdma_req</span></a>
 <a class="sourceLine" id="cb6-34" data-line-number="34">                                        TAILQ_INSERT_TAIL(&amp;rqpair-&gt;outstanding_reqs, rdma_req, link); <span class="co">// 添加到 rqpair-&gt;outstanding_reqs 队列中</span></a>
-<a class="sourceLine" id="cb6-35" data-line-number="35">                                        TAILQ_INSERT_TAIL(&amp;group-&gt;active_qpairs, rqpair, link_active); <span class="co">// rqpair 添加到 rgroup-&gt;active_qpairs 队列中</span></a>
+<a class="sourceLine" id="cb6-35" data-line-number="35">                                        TAILQ_INSERT_TAIL(&amp;rgroup-&gt;active_qpairs, rqpair, link_active); <span class="co">// rqpair 添加到 rgroup-&gt;active_qpairs 队列中</span></a>
 <a class="sourceLine" id="cb6-36" data-line-number="36">                                        <span class="co">// 发送请求排队</span></a>
 <a class="sourceLine" id="cb6-37" data-line-number="37">                                        spdk_rdma_qp_queue_send_wrs(rqpair-&gt;rdma_qp, wr);</a>
 <a class="sourceLine" id="cb6-38" data-line-number="38">                                        <span class="co">// 提交发送请求</span></a>
@@ -3136,23 +3143,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a class="sourceLine" id="cb6-45" data-line-number="45">                                </a>
 <a class="sourceLine" id="cb6-46" data-line-number="46">    &#125;</a></code></pre></div>
 <hr />
-</div><div class="story post-story"><h2 id="七数据流接收">（七）数据流（接收）</h2>
-<p>这里接收流程与后文 <code>检查 IO 完成情况</code> 类似。</p>
-<p>略。</p>
-<!-- 
-流程图：
-
-![](https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/)
-
-函数调用栈：
-
-```c
-``` 
--->
-<hr />
-</div><div class="story post-story"><h2 id="八数据流检查-io-完成情况">（八）数据流（检查 IO 完成情况）</h2>
+</div><div class="story post-story"><h2 id="七数据流检查-io-完成情况">（七）数据流（检查 IO 完成情况）</h2>
 <p>流程图：</p>
-<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/data-stream-check-io.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-03/data-stream-check-io.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
 <p>函数调用栈：</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb7-1" data-line-number="1">check_io(ns_ctx):</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">    nvme_check_io(ns_ctx):</a>
@@ -3282,10 +3275,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-24T14:42:53+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-25T23:45:27+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：2024年9月24日</p>
+    <p>最后更新于：2024年9月25日</p>
   </a>
 </div>
 
@@ -3380,9 +3373,13 @@ NVMe
 
 参考介绍 NVMe
 
-NVMe Specifications
 
-NVM Expres...</p>
+参考NVMe 结构理论
+
+
+参考NVMe 控制器架构模型
+
+...</p>
         </a>
       
       
@@ -3394,8 +3391,8 @@ NVM Expres...</p>
 
 Ubuntu 22.04 虚拟机 x2
 
-dev1，作为 Target 端，ip：192.168.159.142
-dev...</p>
+dev1，作为 Host 端，ip：192.168.246.129
+dev2，...</p>
         </a>
       
     </div>
@@ -3437,7 +3434,7 @@ dev...</p>
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>100 篇</div>
+          <div>101 篇</div>
         </div>
       
 
@@ -3452,7 +3449,7 @@ dev...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>93.1k 字</div>
+          <div>93.7k 字</div>
         </div>
       
 
@@ -3477,7 +3474,7 @@ dev...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2024-09-24 日</div>
+          <div id="last-update-show">2024-09-25 日</div>
         </div>
       
     </div>
@@ -3504,7 +3501,7 @@ dev...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perf-%E4%B8%BB%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">perf 主流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perf-%E8%B5%84%E6%BA%90%E5%85%B3%E7%B3%BB%E5%9B%BE"><span class="toc-number">3.</span> <span class="toc-text">perf 资源关系图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E6%8E%A7%E5%88%B6%E6%B5%81%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">（一）控制流（初始化）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E6%8E%A7%E5%88%B6%E6%B5%81%E5%88%9D%E5%A7%8B%E5%8C%96---fabric_ctrlr_scan"><span class="toc-number">5.</span> <span class="toc-text">（二）控制流（初始化 - fabric_ctrlr_scan）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E6%8E%A7%E5%88%B6%E6%B5%81%E5%88%9D%E5%A7%8B%E5%8C%96---ctrlr_process_init"><span class="toc-number">6.</span> <span class="toc-text">（三）控制流（初始化 - ctrlr_process_init）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E6%8E%A7%E5%88%B6%E6%B5%81%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C"><span class="toc-number">7.</span> <span class="toc-text">（四）控制流（任务执行）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E6%8E%A7%E5%88%B6%E6%B5%81%E5%BB%BA%E7%AB%8B-rdma-%E5%B1%82%E8%BF%9E%E6%8E%A5"><span class="toc-number">8.</span> <span class="toc-text">（五）控制流（建立 RDMA 层连接）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E6%95%B0%E6%8D%AE%E6%B5%81%E5%8F%91%E9%80%81"><span class="toc-number">9.</span> <span class="toc-text">（六）数据流（发送）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E6%95%B0%E6%8D%AE%E6%B5%81%E6%8E%A5%E6%94%B6"><span class="toc-number">10.</span> <span class="toc-text">（七）数据流（接收）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E6%95%B0%E6%8D%AE%E6%B5%81%E6%A3%80%E6%9F%A5-io-%E5%AE%8C%E6%88%90%E6%83%85%E5%86%B5"><span class="toc-number">11.</span> <span class="toc-text">（八）数据流（检查 IO 完成情况）</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perf-%E4%B8%BB%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">perf 主流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perf-%E8%B5%84%E6%BA%90%E5%85%B3%E7%B3%BB%E5%9B%BE"><span class="toc-number">3.</span> <span class="toc-text">perf 资源关系图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E6%8E%A7%E5%88%B6%E6%B5%81%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">（一）控制流（初始化）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E6%8E%A7%E5%88%B6%E6%B5%81%E5%88%9D%E5%A7%8B%E5%8C%96---fabric_ctrlr_scan"><span class="toc-number">5.</span> <span class="toc-text">（二）控制流（初始化 - fabric_ctrlr_scan）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E6%8E%A7%E5%88%B6%E6%B5%81%E5%88%9D%E5%A7%8B%E5%8C%96---ctrlr_process_init"><span class="toc-number">6.</span> <span class="toc-text">（三）控制流（初始化 - ctrlr_process_init）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E6%8E%A7%E5%88%B6%E6%B5%81%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C"><span class="toc-number">7.</span> <span class="toc-text">（四）控制流（任务执行）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E6%8E%A7%E5%88%B6%E6%B5%81%E5%BB%BA%E7%AB%8B-rdma-%E5%B1%82%E8%BF%9E%E6%8E%A5"><span class="toc-number">8.</span> <span class="toc-text">（五）控制流（建立 RDMA 层连接）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E6%95%B0%E6%8D%AE%E6%B5%81%E5%8F%91%E9%80%81"><span class="toc-number">9.</span> <span class="toc-text">（六）数据流（发送）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E6%95%B0%E6%8D%AE%E6%B5%81%E6%A3%80%E6%9F%A5-io-%E5%AE%8C%E6%88%90%E6%83%85%E5%86%B5"><span class="toc-number">10.</span> <span class="toc-text">（七）数据流（检查 IO 完成情况）</span></a></li></ol>
     </div>
   </section>
 
@@ -4338,7 +4335,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4657,7 +4654,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/notes/存储/n-spdk-03/","name":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析","description":"SPDK 自带的性能测试应用 spdk_nvme_perf 的源代码 perf.c 的粗浅分析，进一步熟悉 SPDK 用户态驱动的主要工作流程和方式。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/","wordCount":75,"datePublished":"2024-09-01T11:35:45.000Z","dateModified":"2024-09-24T06:42:53.241Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/notes/存储/n-spdk-03/","name":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（三）：spdk_nvme_perf 代码浅析","description":"SPDK 自带的性能测试应用 spdk_nvme_perf 的源代码 perf.c 的粗浅分析，进一步熟悉 SPDK 用户态驱动的主要工作流程和方式。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-03/","wordCount":75,"datePublished":"2024-09-01T11:35:45.000Z","dateModified":"2024-09-25T15:45:27.474Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
