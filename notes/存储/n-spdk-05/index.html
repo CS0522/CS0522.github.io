@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-09-25T02:04:41.000Z">
-<meta property="article:modified_time" content="2024-09-25T15:35:26.466Z">
+<meta property="article:modified_time" content="2024-09-28T11:47:38.147Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="存储">
 <meta property="article:tag" content="SPDK">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1727280525383),
+    lastupdate: new Date(1727524135451),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2600,13 +2600,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：393 字</p>
+      <p>字数：881 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>时长：2 分钟</p>
+      <p>时长：3 分钟</p>
     </a>
   </div>
 
@@ -2663,10 +2663,41 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co"># 更多参数含义可以见 --help 或源代码中的 usage() 函数</span></a></code></pre></div>
 <hr />
 </div><div class="story post-story"><h2 id="每个-qp-映射一个-target">每个 QP 映射一个 Target</h2>
-<p>本身就是。</p>
+<p>本身就是，每个 NS 建立 1 个 QP，而每个 Target 只有 1 个 NS。</p>
 <hr />
 </div><div class="story post-story"><h2 id="同一个-io-请求复制多份分发到-qp">同一个 IO 请求复制多份分发到 QP</h2>
+<h3 id="如何复制-io">如何复制 IO？</h3>
+<p>初步思路：</p>
+<ul>
+<li><p>为 perf_task 添加索引序号 index 字段；</p></li>
+<li><p>由 main_worker 创建 g_queue_depth 个 tasks，每个 task 中关联的 ns_ctx 指针暂时指向 main_worker 中的 ns_ctx；</p></li>
+<li><p>这些 tasks 保存在 g_tasks 指针数组中，并为所有 tasks 添加索引序号，这样所有 worker_thread 都可以获得相同的 task；</p></li>
+<li><p>在分发 task 时，需要注意深拷贝一份新的 task 然后修改关联的 ns_ctx 指针，否则可能会造成各个线程之间的指针互相影响。</p></li>
+</ul>
+<h3 id="如何控制多线程能够同时下发-io-req">如何控制多线程能够同时下发 IO req？</h3>
+<p><strong>如果是有 n 个线程，&gt; n 个 NS，其中存在 m 个线程关联了 &gt; 1 个 NS，这 m 个线程中的多个 NS 通过 while 循环遍历发送，如何确保同时？</strong></p>
+<p>这里一定需要 worker_thread 和 core 1 对 1？NVMe 架构图好像确实需要 core 和 ns 绑定。</p>
+<ul>
+<li>在分发 tasks 时，每分发一个，就 barrier 同步一次，确保每个 IO 都是尽可能同时发送。</li>
+</ul>
+<h3 id="todo-如何知道-nvme_reqrdma_reqrdma_rsp-等属于哪一个-io">TODO 如何知道 nvme_req、rdma_req、rdma_rsp 等属于哪一个 IO？</h3>
+<p>请求之间转换关系图：</p>
+<p><img src="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-05/req-transform-relationship.png" class="lazyload" data-srcset="https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/_posts/n-spdk-05/req-transform-relationship.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></p>
+<p>疑问：</p>
+<ul>
+<li><p>wc-&gt;wr_id 字段是如何赋值的？</p></li>
+<li><p>send_wr-&gt;imm_data、wc-&gt;imm_data 如何使用？</p></li>
+<li><p>rsp-&gt;cpl 字段是如何赋值的？</p></li>
+</ul>
+<h3 id="todo-req-完成后对应的-rsp-的接收问题">TODO req 完成后对应的 rsp 的接收问题</h3>
+<p>把同一个 IO 分成了 3 份，在 Target 处理完毕后，肯定会发送 rsp，Host 端每个 RQ 都会收到一份相同 IO 的 rsp，因此会对 rsp 处理 3 次 recv_completion 执行 3 次 task-&gt;complete。</p>
 <hr />
+</div><div class="story post-story"><h2 id="当前待解决问题">当前待解决问题</h2>
+<h3 id="副本情况下recv_completion-处理过程中出现段错误">3 副本情况下，recv_completion 处理过程中出现段错误</h3>
+<p>TODO</p>
+<p>可能是回收释放内存的过程中出现了问题，待排查。</p>
+<p>由于 1 个 task 复制了多份，可能存在多个指针指向同一片内存空间，被释放多次的问题。</p>
+<p>也可能指针访问越界。</p>
 
 </div>
   </div>
@@ -2692,10 +2723,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-25T23:35:26+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-28T19:47:38+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：2024年9月25日</p>
+    <p>最后更新于：2024年9月28日</p>
   </a>
 </div>
 
@@ -2854,7 +2885,7 @@ NVMe
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>93.7k 字</div>
+          <div>94.2k 字</div>
         </div>
       
 
@@ -2879,7 +2910,7 @@ NVMe
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2024-09-26 日</div>
+          <div id="last-update-show">2024-09-28 日</div>
         </div>
       
     </div>
@@ -2906,7 +2937,7 @@ NVMe
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perf-%E5%90%8C%E6%97%B6%E6%B5%8B%E8%AF%95%E5%A4%9A%E4%B8%AA-target%E8%AE%BE%E7%BD%AE%E6%8C%87%E5%AE%9A%E6%95%B0%E7%9B%AE-qp"><span class="toc-number">2.</span> <span class="toc-text">perf 同时测试多个 Target、设置指定数目 QP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%8F%E4%B8%AA-qp-%E6%98%A0%E5%B0%84%E4%B8%80%E4%B8%AA-target"><span class="toc-number">3.</span> <span class="toc-text">每个 QP 映射一个 Target</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E4%B8%80%E4%B8%AA-io-%E8%AF%B7%E6%B1%82%E5%A4%8D%E5%88%B6%E5%A4%9A%E4%BB%BD%E5%88%86%E5%8F%91%E5%88%B0-qp"><span class="toc-number">4.</span> <span class="toc-text">同一个 IO 请求复制多份分发到 QP</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perf-%E5%90%8C%E6%97%B6%E6%B5%8B%E8%AF%95%E5%A4%9A%E4%B8%AA-target%E8%AE%BE%E7%BD%AE%E6%8C%87%E5%AE%9A%E6%95%B0%E7%9B%AE-qp"><span class="toc-number">2.</span> <span class="toc-text">perf 同时测试多个 Target、设置指定数目 QP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%8F%E4%B8%AA-qp-%E6%98%A0%E5%B0%84%E4%B8%80%E4%B8%AA-target"><span class="toc-number">3.</span> <span class="toc-text">每个 QP 映射一个 Target</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E4%B8%80%E4%B8%AA-io-%E8%AF%B7%E6%B1%82%E5%A4%8D%E5%88%B6%E5%A4%9A%E4%BB%BD%E5%88%86%E5%8F%91%E5%88%B0-qp"><span class="toc-number">4.</span> <span class="toc-text">同一个 IO 请求复制多份分发到 QP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%A4%8D%E5%88%B6-io"><span class="toc-number">4.1.</span> <span class="toc-text">如何复制 IO？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%8E%A7%E5%88%B6%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%83%BD%E5%A4%9F%E5%90%8C%E6%97%B6%E4%B8%8B%E5%8F%91-io-req"><span class="toc-number">4.2.</span> <span class="toc-text">如何控制多线程能够同时下发 IO req？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#todo-%E5%A6%82%E4%BD%95%E7%9F%A5%E9%81%93-nvme_reqrdma_reqrdma_rsp-%E7%AD%89%E5%B1%9E%E4%BA%8E%E5%93%AA%E4%B8%80%E4%B8%AA-io"><span class="toc-number">4.3.</span> <span class="toc-text">TODO 如何知道 nvme_req、rdma_req、rdma_rsp 等属于哪一个 IO？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#todo-req-%E5%AE%8C%E6%88%90%E5%90%8E%E5%AF%B9%E5%BA%94%E7%9A%84-rsp-%E7%9A%84%E6%8E%A5%E6%94%B6%E9%97%AE%E9%A2%98"><span class="toc-number">4.4.</span> <span class="toc-text">TODO req 完成后对应的 rsp 的接收问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E5%BE%85%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="toc-number">5.</span> <span class="toc-text">当前待解决问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%AF%E6%9C%AC%E6%83%85%E5%86%B5%E4%B8%8Brecv_completion-%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%87%BA%E7%8E%B0%E6%AE%B5%E9%94%99%E8%AF%AF"><span class="toc-number">5.1.</span> <span class="toc-text">3 副本情况下，recv_completion 处理过程中出现段错误</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -3740,7 +3771,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4059,7 +4090,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/notes/存储/n-spdk-05/","name":"【学习笔记-存储】SPDK（五）：实现监控逻辑和功能测试"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（五）：实现监控逻辑和功能测试","description":"修改 perf 中的监控功能，进行功能测试，分析存在的问题。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-05/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-05/","wordCount":30,"datePublished":"2024-09-25T02:04:41.000Z","dateModified":"2024-09-25T15:35:26.466Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/notes/存储/n-spdk-05/","name":"【学习笔记-存储】SPDK（五）：实现监控逻辑和功能测试"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（五）：实现监控逻辑和功能测试","description":"修改 perf 中的监控功能，进行功能测试，分析存在的问题。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-05/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-05/","wordCount":30,"datePublished":"2024-09-25T02:04:41.000Z","dateModified":"2024-09-28T11:47:38.147Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
