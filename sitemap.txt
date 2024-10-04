@@ -35,8 +35,8 @@ https://cs0522.github.io/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/p-str-repeatedStr
 https://cs0522.github.io/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/p-str-replaceNum-l54/
 https://cs0522.github.io/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/p-str-reverseStr-l344/
 https://cs0522.github.io/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/p-str-reverseStrII-l541/
-https://cs0522.github.io/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/p-str-rotateStr-l55/
 https://cs0522.github.io/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/p-str-reverseWords-l151/
+https://cs0522.github.io/practices/%E5%AD%97%E7%AC%A6%E4%B8%B2/p-str-rotateStr-l55/
 https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-groupAnagram-l49/
 https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-happyNum-l202/
 https://cs0522.github.io/practices/%E5%93%88%E5%B8%8C%E8%A1%A8/p-hash-intersection-l349/
@@ -82,8 +82,8 @@ https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-01
 https://cs0522.github.io/notes/C/n-virtual-memory-mmap/
 https://cs0522.github.io/notes/SimPy/n-simpy-01/
 https://cs0522.github.io/notes/SimPy/n-simpy-02/
-https://cs0522.github.io/notes/SimPy/n-simpy-04/
 https://cs0522.github.io/notes/SimPy/n-simpy-03/
+https://cs0522.github.io/notes/SimPy/n-simpy-04/
 https://cs0522.github.io/notes/SimPy/n-simpy-05/
 https://cs0522.github.io/notes/SimPy/n-simpy-06/
 https://cs0522.github.io/learnings/ANN/l-hnsw/
