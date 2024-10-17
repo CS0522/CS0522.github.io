@@ -46,7 +46,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-06-29T13:46:07.000Z">
-<meta property="article:modified_time" content="2024-09-22T07:36:49.493Z">
+<meta property="article:modified_time" content="2024-10-17T13:31:01.002Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="Linux">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1728098634314),
+    lastupdate: new Date(1729172135008),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2596,13 +2596,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>2.1k words</p>
+      <p>2.6k words</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>10 min</p>
+      <p>12 min</p>
     </a>
   </div>
 
@@ -2956,6 +2956,81 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>这里就是程序员可以确定 <code>a&gt;b</code> 在程序执行流程中出现的可能相比较大，因此运用了 <code>likely()</code> 告诉编译器将 <code>fun1()</code> 函数的二进制代码紧跟在前面程序的后面，这样就 cache 在预取数据时就可以将 <code>fun1()</code> 函数的二进制代码拿到 cache 中。这样，也就添加了 <code>cache</code> 的命中率。</p>
 <p>同样的，<code>unlikely()</code> 的作用就是告诉编译器，<code>a&lt;=b</code> 可能行大，<code>fun2()</code> 紧跟前面程序。</p>
 <p>总之，<code>likely</code> 和 <code>unlikely</code> 的功能就是添加 cache 的命中率，提高系统执行速度。</p>
+</div><div class="story post-story"><h2 id="条件编译与-cflags">条件编译与 CFLAGS</h2>
+<p>条件编译：</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="pp">#ifdef PERF_LATENCY_LOG</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">    <span class="dt">uint32_t</span> io_id;</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">    ...</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">    clock_gettime(...);</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="pp">#endif</span></a></code></pre></div>
+<p>意思是，只有当在编译时宏 <code>PERF_LATENCY_LOG</code> 被定义了，<code>#ifdef ... #endif</code> 中的代码块才会被编译并执行；否则该代码块不会被编译执行。</p>
+<p>这个宏可以在多个地方定义：</p>
+<h3 id="定义在头文件中">定义在头文件中</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co">// util.h</span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="pp">#define PERF_LATENCY_LOG</span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">...</a></code></pre></div>
+<h3 id="在-cmakelists.txt-中">在 CMakeLists.txt 中</h3>
+<p>通过 <code>CFLAGS</code> 变量。</p>
+<ul>
+<li>全局编译</li>
+</ul>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">set(</span><span class="ex">CMAKE_C_FLAGS</span> <span class="st">&quot;</span><span class="va">$&#123;CMAKE_C_FLAGS&#125;</span><span class="st"> -O0 -g&quot;</span><span class="kw">)</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw">set(</span><span class="ex">CMAKE_CXX_FLAGS</span> <span class="st">&quot;</span><span class="va">$&#123;CMAKE_CXX_FLAGS&#125;</span><span class="st"> -O0 -g&quot;</span><span class="kw">)</span></a></code></pre></div>
+<ul>
+<li>区分编译</li>
+</ul>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">set(</span><span class="ex">CMAKE_C_FLAGS_DEBUG</span> <span class="st">&quot;</span><span class="va">$&#123;CMAKE_C_FLAGS_DEBUG&#125;</span><span class="st"> -DDEBUG&quot;</span><span class="kw">)</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="kw">set(</span><span class="ex">CMAKE_CXX_FLAGS_DEBUG</span> <span class="st">&quot;</span><span class="va">$&#123;CMAKE_CXX_FLAGS_DEBUG&#125;</span><span class="st"> -DDEBUG&quot;</span><span class="kw">)</span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="kw">set(</span><span class="ex">CMAKE_CXX_FLAGS_Release</span> <span class="st">&quot;</span><span class="va">$&#123;CMAKE_CXX_FLAGS_Release&#125;</span><span class="st"> -DNDBUG&quot;</span><span class="kw">)</span></a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="kw">set(</span><span class="ex">CMAKE_C_FLAGS_Release</span> <span class="st">&quot;</span><span class="va">$&#123;CMAKE_C_FLAGS_Release&#125;</span><span class="st"> -DNDBUG&quot;</span><span class="kw">)</span></a></code></pre></div>
+<p>对于 <code>Debug</code> 模式，编译选项实际使用的值是 <code>CMAKE_CXX_FLAGS</code> 和 <code>CMAKE_CXX_FLAGS_DEBUG</code> 的值的组合（不管 <code>CMAKE_CXX_FLAGS_RELEASE</code> 设置什么值都不会被加入到编译选项中）。</p>
+<p>对于 <code>Release</code> 模式，编译选项实际使用的值是 <code>CMAKE_CXX_FLAGS</code> 和 <code>CMAKE_CXX_FLAGS_RELEASE</code> 的值的组合（不管 <code>CMAKE_CXX_FLAGS_DEBUG</code> 设置什么值都不会被加入到编译选项中）。</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="fu">mkdir</span> debug</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="bu">cd</span> debug</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="fu">cmake</span> -DCMAKE_BUILD_TYPE=Debug ..</a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="fu">make</span></a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="fu">mkdir</span> release</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="bu">cd</span> release</a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="fu">cmake</span> -DCMAKE_BUILD_TYPE=Release ..</a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="fu">make</span></a></code></pre></div>
+<h3 id="在-makefile-中">在 Makefile 中</h3>
+<p>通过 <code>CFLAGS</code> 变量。</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode makefile"><code class="sourceCode makefile"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="co"># Makefile</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="co"># 直接赋值或者追加</span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="dt">CFLAGS </span><span class="ch">=</span><span class="st"> -g -Wall</span></a>
+<a class="sourceLine" id="cb26-4" data-line-number="4"><span class="dt">CFLAGS </span><span class="ch">+=</span><span class="st"> -DPERF_LATENCY_LOG</span></a></code></pre></div>
+<h3 id="通过-make-命令">通过 make 命令</h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode makefile"><code class="sourceCode makefile"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="co"># Makefile</span></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="dt">CFLAGS</span><span class="ch">=$(</span><span class="dt">CFLAG</span><span class="ch">)</span></a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="dt">CFLAGS</span><span class="ch">+=</span><span class="st">-g -Wall</span></a>
+<a class="sourceLine" id="cb27-4" data-line-number="4">...</a></code></pre></div>
+<p>输入 <code>make</code> 编译命令：</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="fu">make</span> CFLAG=-DPERF_LATENCY_LOG</a></code></pre></div>
+<h3 id="在-configure-文件中">在 configure 文件中</h3>
+<p><code>configure</code> 文件本质可以看成是 <code>shell</code> 脚本文件，用来在 <code>make</code> 前配置 <code>make</code> 参数。</p>
+<p>可以在 <code>configure</code> 文件中根据 <code>configure</code> 的参数来设置 <code>make</code> 的 <code>CFLAGS</code> 变量值。</p>
+<p>这种情况一般是存在多级 <code>Makefile</code>，项目通过 <code>configure</code> 来配置。</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="co"># configure</span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="ex">...</span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="co"># 添加 PERF_LATENCY_LOG</span></a>
+<a class="sourceLine" id="cb29-4" data-line-number="4">        <span class="ex">--with-perf-latency-log</span>)</a>
+<a class="sourceLine" id="cb29-5" data-line-number="5">            <span class="va">CONFIG[PERF_LATENCY_LOG]=</span>y</a>
+<a class="sourceLine" id="cb29-6" data-line-number="6">            ;;</a>
+<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="ex">...</span></a>
+<a class="sourceLine" id="cb29-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="co"># CFLAGS 添加相应宏</span></a>
+<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="kw">if [[</span> <span class="st">&quot;</span><span class="va">$&#123;CONFIG[PERF_LATENCY_LOG]&#125;</span><span class="st">&quot;</span> <span class="ot">=</span> <span class="st">&quot;y&quot;</span><span class="kw"> ]]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb29-11" data-line-number="11">    <span class="bu">echo</span> -n <span class="st">&quot;Configuring PERF_LATENCY_LOG...&quot;</span></a>
+<a class="sourceLine" id="cb29-12" data-line-number="12">    <span class="va">CFLAGS=</span><span class="st">&quot;</span><span class="va">$&#123;CFLAGS&#125;</span><span class="st"> -DPERF_LATENCY_LOG&quot;</span></a>
+<a class="sourceLine" id="cb29-13" data-line-number="13">    <span class="bu">echo</span> <span class="st">&quot;done.&quot;</span></a>
+<a class="sourceLine" id="cb29-14" data-line-number="14"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb29-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb29-16" data-line-number="16"><span class="co"># CONFIG</span></a>
+<a class="sourceLine" id="cb29-17" data-line-number="17"><span class="co"># perf latency log</span></a>
+<a class="sourceLine" id="cb29-18" data-line-number="18"><span class="va">CONFIG_PERF_LATENCY_LOG=</span>n</a></code></pre></div>
+<p>这样在 <code>./configure</code> 时，加上 <code>--with-perf-latency-log</code> 参数，就可以在 <code>CFLAGS</code> 变量中添加 <code>-DPERF_LATENCY_LOG</code> 宏定义，再输入 <code>make</code> 就不需要输入参数了。</p>
+</div><div class="story post-story"><h2 id="section"></h2>
 
 </div>
   </div>
@@ -2981,10 +3056,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-09-22T15:36:49+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-10-17T21:31:01+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：Sep 22, 2024</p>
+    <p>最后更新于：Oct 17, 2024</p>
   </a>
 </div>
 
@@ -3128,7 +3203,7 @@ https://we...</p>
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>101 篇</div>
+          <div>104 篇</div>
         </div>
       
 
@@ -3143,7 +3218,7 @@ https://we...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>95.1k 字</div>
+          <div>96.4k 字</div>
         </div>
       
 
@@ -3168,7 +3243,7 @@ https://we...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2024-10-05 日</div>
+          <div id="last-update-show">2024-10-17 日</div>
         </div>
       
     </div>
@@ -3195,7 +3270,7 @@ https://we...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#const-char-string-%E4%B8%8E-char-%E7%9A%84%E8%BD%AC%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">const char, string 与 char 的转化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%8F%E5%B0%91-vector-%E5%A2%9E%E5%8A%A0%E5%85%83%E7%B4%A0%E7%9A%84%E5%BC%80%E9%94%80"><span class="toc-number">2.</span> <span class="toc-text">减少 vector 增加元素的开销</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-number">3.</span> <span class="toc-text">获取文件描述符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96-ivecs-%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">读取 ivecs 数据文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96-bvecs-%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">读取 bvecs 数据文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mmap-%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E8%AF%BB%E5%8F%96%E5%A4%A7%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-number">6.</span> <span class="toc-text">mmap 内存映射读取大文件的一部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF"><span class="toc-number">7.</span> <span class="toc-text">打印错误信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">8.</span> <span class="toc-text">创建虚拟内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%B8%AD%E5%88%9B%E5%BB%BA-vector-%E6%95%B0%E7%BB%84"><span class="toc-number">9.</span> <span class="toc-text">虚拟内存中创建 vector 数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#placement-new"><span class="toc-number">10.</span> <span class="toc-text">placement new</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E5%B7%B2%E8%AE%BF%E9%97%AE%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="toc-number">11.</span> <span class="toc-text">保存已访问的数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0-vector%E9%80%9A%E8%BF%87%E5%85%B6%E4%BB%96-stl-%E5%AE%B9%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%80%E4%B8%AA-vector"><span class="toc-number">12.</span> <span class="toc-text">构造 vector：通过其他 STL 容器初始化一个 vector</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F"><span class="toc-number">13.</span> <span class="toc-text">获取文件大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E4%B8%AD%E7%88%B6%E7%B1%BB%E6%9E%90%E6%9E%84%E8%B0%83%E7%94%A8%E5%AD%90%E7%B1%BB%E6%9E%90%E6%9E%84"><span class="toc-number">14.</span> <span class="toc-text">多态中父类析构调用子类析构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#barrier-%E6%96%B9%E5%BC%8F%E7%9A%84%E6%97%A0%E9%94%81%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5"><span class="toc-number">15.</span> <span class="toc-text">barrier 方式的无锁线程同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#linux-%E5%AE%8F-likelyunlikely"><span class="toc-number">16.</span> <span class="toc-text">Linux 宏 likely()、unlikely()</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#const-char-string-%E4%B8%8E-char-%E7%9A%84%E8%BD%AC%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">const char, string 与 char 的转化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%8F%E5%B0%91-vector-%E5%A2%9E%E5%8A%A0%E5%85%83%E7%B4%A0%E7%9A%84%E5%BC%80%E9%94%80"><span class="toc-number">2.</span> <span class="toc-text">减少 vector 增加元素的开销</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-number">3.</span> <span class="toc-text">获取文件描述符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96-ivecs-%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">读取 ivecs 数据文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96-bvecs-%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">读取 bvecs 数据文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mmap-%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E8%AF%BB%E5%8F%96%E5%A4%A7%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-number">6.</span> <span class="toc-text">mmap 内存映射读取大文件的一部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF"><span class="toc-number">7.</span> <span class="toc-text">打印错误信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">8.</span> <span class="toc-text">创建虚拟内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%B8%AD%E5%88%9B%E5%BB%BA-vector-%E6%95%B0%E7%BB%84"><span class="toc-number">9.</span> <span class="toc-text">虚拟内存中创建 vector 数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#placement-new"><span class="toc-number">10.</span> <span class="toc-text">placement new</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E5%B7%B2%E8%AE%BF%E9%97%AE%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="toc-number">11.</span> <span class="toc-text">保存已访问的数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0-vector%E9%80%9A%E8%BF%87%E5%85%B6%E4%BB%96-stl-%E5%AE%B9%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%80%E4%B8%AA-vector"><span class="toc-number">12.</span> <span class="toc-text">构造 vector：通过其他 STL 容器初始化一个 vector</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F"><span class="toc-number">13.</span> <span class="toc-text">获取文件大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E4%B8%AD%E7%88%B6%E7%B1%BB%E6%9E%90%E6%9E%84%E8%B0%83%E7%94%A8%E5%AD%90%E7%B1%BB%E6%9E%90%E6%9E%84"><span class="toc-number">14.</span> <span class="toc-text">多态中父类析构调用子类析构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#barrier-%E6%96%B9%E5%BC%8F%E7%9A%84%E6%97%A0%E9%94%81%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5"><span class="toc-number">15.</span> <span class="toc-text">barrier 方式的无锁线程同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#linux-%E5%AE%8F-likelyunlikely"><span class="toc-number">16.</span> <span class="toc-text">Linux 宏 likely()、unlikely()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91%E4%B8%8E-cflags"><span class="toc-number">17.</span> <span class="toc-text">条件编译与 CFLAGS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E5%9C%A8%E5%A4%B4%E6%96%87%E4%BB%B6%E4%B8%AD"><span class="toc-number">17.1.</span> <span class="toc-text">定义在头文件中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8-cmakelists.txt-%E4%B8%AD"><span class="toc-number">17.2.</span> <span class="toc-text">在 CMakeLists.txt 中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8-makefile-%E4%B8%AD"><span class="toc-number">17.3.</span> <span class="toc-text">在 Makefile 中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-make-%E5%91%BD%E4%BB%A4"><span class="toc-number">17.4.</span> <span class="toc-text">通过 make 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8-configure-%E6%96%87%E4%BB%B6%E4%B8%AD"><span class="toc-number">17.5.</span> <span class="toc-text">在 configure 文件中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section"><span class="toc-number">18.</span> <span class="toc-text"></span></a></li></ol>
     </div>
   </section>
 
@@ -4029,7 +4104,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4348,7 +4423,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/docs/","name":"文档小记"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/docs/d-cpp-used-codes/","name":"【文档小记】记录 C++ 中使用过的有用代码"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【文档小记】记录 C++ 中使用过的有用代码","description":"记录 C++ 中使用过的有用代码，以后应该还用的上。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/docs/d-cpp-used-codes/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/docs/d-cpp-used-codes/","wordCount":26,"datePublished":"2024-06-29T13:46:07.000Z","dateModified":"2024-09-22T07:36:49.493Z","articleSection":"文档小记","keywords":"C++,Linux","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/docs/","name":"文档小记"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/en/docs/d-cpp-used-codes/","name":"【文档小记】记录 C++ 中使用过的有用代码"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【文档小记】记录 C++ 中使用过的有用代码","description":"记录 C++ 中使用过的有用代码，以后应该还用的上。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/docs/d-cpp-used-codes/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/docs/d-cpp-used-codes/","wordCount":26,"datePublished":"2024-06-29T13:46:07.000Z","dateModified":"2024-10-17T13:31:01.002Z","articleSection":"文档小记","keywords":"C++,Linux","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
