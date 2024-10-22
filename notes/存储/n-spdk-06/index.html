@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-10-17T02:22:09.000Z">
-<meta property="article:modified_time" content="2024-10-17T13:06:11.915Z">
+<meta property="article:modified_time" content="2024-10-22T07:11:12.014Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="存储">
 <meta property="article:tag" content="SPDK">
@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1729172135008),
+    lastupdate: new Date(1729581151531),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2600,13 +2600,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：18 字</p>
+      <p>字数：947 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>时长：1 分钟</p>
+      <p>时长：4 分钟</p>
     </a>
   </div>
 
@@ -2625,8 +2625,194 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="post-body" itemprop="articleBody">
     <p>记录在 CloudLab 上通过 sh 脚本自动化部署 SPDK with latency_test。</p>
 <span id="more"></span>
+<div class="story post-story"><h2 id="脚本介绍">1. 脚本介绍</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">名称</th>
+<th style="text-align: center;">使用位置</th>
+<th style="text-align: center;">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">setup_all_nodes.sh</td>
+<td style="text-align: center;">本地</td>
+<td style="text-align: center;">整合所有功能脚本；<br/>遍历所有节点并配置</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">setup_rdma.sh</td>
+<td style="text-align: center;">远程</td>
+<td style="text-align: center;">配置 RDMA 环境</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">setup_spdk_with_latency_test.sh</td>
+<td style="text-align: center;">远程</td>
+<td style="text-align: center;">搭建添加了 latency_test 的 SPDK 环境</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">configure_host.sh</td>
+<td style="text-align: center;">远程</td>
+<td style="text-align: center;">配置 Host 端</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">configure_target.sh</td>
+<td style="text-align: center;">远程</td>
+<td style="text-align: center;">配置 Target 端</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">run_perf_test.sh</td>
+<td style="text-align: center;">本地 / 远程</td>
+<td style="text-align: center;">运行 perf、perf_rep</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">get_run_output.sh</td>
+<td style="text-align: center;">本地 / 远程</td>
+<td style="text-align: center;">获取所有节点的输出结果</td>
+</tr>
+</tbody>
+</table>
+</div><div class="story post-story"><h2 id="脚本使用方法">2. 脚本使用方法</h2>
+<h3 id="工作路径">2.1. 工作路径</h3>
+<p>由于 CloudLab 服务器要求，需要持久化存储的文件要保存在 <code>/opt</code>或 <code>/usr/local</code>文件夹下，这里选择 <code>/opt</code>。</p>
+<ul>
+<li>远程机器的 SPDK 根目录：<code>/opt/Workspace/spdk-24.05.x</code></li>
+<li>远程机器的输出文件目录：<code>/opt/Workspace/output</code></li>
+<li>本地机器的脚本存放目录：<code>./setup</code></li>
+<li>本地机器运行脚本后的输出文件目录：
+<ul>
+<li><code>./setup/run_output</code>，存放获取远程机器的输出文件；</li>
+<li><code>./setup/setup_output</code>，存放 setup 过程中的文件和输出，包括 <code>nodes_local_ip.txt</code>、<code>setup_all_nodes.log</code>等。</li>
+</ul></li>
+</ul>
+<h3 id="脚本参数">2.2. 脚本参数</h3>
+<h4 id="setup_all_nodes.sh">setup_all_nodes.sh</h4>
+<p><code>./setup/setup_all_nodes.sh &lt;is_mlnx&gt; &lt;is_100g&gt; &lt;cloudlab_username&gt; &lt;node_num&gt; [hostnames...]</code></p>
+<ul>
+<li><code>is_mlnx</code></li>
+</ul>
+<p>值为 0 或 1。</p>
+<p>是否为 Mellanox 网卡。CloudLab 环境上满足实验要求的 NIC 均为 Mellanox 网卡。</p>
+<ul>
+<li><code>is_100g</code></li>
+</ul>
+<p>值为 0 或 1。</p>
+<p>网速是否为 100 Gbps，是为 1，mtu = 9000；否为 0，mtu = 1500；通过 mtu 的大小来获取目标网口的 IP。</p>
+<ul>
+<li><code>cloudlab_username</code></li>
+</ul>
+<p>用户名：CS0522，需要大写。</p>
+<ul>
+<li><code>node_num</code></li>
+</ul>
+<p>节点个数，1 Host + 多 Target。</p>
+<ul>
+<li><code>hostnames...</code></li>
+</ul>
+<p>节点的主机名。值如 <code>amd263.utah.cloudlab.us</code>，多值中间空格分隔，在 CloudLab 实验界面获取。其中输入的第一个节点默认为 Host，其他为 Target。</p>
+<h4 id="setup_rdma.sh">setup_rdma.sh</h4>
+<p><code>./setup/setup_rdma.sh &lt;is_mlnx&gt; &lt;is_100g&gt;</code></p>
+<ul>
+<li><code>is_mlnx</code></li>
+</ul>
+<p>值为 0 或 1。</p>
+<p>是否为 Mellanox 网卡。CloudLab 环境上满足实验要求的 NIC 均为 Mellanox 网卡。</p>
+<ul>
+<li><code>is_100g</code></li>
+</ul>
+<p>值为 0 或 1。</p>
+<p>网速是否为 100 Gbps，是为 1，mtu = 9000；否为 0，mtu = 1500；通过 mtu 的大小来获取目标网口的 IP。</p>
+<h4 id="setup_spdk_with_latency_test.sh">setup_spdk_with_latency_test.sh</h4>
+<p><code>./setup/setup_spdk_with_latency_test.sh &lt;skip_verify&gt;</code></p>
+<ul>
+<li><code>skip_verify</code></li>
+</ul>
+<p>值为 0 或 1。</p>
+<p>是否跳过第一次编译和单元测试，在没有开启 LATENCY_LOG 宏的情况下。开启可以验证克隆的 SPDK 版本是否正确、能否正常运行。</p>
+<h4 id="configure_host.sh">configure_host.sh</h4>
+<p><code>./setup/configure_host.sh</code></p>
+<p>配置 Host 端。</p>
+<h4 id="configure_target.sh">configure_target.sh</h4>
+<p><code>./setup/configure_target.sh &lt;is_100g&gt;</code></p>
+<ul>
+<li><code>is_100g</code></li>
+</ul>
+<p>值为 0 或 1。</p>
+<p>网速是否为 100 Gbps，是为 1，mtu = 9000；否为 0，mtu = 1500；通过 mtu 的大小来获取目标网口的 IP。</p>
+<h4 id="run_perf_test.sh">run_perf_test.sh</h4>
+<p><code>./setup/run_perf_test.sh &lt;cloudlab_username&gt; &lt;hostname&gt; &lt;run_app&gt; &lt;node_num&gt; &lt;file_path&gt; &lt;io_queue_depth&gt; &lt;io_size&gt; &lt;workload&gt; &lt;run_time&gt;</code></p>
+<ul>
+<li><code>cloudlab_username</code></li>
+</ul>
+<p>CS0522。</p>
+<ul>
+<li><code>hostname</code></li>
+</ul>
+<p>Host 的主机名。值如 <code>amd263.utah.cloudlab.us</code>。</p>
+<ul>
+<li><code>run_app</code></li>
+</ul>
+<p>值为 <code>perf</code>或 <code>perf_rep</code>。</p>
+<ul>
+<li><code>node_num</code></li>
+</ul>
+<p>所有节点个数。</p>
+<ul>
+<li><code>file_path</code></li>
+</ul>
+<p>保存 Target 节点的 local IP 文件，即建立 RDMA 连接的网口。</p>
+<ul>
+<li><code>io_queue_depth</code></li>
+</ul>
+<p>perf 参数，值可为 <code>256</code>。</p>
+<ul>
+<li><code>io_size</code></li>
+</ul>
+<p>perf 参数，值可为 <code>4096</code>。</p>
+<ul>
+<li><code>workload</code></li>
+</ul>
+<p>perf 参数，值可为 <code>randread</code>、<code>randwrite</code>、<code>randrw</code>，<code>randrw</code> 会自动添加 <code>-M 50</code>。</p>
+<ul>
+<li><code>run_time</code></li>
+</ul>
+<p>perf 参数，值的单位为<code>秒</code>。</p>
+<h4 id="get_run_output.sh">get_run_output.sh</h4>
+<p><code>./setup/get_run_output.sh &lt;cloudlab_username&gt; &lt;node_num&gt; [hostnames...]</code></p>
+<ul>
+<li><code>cloudlab_username</code></li>
+</ul>
+<p>CS0522。</p>
+<ul>
+<li><code>node_num</code></li>
+</ul>
+<p>所有节点个数。</p>
+<ul>
+<li><code>hostnames...</code></li>
+</ul>
+<p>所有节点主机名。</p>
+<h3 id="全自动配置运行">2.3. 全自动配置运行</h3>
+<p><strong>本地机器</strong>运行 <code>./setup/setup_all_nodes.sh</code>。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># example</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="ex">./setup/setup_all_nodes.sh</span> 1 1 CS0522 2 amd263.utah.cloudlab.us amd250.utah.cloudlab.us</a></code></pre></div>
+<p>运行 perf 和 perf_rep，通过本地机器运行 <code>run_perf_test.sh</code> 并通过 <code>get_run_output.sh</code> 获取结果。</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># example</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="ex">./setup/run_perf_test.sh</span> CS0522 amd263.utah.cloudlab.us perf 2 ./setup/setup_output/nodes_local_ip.txt 256 4096 randwrite 5</a></code></pre></div>
+<h3 id="半自动配置运行">2.4. 半自动配置运行</h3>
+<p><strong>远程机器</strong>分别运行 <code>./setup/*.sh</code>。</p>
+<ol type="1">
+<li>远程机器 clone SPDK v24.05.x 至目录 <code>/opt/Workspace</code> 下；</li>
+<li>按照 SPDK 说明更新子模块；</li>
+<li>删除原有 <code>.git</code> 仓库，新建仓库，并将仓库与 <code>nof-rep</code> 仓库关联；</li>
+<li><code>git fetch</code> 并切换 <code>git checkout</code> 至 <code>latency_test</code> 分支；</li>
+<li>运行 <code>./setup/setup_rdma.sh 1 1</code>；</li>
+<li>运行 <code>./setup/setup_spdk_with_latency_test.sh 1</code>；</li>
+<li>Host 端运行 <code>./setup/configure_host.sh</code>；</li>
+<li>Target 端运行 <code>./setup/configure_target.sh</code>；</li>
+<li>运行 perf 和 perf_rep。</li>
+</ol>
 
-
+</div>
   </div>
   
   
@@ -2650,10 +2836,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-10-17T21:06:11+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-10-22T15:11:12+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：2024年10月17日</p>
+    <p>最后更新于：2024年10月22日</p>
   </a>
 </div>
 
@@ -2815,7 +3001,7 @@ sudo chmod 777 ....</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>96.4k 字</div>
+          <div>97.5k 字</div>
         </div>
       
 
@@ -2840,7 +3026,7 @@ sudo chmod 777 ....</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2024-10-17 日</div>
+          <div id="last-update-show">2024-10-22 日</div>
         </div>
       
     </div>
@@ -2857,9 +3043,19 @@ sudo chmod 777 ....</p>
   
 
 
-  <div class="">
-    <!-- pjax占位 -->
-  </div>
+  <section class="widget toc-wrapper desktop mobile " id="toc-div" >
+    
+  <header>
+    
+      <i class="fa-solid fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">1. 脚本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">2. 脚本使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E8%B7%AF%E5%BE%84"><span class="toc-number">2.1.</span> <span class="toc-text">2.1. 工作路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E5%8F%82%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text">2.2. 脚本参数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#setup_all_nodes.sh"><span class="toc-number">2.2.1.</span> <span class="toc-text">setup_all_nodes.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#setup_rdma.sh"><span class="toc-number">2.2.2.</span> <span class="toc-text">setup_rdma.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#setup_spdk_with_latency_test.sh"><span class="toc-number">2.2.3.</span> <span class="toc-text">setup_spdk_with_latency_test.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#configure_host.sh"><span class="toc-number">2.2.4.</span> <span class="toc-text">configure_host.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#configure_target.sh"><span class="toc-number">2.2.5.</span> <span class="toc-text">configure_target.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#run_perf_test.sh"><span class="toc-number">2.2.6.</span> <span class="toc-text">run_perf_test.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#get_run_output.sh"><span class="toc-number">2.2.7.</span> <span class="toc-text">get_run_output.sh</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E8%BF%90%E8%A1%8C"><span class="toc-number">2.3.</span> <span class="toc-text">2.3. 全自动配置运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8A%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E8%BF%90%E8%A1%8C"><span class="toc-number">2.4.</span> <span class="toc-text">2.4. 半自动配置运行</span></a></li></ol></li></ol>
+    </div>
+  </section>
 
   
 
@@ -3691,7 +3887,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4010,7 +4206,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/notes/存储/n-spdk-06/","name":"【学习笔记-存储】SPDK（六）：CloudLab 脚本自动化部署 SPDK"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（六）：CloudLab 脚本自动化部署 SPDK","description":"记录在 CloudLab 上通过 sh 脚本自动化部署 SPDK with latency_test。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-06/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-06/","wordCount":51,"datePublished":"2024-10-17T02:22:09.000Z","dateModified":"2024-10-17T13:06:11.915Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/存储/","name":"存储"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/notes/存储/n-spdk-06/","name":"【学习笔记-存储】SPDK（六）：CloudLab 脚本自动化部署 SPDK"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记-存储】SPDK（六）：CloudLab 脚本自动化部署 SPDK","description":"记录在 CloudLab 上通过 sh 脚本自动化部署 SPDK with latency_test。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-06/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E5%AD%98%E5%82%A8/n-spdk-06/","wordCount":51,"datePublished":"2024-10-17T02:22:09.000Z","dateModified":"2024-10-22T07:11:12.014Z","articleSection":"学习笔记","keywords":"存储,SPDK","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
