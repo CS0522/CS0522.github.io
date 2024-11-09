@@ -34,19 +34,19 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>【学习笔记】设计模式（一）简介与设计原则 - 诚实同学的博客</title>
+  <title>【学习笔记】设计模式（一）要点与总结 - 诚实同学的博客</title>
   <meta name="keywords" content="设计模式,个人博客, 计算机, 学习">
-  <meta desc name="description" content="开始学习设计模式。 - Chen Shi - 诚实同学的博客">
+  <meta desc name="description" content="设计模式的简介、设计原则与总结。 - Chen Shi - 诚实同学的博客">
   
 <meta property="og:type" content="article">
-<meta property="og:title" content="【学习笔记】设计模式（一）简介与设计原则">
+<meta property="og:title" content="【学习笔记】设计模式（一）要点与总结">
 <meta property="og:url" content="https://cs0522.github.io/ja-JP/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-01/index.html">
 <meta property="og:site_name" content="诚实同学的博客">
-<meta property="og:description" content="开始学习设计模式。">
+<meta property="og:description" content="设计模式的简介、设计原则与总结。">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-06-29T09:10:29.000Z">
-<meta property="article:modified_time" content="2024-07-03T09:33:31.000Z">
+<meta property="article:modified_time" content="2024-11-09T12:14:39.024Z">
 <meta property="article:author" content="Chen Shi">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
@@ -1765,7 +1765,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"images/userphoto/userphoto02.png","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1730550045364),
+    lastupdate: new Date(1731154526750),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2550,7 +2550,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title" itemprop="name headline">
-        【学习笔记】设计模式（一）简介与设计原则
+        【学习笔记】设计模式（一）要点与总结
       </h1>
       <div class='new-meta-box'>
         
@@ -2599,13 +2599,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：502 字</p>
+      <p>字数：651 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>时长：1 分钟</p>
+      <p>时长：2 分钟</p>
     </a>
   </div>
 
@@ -2622,7 +2622,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <p>开始学习设计模式。</p>
+    <p>设计模式的简介、设计原则与总结。</p>
 <span id="more"></span>
 <div class="story post-story"><h2 id="简介">简介</h2>
 <ul>
@@ -2633,47 +2633,74 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li><p>在变化和稳定之间寻找稳定点</p></li>
 <li><p>要看出代码哪部分稳定，哪部分变化</p></li>
 </ul>
+<hr />
 </div><div class="story post-story"><h2 id="面向对象设计原则">面向对象设计原则</h2>
-<h3 id="依赖倒置原则-dip">依赖倒置原则 DIP</h3>
+<h3 id="依赖倒置原则-dip">1. 依赖倒置原则 DIP</h3>
 <ul>
 <li><p>高层模块（稳定）不应该依赖于低层模块（变化），二者都应该依赖于抽象（稳定）。</p></li>
 <li><p>实现细节（变化）应该依赖于抽象（稳定）。</p></li>
 </ul>
 <p>即从问题中提出抽象类，找到低层稳定的抽象。</p>
 <p>比如初始 MainForm 依赖于 Line 和 Rectangle，但低层模块这两个变化，实现细节不一致，因此还需要提出这两个的抽象类 Shape，因此修改后，MainForm 依赖于 Shape，Line 和 Rectangle 依赖于 Shape。</p>
-<h3 id="开放封闭原则-ocp">开放封闭原则 OCP</h3>
+<h3 id="开放封闭原则-ocp">2. 开放封闭原则 OCP</h3>
 <ul>
 <li><p>对扩展开放，对更改封闭。</p></li>
 <li><p>类模块可扩展，但是不可修改。</p></li>
 </ul>
-<h3 id="单一责任原则-srp">单一责任原则 SRP</h3>
+<h3 id="单一责任原则-srp">3. 单一责任原则 SRP</h3>
 <ul>
 <li><p>一个类应该仅有一个引起它变化的原因。</p></li>
 <li><p>变化的方向隐含着类的责任。</p></li>
 </ul>
-<h3 id="liskov-替换原则-lsp">Liskov 替换原则 LSP</h3>
+<h3 id="liskov-替换原则-lsp">4. Liskov 替换原则 LSP</h3>
 <ul>
 <li>子类能够替换他们的基类。</li>
 </ul>
-<h3 id="接口隔离原则-isp">接口隔离原则 ISP</h3>
+<h3 id="接口隔离原则-isp">5. 接口隔离原则 ISP</h3>
 <ul>
 <li>接口应该小而完备。</li>
 </ul>
 <p>仅暴露有必要的方法，非必要不暴露。</p>
-<h3 id="优先使用对象组合而不是继承">优先使用对象组合，而不是继承</h3>
+<h3 id="优先使用对象组合而不是继承">6. 优先使用对象组合，而不是继承</h3>
 <ul>
 <li><p>继承在某种程度上破坏了封装性，子类和父类耦合度高。</p></li>
 <li><p>对象组合则要求被组合的对象具有良好定义的接口，耦合度较低。</p></li>
 </ul>
-<h3 id="封装变化点">封装变化点</h3>
+<h3 id="封装变化点">7. 封装变化点</h3>
 <ul>
 <li>使用封装来创建对象之间的分界层，在一侧进行修改，另一层不受影响，从而实现层次间的松耦合。</li>
 </ul>
-<h3 id="针对接口编程">针对接口编程</h3>
+<h3 id="针对接口编程">8. 针对接口编程</h3>
 <ul>
 <li><p>不将（业务类）变量声明为某个特定的具体类，而是声明为接口类。</p></li>
 <li><p>客户程序只需要知道对象的接口。</p></li>
 <li><p>减少系统各部分的依赖关系，实现“高内聚、低耦合”。</p></li>
+</ul>
+<hr />
+</div><div class="story post-story"><h2 id="重构技法">重构技法</h2>
+<h3 id="静态---动态">静态 -&gt; 动态</h3>
+<h3 id="早绑定---晚绑定">早绑定 -&gt; 晚绑定</h3>
+<h3 id="继承---组合">继承 -&gt; 组合</h3>
+<h3 id="编译时依赖---运行时依赖">编译时依赖 -&gt; 运行时依赖</h3>
+<h3 id="紧耦合---松耦合">紧耦合 -&gt; 松耦合</h3>
+<hr />
+</div><div class="story post-story"><h2 id="什么时候不用模式">什么时候不用模式</h2>
+<ul>
+<li><p>代码可读性很差</p></li>
+<li><p>需求理解很浅</p></li>
+<li><p>变化没有显现</p></li>
+<li><p>不是系统的关键依赖点</p></li>
+<li><p>项目没有复用价值</p></li>
+<li><p>项目将要发布</p></li>
+</ul>
+<hr />
+</div><div class="story post-story"><h2 id="总结">总结</h2>
+<ul>
+<li><p>不要为了模式而模式</p></li>
+<li><p>关注抽象类 &amp; 接口</p></li>
+<li><p>理清变化点和稳定点</p></li>
+<li><p>审视依赖关系</p></li>
+<li><p>良好的设计是演化的结果</p></li>
 </ul>
 
 </div>
@@ -2700,10 +2727,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-07-03T17:33:31+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-11-09T20:14:39+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>最后更新于：2024年7月3日</p>
+    <p>最后更新于：2024年11月9日</p>
   </a>
 </div>
 
@@ -2733,7 +2760,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-01/&title=【学习笔记】设计模式（一）简介与设计原则 - 诚实同学的博客&summary=开始学习设计模式。"
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-01/&title=【学习笔记】设计模式（一）要点与总结 - 诚实同学的博客&summary=设计模式的简介、设计原则与总结。"
           
           >
           
@@ -2745,7 +2772,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-01/&title=【学习笔记】设计模式（一）简介与设计原则 - 诚实同学的博客&summary=开始学习设计模式。"
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-01/&title=【学习笔记】设计模式（一）要点与总结 - 诚实同学的博客&summary=设计模式的简介、设计原则与总结。"
           
           >
           
@@ -2757,7 +2784,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-01/&title=【学习笔记】设计模式（一）简介与设计原则 - 诚实同学的博客&summary=开始学习设计模式。"
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-01/&title=【学习笔记】设计模式（一）要点与总结 - 诚实同学的博客&summary=设计模式的简介、设计原则与总结。"
           
           >
           
@@ -2850,7 +2877,7 @@ https://we...</p>
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>115 篇</div>
+          <div>124 篇</div>
         </div>
       
 
@@ -2865,7 +2892,7 @@ https://we...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>100.8k 字</div>
+          <div>104.3k 字</div>
         </div>
       
 
@@ -2890,7 +2917,7 @@ https://we...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2024-11-02 日</div>
+          <div id="last-update-show">2024-11-09 日</div>
         </div>
       
     </div>
@@ -2917,7 +2944,7 @@ https://we...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="toc-number">2.</span> <span class="toc-text">面向对象设计原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99-dip"><span class="toc-number">2.1.</span> <span class="toc-text">依赖倒置原则 DIP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E6%94%BE%E5%B0%81%E9%97%AD%E5%8E%9F%E5%88%99-ocp"><span class="toc-number">2.2.</span> <span class="toc-text">开放封闭原则 OCP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E8%B4%A3%E4%BB%BB%E5%8E%9F%E5%88%99-srp"><span class="toc-number">2.3.</span> <span class="toc-text">单一责任原则 SRP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#liskov-%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99-lsp"><span class="toc-number">2.4.</span> <span class="toc-text">Liskov 替换原则 LSP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99-isp"><span class="toc-number">2.5.</span> <span class="toc-text">接口隔离原则 ISP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%85%88%E4%BD%BF%E7%94%A8%E5%AF%B9%E8%B1%A1%E7%BB%84%E5%90%88%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E6%89%BF"><span class="toc-number">2.6.</span> <span class="toc-text">优先使用对象组合，而不是继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%81%E8%A3%85%E5%8F%98%E5%8C%96%E7%82%B9"><span class="toc-number">2.7.</span> <span class="toc-text">封装变化点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%92%88%E5%AF%B9%E6%8E%A5%E5%8F%A3%E7%BC%96%E7%A8%8B"><span class="toc-number">2.8.</span> <span class="toc-text">针对接口编程</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="toc-number">2.</span> <span class="toc-text">面向对象设计原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99-dip"><span class="toc-number">2.1.</span> <span class="toc-text">1. 依赖倒置原则 DIP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E6%94%BE%E5%B0%81%E9%97%AD%E5%8E%9F%E5%88%99-ocp"><span class="toc-number">2.2.</span> <span class="toc-text">2. 开放封闭原则 OCP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E8%B4%A3%E4%BB%BB%E5%8E%9F%E5%88%99-srp"><span class="toc-number">2.3.</span> <span class="toc-text">3. 单一责任原则 SRP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#liskov-%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99-lsp"><span class="toc-number">2.4.</span> <span class="toc-text">4. Liskov 替换原则 LSP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99-isp"><span class="toc-number">2.5.</span> <span class="toc-text">5. 接口隔离原则 ISP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%85%88%E4%BD%BF%E7%94%A8%E5%AF%B9%E8%B1%A1%E7%BB%84%E5%90%88%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E6%89%BF"><span class="toc-number">2.6.</span> <span class="toc-text">6. 优先使用对象组合，而不是继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%81%E8%A3%85%E5%8F%98%E5%8C%96%E7%82%B9"><span class="toc-number">2.7.</span> <span class="toc-text">7. 封装变化点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%92%88%E5%AF%B9%E6%8E%A5%E5%8F%A3%E7%BC%96%E7%A8%8B"><span class="toc-number">2.8.</span> <span class="toc-text">8. 针对接口编程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E6%9E%84%E6%8A%80%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">重构技法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81---%E5%8A%A8%E6%80%81"><span class="toc-number">3.1.</span> <span class="toc-text">静态 -&gt; 动态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A9%E7%BB%91%E5%AE%9A---%E6%99%9A%E7%BB%91%E5%AE%9A"><span class="toc-number">3.2.</span> <span class="toc-text">早绑定 -&gt; 晚绑定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF---%E7%BB%84%E5%90%88"><span class="toc-number">3.3.</span> <span class="toc-text">继承 -&gt; 组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E6%97%B6%E4%BE%9D%E8%B5%96---%E8%BF%90%E8%A1%8C%E6%97%B6%E4%BE%9D%E8%B5%96"><span class="toc-number">3.4.</span> <span class="toc-text">编译时依赖 -&gt; 运行时依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A7%E8%80%A6%E5%90%88---%E6%9D%BE%E8%80%A6%E5%90%88"><span class="toc-number">3.5.</span> <span class="toc-text">紧耦合 -&gt; 松耦合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%B8%8D%E7%94%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">什么时候不用模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
     </div>
   </section>
 
@@ -3751,7 +3778,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp"];
   let index = 0;
   let IntervalParallax = null;
 
@@ -4070,7 +4097,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/设计模式/","name":"设计模式"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/ja-JP/notes/设计模式/n-pattern-01/","name":"【学习笔记】设计模式（一）简介与设计原则"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记】设计模式（一）简介与设计原则","description":"开始学习设计模式。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-01/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-01/","wordCount":9,"datePublished":"2024-06-29T09:10:29.000Z","dateModified":"2024-07-03T09:33:31.000Z","articleSection":"学习笔记","keywords":"设计模式","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Patience is key in life."},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://CS0522.github.io/","name":"诚实同学的博客"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/","name":"学习笔记"}},{"@type":"ListItem","position":2,"item":{"@id":"https://CS0522.github.io/categories/notes/设计模式/","name":"设计模式"}},{"@type":"ListItem","position":3,"item":{"@id":"https://CS0522.github.io/ja-JP/notes/设计模式/n-pattern-01/","name":"【学习笔记】设计模式（一）要点与总结"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"诚实同学的博客","url":"https://CS0522.github.io/","keywords":"个人博客, 计算机, 学习","description":"Patience is key in life.","author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/","description":"Patience is key in life."},"publisher":{"@type":"Organization","name":"诚实同学的博客","url":"https://CS0522.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://CS0522.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"【学习笔记】设计模式（一）要点与总结","description":"设计模式的简介、设计原则与总结。","inLanguage":["zh-CN","en","ja-JP"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-01/"},"author":{"@type":"Person","name":"Chen Shi","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://CS0522.github.io/"},"publisher":{"@type":"Organization","name":"诚实同学的博客","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://cs0522.github.io/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/n-pattern-01/","wordCount":16,"datePublished":"2024-06-29T09:10:29.000Z","dateModified":"2024-11-09T12:14:39.024Z","articleSection":"学习笔记","keywords":"设计模式","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
