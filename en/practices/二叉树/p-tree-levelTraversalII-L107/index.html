@@ -1767,7 +1767,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2633,40 +2633,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </div><div class="story post-story"><h2 id="学习点">学习点</h2>
 </div><div class="story post-story"><h2 id="代码">代码</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">class</span> Solution &#123;</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">public</span>:</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    vector&lt;vector&lt;<span class="dt">int</span>&gt;&gt; levelOrderBottom(TreeNode* root) &#123;</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">        <span class="co">// result</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">        vector&lt;vector&lt;<span class="dt">int</span>&gt;&gt; res;</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">        <span class="cf">if</span> (root == <span class="kw">nullptr</span>)</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">            <span class="cf">return</span> res;</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">        <span class="co">// queue</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">        queue&lt;TreeNode*&gt; qe;</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">        qe.push(root);</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">        <span class="cf">while</span> (!qe.empty())</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">        &#123;</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">            <span class="dt">int</span> node_num = qe.size();</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">            vector&lt;<span class="dt">int</span>&gt; level_traverse;</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">            <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; node_num; i++)</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">            &#123;</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">                <span class="kw">auto</span> tmp = qe.front();</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">                qe.pop();</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">                level_traverse.push_back(tmp-&gt;val);</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">                <span class="cf">if</span> (tmp-&gt;left)</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">                    qe.push(tmp-&gt;left);</a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">                <span class="cf">if</span> (tmp-&gt;right)</a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">                    qe.push(tmp-&gt;right);</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">            &#125;</a>
-<a class="sourceLine" id="cb1-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27">            res.push_back(level_traverse);</a>
-<a class="sourceLine" id="cb1-28" data-line-number="28">        &#125;</a>
-<a class="sourceLine" id="cb1-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb1-30" data-line-number="30">        <span class="co">// 相比于正序遍历只需要倒序第一维</span></a>
-<a class="sourceLine" id="cb1-31" data-line-number="31">        reverse(res.begin(), res.end());</a>
-<a class="sourceLine" id="cb1-32" data-line-number="32">        <span class="cf">return</span> res;</a>
-<a class="sourceLine" id="cb1-33" data-line-number="33">    &#125;</a>
-<a class="sourceLine" id="cb1-34" data-line-number="34">&#125;;</a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">levelOrderBottom</span>(TreeNode* root) &#123;</span><br><span class="line">        <span class="comment">// result</span></span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; res;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">nullptr</span>)</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        <span class="comment">// queue</span></span><br><span class="line">        queue&lt;TreeNode*&gt; qe;</span><br><span class="line">        qe.<span class="built_in">push</span>(root);</span><br><span class="line">        <span class="keyword">while</span> (!qe.<span class="built_in">empty</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> node_num = qe.<span class="built_in">size</span>();</span><br><span class="line">            vector&lt;<span class="type">int</span>&gt; level_traverse;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; node_num; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">auto</span> tmp = qe.<span class="built_in">front</span>();</span><br><span class="line">                qe.<span class="built_in">pop</span>();</span><br><span class="line">                level_traverse.<span class="built_in">push_back</span>(tmp-&gt;val);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (tmp-&gt;left)</span><br><span class="line">                    qe.<span class="built_in">push</span>(tmp-&gt;left);</span><br><span class="line">                <span class="keyword">if</span> (tmp-&gt;right)</span><br><span class="line">                    qe.<span class="built_in">push</span>(tmp-&gt;right);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            res.<span class="built_in">push_back</span>(level_traverse);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 相比于正序遍历只需要倒序第一维</span></span><br><span class="line">        <span class="built_in">reverse</span>(res.<span class="built_in">begin</span>(), res.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 </div>
   </div>
@@ -2858,7 +2825,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2869,7 +2836,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3730,7 +3697,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

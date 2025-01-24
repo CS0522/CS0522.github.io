@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2630,9 +2630,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>整个系统里面有两个文件包含可以运行的主函数： <code>disksim.c</code> 和 <code>syssim_driver.c</code>。</p>
 <div class="story post-story"><h2 id="disksim.c">disksim.c</h2>
 <p><code>disksim-4.0/src</code> 目录下的 <code>disksim</code> 为可执行程序。运行的命令格式为：</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">disksim</span> <span class="op">&lt;</span>parfile<span class="op">&gt;</span> <span class="op">&lt;</span>outfile<span class="op">&gt;</span> <span class="op">&lt;</span>tracetype<span class="op">&gt;</span> <span class="op">&lt;</span>tracefile<span class="op">&gt;</span> <span class="op">&lt;</span>synthgen<span class="op">&gt;</span> [par_override…]</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># 示例</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="ex">disksim</span> atlas_III.parv atlas_III.outv validate atlas_III.trace 0</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">disksim &lt;parfile&gt; &lt;outfile&gt; &lt;tracetype&gt; &lt;tracefile&gt; &lt;synthgen&gt; [par_override…]</span><br><span class="line"><span class="comment"># 示例</span></span><br><span class="line">disksim atlas_III.parv atlas_III.outv validate atlas_III.trace 0</span><br></pre></td></tr></table></figure>
 <h3 id="parfile">parfile</h3>
 <p>参数文件，包括仿真器各个参数的配置。后续文章继续学习。</p>
 <h3 id="outfile">outfile</h3>
@@ -2665,17 +2663,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h3 id="par_override">par_override</h3>
 <p>允许默认参数值或者 parfile 文件中的参数值替换为命令行指定的值。</p>
 <p>parameter overrides 的格式为 <code>(component, param name, param value)</code> 三元组：</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="op">&lt;</span><span class="ex">component</span><span class="op">&gt;</span> <span class="op">&lt;</span>parameter<span class="op">&gt;</span> <span class="op">&lt;</span>new value<span class="op">&gt;</span></a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;component&gt; &lt;parameter&gt; &lt;new value&gt;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p><code>component</code> 是需要被覆盖参数的目标组件。支持多个修改和通配符。用 <code>&quot;&quot;</code> 包裹。如：<code>&quot;disk0 .. disk5&quot;</code>、<code>&quot;driver*&quot;</code>（<code>*</code> 通配 0 或多个<code>数字</code>而不是字符）</p></li>
 <li><p><code>parameter</code> 是需要被覆盖的参数。最好用 <code>&quot;&quot;</code> 包裹，因为可能会有空格。如：<code>&quot;Scheduler:Scheduling policy&quot;</code></p></li>
 <li><p><code>new value</code> 是新的值</p></li>
 </ul>
 <h3 id="examples">Examples</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># 格式</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="ex">disksim</span> <span class="op">&lt;</span>parfile<span class="op">&gt;</span> <span class="op">&lt;</span>outfile<span class="op">&gt;</span> <span class="op">&lt;</span>tracetype<span class="op">&gt;</span> <span class="op">&lt;</span>tracefile<span class="op">&gt;</span> <span class="op">&lt;</span>synthgen<span class="op">&gt;</span> [par_override…]</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="ex">disksim</span> parms.1B stdout ascii t.Jan6 0 <span class="st">&quot;disk1 .. disk16&quot;</span> <span class="st">&quot;Segment size (in blks)&quot;</span> 64 <span class="st">&quot;disk*&quot;</span> <span class="st">&quot;Scheduler:Scheduling policy&quot;</span> 4</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 格式</span></span><br><span class="line">disksim &lt;parfile&gt; &lt;outfile&gt; &lt;tracetype&gt; &lt;tracefile&gt; &lt;synthgen&gt; [par_override…]</span><br><span class="line"></span><br><span class="line">disksim parms.1B stdout ascii t.Jan6 0 <span class="string">&quot;disk1 .. disk16&quot;</span> <span class="string">&quot;Segment size (in blks)&quot;</span> 64 <span class="string">&quot;disk*&quot;</span> <span class="string">&quot;Scheduler:Scheduling policy&quot;</span> 4</span><br></pre></td></tr></table></figure>
 <p>运行后：</p>
 <ul>
 <li><p>从文件 <code>parms.1B</code> 中读取初始化参数</p></li>
@@ -2806,7 +2801,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 disksim_main.c
 DiskSim 的 main 函数位于 disksim-4.0/src/disksim_main.c 文件里。代码如下：
-in...</p>
+12...</p>
         </a>
       
       
@@ -2874,7 +2869,7 @@ ReadQueue.py：实现 Re...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2885,7 +2880,7 @@ ReadQueue.py：实现 Re...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3746,7 +3741,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

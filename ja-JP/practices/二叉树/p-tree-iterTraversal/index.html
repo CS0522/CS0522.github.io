@@ -1767,7 +1767,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2634,84 +2634,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </div><div class="story post-story"><h2 id="学习点">学习点</h2>
 </div><div class="story post-story"><h2 id="代码">代码</h2>
 <p>前序遍历：</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">class</span> Solution &#123;</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">public</span>:</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    vector&lt;<span class="dt">int</span>&gt; preorderTraversal(TreeNode* root) &#123;</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">        vector&lt;<span class="dt">int</span>&gt; result;</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">        stack&lt;TreeNode*&gt; st;</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">        <span class="cf">if</span> (root != NULL) st.push(root);</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">        <span class="cf">while</span> (!st.empty()) &#123;</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">            TreeNode* node = st.top();</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">            <span class="cf">if</span> (node != NULL) &#123;</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">                st.pop();</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">                <span class="cf">if</span> (node-&gt;right) st.push(node-&gt;right);  <span class="co">// 右</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">                <span class="cf">if</span> (node-&gt;left) st.push(node-&gt;left);    <span class="co">// 左</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">                st.push(node);                          <span class="co">// 中</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">                st.push(NULL);</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">            &#125; <span class="cf">else</span> &#123;</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">                st.pop();</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">                node = st.top();</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">                st.pop();</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">                result.push_back(node-&gt;val);</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">            &#125;</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">        &#125;</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">        <span class="cf">return</span> result;</a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">    &#125;</a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">&#125;;</a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; result;</span><br><span class="line">        stack&lt;TreeNode*&gt; st;</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="literal">NULL</span>) st.<span class="built_in">push</span>(root);</span><br><span class="line">        <span class="keyword">while</span> (!st.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            TreeNode* node = st.<span class="built_in">top</span>();</span><br><span class="line">            <span class="keyword">if</span> (node != <span class="literal">NULL</span>) &#123;</span><br><span class="line">                st.<span class="built_in">pop</span>();</span><br><span class="line">                <span class="keyword">if</span> (node-&gt;right) st.<span class="built_in">push</span>(node-&gt;right);  <span class="comment">// 右</span></span><br><span class="line">                <span class="keyword">if</span> (node-&gt;left) st.<span class="built_in">push</span>(node-&gt;left);    <span class="comment">// 左</span></span><br><span class="line">                st.<span class="built_in">push</span>(node);                          <span class="comment">// 中</span></span><br><span class="line">                st.<span class="built_in">push</span>(<span class="literal">NULL</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                st.<span class="built_in">pop</span>();</span><br><span class="line">                node = st.<span class="built_in">top</span>();</span><br><span class="line">                st.<span class="built_in">pop</span>();</span><br><span class="line">                result.<span class="built_in">push_back</span>(node-&gt;val);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>中序遍历：</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">class</span> Solution &#123;</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">public</span>:</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">    vector&lt;<span class="dt">int</span>&gt; inorderTraversal(TreeNode* root) &#123;</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">        vector&lt;<span class="dt">int</span>&gt; result;</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">        stack&lt;TreeNode*&gt; st;</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">        <span class="cf">if</span> (root != NULL) st.push(root);</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">        <span class="cf">while</span> (!st.empty()) &#123;</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">            TreeNode* node = st.top();</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">            <span class="cf">if</span> (node != NULL) &#123;</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">                st.pop(); <span class="co">// 将该节点弹出，避免重复操作，下面再将右中左节点添加到栈中</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">                <span class="cf">if</span> (node-&gt;right) st.push(node-&gt;right);  <span class="co">// 添加右节点（空节点不入栈）</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">                st.push(node);                          <span class="co">// 添加中节点</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">                st.push(NULL); <span class="co">// 中节点访问过，但是还没有处理，加入空节点做为标记。</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">                <span class="cf">if</span> (node-&gt;left) st.push(node-&gt;left);    <span class="co">// 添加左节点（空节点不入栈）</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">            &#125; <span class="cf">else</span> &#123; <span class="co">// 只有遇到空节点的时候，才将下一个节点放进结果集</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">                st.pop();           <span class="co">// 将空节点弹出</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">                node = st.top();    <span class="co">// 重新取出栈中元素</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">                st.pop();</a>
-<a class="sourceLine" id="cb2-21" data-line-number="21">                result.push_back(node-&gt;val); <span class="co">// 加入到结果集</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22">            &#125;</a>
-<a class="sourceLine" id="cb2-23" data-line-number="23">        &#125;</a>
-<a class="sourceLine" id="cb2-24" data-line-number="24">        <span class="cf">return</span> result;</a>
-<a class="sourceLine" id="cb2-25" data-line-number="25">    &#125;</a>
-<a class="sourceLine" id="cb2-26" data-line-number="26">&#125;;</a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; result;</span><br><span class="line">        stack&lt;TreeNode*&gt; st;</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="literal">NULL</span>) st.<span class="built_in">push</span>(root);</span><br><span class="line">        <span class="keyword">while</span> (!st.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            TreeNode* node = st.<span class="built_in">top</span>();</span><br><span class="line">            <span class="keyword">if</span> (node != <span class="literal">NULL</span>) &#123;</span><br><span class="line">                st.<span class="built_in">pop</span>(); <span class="comment">// 将该节点弹出，避免重复操作，下面再将右中左节点添加到栈中</span></span><br><span class="line">                <span class="keyword">if</span> (node-&gt;right) st.<span class="built_in">push</span>(node-&gt;right);  <span class="comment">// 添加右节点（空节点不入栈）</span></span><br><span class="line"></span><br><span class="line">                st.<span class="built_in">push</span>(node);                          <span class="comment">// 添加中节点</span></span><br><span class="line">                st.<span class="built_in">push</span>(<span class="literal">NULL</span>); <span class="comment">// 中节点访问过，但是还没有处理，加入空节点做为标记。</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (node-&gt;left) st.<span class="built_in">push</span>(node-&gt;left);    <span class="comment">// 添加左节点（空节点不入栈）</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123; <span class="comment">// 只有遇到空节点的时候，才将下一个节点放进结果集</span></span><br><span class="line">                st.<span class="built_in">pop</span>();           <span class="comment">// 将空节点弹出</span></span><br><span class="line">                node = st.<span class="built_in">top</span>();    <span class="comment">// 重新取出栈中元素</span></span><br><span class="line">                st.<span class="built_in">pop</span>();</span><br><span class="line">                result.<span class="built_in">push_back</span>(node-&gt;val); <span class="comment">// 加入到结果集</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>后序遍历：</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">class</span> Solution &#123;</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">public</span>:</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">    vector&lt;<span class="dt">int</span>&gt; postorderTraversal(TreeNode* root) &#123;</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">        vector&lt;<span class="dt">int</span>&gt; result;</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">        stack&lt;TreeNode*&gt; st;</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">        <span class="cf">if</span> (root != NULL) st.push(root);</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">        <span class="cf">while</span> (!st.empty()) &#123;</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">            TreeNode* node = st.top();</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">            <span class="cf">if</span> (node != NULL) &#123;</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">                st.pop();</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">                st.push(node);                          <span class="co">// 中</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">                st.push(NULL);</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">                <span class="cf">if</span> (node-&gt;right) st.push(node-&gt;right);  <span class="co">// 右</span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">                <span class="cf">if</span> (node-&gt;left) st.push(node-&gt;left);    <span class="co">// 左</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">            &#125; <span class="cf">else</span> &#123;</a>
-<a class="sourceLine" id="cb3-18" data-line-number="18">                st.pop();</a>
-<a class="sourceLine" id="cb3-19" data-line-number="19">                node = st.top();</a>
-<a class="sourceLine" id="cb3-20" data-line-number="20">                st.pop();</a>
-<a class="sourceLine" id="cb3-21" data-line-number="21">                result.push_back(node-&gt;val);</a>
-<a class="sourceLine" id="cb3-22" data-line-number="22">            &#125;</a>
-<a class="sourceLine" id="cb3-23" data-line-number="23">        &#125;</a>
-<a class="sourceLine" id="cb3-24" data-line-number="24">        <span class="cf">return</span> result;</a>
-<a class="sourceLine" id="cb3-25" data-line-number="25">    &#125;</a>
-<a class="sourceLine" id="cb3-26" data-line-number="26">&#125;;</a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; result;</span><br><span class="line">        stack&lt;TreeNode*&gt; st;</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="literal">NULL</span>) st.<span class="built_in">push</span>(root);</span><br><span class="line">        <span class="keyword">while</span> (!st.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            TreeNode* node = st.<span class="built_in">top</span>();</span><br><span class="line">            <span class="keyword">if</span> (node != <span class="literal">NULL</span>) &#123;</span><br><span class="line">                st.<span class="built_in">pop</span>();</span><br><span class="line">                st.<span class="built_in">push</span>(node);                          <span class="comment">// 中</span></span><br><span class="line">                st.<span class="built_in">push</span>(<span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (node-&gt;right) st.<span class="built_in">push</span>(node-&gt;right);  <span class="comment">// 右</span></span><br><span class="line">                <span class="keyword">if</span> (node-&gt;left) st.<span class="built_in">push</span>(node-&gt;left);    <span class="comment">// 左</span></span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                st.<span class="built_in">pop</span>();</span><br><span class="line">                node = st.<span class="built_in">top</span>();</span><br><span class="line">                st.<span class="built_in">pop</span>();</span><br><span class="line">                result.<span class="built_in">push_back</span>(node-&gt;val);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 </div>
   </div>
@@ -2907,7 +2834,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2918,7 +2845,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3779,7 +3706,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

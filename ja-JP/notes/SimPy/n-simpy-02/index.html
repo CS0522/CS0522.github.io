@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2634,9 +2634,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li><p>提供延时事件：<code>simpy.Environment.timeout()</code></p></li>
 <li>仿真结束的条件：<code>until=xxx</code>
 <ul>
-<li><p><code>进程也是事件</code>：</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">proc</span> = env.process(my_proc(env))</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="ex">env.run</span>(until=proc)</a></code></pre></div></li>
+<li><code>进程也是事件</code>： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">proc = env.process(my_proc(<span class="built_in">env</span>))</span><br><span class="line">env.run(<span class="keyword">until</span>=proc)</span><br></pre></td></tr></table></figure></li>
 </ul></li>
 <li><p>仿真启动：<code>simpy.Environment.run()</code></p></li>
 <li><p>现在的时间：<code>simpy.Environment.now</code></p></li>
@@ -2645,200 +2643,37 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>返回下一个计划事件的时间：<code>simpy.Environment.peek()</code></li>
 <li>处理下一个计划的事件：<code>simpy.Environment.step()</code></li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">until</span> = <span class="ex">10</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">while</span> <span class="ex">env.peek</span>() <span class="op">&lt;</span> <span class="ex">until</span>:</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="ex">env.step</span>()</a></code></pre></div></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">until</span> = 10</span><br><span class="line"><span class="keyword">while</span> env.peek() &lt; <span class="keyword">until</span>:</span><br><span class="line">  env.step()</span><br></pre></td></tr></table></figure></li>
 <li><p>当前活动进程：<code>simpy.Environment.active_process</code></p></li>
 </ul>
 <h3 id="example-2.1">Example 2.1</h3>
 <details>
 <p><summary>定义一个进程，仿真的简单代码结构</summary></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="im">import</span> simpy</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># 定义一个汽车进程</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw">def</span> car(env):</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="cf">while</span> <span class="va">True</span>:</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">        <span class="bu">print</span>(<span class="st">&#39;Start parking at </span><span class="sc">%d</span><span class="st">&#39;</span> <span class="op">%</span> env.now)</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">        parking_duration <span class="op">=</span> <span class="dv">5</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">        <span class="co"># 进程延时 5s</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">        <span class="cf">yield</span> env.timeout(parking_duration) </a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">        <span class="bu">print</span>(<span class="st">&#39;Start driving at </span><span class="sc">%d</span><span class="st">&#39;</span> <span class="op">%</span> env.now)</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">        trip_duration <span class="op">=</span> <span class="dv">2</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">        <span class="co"># 延时 2s</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">        <span class="cf">yield</span> env.timeout(trip_duration) </a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co"># 仿真启动</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">env <span class="op">=</span> simpy.Environment()   <span class="co"># 实例化环境</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">env.process(car(env))   <span class="co"># 添加汽车进程</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18">env.run(until <span class="op">=</span> <span class="dv">15</span>)   <span class="co"># 设定仿真结束条件, 这里是 15s 后停止</span></a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个汽车进程</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">car</span>(<span class="params">env</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Start parking at %d&#x27;</span> % env.now)</span><br><span class="line">        parking_duration = <span class="number">5</span></span><br><span class="line">        <span class="comment"># 进程延时 5s</span></span><br><span class="line">        <span class="keyword">yield</span> env.timeout(parking_duration) </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Start driving at %d&#x27;</span> % env.now)</span><br><span class="line">        trip_duration = <span class="number">2</span></span><br><span class="line">        <span class="comment"># 延时 2s</span></span><br><span class="line">        <span class="keyword">yield</span> env.timeout(trip_duration) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 仿真启动</span></span><br><span class="line">env = simpy.Environment()   <span class="comment"># 实例化环境</span></span><br><span class="line">env.process(car(env))   <span class="comment"># 添加汽车进程</span></span><br><span class="line">env.run(until = <span class="number">15</span>)   <span class="comment"># 设定仿真结束条件, 这里是 15s 后停止</span></span><br></pre></td></tr></table></figure>
 </details>
 <h3 id="example-2.2">Example 2.2</h3>
 <p><code>理解整个进程交互执行的流程。</code></p>
 <details>
 <p><summary>描述一个汽车驾驶一段时间后停车充电， 汽车驾驶进程和电池充电进程通过事件的激活来相互影响</summary></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="im">import</span> simpy</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="im">from</span> random <span class="im">import</span> seed, randint</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">seed(<span class="dv">23</span>)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="kw">class</span> ENV:</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, env):</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">        <span class="va">self</span>.env <span class="op">=</span> env</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">        <span class="va">self</span>.drive_proc <span class="op">=</span> env.process(<span class="va">self</span>.drive(env))</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">        <span class="va">self</span>.bat_ctrl_proc <span class="op">=</span> env.process(<span class="va">self</span>.bat_ctrl(env))</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">        <span class="bu">print</span>(<span class="st">&quot;执行了 2 个 process&quot;</span>)</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">        <span class="va">self</span>.bat_ctrl_reactivate <span class="op">=</span> env.event()</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">        <span class="va">self</span>.bat_ctrl_sleep <span class="op">=</span> env.event()</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">        <span class="bu">print</span>(<span class="st">&quot;创建了 2 个事件&quot;</span>)</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">    <span class="co"># 驾驶进程</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">    <span class="kw">def</span> drive(<span class="va">self</span>, env):</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">        <span class="cf">while</span> <span class="va">True</span>:</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">            <span class="co"># drive 20~40 minutes</span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">            <span class="bu">print</span>(<span class="st">&quot;Start driving at: &quot;</span>, env.now)</a>
-<a class="sourceLine" id="cb4-21" data-line-number="21">            <span class="bu">print</span>(<span class="st">&quot;drive() 抛出了 timeout&quot;</span>)</a>
-<a class="sourceLine" id="cb4-22" data-line-number="22">            <span class="cf">yield</span> env.timeout(randint(<span class="dv">20</span>, <span class="dv">40</span>))</a>
-<a class="sourceLine" id="cb4-23" data-line-number="23">            <span class="bu">print</span>(<span class="st">&quot;drive() 恢复了&quot;</span>)</a>
-<a class="sourceLine" id="cb4-24" data-line-number="24">            <span class="bu">print</span>(<span class="st">&quot;End driving at: &quot;</span>, env.now)</a>
-<a class="sourceLine" id="cb4-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb4-26" data-line-number="26">            <span class="co"># parking 1~6 hours</span></a>
-<a class="sourceLine" id="cb4-27" data-line-number="27">            <span class="bu">print</span>(<span class="st">&quot;Start parking at: &quot;</span>, env.now)</a>
-<a class="sourceLine" id="cb4-28" data-line-number="28">            <span class="co"># activate battery charging</span></a>
-<a class="sourceLine" id="cb4-29" data-line-number="29">            <span class="co"># 这段代码应该是指触发事件并成功</span></a>
-<a class="sourceLine" id="cb4-30" data-line-number="30">            <span class="bu">print</span>(<span class="st">&quot;drive() 触发了 reactivate 并成功&quot;</span>)</a>
-<a class="sourceLine" id="cb4-31" data-line-number="31">            <span class="va">self</span>.bat_ctrl_reactivate.succeed()</a>
-<a class="sourceLine" id="cb4-32" data-line-number="32">            <span class="va">self</span>.bat_ctrl_reactivate <span class="op">=</span>  env.event()</a>
-<a class="sourceLine" id="cb4-33" data-line-number="33">            <span class="co"># 继续执行</span></a>
-<a class="sourceLine" id="cb4-34" data-line-number="34">            <span class="co"># 超时并挂起，等待 bat_ctrl_sleep 事件发生</span></a>
-<a class="sourceLine" id="cb4-35" data-line-number="35">            <span class="bu">print</span>(<span class="st">&quot;drive() 抛出了 timeout 和 sleep&quot;</span>)</a>
-<a class="sourceLine" id="cb4-36" data-line-number="36">            <span class="cf">yield</span> env.timeout(randint(<span class="dv">60</span>, <span class="dv">360</span>)) <span class="op">&amp;</span> <span class="va">self</span>.bat_ctrl_sleep</a>
-<a class="sourceLine" id="cb4-37" data-line-number="37">            <span class="bu">print</span>(<span class="st">&quot;drive() 恢复了&quot;</span>)</a>
-<a class="sourceLine" id="cb4-38" data-line-number="38">            <span class="bu">print</span>(<span class="st">&quot;End parking at: &quot;</span>, env.now)</a>
-<a class="sourceLine" id="cb4-39" data-line-number="39"></a>
-<a class="sourceLine" id="cb4-40" data-line-number="40">    <span class="co"># 电池充电进程</span></a>
-<a class="sourceLine" id="cb4-41" data-line-number="41">    <span class="kw">def</span> bat_ctrl(<span class="va">self</span>, env):</a>
-<a class="sourceLine" id="cb4-42" data-line-number="42">        <span class="cf">while</span> <span class="va">True</span>:</a>
-<a class="sourceLine" id="cb4-43" data-line-number="43">            <span class="bu">print</span>(<span class="st">&quot;Charge sleep at: &quot;</span>, env.now)</a>
-<a class="sourceLine" id="cb4-44" data-line-number="44">            <span class="co"># 挂起。接收到 drive() 中的事件发生后恢复</span></a>
-<a class="sourceLine" id="cb4-45" data-line-number="45">            <span class="bu">print</span>(<span class="st">&quot;bat_ctrl() 抛出了 reactivate&quot;</span>)</a>
-<a class="sourceLine" id="cb4-46" data-line-number="46">            <span class="cf">yield</span> <span class="va">self</span>.bat_ctrl_reactivate</a>
-<a class="sourceLine" id="cb4-47" data-line-number="47">            <span class="bu">print</span>(<span class="st">&quot;bat_ctrl() 恢复了&quot;</span>)</a>
-<a class="sourceLine" id="cb4-48" data-line-number="48">            <span class="bu">print</span>(<span class="st">&quot;Charge activate at: &quot;</span>, env.now)</a>
-<a class="sourceLine" id="cb4-49" data-line-number="49">            <span class="bu">print</span>(<span class="st">&quot;bat_ctrl() 抛出了 timeout&quot;</span>)</a>
-<a class="sourceLine" id="cb4-50" data-line-number="50">            <span class="cf">yield</span> env.timeout(randint(<span class="dv">30</span>, <span class="dv">90</span>))</a>
-<a class="sourceLine" id="cb4-51" data-line-number="51">            <span class="bu">print</span>(<span class="st">&quot;bat_ctrl() 恢复了&quot;</span>)</a>
-<a class="sourceLine" id="cb4-52" data-line-number="52">            <span class="bu">print</span>(<span class="st">&quot;Charge end at:&quot;</span>, env.now)</a>
-<a class="sourceLine" id="cb4-53" data-line-number="53">            <span class="co"># 这段代码应该是指触发事件并成功</span></a>
-<a class="sourceLine" id="cb4-54" data-line-number="54">            <span class="bu">print</span>(<span class="st">&quot;bat_ctrl() 触发了 sleep 并成功&quot;</span>)</a>
-<a class="sourceLine" id="cb4-55" data-line-number="55">            <span class="va">self</span>.bat_ctrl_sleep.succeed()</a>
-<a class="sourceLine" id="cb4-56" data-line-number="56">            <span class="va">self</span>.bat_ctrl_sleep <span class="op">=</span> env.event()</a>
-<a class="sourceLine" id="cb4-57" data-line-number="57"></a>
-<a class="sourceLine" id="cb4-58" data-line-number="58"></a>
-<a class="sourceLine" id="cb4-59" data-line-number="59"><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</a>
-<a class="sourceLine" id="cb4-60" data-line-number="60">    env <span class="op">=</span> simpy.Environment()</a>
-<a class="sourceLine" id="cb4-61" data-line-number="61">    <span class="co"># 下面这一步执行了 init()</span></a>
-<a class="sourceLine" id="cb4-62" data-line-number="62">    ENV(env)</a>
-<a class="sourceLine" id="cb4-63" data-line-number="63">    <span class="bu">print</span>(<span class="st">&quot;env 开始模拟...&quot;</span>)</a>
-<a class="sourceLine" id="cb4-64" data-line-number="64">    env.run(until<span class="op">=</span><span class="dv">300</span>)</a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> seed, randint</span><br><span class="line">seed(<span class="number">23</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ENV</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, env</span>):</span><br><span class="line">        self.env = env</span><br><span class="line">        self.drive_proc = env.process(self.drive(env))</span><br><span class="line">        self.bat_ctrl_proc = env.process(self.bat_ctrl(env))</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;执行了 2 个 process&quot;</span>)</span><br><span class="line">        self.bat_ctrl_reactivate = env.event()</span><br><span class="line">        self.bat_ctrl_sleep = env.event()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;创建了 2 个事件&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 驾驶进程</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">drive</span>(<span class="params">self, env</span>):</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="comment"># drive 20~40 minutes</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Start driving at: &quot;</span>, env.now)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;drive() 抛出了 timeout&quot;</span>)</span><br><span class="line">            <span class="keyword">yield</span> env.timeout(randint(<span class="number">20</span>, <span class="number">40</span>))</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;drive() 恢复了&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;End driving at: &quot;</span>, env.now)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># parking 1~6 hours</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Start parking at: &quot;</span>, env.now)</span><br><span class="line">            <span class="comment"># activate battery charging</span></span><br><span class="line">            <span class="comment"># 这段代码应该是指触发事件并成功</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;drive() 触发了 reactivate 并成功&quot;</span>)</span><br><span class="line">            self.bat_ctrl_reactivate.succeed()</span><br><span class="line">            self.bat_ctrl_reactivate =  env.event()</span><br><span class="line">            <span class="comment"># 继续执行</span></span><br><span class="line">            <span class="comment"># 超时并挂起，等待 bat_ctrl_sleep 事件发生</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;drive() 抛出了 timeout 和 sleep&quot;</span>)</span><br><span class="line">            <span class="keyword">yield</span> env.timeout(randint(<span class="number">60</span>, <span class="number">360</span>)) &amp; self.bat_ctrl_sleep</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;drive() 恢复了&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;End parking at: &quot;</span>, env.now)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 电池充电进程</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">bat_ctrl</span>(<span class="params">self, env</span>):</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Charge sleep at: &quot;</span>, env.now)</span><br><span class="line">            <span class="comment"># 挂起。接收到 drive() 中的事件发生后恢复</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;bat_ctrl() 抛出了 reactivate&quot;</span>)</span><br><span class="line">            <span class="keyword">yield</span> self.bat_ctrl_reactivate</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;bat_ctrl() 恢复了&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Charge activate at: &quot;</span>, env.now)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;bat_ctrl() 抛出了 timeout&quot;</span>)</span><br><span class="line">            <span class="keyword">yield</span> env.timeout(randint(<span class="number">30</span>, <span class="number">90</span>))</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;bat_ctrl() 恢复了&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Charge end at:&quot;</span>, env.now)</span><br><span class="line">            <span class="comment"># 这段代码应该是指触发事件并成功</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;bat_ctrl() 触发了 sleep 并成功&quot;</span>)</span><br><span class="line">            self.bat_ctrl_sleep.succeed()</span><br><span class="line">            self.bat_ctrl_sleep = env.event()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    env = simpy.Environment()</span><br><span class="line">    <span class="comment"># 下面这一步执行了 init()</span></span><br><span class="line">    ENV(env)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;env 开始模拟...&quot;</span>)</span><br><span class="line">    env.run(until=<span class="number">300</span>)</span><br></pre></td></tr></table></figure>
 </details>
 <p>汽车的进程需要引用环境（<code>env</code>）来创建新的事件。汽车的行为被描述成一个无限循环。记住，这个函数是一个生成器。尽管它永远不会终止，但一旦到达 <code>yield</code> 语句，它会将控制流传回仿真程序。触发生成的事件后（<code>事件发生</code>），模拟将在此语句中恢复该函数。</p>
 <p>可以看到，首先进行了 <code>env</code> 的初始化，进程并没有执行；<code>env.run()</code> 后，进程开始执行，个人感觉在 env 环境内进程是同时的，代码是按加入 process 的顺序执行的。</p>
 <details>
 <p><summary>查看运行结果</summary></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1">执行了 <span class="ex">2</span> 个 process</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">创建了 <span class="ex">2</span> 个事件</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="fu">env</span> 开始模拟...</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="ex">Start</span> driving at:  0</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="fu">drive()</span> 抛出了 <span class="ex">timeout</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="ex">Charge</span> sleep at:  0</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="fu">bat_ctrl()</span> 抛出了 <span class="ex">reactivate</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="fu">drive()</span> 恢复了</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="ex">End</span> driving at:  29</a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="ex">Start</span> parking at:  29</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="fu">drive()</span> 触发了 <span class="ex">reactivate</span> 并成功</a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="fu">drive()</span> 抛出了 <span class="ex">timeout</span> 和 sleep</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="fu">bat_ctrl()</span> 恢复了</a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="ex">Charge</span> activate at:  29</a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="fu">bat_ctrl()</span> 抛出了 <span class="ex">timeout</span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="fu">bat_ctrl()</span> 恢复了</a>
-<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="ex">Charge</span> end at: 60</a>
-<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="fu">bat_ctrl()</span> 触发了 <span class="fu">sleep</span> 并成功</a>
-<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="ex">Charge</span> sleep at:  60</a>
-<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="fu">bat_ctrl()</span> 抛出了 <span class="ex">reactivate</span></a>
-<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="fu">drive()</span> 恢复了</a>
-<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="ex">End</span> parking at:  131</a>
-<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="ex">Start</span> driving at:  131</a>
-<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="fu">drive()</span> 抛出了 <span class="ex">timeout</span></a>
-<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="fu">drive()</span> 恢复了</a>
-<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="ex">End</span> driving at:  169</a>
-<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="ex">Start</span> parking at:  169</a>
-<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="fu">drive()</span> 触发了 <span class="ex">reactivate</span> 并成功</a>
-<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="fu">drive()</span> 抛出了 <span class="ex">timeout</span> 和 sleep</a>
-<a class="sourceLine" id="cb5-30" data-line-number="30"><span class="fu">bat_ctrl()</span> 恢复了</a>
-<a class="sourceLine" id="cb5-31" data-line-number="31"><span class="ex">Charge</span> activate at:  169</a>
-<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="fu">bat_ctrl()</span> 抛出了 <span class="ex">timeout</span></a>
-<a class="sourceLine" id="cb5-33" data-line-number="33"><span class="fu">bat_ctrl()</span> 恢复了</a>
-<a class="sourceLine" id="cb5-34" data-line-number="34"><span class="ex">Charge</span> end at: 226</a>
-<a class="sourceLine" id="cb5-35" data-line-number="35"><span class="fu">bat_ctrl()</span> 触发了 <span class="fu">sleep</span> 并成功</a>
-<a class="sourceLine" id="cb5-36" data-line-number="36"><span class="ex">Charge</span> sleep at:  226</a>
-<a class="sourceLine" id="cb5-37" data-line-number="37"><span class="fu">bat_ctrl()</span> 抛出了 <span class="ex">reactivate</span></a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">执行了 2 个 process</span><br><span class="line">创建了 2 个事件</span><br><span class="line"><span class="built_in">env</span> 开始模拟...</span><br><span class="line">Start driving at:  0</span><br><span class="line">drive() 抛出了 <span class="built_in">timeout</span></span><br><span class="line">Charge <span class="built_in">sleep</span> at:  0</span><br><span class="line">bat_ctrl() 抛出了 reactivate</span><br><span class="line">drive() 恢复了</span><br><span class="line">End driving at:  29</span><br><span class="line">Start parking at:  29</span><br><span class="line">drive() 触发了 reactivate 并成功</span><br><span class="line">drive() 抛出了 <span class="built_in">timeout</span> 和 <span class="built_in">sleep</span></span><br><span class="line">bat_ctrl() 恢复了</span><br><span class="line">Charge activate at:  29</span><br><span class="line">bat_ctrl() 抛出了 <span class="built_in">timeout</span></span><br><span class="line">bat_ctrl() 恢复了</span><br><span class="line">Charge end at: 60</span><br><span class="line">bat_ctrl() 触发了 <span class="built_in">sleep</span> 并成功</span><br><span class="line">Charge <span class="built_in">sleep</span> at:  60</span><br><span class="line">bat_ctrl() 抛出了 reactivate</span><br><span class="line">drive() 恢复了</span><br><span class="line">End parking at:  131</span><br><span class="line">Start driving at:  131</span><br><span class="line">drive() 抛出了 <span class="built_in">timeout</span></span><br><span class="line">drive() 恢复了</span><br><span class="line">End driving at:  169</span><br><span class="line">Start parking at:  169</span><br><span class="line">drive() 触发了 reactivate 并成功</span><br><span class="line">drive() 抛出了 <span class="built_in">timeout</span> 和 <span class="built_in">sleep</span></span><br><span class="line">bat_ctrl() 恢复了</span><br><span class="line">Charge activate at:  169</span><br><span class="line">bat_ctrl() 抛出了 <span class="built_in">timeout</span></span><br><span class="line">bat_ctrl() 恢复了</span><br><span class="line">Charge end at: 226</span><br><span class="line">bat_ctrl() 触发了 <span class="built_in">sleep</span> 并成功</span><br><span class="line">Charge <span class="built_in">sleep</span> at:  226</span><br><span class="line">bat_ctrl() 抛出了 reactivate</span><br></pre></td></tr></table></figure>
 </details>
 <h3 id="example-2.3">Example 2.3</h3>
 <p><code>进程的中断。</code></p>
 <details>
 <p><summary>在电动汽车还在充电过程中，接到一个紧急通知，需要中断充电进程马上出门</summary></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="im">from</span> random <span class="im">import</span> seed, randint</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"> </a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="im">import</span> simpy</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">seed(<span class="dv">23</span>)</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"> </a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="kw">class</span> EV:</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, env):</a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">        <span class="va">self</span>.env <span class="op">=</span> env</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">        <span class="va">self</span>.drive_proc <span class="op">=</span> env.process(<span class="va">self</span>.drive(env))</a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"> </a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"> </a>
-<a class="sourceLine" id="cb6-12" data-line-number="12">    <span class="kw">def</span> drive(<span class="va">self</span>, env):</a>
-<a class="sourceLine" id="cb6-13" data-line-number="13">        <span class="cf">while</span> <span class="va">True</span>:</a>
-<a class="sourceLine" id="cb6-14" data-line-number="14">            <span class="co"># 行驶20-40分钟</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15">            <span class="cf">yield</span> env.timeout(randint(<span class="dv">20</span>, <span class="dv">40</span>))</a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"> </a>
-<a class="sourceLine" id="cb6-17" data-line-number="17">            <span class="co"># 停车1小时</span></a>
-<a class="sourceLine" id="cb6-18" data-line-number="18">            <span class="bu">print</span>(<span class="st">&#39;开始停车时间&#39;</span>, env.now)</a>
-<a class="sourceLine" id="cb6-19" data-line-number="19">            charging <span class="op">=</span> env.process(<span class="va">self</span>.bat_ctrl(env))</a>
-<a class="sourceLine" id="cb6-20" data-line-number="20">            <span class="bu">print</span>(<span class="st">&quot;设置了 timeout&quot;</span>)</a>
-<a class="sourceLine" id="cb6-21" data-line-number="21">            parking <span class="op">=</span> env.timeout(<span class="dv">60</span>)</a>
-<a class="sourceLine" id="cb6-22" data-line-number="22">            <span class="bu">print</span>(<span class="st">&quot;抛出了事件&quot;</span>)</a>
-<a class="sourceLine" id="cb6-23" data-line-number="23">            <span class="cf">yield</span> charging <span class="op">|</span> parking</a>
-<a class="sourceLine" id="cb6-24" data-line-number="24">            <span class="cf">if</span> <span class="kw">not</span> charging.triggered:</a>
-<a class="sourceLine" id="cb6-25" data-line-number="25">                <span class="co"># 中断充电</span></a>
-<a class="sourceLine" id="cb6-26" data-line-number="26">                charging.interrupt(<span class="st">&#39;该出发了！&#39;</span>)</a>
-<a class="sourceLine" id="cb6-27" data-line-number="27">            <span class="bu">print</span>(<span class="st">&#39;结束停车时间：&#39;</span>, env.now)</a>
-<a class="sourceLine" id="cb6-28" data-line-number="28">            </a>
-<a class="sourceLine" id="cb6-29" data-line-number="29">              </a>
-<a class="sourceLine" id="cb6-30" data-line-number="30">    <span class="kw">def</span> bat_ctrl(<span class="va">self</span>, env):</a>
-<a class="sourceLine" id="cb6-31" data-line-number="31">        <span class="bu">print</span>(<span class="st">&#39;充电器启动时间：&#39;</span>, env.now)</a>
-<a class="sourceLine" id="cb6-32" data-line-number="32">        <span class="cf">try</span>:</a>
-<a class="sourceLine" id="cb6-33" data-line-number="33">            <span class="cf">yield</span> env.timeout(randint(<span class="dv">60</span>, <span class="dv">90</span>))</a>
-<a class="sourceLine" id="cb6-34" data-line-number="34">            <span class="bu">print</span>(<span class="st">&#39;充电器完成时间：&#39;</span>, env.now)</a>
-<a class="sourceLine" id="cb6-35" data-line-number="35">        <span class="cf">except</span> simpy.Interrupt <span class="im">as</span> i:</a>
-<a class="sourceLine" id="cb6-36" data-line-number="36">            <span class="co"># 充电被中断</span></a>
-<a class="sourceLine" id="cb6-37" data-line-number="37">            <span class="bu">print</span>(<span class="st">&#39;充电器中断时间：&#39;</span>, env.now, <span class="st">&#39;, msg:&#39;</span>, i.cause)        </a>
-<a class="sourceLine" id="cb6-38" data-line-number="38">        </a>
-<a class="sourceLine" id="cb6-39" data-line-number="39">env <span class="op">=</span> simpy.Environment()</a>
-<a class="sourceLine" id="cb6-40" data-line-number="40">ev <span class="op">=</span> EV(env)</a>
-<a class="sourceLine" id="cb6-41" data-line-number="41">env.run(until<span class="op">=</span><span class="dv">100</span>)</a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> seed, randint</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line">seed(<span class="number">23</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EV</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, env</span>):</span><br><span class="line">        self.env = env</span><br><span class="line">        self.drive_proc = env.process(self.drive(env))</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">drive</span>(<span class="params">self, env</span>):</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="comment"># 行驶20-40分钟</span></span><br><span class="line">            <span class="keyword">yield</span> env.timeout(randint(<span class="number">20</span>, <span class="number">40</span>))</span><br><span class="line"> </span><br><span class="line">            <span class="comment"># 停车1小时</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;开始停车时间&#x27;</span>, env.now)</span><br><span class="line">            charging = env.process(self.bat_ctrl(env))</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;设置了 timeout&quot;</span>)</span><br><span class="line">            parking = env.timeout(<span class="number">60</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;抛出了事件&quot;</span>)</span><br><span class="line">            <span class="keyword">yield</span> charging | parking</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> charging.triggered:</span><br><span class="line">                <span class="comment"># 中断充电</span></span><br><span class="line">                charging.interrupt(<span class="string">&#x27;该出发了！&#x27;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;结束停车时间：&#x27;</span>, env.now)</span><br><span class="line">            </span><br><span class="line">              </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">bat_ctrl</span>(<span class="params">self, env</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;充电器启动时间：&#x27;</span>, env.now)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">yield</span> env.timeout(randint(<span class="number">60</span>, <span class="number">90</span>))</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;充电器完成时间：&#x27;</span>, env.now)</span><br><span class="line">        <span class="keyword">except</span> simpy.Interrupt <span class="keyword">as</span> i:</span><br><span class="line">            <span class="comment"># 充电被中断</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;充电器中断时间：&#x27;</span>, env.now, <span class="string">&#x27;, msg:&#x27;</span>, i.cause)        </span><br><span class="line">        </span><br><span class="line">env = simpy.Environment()</span><br><span class="line">ev = EV(env)</span><br><span class="line">env.run(until=<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
 </details>
 <p>中断另一个进程。可以对进程调用 <code>process.interrupt(xxx)</code>。这将在该进程中引发中断异常，并立即恢复。</p>
 <p><code>simpy.Interrupt.cause</code> 获取 <code>xxx</code> 信息。</p>
 <details>
 <p><summary>查看结果</summary></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1">开始停车时间 <span class="ex">29</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">设置了 <span class="ex">timeout</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">抛出了事件</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">充电器启动时间： <span class="ex">29</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">结束停车时间： <span class="ex">89</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">充电器中断时间： <span class="ex">89</span> , msg: 该出发了！</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">开始停车时间 29</span><br><span class="line">设置了 <span class="built_in">timeout</span></span><br><span class="line">抛出了事件</span><br><span class="line">充电器启动时间： 29</span><br><span class="line">结束停车时间： 89</span><br><span class="line">充电器中断时间： 89 , msg: 该出发了！</span><br></pre></td></tr></table></figure>
 </details>
 </div><div class="story post-story"><h2 id="events">Events</h2>
 <p>SimPy 包含一组用于各种目的的事件类型。它们都继承 <code>simpy.events.Event</code>。</p>
@@ -2893,22 +2728,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h3 id="同时等待多个事件">同时等待多个事件</h3>
 <p>SimPy 提供 AnyOf 和 AllOf 事件，这两个事件都是条件事件。两者都将事件列表作为参数，并在触发任何（至少一个）或所有事件时触发。</p>
 <p>作为 AllOf 和 AnyOf 的简写，可以使用逻辑运算符 &amp;（and）和 |（or）。</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">def</span> test_condition(env):</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">    t1, t2 <span class="op">=</span> env.timeout(<span class="dv">1</span>, value<span class="op">=</span><span class="st">&#39;spam&#39;</span>), env.timeout(<span class="dv">2</span>, value<span class="op">=</span><span class="st">&#39;eggs&#39;</span>)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">    ret <span class="op">=</span> <span class="cf">yield</span> t1 <span class="op">|</span> t2</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">    <span class="cf">assert</span> ret <span class="op">==</span> &#123;t1: <span class="st">&#39;spam&#39;</span>&#125;</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"> </a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">    t1, t2 <span class="op">=</span> env.timeout(<span class="dv">1</span>, value<span class="op">=</span><span class="st">&#39;spam&#39;</span>), env.timeout(<span class="dv">2</span>, value<span class="op">=</span><span class="st">&#39;eggs&#39;</span>)</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">    ret <span class="op">=</span> <span class="cf">yield</span> t1 <span class="op">&amp;</span> t2</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">    <span class="cf">assert</span> ret <span class="op">==</span> &#123;t1: <span class="st">&#39;spam&#39;</span>, t2: <span class="st">&#39;eggs&#39;</span>&#125;</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"> </a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">    <span class="co"># You can also concatenate &amp; and |</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">    e1, e2, e3 <span class="op">=</span> [env.timeout(i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>)]</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">    <span class="cf">yield</span> (e1 <span class="op">|</span> e2) <span class="op">&amp;</span> e3</a>
-<a class="sourceLine" id="cb8-13" data-line-number="13">    <span class="cf">assert</span> <span class="bu">all</span>(e.processed <span class="cf">for</span> e <span class="kw">in</span> [e1, e2, e3])</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"> </a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">proc <span class="op">=</span> env.process(test_condition(env))</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">env.run()</a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_condition</span>(<span class="params">env</span>):</span><br><span class="line">    t1, t2 = env.timeout(<span class="number">1</span>, value=<span class="string">&#x27;spam&#x27;</span>), env.timeout(<span class="number">2</span>, value=<span class="string">&#x27;eggs&#x27;</span>)</span><br><span class="line">    ret = <span class="keyword">yield</span> t1 | t2</span><br><span class="line">    <span class="keyword">assert</span> ret == &#123;t1: <span class="string">&#x27;spam&#x27;</span>&#125;</span><br><span class="line"> </span><br><span class="line">    t1, t2 = env.timeout(<span class="number">1</span>, value=<span class="string">&#x27;spam&#x27;</span>), env.timeout(<span class="number">2</span>, value=<span class="string">&#x27;eggs&#x27;</span>)</span><br><span class="line">    ret = <span class="keyword">yield</span> t1 &amp; t2</span><br><span class="line">    <span class="keyword">assert</span> ret == &#123;t1: <span class="string">&#x27;spam&#x27;</span>, t2: <span class="string">&#x27;eggs&#x27;</span>&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># You can also concatenate &amp; and |</span></span><br><span class="line">    e1, e2, e3 = [env.timeout(i) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>)]</span><br><span class="line">    <span class="keyword">yield</span> (e1 | e2) &amp; e3</span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">all</span>(e.processed <span class="keyword">for</span> e <span class="keyword">in</span> [e1, e2, e3])</span><br><span class="line"> </span><br><span class="line">proc = env.process(test_condition(env))</span><br><span class="line">env.run()</span><br></pre></td></tr></table></figure>
 <p><br> <br> <br></p>
 <p>SimPy 学习</p>
 <ul>
@@ -3108,7 +2928,7 @@ SimPy 简介
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -3119,7 +2939,7 @@ SimPy 简介
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3980,7 +3800,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

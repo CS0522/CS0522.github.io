@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2596,7 +2596,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>203 words</p>
+      <p>192 words</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2629,42 +2629,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>gRPC 该版本在 Ubuntu 22.04 下编译出错。</p>
 <hr />
 </div><div class="story post-story"><h2 id="安装依赖clone-仓库">安装依赖、Clone 仓库</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">sudo</span> apt install -y build-essential autoconf libtool \</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">                pkg-config cmake make git vim</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="fu">git</span> clone --recurse-submodules -b v1.34.0 --depth 1 \</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">          --shallow-submodules https://github.com/grpc/grpc.git</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># 获取已经打包好的</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="fu">wget</span> https://github.com/CS0522/CSBlog/releases/download/coroutine_kvdb_files/grpc-1.34.0.zip</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="fu">unzip</span> grpc-1.34.0.zip</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -y build-essential autoconf libtool \</span><br><span class="line">                pkg-config cmake make git vim</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> --recurse-submodules -b v1.34.0 --depth 1 \</span><br><span class="line">          --shallow-submodules https://github.com/grpc/grpc.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取已经打包好的</span></span><br><span class="line">wget https://github.com/CS0522/CSBlog/releases/download/coroutine_kvdb_files/grpc-1.34.0.zip</span><br><span class="line">unzip grpc-1.34.0.zip</span><br></pre></td></tr></table></figure>
 <hr />
 </div><div class="story post-story"><h2 id="编译">编译</h2>
 <p>一起编译其他依赖库，不需要额外安装。</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="bu">cd</span> grpc</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># 建议不安装在 /usr/local</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="bu">export</span> <span class="va">MY_INSTALL_DIR=$HOME</span>/.local</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="fu">mkdir</span> -p <span class="va">$MY_INSTALL_DIR</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="bu">export</span> <span class="va">PATH=</span><span class="st">&quot;</span><span class="va">$MY_INSTALL_DIR</span><span class="st">/bin:</span><span class="va">$PATH</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="fu">mkdir</span> -p cmake/build</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="bu">pushd</span> cmake/build</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="fu">cmake</span> -DgRPC_INSTALL=ON \</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">      -DgRPC_BUILD_TESTS=OFF \</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">      -DCMAKE_INSTALL_PREFIX=<span class="va">$MY_INSTALL_DIR</span> \</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">      ../..</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="fu">make</span> -j16</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="fu">sudo</span> make install</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="bu">popd</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co"># 再将 PATH 写入 /etc/profile 或 ~/.bashrc</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="ex">vim</span> ~/.bashrc</a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="bu">export</span> <span class="va">export</span> <span class="va">PATH=</span><span class="st">&quot;</span><span class="va">$HOME</span><span class="st">/.local/bin:</span><span class="va">$PATH</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="bu">source</span> ~/.bashrc</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> grpc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 建议不安装在 /usr/local</span></span><br><span class="line"><span class="built_in">export</span> MY_INSTALL_DIR=<span class="variable">$HOME</span>/.local</span><br><span class="line"><span class="built_in">mkdir</span> -p <span class="variable">$MY_INSTALL_DIR</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;<span class="variable">$MY_INSTALL_DIR</span>/bin:<span class="variable">$PATH</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p cmake/build</span><br><span class="line"><span class="built_in">pushd</span> cmake/build</span><br><span class="line">cmake -DgRPC_INSTALL=ON \</span><br><span class="line">      -DgRPC_BUILD_TESTS=OFF \</span><br><span class="line">      -DCMAKE_INSTALL_PREFIX=<span class="variable">$MY_INSTALL_DIR</span> \</span><br><span class="line">      ../..</span><br><span class="line">make -j16</span><br><span class="line">sudo make install</span><br><span class="line"><span class="built_in">popd</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 再将 PATH 写入 /etc/profile 或 ~/.bashrc</span></span><br><span class="line">vim ~/.bashrc</span><br><span class="line"><span class="built_in">export</span> <span class="built_in">export</span> PATH=<span class="string">&quot;<span class="variable">$HOME</span>/.local/bin:<span class="variable">$PATH</span>&quot;</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
 <hr />
 </div><div class="story post-story"><h2 id="proto-文件生成命令">proto 文件生成命令</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="ex">protoc</span> --cpp_out=./include --grpc_out=./include --plugin=protoc-gen-grpc=<span class="kw">`</span><span class="fu">which</span> grpc_cpp_plugin<span class="kw">`</span> -I./proto db.proto</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc --cpp_out=./include --grpc_out=./include --plugin=protoc-gen-grpc=`<span class="built_in">which</span> grpc_cpp_plugin` -I./proto db.proto</span><br></pre></td></tr></table></figure>
 
 </div>
   </div>
@@ -2787,7 +2759,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 CPU 利用率统计
 与 top 命令结果一致。
-inline double calculate_cpu_utilization(uint64_t &am...</p>
+1234567891011121314151617181920212223242526272829303...</p>
         </a>
       
     </div>
@@ -2844,7 +2816,7 @@ inline double calculate_cpu_utilization(uint64_t &am...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2855,7 +2827,7 @@ inline double calculate_cpu_utilization(uint64_t &am...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3716,7 +3688,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

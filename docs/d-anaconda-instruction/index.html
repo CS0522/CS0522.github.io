@@ -1765,7 +1765,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2595,7 +2595,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：155 字</p>
+      <p>字数：142 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2621,54 +2621,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <p>记录 Anaconda3 的使用方法</p>
 <span id="more"></span>
 <div class="story post-story"><h2 id="install">Install</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">wget</span> -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="fu">sudo</span> gedit ~/.bashrc</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># .bashrc</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="bu">export</span> <span class="va">PATH=</span><span class="st">&quot;/home/&lt;username&gt;/anaconda3/bin:</span><span class="va">$PATH</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="bu">source</span> ~/.bashrc</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh</span><br><span class="line"></span><br><span class="line">sudo gedit ~/.bashrc</span><br><span class="line"><span class="comment"># .bashrc</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;/home/&lt;username&gt;/anaconda3/bin:<span class="variable">$PATH</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
 </div><div class="story post-story"><h2 id="use">Use</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># set no auto activate</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="ex">conda</span> config --set auto_activate_base false</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># create a new env</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="ex">conda</span> create -n <span class="op">&lt;</span>env_name<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co"># check all envs</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="ex">conda</span> info --envs</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co"># activate the env</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="ex">conda</span> activate <span class="op">&lt;</span>env_name<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co"># deactivate env</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="ex">conda</span> deactivate <span class="op">&lt;</span>env_name<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co"># install package</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="ex">conda</span> install <span class="op">&lt;</span>package_name<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co"># list packages</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="ex">conda</span> list</a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co"># remove env</span></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="ex">conda</span> remove -n <span class="op">&lt;</span>env_name<span class="op">&gt;</span> --all</a>
-<a class="sourceLine" id="cb2-24" data-line-number="24"></a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co"># set one env&#39;s python version</span></a>
-<a class="sourceLine" id="cb2-26" data-line-number="26"><span class="ex">conda</span> install python==3.8 -n <span class="st">&quot;&lt;env_name&gt;&quot;</span></a>
-<a class="sourceLine" id="cb2-27" data-line-number="27"></a>
-<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="co"># if pip failed</span></a>
-<a class="sourceLine" id="cb2-29" data-line-number="29"><span class="co"># Linux</span></a>
-<a class="sourceLine" id="cb2-30" data-line-number="30"><span class="fu">sudo</span> mkdir ~/.pip</a>
-<a class="sourceLine" id="cb2-31" data-line-number="31"></a>
-<a class="sourceLine" id="cb2-32" data-line-number="32"><span class="fu">sudo</span> touch ~/.pip/pip.conf</a>
-<a class="sourceLine" id="cb2-33" data-line-number="33"></a>
-<a class="sourceLine" id="cb2-34" data-line-number="34"><span class="fu">sudo</span> vim ~/.pip/pip.conf</a>
-<a class="sourceLine" id="cb2-35" data-line-number="35"></a>
-<a class="sourceLine" id="cb2-36" data-line-number="36"><span class="co"># in pip.conf</span></a>
-<a class="sourceLine" id="cb2-37" data-line-number="37">[<span class="ex">global</span>]</a>
-<a class="sourceLine" id="cb2-38" data-line-number="38"><span class="ex">index-url</span> = https://pypi.tuna.tsinghua.edu.cn/simple</a>
-<a class="sourceLine" id="cb2-39" data-line-number="39">[<span class="ex">install</span>]</a>
-<a class="sourceLine" id="cb2-40" data-line-number="40"><span class="ex">trusted-host</span>=mirrors.aliyun.com</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># set no auto activate</span></span><br><span class="line">conda config --<span class="built_in">set</span> auto_activate_base <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># create a new env</span></span><br><span class="line">conda create -n &lt;env_name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># check all envs</span></span><br><span class="line">conda info --envs</span><br><span class="line"></span><br><span class="line"><span class="comment"># activate the env</span></span><br><span class="line">conda activate &lt;env_name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># deactivate env</span></span><br><span class="line">conda deactivate &lt;env_name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># install package</span></span><br><span class="line">conda install &lt;package_name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># list packages</span></span><br><span class="line">conda list</span><br><span class="line"></span><br><span class="line"><span class="comment"># remove env</span></span><br><span class="line">conda remove -n &lt;env_name&gt; --all</span><br><span class="line"></span><br><span class="line"><span class="comment"># set one env&#x27;s python version</span></span><br><span class="line">conda install python==3.8 -n <span class="string">&quot;&lt;env_name&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># if pip failed</span></span><br><span class="line"><span class="comment"># Linux</span></span><br><span class="line">sudo <span class="built_in">mkdir</span> ~/.pip</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">touch</span> ~/.pip/pip.conf</span><br><span class="line"></span><br><span class="line">sudo vim ~/.pip/pip.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># in pip.conf</span></span><br><span class="line">[global]</span><br><span class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 </div>
   </div>
@@ -2793,7 +2748,7 @@ SSH key
 
 创建 SSH key
 
-ssh-keygen -t rsa -C &quot;812359326@qq...</p>
+1ssh-keygen -t rsa -C &quot;812359326@q...</p>
         </a>
       
       
@@ -2865,7 +2820,7 @@ Based on Hexo &amp; Volantis
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2876,7 +2831,7 @@ Based on Hexo &amp; Volantis
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3737,7 +3692,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

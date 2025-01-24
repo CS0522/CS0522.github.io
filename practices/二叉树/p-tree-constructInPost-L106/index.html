@@ -1767,7 +1767,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2640,55 +2640,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </div><div class="story post-story"><h2 id="代码">代码</h2>
 <p>思路 1：</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">class</span> Solution &#123;</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">public</span>:</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    TreeNode* buildTree(vector&lt;<span class="dt">int</span>&gt;&amp; inorder, vector&lt;<span class="dt">int</span>&gt;&amp; postorder) &#123;</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">        <span class="co">// 空节点</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">        <span class="cf">if</span> (!inorder.size())</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">            <span class="cf">return</span> <span class="kw">nullptr</span>;</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">        <span class="co">// 后序遍历的最后一个节点为当前的根节点</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">        <span class="dt">int</span> root_val = postorder[postorder.size() - <span class="dv">1</span>];</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">        postorder.pop_back();</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">        TreeNode* root = <span class="kw">new</span> TreeNode(root_val);</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">        <span class="co">// 后序遍历顺序：左右根，反构造时先构造右节点</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">        vector&lt;<span class="dt">int</span>&gt;::iterator root_iter = find(inorder.begin(), inorder.end(), root_val);</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">        vector&lt;<span class="dt">int</span>&gt; left_inorder(inorder.begin(), root_iter);</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">        vector&lt;<span class="dt">int</span>&gt; right_inorder(root_iter + <span class="dv">1</span>, inorder.end());</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">        </a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">        root-&gt;right = buildTree(right_inorder, postorder);</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">        root-&gt;left = buildTree(left_inorder, postorder);</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">        <span class="cf">return</span> root;</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">    &#125;</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">&#125;;</a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">buildTree</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; inorder, vector&lt;<span class="type">int</span>&gt;&amp; postorder)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 空节点</span></span><br><span class="line">        <span class="keyword">if</span> (!inorder.<span class="built_in">size</span>())</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="comment">// 后序遍历的最后一个节点为当前的根节点</span></span><br><span class="line">        <span class="type">int</span> root_val = postorder[postorder.<span class="built_in">size</span>() - <span class="number">1</span>];</span><br><span class="line">        postorder.<span class="built_in">pop_back</span>();</span><br><span class="line">        TreeNode* root = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(root_val);</span><br><span class="line">        <span class="comment">// 后序遍历顺序：左右根，反构造时先构造右节点</span></span><br><span class="line">        vector&lt;<span class="type">int</span>&gt;::iterator root_iter = <span class="built_in">find</span>(inorder.<span class="built_in">begin</span>(), inorder.<span class="built_in">end</span>(), root_val);</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">left_inorder</span><span class="params">(inorder.begin(), root_iter)</span></span>;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">right_inorder</span><span class="params">(root_iter + <span class="number">1</span>, inorder.end())</span></span>;</span><br><span class="line">        </span><br><span class="line">        root-&gt;right = <span class="built_in">buildTree</span>(right_inorder, postorder);</span><br><span class="line">        root-&gt;left = <span class="built_in">buildTree</span>(left_inorder, postorder);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>思路 1 优化版：</p>
 <p>不需要每次新构建 vectors，直接传入分割的下标。</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">class</span> Solution &#123;</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">public</span>:</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">    TreeNode * build_tree(vector&lt;<span class="dt">int</span>&gt; &amp;inorder, vector&lt;<span class="dt">int</span>&gt; &amp;postorder, </a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">                        <span class="dt">int</span> inorder_start, <span class="dt">int</span> inorder_end)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">    &#123;</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">        <span class="co">// 空节点</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">        <span class="cf">if</span> ((inorder_end - inorder_start) == <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">            <span class="cf">return</span> <span class="kw">nullptr</span>;</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">        <span class="co">// 后序遍历的最后一个节点为当前的根节点</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">        <span class="dt">int</span> root_val = postorder[postorder.size() - <span class="dv">1</span>];</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">        postorder.pop_back();</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">        TreeNode *root = <span class="kw">new</span> TreeNode(root_val);</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">        <span class="co">// 分割中序遍历</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">        vector&lt;<span class="dt">int</span>&gt;::iterator root_iter = find(inorder.begin() + inorder_start, inorder.begin() + inorder_end, root_val);</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">        <span class="dt">int</span> root_index = (root_iter - inorder.begin());</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">        root-&gt;right = build_tree(inorder, postorder, root_index + <span class="dv">1</span>, inorder_end);</a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">        root-&gt;left = build_tree(inorder, postorder, inorder_start, root_index);</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">        <span class="cf">return</span> root;</a>
-<a class="sourceLine" id="cb2-21" data-line-number="21">    &#125;</a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23">    TreeNode* buildTree(vector&lt;<span class="dt">int</span>&gt;&amp; inorder, vector&lt;<span class="dt">int</span>&gt;&amp; postorder) &#123;</a>
-<a class="sourceLine" id="cb2-24" data-line-number="24">        <span class="cf">return</span> build_tree(inorder, postorder, <span class="dv">0</span>, inorder.size());</a>
-<a class="sourceLine" id="cb2-25" data-line-number="25">    &#125;</a>
-<a class="sourceLine" id="cb2-26" data-line-number="26">&#125;;</a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode * <span class="title">build_tree</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp;inorder, vector&lt;<span class="type">int</span>&gt; &amp;postorder, </span></span></span><br><span class="line"><span class="params"><span class="function">                        <span class="type">int</span> inorder_start, <span class="type">int</span> inorder_end)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 空节点</span></span><br><span class="line">        <span class="keyword">if</span> ((inorder_end - inorder_start) == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="comment">// 后序遍历的最后一个节点为当前的根节点</span></span><br><span class="line">        <span class="type">int</span> root_val = postorder[postorder.<span class="built_in">size</span>() - <span class="number">1</span>];</span><br><span class="line">        postorder.<span class="built_in">pop_back</span>();</span><br><span class="line">        TreeNode *root = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(root_val);</span><br><span class="line">        <span class="comment">// 分割中序遍历</span></span><br><span class="line">        vector&lt;<span class="type">int</span>&gt;::iterator root_iter = <span class="built_in">find</span>(inorder.<span class="built_in">begin</span>() + inorder_start, inorder.<span class="built_in">begin</span>() + inorder_end, root_val);</span><br><span class="line">        <span class="type">int</span> root_index = (root_iter - inorder.<span class="built_in">begin</span>());</span><br><span class="line"></span><br><span class="line">        root-&gt;right = <span class="built_in">build_tree</span>(inorder, postorder, root_index + <span class="number">1</span>, inorder_end);</span><br><span class="line">        root-&gt;left = <span class="built_in">build_tree</span>(inorder, postorder, inorder_start, root_index);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">TreeNode* <span class="title">buildTree</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; inorder, vector&lt;<span class="type">int</span>&gt;&amp; postorder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">build_tree</span>(inorder, postorder, <span class="number">0</span>, inorder.<span class="built_in">size</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 </div>
   </div>
@@ -2876,7 +2831,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2887,7 +2842,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3748,7 +3703,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

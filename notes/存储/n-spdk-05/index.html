@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2644,55 +2644,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </div><div class="story post-story"><h2 id="perf-同时测试多个-target设置指定数目-qp">perf 同时测试多个 Target、设置指定数目 QP</h2>
 <p>建立环境的操作见 <a href="/notes/%E5%AD%98%E5%82%A8/n-spdk-02/" title="【学习笔记】SPDK（二）：SPDK NVMe over RDMA 部署">【学习笔记】SPDK（二）：SPDK NVMe over RDMA 部署</a>。</p>
 <p>Host 端：</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">./build/bin/spdk_nvme_perf</span> -r <span class="st">&#39;trtype:rdma adrfam:IPv4 traddr:192.168.246.130 trsvcid:4420&#39;</span> -r <span class="st">&#39;trtype:rdma adrfam:IPv4 traddr:192.168.246.131 trsvcid:4420&#39;</span> -r <span class="st">&#39;trtype:rdma adrfam:IPv4 traddr:192.168.246.132 trsvcid:4420&#39;</span> -q 256 -o 4096 -w randrw -M 50 -t 5 -P 1 -G -LL -l --transport-stats</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"># 一些参数含义</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># -r, --transport &lt;fmt&gt; Transport ID for local PCIe NVMe or NVMeoF</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co"># 对于同时测试多块盘，只需要添加多个 -r 指定设备地址即可</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># -q, --io-depth &lt;val&gt; io depth</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># -o, --io-size &lt;val&gt; io size in bytes</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co"># -w, --io-pattern &lt;pattern&gt; io pattern type, must be one of: </span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co"># (read, write, randread, randwrite, rw, randrw)</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"># -M, --rwmixread &lt;0-100&gt; rwmixread (100 for reads, 0 for writes)</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"># -t, --time &lt;sec&gt; time in seconds</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co"># -P, --num-qpairs &lt;val&gt; number of io queues per namespace. default: 1</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co"># -L, --enable-sw-latency-tracking enable latency tracking via sw, -LL for detailed histogram, default: disabled</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co"># -l, --enable-ssd-latency-tracking enable latency tracking via ssd (if supported), default: disabled</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co"># -G, --enable-debug enable debug logging</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co"># --transport-stats dump transport statistics</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co"># 更多参数含义可以见 --help 或源代码中的 usage() 函数</span></a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">./build/bin/spdk_nvme_perf -r <span class="string">&#x27;trtype:rdma adrfam:IPv4 traddr:192.168.246.130 trsvcid:4420&#x27;</span> -r <span class="string">&#x27;trtype:rdma adrfam:IPv4 traddr:192.168.246.131 trsvcid:4420&#x27;</span> -r <span class="string">&#x27;trtype:rdma adrfam:IPv4 traddr:192.168.246.132 trsvcid:4420&#x27;</span> -q 256 -o 4096 -w randrw -M 50 -t 5 -P 1 -G -LL -l --transport-stats</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一些参数含义</span></span><br><span class="line"><span class="comment"># -r, --transport &lt;fmt&gt; Transport ID for local PCIe NVMe or NVMeoF</span></span><br><span class="line"><span class="comment"># 对于同时测试多块盘，只需要添加多个 -r 指定设备地址即可</span></span><br><span class="line"><span class="comment"># -q, --io-depth &lt;val&gt; io depth</span></span><br><span class="line"><span class="comment"># -o, --io-size &lt;val&gt; io size in bytes</span></span><br><span class="line"><span class="comment"># -w, --io-pattern &lt;pattern&gt; io pattern type, must be one of: </span></span><br><span class="line"><span class="comment"># (read, write, randread, randwrite, rw, randrw)</span></span><br><span class="line"><span class="comment"># -M, --rwmixread &lt;0-100&gt; rwmixread (100 for reads, 0 for writes)</span></span><br><span class="line"><span class="comment"># -t, --time &lt;sec&gt; time in seconds</span></span><br><span class="line"><span class="comment"># -P, --num-qpairs &lt;val&gt; number of io queues per namespace. default: 1</span></span><br><span class="line"><span class="comment"># -L, --enable-sw-latency-tracking enable latency tracking via sw, -LL for detailed histogram, default: disabled</span></span><br><span class="line"><span class="comment"># -l, --enable-ssd-latency-tracking enable latency tracking via ssd (if supported), default: disabled</span></span><br><span class="line"><span class="comment"># -G, --enable-debug enable debug logging</span></span><br><span class="line"><span class="comment"># --transport-stats dump transport statistics</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 更多参数含义可以见 --help 或源代码中的 usage() 函数</span></span><br></pre></td></tr></table></figure>
 <hr />
 </div><div class="story post-story"><h2 id="每个-qp-映射一个-target">每个 QP 映射一个 Target</h2>
 <p>本身就是，每个 <code>NS</code> 建立 1 个 <code>QP</code>，而每个 <code>Target</code> 只有 1 个 <code>NS</code>。</p>
 <hr />
 </div><div class="story post-story"><h2 id="perf-当前-io-任务下发回收逻辑">perf 当前 IO 任务下发、回收逻辑</h2>
 <p>简洁版：</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">/*** 下发 ***/</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">foreach (ns_ctx) &#123;</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="cf">while</span> (queue_depth-- &gt; <span class="dv">0</span>) &#123;</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">        ... <span class="co">// 创建一个 task</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">        ... <span class="co">// 发送 task</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">            ... <span class="co">// 经过多层调用、每层都会对 task 某些字段进行配置</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">            submit_single_io(task): <span class="co">// 这一层设置了 random offset 和 random read/write</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">            nvme_submit_io(task):</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">                ... <span class="co">// 通过 io_complete callback 关联 req 与 task</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">                ... <span class="co">// 创建 nvme_req、rdma_req、ibv_send_wr 等</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">                qp_send_wrs(send_wr); <span class="co">// 最终发送 send_wr</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">    &#125;</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">&#125;</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">/*** 回收 ***/</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">...</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">process_recv_completion(...):</a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">    ... <span class="co">// rdma_req 打上 RECV_COMPLETED 标记</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">    ... <span class="co">// 因为是同一个 rdma_req，所以在发送成功后已经有 SEND_COMPLETED 标记</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">    ... <span class="co">// 如果同时有 RECV 和 SEND 完成标记，则会进行下一步</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21">    io_complete(task):</a>
-<a class="sourceLine" id="cb2-22" data-line-number="22">        task_complete(task):</a>
-<a class="sourceLine" id="cb2-23" data-line-number="23">            <span class="cf">if</span> (ns_ctx-&gt;is_draining): free(task); <span class="co">// 如果超过时间，则开始释放 IO 任务</span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24">            <span class="cf">else</span>: submit_single_io(task):</a>
-<a class="sourceLine" id="cb2-25" data-line-number="25">                ... <span class="co">// 没有超过时间，则会重新利用 task、设置 random offset 和 random read/write</span></a></code></pre></div>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*** 下发 ***/</span></span><br><span class="line">foreach (ns_ctx) &#123;</span><br><span class="line">    <span class="keyword">while</span> (queue_depth-- &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        ... <span class="comment">// 创建一个 task</span></span><br><span class="line">        ... <span class="comment">// 发送 task</span></span><br><span class="line">            ... <span class="comment">// 经过多层调用、每层都会对 task 某些字段进行配置</span></span><br><span class="line">            submit_single_io(task): <span class="comment">// 这一层设置了 random offset 和 random read/write</span></span><br><span class="line">            nvme_submit_io(task):</span><br><span class="line">                ... <span class="comment">// 通过 io_complete callback 关联 req 与 task</span></span><br><span class="line">                ... <span class="comment">// 创建 nvme_req、rdma_req、ibv_send_wr 等</span></span><br><span class="line">                qp_send_wrs(send_wr); <span class="comment">// 最终发送 send_wr</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*** 回收 ***/</span></span><br><span class="line">...</span><br><span class="line">process_recv_completion(...):</span><br><span class="line">    ... <span class="comment">// rdma_req 打上 RECV_COMPLETED 标记</span></span><br><span class="line">    ... <span class="comment">// 因为是同一个 rdma_req，所以在发送成功后已经有 SEND_COMPLETED 标记</span></span><br><span class="line">    ... <span class="comment">// 如果同时有 RECV 和 SEND 完成标记，则会进行下一步</span></span><br><span class="line">    io_complete(task):</span><br><span class="line">        task_complete(task):</span><br><span class="line">            <span class="keyword">if</span> (ns_ctx-&gt;is_draining): <span class="built_in">free</span>(task); <span class="comment">// 如果超过时间，则开始释放 IO 任务</span></span><br><span class="line">            <span class="keyword">else</span>: submit_single_io(task):</span><br><span class="line">                ... <span class="comment">// 没有超过时间，则会重新利用 task、设置 random offset 和 random read/write</span></span><br></pre></td></tr></table></figure>
 <p>重要的点在于<strong>如果没有超过时间，接收到的 req 对应的 task 会被重新利用，buffer 的地址不变、但 random offset 和 random read/write 的值会发生随机改变。</strong></p>
 <hr />
 </div><div class="story post-story"><h2 id="各层的-req-与-task-关联以及互相关联">各层的 req 与 task 关联以及互相关联</h2>
@@ -2903,10 +2862,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 使用小结
 运行
-# 1. 调用 sh 命令（不推荐）
-sh ./setup_rdma.sh
-
-...</p>
+123456# 1. 调用 sh 命令（不推荐）sh ./setup_rdma...</p>
         </a>
       
       
@@ -2981,7 +2937,7 @@ NVMe
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2992,7 +2948,7 @@ NVMe
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3853,7 +3809,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

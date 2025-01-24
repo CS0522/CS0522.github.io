@@ -1767,7 +1767,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2636,68 +2636,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>栈和队列的特性。</li>
 </ul>
 </div><div class="story post-story"><h2 id="代码">代码</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">class</span> MyQueue &#123;</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">private</span>:</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    stack&lt;<span class="dt">int</span>&gt; st;</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">    stack&lt;<span class="dt">int</span>&gt; tmp_st;</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">    </a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">public</span>:</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">    MyQueue() &#123;</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">    &#125;</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">    </a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">    <span class="dt">void</span> push(<span class="dt">int</span> x) &#123;</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">        <span class="kw">this</span>-&gt;st.push(x);</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">    &#125;</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">    </a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">    <span class="dt">int</span> pop() &#123;</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">        <span class="cf">while</span> (!st.empty())</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">        &#123;</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">            tmp_st.push(st.top());</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">            st.pop();</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">        &#125;</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">        <span class="kw">auto</span> res = tmp_st.top();</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">        tmp_st.pop();</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">        <span class="co">// 元素还回 st</span></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">        <span class="cf">while</span> (!tmp_st.empty())</a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">        &#123;</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">            st.push(tmp_st.top());</a>
-<a class="sourceLine" id="cb1-26" data-line-number="26">            tmp_st.pop();</a>
-<a class="sourceLine" id="cb1-27" data-line-number="27">        &#125;</a>
-<a class="sourceLine" id="cb1-28" data-line-number="28"></a>
-<a class="sourceLine" id="cb1-29" data-line-number="29">        <span class="cf">return</span> res;</a>
-<a class="sourceLine" id="cb1-30" data-line-number="30">    &#125;</a>
-<a class="sourceLine" id="cb1-31" data-line-number="31">    </a>
-<a class="sourceLine" id="cb1-32" data-line-number="32">    <span class="dt">int</span> peek() &#123;</a>
-<a class="sourceLine" id="cb1-33" data-line-number="33">        <span class="cf">while</span> (!st.empty())</a>
-<a class="sourceLine" id="cb1-34" data-line-number="34">        &#123;</a>
-<a class="sourceLine" id="cb1-35" data-line-number="35">            tmp_st.push(st.top());</a>
-<a class="sourceLine" id="cb1-36" data-line-number="36">            st.pop();</a>
-<a class="sourceLine" id="cb1-37" data-line-number="37">        &#125;</a>
-<a class="sourceLine" id="cb1-38" data-line-number="38">        <span class="kw">auto</span> res = tmp_st.top();</a>
-<a class="sourceLine" id="cb1-39" data-line-number="39">        <span class="co">// tmp_st.pop();</span></a>
-<a class="sourceLine" id="cb1-40" data-line-number="40">        <span class="co">// 元素还回 st</span></a>
-<a class="sourceLine" id="cb1-41" data-line-number="41">        <span class="cf">while</span> (!tmp_st.empty())</a>
-<a class="sourceLine" id="cb1-42" data-line-number="42">        &#123;</a>
-<a class="sourceLine" id="cb1-43" data-line-number="43">            st.push(tmp_st.top());</a>
-<a class="sourceLine" id="cb1-44" data-line-number="44">            tmp_st.pop();</a>
-<a class="sourceLine" id="cb1-45" data-line-number="45">        &#125;</a>
-<a class="sourceLine" id="cb1-46" data-line-number="46"></a>
-<a class="sourceLine" id="cb1-47" data-line-number="47">        <span class="cf">return</span> res;</a>
-<a class="sourceLine" id="cb1-48" data-line-number="48">    &#125; </a>
-<a class="sourceLine" id="cb1-49" data-line-number="49">    </a>
-<a class="sourceLine" id="cb1-50" data-line-number="50">    <span class="dt">bool</span> empty() &#123;</a>
-<a class="sourceLine" id="cb1-51" data-line-number="51">        <span class="cf">return</span> (st.empty() &amp;&amp; tmp_st.empty());</a>
-<a class="sourceLine" id="cb1-52" data-line-number="52">    &#125;</a>
-<a class="sourceLine" id="cb1-53" data-line-number="53">&#125;;</a>
-<a class="sourceLine" id="cb1-54" data-line-number="54"></a>
-<a class="sourceLine" id="cb1-55" data-line-number="55"><span class="co">/**</span></a>
-<a class="sourceLine" id="cb1-56" data-line-number="56"><span class="co"> * Your MyQueue object will be instantiated and called as such:</span></a>
-<a class="sourceLine" id="cb1-57" data-line-number="57"><span class="co"> * MyQueue* obj = new MyQueue();</span></a>
-<a class="sourceLine" id="cb1-58" data-line-number="58"><span class="co"> * obj-&gt;push(x);</span></a>
-<a class="sourceLine" id="cb1-59" data-line-number="59"><span class="co"> * int param_2 = obj-&gt;pop();</span></a>
-<a class="sourceLine" id="cb1-60" data-line-number="60"><span class="co"> * int param_3 = obj-&gt;peek();</span></a>
-<a class="sourceLine" id="cb1-61" data-line-number="61"><span class="co"> * bool param_4 = obj-&gt;empty();</span></a>
-<a class="sourceLine" id="cb1-62" data-line-number="62"><span class="co"> */</span></a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyQueue</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    stack&lt;<span class="type">int</span>&gt; st;</span><br><span class="line">    stack&lt;<span class="type">int</span>&gt; tmp_st;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyQueue</span>() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">push</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;st.<span class="built_in">push</span>(x);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (!st.<span class="built_in">empty</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            tmp_st.<span class="built_in">push</span>(st.<span class="built_in">top</span>());</span><br><span class="line">            st.<span class="built_in">pop</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">auto</span> res = tmp_st.<span class="built_in">top</span>();</span><br><span class="line">        tmp_st.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="comment">// 元素还回 st</span></span><br><span class="line">        <span class="keyword">while</span> (!tmp_st.<span class="built_in">empty</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            st.<span class="built_in">push</span>(tmp_st.<span class="built_in">top</span>());</span><br><span class="line">            tmp_st.<span class="built_in">pop</span>();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">peek</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (!st.<span class="built_in">empty</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            tmp_st.<span class="built_in">push</span>(st.<span class="built_in">top</span>());</span><br><span class="line">            st.<span class="built_in">pop</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">auto</span> res = tmp_st.<span class="built_in">top</span>();</span><br><span class="line">        <span class="comment">// tmp_st.pop();</span></span><br><span class="line">        <span class="comment">// 元素还回 st</span></span><br><span class="line">        <span class="keyword">while</span> (!tmp_st.<span class="built_in">empty</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            st.<span class="built_in">push</span>(tmp_st.<span class="built_in">top</span>());</span><br><span class="line">            tmp_st.<span class="built_in">pop</span>();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (st.<span class="built_in">empty</span>() &amp;&amp; tmp_st.<span class="built_in">empty</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your MyQueue object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * MyQueue* obj = new MyQueue();</span></span><br><span class="line"><span class="comment"> * obj-&gt;push(x);</span></span><br><span class="line"><span class="comment"> * int param_2 = obj-&gt;pop();</span></span><br><span class="line"><span class="comment"> * int param_3 = obj-&gt;peek();</span></span><br><span class="line"><span class="comment"> * bool param_4 = obj-&gt;empty();</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
 
 </div>
   </div>
@@ -2889,7 +2828,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2900,7 +2839,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3761,7 +3700,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

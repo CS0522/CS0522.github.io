@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2600,7 +2600,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：613 字</p>
+      <p>字数：609 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2643,29 +2643,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h3 id="example-4.1">Example 4.1</h3>
 <details>
 <p><summary>简单实时模拟的例子</summary></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="im">import</span> time</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="im">import</span> simpy</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">def</span> example(env):</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">    start <span class="op">=</span> time.perf_counter()</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="co"># 时延 1 个单位，也就是 1 个 factor</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="cf">yield</span> env.timeout(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">    end <span class="op">=</span> time.perf_counter()</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="bu">print</span>(<span class="st">&#39;Duration of one simulation time unit: </span><span class="sc">%.2f</span><span class="st">s&#39;</span> <span class="op">%</span> (end <span class="op">-</span> start))</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">env <span class="op">=</span> simpy.Environment()</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">proc <span class="op">=</span> env.process(example(env))</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">env.run(until<span class="op">=</span>proc)</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="im">import</span> simpy.rt</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">env <span class="op">=</span> simpy.rt.RealtimeEnvironment(factor<span class="op">=</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">proc <span class="op">=</span> env.process(example(env))</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">env.run(until<span class="op">=</span>proc)</a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">example</span>(<span class="params">env</span>):</span><br><span class="line">    start = time.perf_counter()</span><br><span class="line">    <span class="comment"># 时延 1 个单位，也就是 1 个 factor</span></span><br><span class="line">    <span class="keyword">yield</span> env.timeout(<span class="number">1</span>)</span><br><span class="line">    end = time.perf_counter()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Duration of one simulation time unit: %.2fs&#x27;</span> % (end - start))</span><br><span class="line"></span><br><span class="line">env = simpy.Environment()</span><br><span class="line">proc = env.process(example(env))</span><br><span class="line">env.run(until=proc)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> simpy.rt</span><br><span class="line">env = simpy.rt.RealtimeEnvironment(factor=<span class="number">10</span>)</span><br><span class="line">proc = env.process(example(env))</span><br><span class="line">env.run(until=proc)</span><br></pre></td></tr></table></figure>
 </details>
 <details>
 <p><summary>查看结果</summary></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ex">Duration</span> of one simulation time unit: 0.00s</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="ex">Duration</span> of one simulation time unit: 10.01s</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Duration of one simulation time unit: 0.00s</span><br><span class="line">Duration of one simulation time unit: 10.01s</span><br></pre></td></tr></table></figure>
 </details>
 </div><div class="story post-story"><h2 id="time-and-scheduling">Time and Scheduling</h2>
 <p>SimPy 是一个单线程、确定性的库，按顺序逐个处理事件。如果同时安排两个事件，则首先安排的事件也将是最先处理的事件（FIFO）。</p>
@@ -2871,7 +2853,7 @@ SimPy 3 的 im...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2882,7 +2864,7 @@ SimPy 3 的 im...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3743,7 +3725,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

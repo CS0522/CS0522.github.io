@@ -1767,7 +1767,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2638,66 +2638,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </div><div class="story post-story"><h2 id="代码">代码</h2>
 <p>超出时间限制：</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">class</span> Solution &#123;</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">public</span>:</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    vector&lt;<span class="dt">int</span>&gt; findAnagrams(string s, string p) &#123;</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">        <span class="cf">if</span> (s.length() &lt; p.length())</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">          &#123;</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">              <span class="cf">return</span> &#123;&#125;;</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">          &#125;</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">        <span class="dt">int</span> len = p.length();</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">        <span class="co">// unordered_map</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">        <span class="co">// key(string). value(index)</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">        unordered_map&lt;string, vector&lt;<span class="dt">int</span>&gt;&gt; um;</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">        <span class="co">// 遍历 s</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">        <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; s.length(); i++)</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">        &#123;</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">            string key = s.substr(i, len);</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">            sort(key.begin(), key.end());</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">            um[key].emplace_back(i);</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">        &#125;</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">        <span class="co">// 找 p 对应的键值</span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">        sort(p.begin(), p.end());</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">        <span class="cf">return</span> um[p];</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">    &#125;</a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">&#125;;</a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">findAnagrams</span><span class="params">(string s, string p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.<span class="built_in">length</span>() &lt; p.<span class="built_in">length</span>())</span><br><span class="line">          &#123;</span><br><span class="line">              <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">          &#125;</span><br><span class="line">        <span class="type">int</span> len = p.<span class="built_in">length</span>();</span><br><span class="line">        <span class="comment">// unordered_map</span></span><br><span class="line">        <span class="comment">// key(string). value(index)</span></span><br><span class="line">        unordered_map&lt;string, vector&lt;<span class="type">int</span>&gt;&gt; um;</span><br><span class="line">        <span class="comment">// 遍历 s</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; s.<span class="built_in">length</span>(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            string key = s.<span class="built_in">substr</span>(i, len);</span><br><span class="line">            <span class="built_in">sort</span>(key.<span class="built_in">begin</span>(), key.<span class="built_in">end</span>());</span><br><span class="line">            um[key].<span class="built_in">emplace_back</span>(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 找 p 对应的键值</span></span><br><span class="line">        <span class="built_in">sort</span>(p.<span class="built_in">begin</span>(), p.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">return</span> um[p];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>滑动窗口：</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">class</span> Solution &#123;</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">public</span>:</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">    vector&lt;<span class="dt">int</span>&gt; findAnagrams(string s, string p) &#123;</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">        <span class="dt">int</span> <span class="va">s_len</span> = s.length();</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">        <span class="dt">int</span> p_len = p.length();</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">        <span class="cf">if</span> (<span class="va">s_len</span> &lt; p_len)</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">            <span class="cf">return</span> &#123;&#125;;</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">        <span class="co">// 滑动窗口 + 哈希表</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">        vector&lt;<span class="dt">int</span>&gt; <span class="va">s_counts</span>(<span class="dv">26</span>, <span class="dv">0</span>);</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">        vector&lt;<span class="dt">int</span>&gt; p_counts(<span class="dv">26</span>, <span class="dv">0</span>);</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">        <span class="co">// 存储 indices</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">        vector&lt;<span class="dt">int</span>&gt; ans;</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">        <span class="co">// 初始化</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">        <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; p_len; ++i)</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">        &#123;</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">            ++<span class="va">s_counts</span>[s[i] - <span class="ch">&#39;a&#39;</span>];</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">            ++p_counts[p[i] - <span class="ch">&#39;a&#39;</span>];</a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">        &#125;</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">        <span class="co">// 滑动窗口遍历 s</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">        <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="va">s_len</span> - p_len; ++i)</a>
-<a class="sourceLine" id="cb2-21" data-line-number="21">        &#123;</a>
-<a class="sourceLine" id="cb2-22" data-line-number="22">            <span class="co">// 如果哈希数组相同</span></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23">            <span class="cf">if</span> (<span class="va">s_counts</span> == p_counts)</a>
-<a class="sourceLine" id="cb2-24" data-line-number="24">                ans.emplace_back(i);</a>
-<a class="sourceLine" id="cb2-25" data-line-number="25">            <span class="co">// 不相同，滑动窗口前进，前面的自减，后面的自加</span></a>
-<a class="sourceLine" id="cb2-26" data-line-number="26">            --<span class="va">s_counts</span>[s[i] - <span class="ch">&#39;a&#39;</span>];</a>
-<a class="sourceLine" id="cb2-27" data-line-number="27">            ++<span class="va">s_counts</span>[s[i + p_len] - <span class="ch">&#39;a&#39;</span>];</a>
-<a class="sourceLine" id="cb2-28" data-line-number="28">        &#125;</a>
-<a class="sourceLine" id="cb2-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb2-30" data-line-number="30">        <span class="co">// 最后再比较一次，如果哈希数组相同</span></a>
-<a class="sourceLine" id="cb2-31" data-line-number="31">        <span class="cf">if</span> (<span class="va">s_counts</span> == p_counts)</a>
-<a class="sourceLine" id="cb2-32" data-line-number="32">            ans.emplace_back(<span class="va">s_len</span> - p_len);</a>
-<a class="sourceLine" id="cb2-33" data-line-number="33"></a>
-<a class="sourceLine" id="cb2-34" data-line-number="34">        <span class="cf">return</span> ans;</a>
-<a class="sourceLine" id="cb2-35" data-line-number="35">    &#125;</a>
-<a class="sourceLine" id="cb2-36" data-line-number="36">&#125;;</a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">findAnagrams</span><span class="params">(string s, string p)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> s_len = s.<span class="built_in">length</span>();</span><br><span class="line">        <span class="type">int</span> p_len = p.<span class="built_in">length</span>();</span><br><span class="line">        <span class="keyword">if</span> (s_len &lt; p_len)</span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="comment">// 滑动窗口 + 哈希表</span></span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">s_counts</span><span class="params">(<span class="number">26</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">p_counts</span><span class="params">(<span class="number">26</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="comment">// 存储 indices</span></span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line">        <span class="comment">// 初始化</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; p_len; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            ++s_counts[s[i] - <span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">            ++p_counts[p[i] - <span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 滑动窗口遍历 s</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; s_len - p_len; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 如果哈希数组相同</span></span><br><span class="line">            <span class="keyword">if</span> (s_counts == p_counts)</span><br><span class="line">                ans.<span class="built_in">emplace_back</span>(i);</span><br><span class="line">            <span class="comment">// 不相同，滑动窗口前进，前面的自减，后面的自加</span></span><br><span class="line">            --s_counts[s[i] - <span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">            ++s_counts[s[i + p_len] - <span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 最后再比较一次，如果哈希数组相同</span></span><br><span class="line">        <span class="keyword">if</span> (s_counts == p_counts)</span><br><span class="line">            ans.<span class="built_in">emplace_back</span>(s_len - p_len);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 </div>
   </div>
@@ -2893,7 +2836,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2904,7 +2847,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3765,7 +3708,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2600,7 +2600,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：180 字</p>
+      <p>字数：177 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2630,14 +2630,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <ul>
 <li>Ubuntu14.04 x64 以下</li>
 <li>测试通过：Ubuntu14.04 x64，Ubuntu10.04 x86</li>
-<li><p>老版本需要更换官方源</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Ubuntu10.04 换源</span></a></code></pre></div></li>
+<li>老版本需要更换官方源 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ubuntu10.04 换源</span></span><br></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="gcc-等工具">gcc 等工具</h3>
 <ul>
 <li><font color="red">gcc 版本要在 gcc-4.8 以下，越老越好</font></li>
-<li><p>直接安装</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">sudo</span> apt-get install gcc g++ build-essential make flex-old bison</a></code></pre></div></li>
+<li>直接安装 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gcc g++ build-essential make flex-old bison</span><br></pre></td></tr></table></figure></li>
 </ul>
 </div><div class="story post-story"><h2 id="安装-disksim">安装 DiskSim</h2>
 <h3 id="下载源码包">1. 下载源码包</h3>
@@ -2646,33 +2644,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li><a target="_blank" rel="noopener" href="http://research.microsoft.com/en-us/downloads/b41019e2-1d2b-44d8-b512-ba35ab814cd4/">ssd-add-on</a></li>
 </ul>
 <h3 id="解压">2. 解压</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">tar</span> xfz disksim-4.0-with-dixtrac.tar.gz</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="bu">cd</span> disksim-4.0</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="fu">unzip</span> ../ssd-add-on.zip</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar xfz disksim-4.0-with-dixtrac.tar.gz</span><br><span class="line"><span class="built_in">cd</span> disksim-4.0</span><br><span class="line">unzip ../ssd-add-on.zip</span><br></pre></td></tr></table></figure>
 <h3 id="下载修改补丁x64-兼容补丁">3. 下载修改补丁、x64 兼容补丁</h3>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/cighao/disksim-4.0-with-ssdmodel-patch">modify-patch</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/cighao/disksim-4.0-with-ssdmodel-64bit-patch">64bit-patch</a></li>
 </ul>
 <h3 id="打上补丁">4. 打上补丁</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># disksim-4.0/</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="fu">patch</span> -p1 <span class="op">&lt;</span> ssdmodel/ssd-patch</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="fu">patch</span> -p1 <span class="op">&lt;</span> modify-patch</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="fu">patch</span> -p1 <span class="op">&lt;</span> 64bit-patch</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># disksim-4.0/</span></span><br><span class="line">patch -p1 &lt; ssdmodel/ssd-patch</span><br><span class="line"></span><br><span class="line">patch -p1 &lt; modify-patch</span><br><span class="line"></span><br><span class="line">patch -p1 &lt; 64bit-patch</span><br></pre></td></tr></table></figure>
 </div><div class="story post-story"><h2 id="编译与验证">编译与验证</h2>
 <h3 id="make">Make</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># disksim-4.0/</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="fu">make</span></a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># disksim-4.0/</span></span><br><span class="line">make</span><br></pre></td></tr></table></figure>
 <h3 id="验证">验证</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="bu">cd</span> valid</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="ex">./runvalid</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># 验证 ssdmodel</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="fu">chmod</span> a+x ./ssdmodel/valid/runvalid</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="bu">cd</span> ./ssdmodel/valid</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="ex">./runvalid</span></a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> valid</span><br><span class="line">./runvalid</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证 ssdmodel</span></span><br><span class="line"><span class="built_in">chmod</span> a+x ./ssdmodel/valid/runvalid</span><br><span class="line"><span class="built_in">cd</span> ./ssdmodel/valid</span><br><span class="line">./runvalid</span><br></pre></td></tr></table></figure>
 
 </div>
   </div>
@@ -2868,7 +2852,7 @@ Windows
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2879,7 +2863,7 @@ Windows
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3740,7 +3724,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

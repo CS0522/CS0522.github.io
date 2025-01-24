@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2602,7 +2602,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>12 min</p>
+      <p>11 min</p>
     </a>
   </div>
 
@@ -2627,489 +2627,118 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39289876/article/details/118484127">VSCode 创建启动器</a></p>
 </blockquote>
 <h3 id="c-环境安装配置">C++ 环境安装配置</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">sudo</span> apt install g++ gdb make build-essential ninja-build zip vim screen</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install g++ gdb make build-essential ninja-build zip vim screen</span><br></pre></td></tr></table></figure>
 <h3 id="javamaven3-环境配置">Java、maven3 环境配置</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># ----- Java -----</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># Ubuntu</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="fu">sudo</span> apt install openjdk-16-jdk</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co"># CentOS</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="fu">sudo</span> yum install java-1.8.0-openjdk* -y</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="ex">java</span> -version</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="ex">javac</span> -version</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co"># 查看 java 安装位置</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="fu">which</span> java</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="fu">ls</span> -lrt /usr/bin/java</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="fu">ls</span> -lrt /etc/alternatives/java</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co"># JAVA_HOME 变量配置</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="fu">sudo</span> vim /etc/profile</a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co"># 添加：</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co"># jdk 1.8</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="bu">export</span> <span class="va">JAVA_HOME=</span>/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.362.b08-3.el8.x86_64</a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="bu">export</span> <span class="va">JRE_HOME=$JAVA_HOME</span>/jre</a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="bu">export</span> <span class="va">CLASSPATH=$JAVA_HOME</span>/lib:<span class="va">$JRE_HOME</span>/lib:<span class="va">$CLASSPATH</span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="bu">export</span> <span class="va">PATH=$JAVA_HOME</span>/bin:<span class="va">$JRE_HOME</span>/bin:<span class="va">$PATH</span></a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb2-26" data-line-number="26"><span class="co"># jdk 16</span></a>
-<a class="sourceLine" id="cb2-27" data-line-number="27"><span class="bu">export</span> <span class="va">JAVA_HOME=</span>/usr/lib/jvm/java-16.0.1-openjdk-amd64</a>
-<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="bu">export</span> <span class="va">PATH=$JAVA_HOME</span>/bin:<span class="va">$PATH</span></a>
-<a class="sourceLine" id="cb2-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb2-30" data-line-number="30"><span class="bu">source</span> /etc/profile</a>
-<a class="sourceLine" id="cb2-31" data-line-number="31"></a>
-<a class="sourceLine" id="cb2-32" data-line-number="32"><span class="co"># ----- maven3 -----</span></a>
-<a class="sourceLine" id="cb2-33" data-line-number="33"></a>
-<a class="sourceLine" id="cb2-34" data-line-number="34"><span class="co"># Ubuntu</span></a>
-<a class="sourceLine" id="cb2-35" data-line-number="35"><span class="fu">sudo</span> apt-get install maven</a>
-<a class="sourceLine" id="cb2-36" data-line-number="36"></a>
-<a class="sourceLine" id="cb2-37" data-line-number="37"><span class="co"># CentOS</span></a>
-<a class="sourceLine" id="cb2-38" data-line-number="38"><span class="fu">wget</span> https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz</a>
-<a class="sourceLine" id="cb2-39" data-line-number="39"><span class="fu">tar</span> zxf apache-maven-3.9.9-bin.tar.gz</a>
-<a class="sourceLine" id="cb2-40" data-line-number="40"><span class="fu">mv</span> apache-maven-3.9.9 maven3</a>
-<a class="sourceLine" id="cb2-41" data-line-number="41"></a>
-<a class="sourceLine" id="cb2-42" data-line-number="42"><span class="co"># 当前路径为 /home/frank</span></a>
-<a class="sourceLine" id="cb2-43" data-line-number="43"><span class="co"># maven3 路径为 /home/frank/maven3</span></a>
-<a class="sourceLine" id="cb2-44" data-line-number="44"></a>
-<a class="sourceLine" id="cb2-45" data-line-number="45"><span class="co"># 编辑 maven3/conf/settings.xml</span></a>
-<a class="sourceLine" id="cb2-46" data-line-number="46"><span class="co"># 指定源</span></a>
-<a class="sourceLine" id="cb2-47" data-line-number="47"><span class="op">&lt;</span><span class="ex">mirrors</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-48" data-line-number="48">    <span class="op">&lt;</span><span class="ex">mirror</span><span class="op">&gt;</span> </a>
-<a class="sourceLine" id="cb2-49" data-line-number="49">         <span class="op">&lt;</span><span class="fu">id</span><span class="op">&gt;</span>alimaven<span class="op">&lt;</span>/id<span class="op">&gt;</span> </a>
-<a class="sourceLine" id="cb2-50" data-line-number="50">         <span class="op">&lt;</span><span class="ex">name</span><span class="op">&gt;</span>aliyun maven<span class="op">&lt;</span>/name<span class="op">&gt;</span> </a>
-<a class="sourceLine" id="cb2-51" data-line-number="51">         <span class="op">&lt;</span><span class="ex">url</span><span class="op">&gt;</span>https://maven.aliyun.com/nexus/content/groups/public/<span class="op">&lt;</span>/url<span class="op">&gt;</span> </a>
-<a class="sourceLine" id="cb2-52" data-line-number="52">         <span class="op">&lt;</span><span class="ex">mirrorOf</span><span class="op">&gt;</span>central<span class="op">&lt;</span>/mirrorOf<span class="op">&gt;</span> </a>
-<a class="sourceLine" id="cb2-53" data-line-number="53">     <span class="op">&lt;</span>/<span class="ex">mirror</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-54" data-line-number="54"><span class="op">&lt;</span>/<span class="ex">mirrors</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-55" data-line-number="55"></a>
-<a class="sourceLine" id="cb2-56" data-line-number="56"><span class="co"># 指定版本</span></a>
-<a class="sourceLine" id="cb2-57" data-line-number="57"><span class="op">&lt;</span><span class="ex">profiles</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-58" data-line-number="58">    <span class="op">&lt;</span><span class="ex">profile</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-59" data-line-number="59">      <span class="op">&lt;</span><span class="fu">id</span><span class="op">&gt;</span>jdk-1.<span class="op">8&lt;</span>/id<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-60" data-line-number="60">      <span class="op">&lt;</span><span class="ex">activation</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-61" data-line-number="61">        <span class="op">&lt;</span><span class="ex">activeByDefault</span><span class="op">&gt;</span>true<span class="op">&lt;</span>/activeByDefault<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-62" data-line-number="62">        <span class="op">&lt;</span><span class="ex">jdk</span><span class="op">&gt;</span>1.<span class="op">8&lt;</span>/jdk<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-63" data-line-number="63">      <span class="op">&lt;</span>/<span class="ex">activation</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-64" data-line-number="64">      <span class="op">&lt;</span><span class="ex">properties</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-65" data-line-number="65">        <span class="op">&lt;</span><span class="ex">maven.compiler.source</span><span class="op">&gt;</span>1.<span class="op">8&lt;</span>/maven.compiler.source<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-66" data-line-number="66">        <span class="op">&lt;</span><span class="ex">maven.compiler.target</span><span class="op">&gt;</span>1.<span class="op">8&lt;</span>/maven.compiler.target<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-67" data-line-number="67">        <span class="op">&lt;</span><span class="ex">maven.compiler.compilerVersion</span><span class="op">&gt;</span>1.<span class="op">8&lt;</span>/maven.compiler.compilerVersion<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-68" data-line-number="68">      <span class="op">&lt;</span>/<span class="ex">properties</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-69" data-line-number="69">    <span class="op">&lt;</span>/<span class="ex">profile</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-70" data-line-number="70"><span class="op">&lt;</span>/<span class="ex">profiles</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-71" data-line-number="71"></a>
-<a class="sourceLine" id="cb2-72" data-line-number="72"><span class="co"># 配置 maven 环境变量</span></a>
-<a class="sourceLine" id="cb2-73" data-line-number="73"><span class="fu">sudo</span> vim /etc/profile</a>
-<a class="sourceLine" id="cb2-74" data-line-number="74"><span class="bu">export</span> <span class="va">MAVEN_HOME=</span>/home/frank/maven3</a>
-<a class="sourceLine" id="cb2-75" data-line-number="75"><span class="bu">export</span> <span class="va">PATH=$PATH</span>:<span class="va">$JAVA_HOME</span>/bin:<span class="va">$MAVEN_HOME</span>/bin</a>
-<a class="sourceLine" id="cb2-76" data-line-number="76"><span class="bu">source</span> /etc/profile</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ----- Java -----</span></span><br><span class="line"><span class="comment"># Ubuntu</span></span><br><span class="line">sudo apt install openjdk-16-jdk</span><br><span class="line"></span><br><span class="line"><span class="comment"># CentOS</span></span><br><span class="line">sudo yum install java-1.8.0-openjdk* -y</span><br><span class="line"></span><br><span class="line">java -version</span><br><span class="line">javac -version</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 java 安装位置</span></span><br><span class="line"><span class="built_in">which</span> java</span><br><span class="line"><span class="built_in">ls</span> -lrt /usr/bin/java</span><br><span class="line"><span class="built_in">ls</span> -lrt /etc/alternatives/java</span><br><span class="line"></span><br><span class="line"><span class="comment"># JAVA_HOME 变量配置</span></span><br><span class="line">sudo vim /etc/profile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加：</span></span><br><span class="line"><span class="comment"># jdk 1.8</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.362.b08-3.el8.x86_64</span><br><span class="line"><span class="built_in">export</span> JRE_HOME=<span class="variable">$JAVA_HOME</span>/jre</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=<span class="variable">$JAVA_HOME</span>/lib:<span class="variable">$JRE_HOME</span>/lib:<span class="variable">$CLASSPATH</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$JRE_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># jdk 16</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/lib/jvm/java-16.0.1-openjdk-amd64</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----- maven3 -----</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu</span></span><br><span class="line">sudo apt-get install maven</span><br><span class="line"></span><br><span class="line"><span class="comment"># CentOS</span></span><br><span class="line">wget https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz</span><br><span class="line">tar zxf apache-maven-3.9.9-bin.tar.gz</span><br><span class="line"><span class="built_in">mv</span> apache-maven-3.9.9 maven3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当前路径为 /home/frank</span></span><br><span class="line"><span class="comment"># maven3 路径为 /home/frank/maven3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑 maven3/conf/settings.xml</span></span><br><span class="line"><span class="comment"># 指定源</span></span><br><span class="line">&lt;mirrors&gt;</span><br><span class="line">    &lt;mirror&gt; </span><br><span class="line">         &lt;<span class="built_in">id</span>&gt;alimaven&lt;/id&gt; </span><br><span class="line">         &lt;name&gt;aliyun maven&lt;/name&gt; </span><br><span class="line">         &lt;url&gt;https://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt; </span><br><span class="line">         &lt;mirrorOf&gt;central&lt;/mirrorOf&gt; </span><br><span class="line">     &lt;/mirror&gt;</span><br><span class="line">&lt;/mirrors&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定版本</span></span><br><span class="line">&lt;profiles&gt;</span><br><span class="line">    &lt;profile&gt;</span><br><span class="line">      &lt;<span class="built_in">id</span>&gt;jdk-1.8&lt;/id&gt;</span><br><span class="line">      &lt;activation&gt;</span><br><span class="line">        &lt;activeByDefault&gt;<span class="literal">true</span>&lt;/activeByDefault&gt;</span><br><span class="line">        &lt;jdk&gt;1.8&lt;/jdk&gt;</span><br><span class="line">      &lt;/activation&gt;</span><br><span class="line">      &lt;properties&gt;</span><br><span class="line">        &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;</span><br><span class="line">        &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;</span><br><span class="line">        &lt;maven.compiler.compilerVersion&gt;1.8&lt;/maven.compiler.compilerVersion&gt;</span><br><span class="line">      &lt;/properties&gt;</span><br><span class="line">    &lt;/profile&gt;</span><br><span class="line">&lt;/profiles&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置 maven 环境变量</span></span><br><span class="line">sudo vim /etc/profile</span><br><span class="line"><span class="built_in">export</span> MAVEN_HOME=/home/frank/maven3</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$MAVEN_HOME</span>/bin</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
 <h3 id="配置-root-密码">配置 root 密码</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">sudo</span> passwd</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd</span><br></pre></td></tr></table></figure>
 <h3 id="中文包">中文包</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="fu">sudo</span> apt install language-pack-zh-hans</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="fu">sudo</span> update-locale LANG=zh_CN.UTF-8</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install language-pack-zh-hans</span><br><span class="line">sudo update-locale LANG=zh_CN.UTF-8</span><br></pre></td></tr></table></figure>
 <h3 id="删除桌面回收站用户文件图标">删除桌面回收站、用户文件图标</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="ex">gsettings</span> set org.gnome.shell.extensions.desktop-icons show-trash false</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="ex">gsettings</span> set org.gnome.shell.extensions.desktop-icons show-home false</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.shell.extensions.desktop-icons show-trash <span class="literal">false</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.shell.extensions.desktop-icons show-home <span class="literal">false</span></span><br></pre></td></tr></table></figure>
 <h3 id="添加监视器-system-monitor">添加监视器 system monitor</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="fu">sudo</span> add-apt-repository ppa:fossfreedom/indicator-sysmonitor</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="fu">sudo</span> apt-get install -y indicator-sysmonitor</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor</span><br><span class="line">sudo apt-get install -y indicator-sysmonitor</span><br></pre></td></tr></table></figure>
 <h3 id="sudo-不输入密码">sudo 不输入密码</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="fu">sudo</span> vim /etc/sudoers</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co"># 文末添加下句: </span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="ex">frank</span> ALL=(ALL:ALL) <span class="ex">NOPASSWD</span>: ALL</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/sudoers</span><br><span class="line"></span><br><span class="line"><span class="comment"># 文末添加下句: </span></span><br><span class="line">frank ALL=(ALL:ALL) NOPASSWD: ALL</span><br></pre></td></tr></table></figure>
 <hr />
 </div><div class="story post-story"><h2 id="软件安装">软件安装</h2>
 <h3 id="数据库">数据库</h3>
 <details>
 <p><summary>点击查看</summary></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="fu">sudo</span> apt install mysql-server</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="fu">sudo</span> apt install mysql-client</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="fu">sudo</span> apt install libmysqlclient-dev</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="fu">sudo</span> vim /etc/mysql/debian.cnf</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="ex">mysql</span> -u debian-sys-maint -p</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="ex">flush</span> privileges<span class="kw">;</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="ex">alter</span> user <span class="st">&#39;root&#39;</span>@<span class="st">&#39;localhost&#39;</span> identified with   caching_sha2_password by <span class="st">&#39;123456frank&#39;</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="ex">flush</span> privileges</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="ex">quit</span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="ex">service</span> mysql restart</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install mysql-server</span><br><span class="line"></span><br><span class="line">sudo apt install mysql-client</span><br><span class="line"></span><br><span class="line">sudo apt install libmysqlclient-dev</span><br><span class="line"></span><br><span class="line">sudo vim /etc/mysql/debian.cnf</span><br><span class="line"></span><br><span class="line">mysql -u debian-sys-maint -p</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">alter user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> identified with   caching_sha2_password by <span class="string">&#x27;123456frank&#x27;</span></span><br><span class="line"></span><br><span class="line">flush privileges</span><br><span class="line"></span><br><span class="line">quit</span><br><span class="line"></span><br><span class="line">service mysql restart</span><br></pre></td></tr></table></figure>
 </details>
 <h3 id="安装-deb-软件包">安装 deb 软件包</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># deb package</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="fu">sudo</span> dpkg -i *.deb</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># deb package</span></span><br><span class="line">sudo dpkg -i *.deb</span><br></pre></td></tr></table></figure>
 <h3 id="vim">vim</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># vim</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="fu">sudo</span> apt install gedit vim</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim</span></span><br><span class="line">sudo apt install gedit vim</span><br></pre></td></tr></table></figure>
 <h3 id="主菜单编辑软件">主菜单编辑软件</h3>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># 主菜单编辑软件</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="fu">sudo</span> apt install alacarte</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 主菜单编辑软件</span></span><br><span class="line">sudo apt install alacarte</span><br></pre></td></tr></table></figure>
 <h3 id="gnome-tweak-tool">gnome-tweak-tool</h3>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># gnome-tweak-tool</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="fu">sudo</span> apt install gnome-tweak-tool</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># gnome-tweak-tool</span></span><br><span class="line">sudo apt install gnome-tweak-tool</span><br></pre></td></tr></table></figure>
 <h3 id="copyq">copyQ</h3>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># copyQ</span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="fu">sudo</span> add-apt-repository ppa:hluk/copyq</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="fu">sudo</span> apt update</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="fu">sudo</span> apt install copyq</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># copyQ</span></span><br><span class="line">sudo add-apt-repository ppa:hluk/copyq</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install copyq</span><br></pre></td></tr></table></figure>
 <h3 id="indicator-stickynotes">indicator &amp; stickynotes</h3>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># indicator stickynotes</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="fu">sudo</span> add-apt-repository ppa:umang/indicator-stickynotes</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="fu">sudo</span> apt-get update</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="fu">sudo</span> apt-get install indicator-stickynotes</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># indicator stickynotes</span></span><br><span class="line">sudo add-apt-repository ppa:umang/indicator-stickynotes</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install indicator-stickynotes</span><br></pre></td></tr></table></figure>
 <h3 id="jetbrains-ide">jetbrains IDE</h3>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># jetbrains (idea &amp; clion)</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="fu">sudo</span> snap install intellij-idea-ultimate --classic</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="fu">sudo</span> snap install clion --classic</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># jetbrains (idea &amp; clion)</span></span><br><span class="line">sudo snap install intellij-idea-ultimate --classic</span><br><span class="line">sudo snap install clion --classic</span><br></pre></td></tr></table></figure>
 <h3 id="systemback">systemback</h3>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># systemback</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="fu">sudo</span> sh -c <span class="st">&#39;echo &quot;deb [arch=amd64] http://mirrors.bwbot.org/ stable main&quot; &gt; /etc/apt/sources.list.d/systemback. list&#39;</span></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="fu">sudo</span> apt-key adv --keyserver <span class="st">&#39;hkp://keyserver.ubuntu.com:80&#39;</span> --recv-key 50B2C005A67B264F</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="fu">sudo</span> apt-get update</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="fu">sudo</span> apt-get install systemback</a></code></pre></div>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemback</span></span><br><span class="line">sudo sh -c <span class="string">&#x27;echo &quot;deb [arch=amd64] http://mirrors.bwbot.org/ stable main&quot; &gt; /etc/apt/sources.list.d/systemback. list&#x27;</span></span><br><span class="line">sudo apt-key adv --keyserver <span class="string">&#x27;hkp://keyserver.ubuntu.com:80&#x27;</span> --recv-key 50B2C005A67B264F</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install systemback</span><br></pre></td></tr></table></figure></p>
 <h3 id="timeshift">timeshift</h3>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="fu">sudo</span> apt install timeshift</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install timeshift</span><br></pre></td></tr></table></figure>
 <h3 id="nvm-node">nvm, node</h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># 通过 nvm 安装 nodejs npm</span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="ex">curl</span> -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh <span class="kw">|</span> <span class="fu">bash</span></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="ex">nvm</span> install node</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过 nvm 安装 nodejs npm</span></span><br><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash</span><br><span class="line">nvm install node</span><br></pre></td></tr></table></figure>
 <h3 id="conda">conda</h3>
-<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># anaconda3</span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="fu">wget</span> -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="fu">sudo</span> gedit ~/.bashrc</a>
-<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="co"># .bashrc</span></a>
-<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="bu">export</span> <span class="va">PATH=</span><span class="st">&quot;/home/用户名/anaconda3/bin:</span><span class="va">$PATH</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="bu">source</span> ~/.bashrc</a></code></pre></div>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># anaconda3</span></span><br><span class="line">wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh</span><br><span class="line">sudo gedit ~/.bashrc</span><br><span class="line"><span class="comment"># .bashrc</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;/home/用户名/anaconda3/bin:<span class="variable">$PATH</span>&quot;</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure></p>
 <h3 id="screen">screen</h3>
 <blockquote>
 <p>管理会话，SSH 时断开连接也不中断进程</p>
 </blockquote>
-<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># 安装 screen</span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="fu">sudo</span> apt install screen</a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="co"># 新建 screen</span></a>
-<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="ex">screen</span> -S <span class="op">&lt;</span>name<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb20-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="co"># 进入 screen</span></a>
-<a class="sourceLine" id="cb20-8" data-line-number="8"><span class="ex">screen</span> -r <span class="op">&lt;</span>name<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb20-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb20-10" data-line-number="10"><span class="co"># 退出当前 screen</span></a>
-<a class="sourceLine" id="cb20-11" data-line-number="11"><span class="co"># 在当前 screen 下</span></a>
-<a class="sourceLine" id="cb20-12" data-line-number="12"><span class="ex">Ctrl+A</span>，Ctrl+D  </a>
-<a class="sourceLine" id="cb20-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb20-14" data-line-number="14"><span class="co"># 显示 screen list</span></a>
-<a class="sourceLine" id="cb20-15" data-line-number="15">​​​​​​​<span class="ex">screen</span> -ls</a>
-<a class="sourceLine" id="cb20-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb20-17" data-line-number="17"><span class="co"># 删除指定 screen</span></a>
-<a class="sourceLine" id="cb20-18" data-line-number="18"><span class="co"># 在当前 screen 下</span></a>
-<a class="sourceLine" id="cb20-19" data-line-number="19"><span class="ex">Ctrl+D</span></a>
-<a class="sourceLine" id="cb20-20" data-line-number="20"><span class="co"># 不在当前 screen 下</span></a>
-<a class="sourceLine" id="cb20-21" data-line-number="21">​​​​​​​<span class="ex">screen</span> -S <span class="op">&lt;</span>name<span class="op">&gt;</span> -X quit</a></code></pre></div>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 screen</span></span><br><span class="line">sudo apt install screen</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建 screen</span></span><br><span class="line">screen -S &lt;name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入 screen</span></span><br><span class="line">screen -r &lt;name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 退出当前 screen</span></span><br><span class="line"><span class="comment"># 在当前 screen 下</span></span><br><span class="line">Ctrl+A，Ctrl+D  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示 screen list</span></span><br><span class="line">​​​​​​​screen -<span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除指定 screen</span></span><br><span class="line"><span class="comment"># 在当前 screen 下</span></span><br><span class="line">Ctrl+D</span><br><span class="line"><span class="comment"># 不在当前 screen 下</span></span><br><span class="line">​​​​​​​screen -S &lt;name&gt; -X quit</span><br></pre></td></tr></table></figure></p>
 <h3 id="virtualbox">VirtualBox</h3>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="fu">sudo</span> apt install virtualbox</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="fu">sudo</span> apt install virtualbox-ext-pack</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install virtualbox</span><br><span class="line">sudo apt install virtualbox-ext-pack</span><br></pre></td></tr></table></figure>
 <h3 id="easyconnect">EasyConnect</h3>
 <p>EasyConnect 在 Ubuntu 20.04 以上因为依赖问题无法正常打开。</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co"># 安装软件</span></a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="fu">sudo</span> dpkg -i ./EasyConnect.deb</a>
-<a class="sourceLine" id="cb22-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="co"># 查看安装路径</span></a>
-<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="ex">dpkg</span> -L easyconnect</a>
-<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="co"># /usr/share/sangfor/EasyConnect</span></a>
-<a class="sourceLine" id="cb22-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb22-8" data-line-number="8"><span class="co"># cd </span></a>
-<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="bu">cd</span> /usr/share/sangfor/EasyConnect</a>
-<a class="sourceLine" id="cb22-10" data-line-number="10"><span class="fu">sudo</span> su</a>
-<a class="sourceLine" id="cb22-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb22-12" data-line-number="12"><span class="co"># 查看依赖</span></a>
-<a class="sourceLine" id="cb22-13" data-line-number="13"><span class="fu">ldd</span> ./EasyConnect <span class="kw">|</span> <span class="fu">grep</span> pango</a>
-<a class="sourceLine" id="cb22-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb22-15" data-line-number="15"><span class="co"># 下载缺失依赖文件</span></a>
-<a class="sourceLine" id="cb22-16" data-line-number="16"><span class="co"># http://kr.archive.ubuntu.com/ubuntu/pool/main/p/pango1.0/</span></a>
-<a class="sourceLine" id="cb22-17" data-line-number="17"><span class="co"># libpangocairo-1.0-0_1.40.14-1_amd64.deb</span></a>
-<a class="sourceLine" id="cb22-18" data-line-number="18"><span class="co"># libpangoft2-1.0-0_1.40.14-1_amd64.deb</span></a>
-<a class="sourceLine" id="cb22-19" data-line-number="19"><span class="co"># libpango-1.0-0_1.40.14-1_amd64.deb</span></a>
-<a class="sourceLine" id="cb22-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb22-21" data-line-number="21"><span class="co"># 对这三个文件进行解压缩，提取出 data.tra.xz -&gt; usr -&gt; lib -&gt; x86_64-linux-gnu 下面的所有文件</span></a>
-<a class="sourceLine" id="cb22-22" data-line-number="22"><span class="co"># 将得到的 6 个文件全部复制到安装目录下</span></a>
-<a class="sourceLine" id="cb22-23" data-line-number="23"><span class="fu">cp</span> ./* /usr/share/sangfor/EasyConnect</a>
-<a class="sourceLine" id="cb22-24" data-line-number="24"></a>
-<a class="sourceLine" id="cb22-25" data-line-number="25"><span class="co"># 启动 EasyConnect</span></a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装软件</span></span><br><span class="line">sudo dpkg -i ./EasyConnect.deb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看安装路径</span></span><br><span class="line">dpkg -L easyconnect</span><br><span class="line"><span class="comment"># /usr/share/sangfor/EasyConnect</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># cd </span></span><br><span class="line"><span class="built_in">cd</span> /usr/share/sangfor/EasyConnect</span><br><span class="line">sudo su</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看依赖</span></span><br><span class="line">ldd ./EasyConnect | grep pango</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载缺失依赖文件</span></span><br><span class="line"><span class="comment"># http://kr.archive.ubuntu.com/ubuntu/pool/main/p/pango1.0/</span></span><br><span class="line"><span class="comment"># libpangocairo-1.0-0_1.40.14-1_amd64.deb</span></span><br><span class="line"><span class="comment"># libpangoft2-1.0-0_1.40.14-1_amd64.deb</span></span><br><span class="line"><span class="comment"># libpango-1.0-0_1.40.14-1_amd64.deb</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对这三个文件进行解压缩，提取出 data.tra.xz -&gt; usr -&gt; lib -&gt; x86_64-linux-gnu 下面的所有文件</span></span><br><span class="line"><span class="comment"># 将得到的 6 个文件全部复制到安装目录下</span></span><br><span class="line"><span class="built_in">cp</span> ./* /usr/share/sangfor/EasyConnect</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 EasyConnect</span></span><br></pre></td></tr></table></figure>
 <h3 id="安装-vmware-17.5.2-虚拟机">安装 VMware 17.5.2 虚拟机</h3>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="fu">sudo</span> dpkg -i ./*.bundle</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="co"># 编译 vmmon、vmnet 模块</span></a>
-<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="fu">sudo</span> apt install gcc-12</a>
-<a class="sourceLine" id="cb23-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="co"># clone 补充模块</span></a>
-<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="fu">git</span> clone https://github.com/mkubecek/vmware-host-modules</a>
-<a class="sourceLine" id="cb23-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="fu">git</span> checkout -t origin/workstation-17.5.1</a>
-<a class="sourceLine" id="cb23-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="fu">sudo</span> make</a>
-<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="fu">sudo</span> make install </a>
-<a class="sourceLine" id="cb23-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb23-14" data-line-number="14"><span class="fu">sudo</span> /etc/init.d/vmware start</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i ./*.bundle</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译 vmmon、vmnet 模块</span></span><br><span class="line">sudo apt install gcc-12</span><br><span class="line"></span><br><span class="line"><span class="comment"># clone 补充模块</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/mkubecek/vmware-host-modules</span><br><span class="line"></span><br><span class="line">git checkout -t origin/workstation-17.5.1</span><br><span class="line"></span><br><span class="line">sudo make</span><br><span class="line">sudo make install </span><br><span class="line"></span><br><span class="line">sudo /etc/init.d/vmware start</span><br></pre></td></tr></table></figure>
 </div><div class="story post-story"><h2 id="常用命令-解决方案">常用命令 / 解决方案</h2>
 <h3 id="显示内存">显示内存</h3>
-<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="fu">free</span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="fu">free</span> -m</a>
-<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="fu">free</span> -h</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">free</span><br><span class="line">free -m</span><br><span class="line">free -h</span><br></pre></td></tr></table></figure>
 <h3 id="screen-1">screen</h3>
 <blockquote>
 <p>管理会话，SSH 时断开连接也不中断进程</p>
 </blockquote>
-<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co"># 安装 screen</span></a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="fu">sudo</span> apt install screen</a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="co"># 新建 screen</span></a>
-<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="ex">screen</span> -S <span class="op">&lt;</span>name<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb25-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb25-7" data-line-number="7"><span class="co"># 进入 screen</span></a>
-<a class="sourceLine" id="cb25-8" data-line-number="8"><span class="ex">screen</span> -r <span class="op">&lt;</span>name<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb25-9" data-line-number="9"><span class="co"># 状态显示 Attached，但无法进入</span></a>
-<a class="sourceLine" id="cb25-10" data-line-number="10"><span class="ex">screen</span> -D -r <span class="op">&lt;</span>session-id<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb25-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb25-12" data-line-number="12"><span class="co"># 退出当前 screen</span></a>
-<a class="sourceLine" id="cb25-13" data-line-number="13"><span class="co"># 在当前 screen 下</span></a>
-<a class="sourceLine" id="cb25-14" data-line-number="14"><span class="ex">Ctrl+A</span>，Ctrl+D  </a>
-<a class="sourceLine" id="cb25-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb25-16" data-line-number="16"><span class="co"># 显示 screen list</span></a>
-<a class="sourceLine" id="cb25-17" data-line-number="17">​​​​​​​<span class="ex">screen</span> -ls</a>
-<a class="sourceLine" id="cb25-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb25-19" data-line-number="19"><span class="co"># 删除指定 screen</span></a>
-<a class="sourceLine" id="cb25-20" data-line-number="20"><span class="co"># 在当前 screen 下</span></a>
-<a class="sourceLine" id="cb25-21" data-line-number="21"><span class="ex">Ctrl+D</span></a>
-<a class="sourceLine" id="cb25-22" data-line-number="22"><span class="co"># 不在当前 screen 下</span></a>
-<a class="sourceLine" id="cb25-23" data-line-number="23">​​​​​​​<span class="ex">screen</span> -S <span class="op">&lt;</span>name<span class="op">&gt;</span> -X quit</a></code></pre></div>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 screen</span></span><br><span class="line">sudo apt install screen</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建 screen</span></span><br><span class="line">screen -S &lt;name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入 screen</span></span><br><span class="line">screen -r &lt;name&gt;</span><br><span class="line"><span class="comment"># 状态显示 Attached，但无法进入</span></span><br><span class="line">screen -D -r &lt;session-id&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 退出当前 screen</span></span><br><span class="line"><span class="comment"># 在当前 screen 下</span></span><br><span class="line">Ctrl+A，Ctrl+D  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示 screen list</span></span><br><span class="line">​​​​​​​screen -<span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除指定 screen</span></span><br><span class="line"><span class="comment"># 在当前 screen 下</span></span><br><span class="line">Ctrl+D</span><br><span class="line"><span class="comment"># 不在当前 screen 下</span></span><br><span class="line">​​​​​​​screen -S &lt;name&gt; -X quit</span><br></pre></td></tr></table></figure></p>
 <h3 id="增加虚拟内存交换空间">增加虚拟内存交换空间</h3>
 <p>未开启交换空间：</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="fu">sudo</span> su</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="co"># 查看内存使用情况</span></a>
-<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="fu">free</span> -h</a>
-<a class="sourceLine" id="cb26-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co"># 创建 swap 文件</span></a>
-<a class="sourceLine" id="cb26-6" data-line-number="6"><span class="co"># 单位 bs 为 G，大小 count 为 20，创建 20G 交换空间</span></a>
-<a class="sourceLine" id="cb26-7" data-line-number="7"><span class="fu">dd</span> if=/dev/zero of=/swapfile bs=1G count=20</a>
-<a class="sourceLine" id="cb26-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb26-9" data-line-number="9"><span class="co"># 激活 swap 文件</span></a>
-<a class="sourceLine" id="cb26-10" data-line-number="10"><span class="fu">chmod</span> 600 swapfile</a>
-<a class="sourceLine" id="cb26-11" data-line-number="11"><span class="ex">mkswap</span> swapfile</a>
-<a class="sourceLine" id="cb26-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb26-13" data-line-number="13"><span class="co"># 开启 swap</span></a>
-<a class="sourceLine" id="cb26-14" data-line-number="14"><span class="ex">swapon</span> swapfile</a>
-<a class="sourceLine" id="cb26-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb26-16" data-line-number="16"><span class="fu">free</span> -h</a>
-<a class="sourceLine" id="cb26-17" data-line-number="17"><span class="co"># 查看已开启的交换空间</span></a>
-<a class="sourceLine" id="cb26-18" data-line-number="18"><span class="ex">swapon</span> --show</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line"><span class="comment"># 查看内存使用情况</span></span><br><span class="line">free -h</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 swap 文件</span></span><br><span class="line"><span class="comment"># 单位 bs 为 G，大小 count 为 20，创建 20G 交换空间</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/zero of=/swapfile bs=1G count=20</span><br><span class="line"></span><br><span class="line"><span class="comment"># 激活 swap 文件</span></span><br><span class="line"><span class="built_in">chmod</span> 600 swapfile</span><br><span class="line">mkswap swapfile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启 swap</span></span><br><span class="line">swapon swapfile</span><br><span class="line"></span><br><span class="line">free -h</span><br><span class="line"><span class="comment"># 查看已开启的交换空间</span></span><br><span class="line">swapon --show</span><br></pre></td></tr></table></figure>
 <p>已开启交换空间，重新修改 swap 大小：</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="co"># 查看内存使用情况</span></a>
-<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="fu">free</span> -h</a>
-<a class="sourceLine" id="cb27-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co"># 关闭指定 swap</span></a>
-<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="ex">swapoff</span> /swapfile</a>
-<a class="sourceLine" id="cb27-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb27-7" data-line-number="7"><span class="co"># 重新分配</span></a>
-<a class="sourceLine" id="cb27-8" data-line-number="8"><span class="ex">fallocate</span> -l 30G /swapfile</a>
-<a class="sourceLine" id="cb27-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb27-10" data-line-number="10"><span class="fu">chmod</span> 600 swapfile</a>
-<a class="sourceLine" id="cb27-11" data-line-number="11"><span class="ex">mkswap</span> swapfile</a>
-<a class="sourceLine" id="cb27-12" data-line-number="12"><span class="ex">swapon</span> swapfile</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看内存使用情况</span></span><br><span class="line">free -h</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭指定 swap</span></span><br><span class="line">swapoff /swapfile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新分配</span></span><br><span class="line">fallocate -l 30G /swapfile</span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> 600 swapfile</span><br><span class="line">mkswap swapfile</span><br><span class="line">swapon swapfile</span><br></pre></td></tr></table></figure>
 <h3 id="动态库无法链接-cannot-open-shared-object-file">动态库无法链接 cannot open shared object file</h3>
-<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="fu">sudo</span> vim /etc/ld.so.conf</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co"># 在 ld.so.conf 中加入 *.so 的绝对路径，如</span></a>
-<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="co"># /usr/local/lib</span></a>
-<a class="sourceLine" id="cb28-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb28-6" data-line-number="6"><span class="co"># 对配置文件 /etc/ld.so.conf 中定义的路径下的程序库重新建立必要的链接</span></a>
-<a class="sourceLine" id="cb28-7" data-line-number="7"><span class="fu">sudo</span> ldconfig</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/ld.so.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 ld.so.conf 中加入 *.so 的绝对路径，如</span></span><br><span class="line"><span class="comment"># /usr/local/lib</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对配置文件 /etc/ld.so.conf 中定义的路径下的程序库重新建立必要的链接</span></span><br><span class="line">sudo ldconfig</span><br></pre></td></tr></table></figure>
 <h3 id="挂载卸载-img-镜像">挂载、卸载 img 镜像</h3>
 <p>使用 <code>mount</code>、<code>umount</code> 命令。挂载 <code>nsg_server.img</code> 文件为例子。</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="co"># NSG_SERVER.img</span></a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="co"># 1. 查看 NSG_SERVER.img 的分区情况，是为了看需要挂载哪个分区</span></a>
-<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="ex">fdisk</span> ./NSG_SERVER.img</a>
-<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="co"># result: </span></a>
-<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="co"># Disk NSG_SERVER.img：20 GiB，21474836480 字节，41943040 个扇区</span></a>
-<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="co"># 单元：扇区 / 1 * 512 = 512 字节</span></a>
-<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="co"># 扇区大小(逻辑/物理)：512 字节 / 512 字节</span></a>
-<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="co"># I/O 大小(最小/最佳)：512 字节 / 512 字节</span></a>
-<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="co"># 磁盘标签类型：gpt</span></a>
-<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="co"># 磁盘标识符：D85F133D-8179-4557-86F6-6DF45C769770</span></a>
-<a class="sourceLine" id="cb29-11" data-line-number="11"><span class="co"># 设备             起点     末尾     扇区 大小 类型</span></a>
-<a class="sourceLine" id="cb29-12" data-line-number="12"><span class="co"># NSG_SERVER.img1  2048     4095     2048   1M BIOS 启动</span></a>
-<a class="sourceLine" id="cb29-13" data-line-number="13"><span class="co"># NSG_SERVER.img2  4096 41940991 41936896  20G Linux 文件系统</span></a>
-<a class="sourceLine" id="cb29-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb29-15" data-line-number="15"><span class="co"># 2. 挂载 .img2 分区到本机 /mnt/nsg_server</span></a>
-<a class="sourceLine" id="cb29-16" data-line-number="16"><span class="co"># 注意其中 offset = 4096 * 512，因为扇区大小为 512 字节</span></a>
-<a class="sourceLine" id="cb29-17" data-line-number="17"><span class="fu">mkdir</span> /mnt/nsg_server</a>
-<a class="sourceLine" id="cb29-18" data-line-number="18"><span class="fu">sudo</span> mount -o loop,offset=2097152 NSG_SERVER.img /mnt/nsg_server</a>
-<a class="sourceLine" id="cb29-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb29-20" data-line-number="20"><span class="co"># 3. 卸载 .img2 分区</span></a>
-<a class="sourceLine" id="cb29-21" data-line-number="21"><span class="fu">sudo</span> umount /mnt/nsg_server</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># NSG_SERVER.img</span></span><br><span class="line"><span class="comment"># 1. 查看 NSG_SERVER.img 的分区情况，是为了看需要挂载哪个分区</span></span><br><span class="line">fdisk ./NSG_SERVER.img</span><br><span class="line"><span class="comment"># result: </span></span><br><span class="line"><span class="comment"># Disk NSG_SERVER.img：20 GiB，21474836480 字节，41943040 个扇区</span></span><br><span class="line"><span class="comment"># 单元：扇区 / 1 * 512 = 512 字节</span></span><br><span class="line"><span class="comment"># 扇区大小(逻辑/物理)：512 字节 / 512 字节</span></span><br><span class="line"><span class="comment"># I/O 大小(最小/最佳)：512 字节 / 512 字节</span></span><br><span class="line"><span class="comment"># 磁盘标签类型：gpt</span></span><br><span class="line"><span class="comment"># 磁盘标识符：D85F133D-8179-4557-86F6-6DF45C769770</span></span><br><span class="line"><span class="comment"># 设备             起点     末尾     扇区 大小 类型</span></span><br><span class="line"><span class="comment"># NSG_SERVER.img1  2048     4095     2048   1M BIOS 启动</span></span><br><span class="line"><span class="comment"># NSG_SERVER.img2  4096 41940991 41936896  20G Linux 文件系统</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 挂载 .img2 分区到本机 /mnt/nsg_server</span></span><br><span class="line"><span class="comment"># 注意其中 offset = 4096 * 512，因为扇区大小为 512 字节</span></span><br><span class="line"><span class="built_in">mkdir</span> /mnt/nsg_server</span><br><span class="line">sudo mount -o loop,offset=2097152 NSG_SERVER.img /mnt/nsg_server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 卸载 .img2 分区</span></span><br><span class="line">sudo umount /mnt/nsg_server</span><br></pre></td></tr></table></figure>
 <h3 id="virtualbox-挂载共享文件夹">VirtualBox 挂载共享文件夹</h3>
 <p>在本地中创建共享的文件夹，我的共享文件夹为：<code>/mnt/nsg_server/home/icecream</code>，想要挂载到虚拟机中的 <code>/mnt/nsg_server</code> 中。</p>
 <p>本地电脑中设置共享文件夹路径（如上）以及共享文件夹名称 <code>icecream</code>，注意<strong>不要勾选自动挂载</strong>，会出现权限问题；</p>
 <p>虚拟机中：</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="co"># 创建挂载点</span></a>
-<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="fu">sudo</span> mkdir /mnt/nsg_server</a>
-<a class="sourceLine" id="cb30-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="co"># 挂载命令</span></a>
-<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="co"># mount -t vboxsf &lt;共享文件夹名称&gt; &lt;挂载目录&gt;</span></a>
-<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="fu">sudo</span> mount -t vboxsf icecream /mnt/nsg_server/</a>
-<a class="sourceLine" id="cb30-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb30-8" data-line-number="8"><span class="co"># 开机自动挂载</span></a>
-<a class="sourceLine" id="cb30-9" data-line-number="9"><span class="fu">sudo</span> gedit /etc/sftab</a>
-<a class="sourceLine" id="cb30-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb30-11" data-line-number="11"><span class="co"># 文末添加</span></a>
-<a class="sourceLine" id="cb30-12" data-line-number="12"><span class="co"># &lt;共享文件夹名称&gt; &lt; 挂载目录&gt; vboxsf defaults 0 0</span></a>
-<a class="sourceLine" id="cb30-13" data-line-number="13"><span class="ex">icecream</span> /mnt/nsg_server/ vboxsf defaults 0 0</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建挂载点</span></span><br><span class="line">sudo <span class="built_in">mkdir</span> /mnt/nsg_server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 挂载命令</span></span><br><span class="line"><span class="comment"># mount -t vboxsf &lt;共享文件夹名称&gt; &lt;挂载目录&gt;</span></span><br><span class="line">sudo mount -t vboxsf icecream /mnt/nsg_server/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开机自动挂载</span></span><br><span class="line">sudo gedit /etc/sftab</span><br><span class="line"></span><br><span class="line"><span class="comment"># 文末添加</span></span><br><span class="line"><span class="comment"># &lt;共享文件夹名称&gt; &lt; 挂载目录&gt; vboxsf defaults 0 0</span></span><br><span class="line">icecream /mnt/nsg_server/ vboxsf defaults 0 0</span><br></pre></td></tr></table></figure>
 <h3 id="vim-操作">vim 操作</h3>
-<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="co"># 显示行号</span></a>
-<a class="sourceLine" id="cb31-2" data-line-number="2">:<span class="ex">set</span> number </a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="co"># 删除单行</span></a>
-<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="fu">dd</span></a>
-<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="bu">:</span><span class="op">&lt;</span>num<span class="op">&gt;</span>d</a>
-<a class="sourceLine" id="cb31-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb31-8" data-line-number="8"><span class="co"># 删除多行</span></a>
-<a class="sourceLine" id="cb31-9" data-line-number="9"><span class="bu">:</span><span class="op">&lt;</span>begin<span class="op">&gt;&lt;</span>end<span class="op">&gt;</span>d</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示行号</span></span><br><span class="line">:<span class="built_in">set</span> number </span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除单行</span></span><br><span class="line"><span class="built_in">dd</span></span><br><span class="line">:&lt;num&gt;d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除多行</span></span><br><span class="line">:&lt;begin&gt;&lt;end&gt;d</span><br></pre></td></tr></table></figure>
 <h3 id="imgvdi-格式转换">img、vdi 格式转换</h3>
 <p>通过 VirtualBox 的 VBoxChange 工具进行转换</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="co"># vdi to img</span></a>
-<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="ex">VBoxManage</span> clonehd test.vdi test.img --format raw</a>
-<a class="sourceLine" id="cb32-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="co"># img to vdi </span></a>
-<a class="sourceLine" id="cb32-5" data-line-number="5"><span class="ex">VBoxManage</span> convertfromraw test.img test.vdi --format vdi</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vdi to img</span></span><br><span class="line">VBoxManage clonehd test.vdi test.img --format raw</span><br><span class="line"></span><br><span class="line"><span class="comment"># img to vdi </span></span><br><span class="line">VBoxManage convertfromraw test.img test.vdi --format vdi</span><br></pre></td></tr></table></figure>
 <h3 id="彻底删除-snap">彻底删除 Snap</h3>
-<div class="sourceCode" id="cb33"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co"># 1. 删掉所有的已经安装的 Snap 软件</span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="kw">for</span> <span class="ex">p</span> in <span class="va">$(</span><span class="ex">snap</span> list <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;&#123;print $1&#125;&#39;</span><span class="va">)</span><span class="kw">;</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb33-3" data-line-number="3">  <span class="fu">sudo</span> snap remove <span class="va">$p</span></a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="kw">done</span></a>
-<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co"># 直到出现：No snaps are installed yet. Try &#39;snap install hello-world&#39;.</span></a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="co"># 2. 删除 Snap 的 Core 文件</span></a>
-<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="fu">sudo</span> systemctl stop snapd</a>
-<a class="sourceLine" id="cb33-9" data-line-number="9"><span class="fu">sudo</span> systemctl disable --now snapd.socket</a>
-<a class="sourceLine" id="cb33-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb33-11" data-line-number="11"><span class="kw">for</span> <span class="ex">m</span> in /snap/core/*<span class="kw">;</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb33-12" data-line-number="12">   <span class="fu">sudo</span> umount <span class="va">$m</span></a>
-<a class="sourceLine" id="cb33-13" data-line-number="13"><span class="kw">done</span></a>
-<a class="sourceLine" id="cb33-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb33-15" data-line-number="15"><span class="co"># 3. 删除 Snap 的管理工具</span></a>
-<a class="sourceLine" id="cb33-16" data-line-number="16"><span class="fu">sudo</span> apt autoremove --purge snapd</a>
-<a class="sourceLine" id="cb33-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb33-18" data-line-number="18"><span class="co"># 4. 删除 Snap 的目录</span></a>
-<a class="sourceLine" id="cb33-19" data-line-number="19"><span class="fu">rm</span> -rf ~/snap</a>
-<a class="sourceLine" id="cb33-20" data-line-number="20"><span class="fu">sudo</span> rm -rf /snap</a>
-<a class="sourceLine" id="cb33-21" data-line-number="21"><span class="fu">sudo</span> rm -rf /var/snap</a>
-<a class="sourceLine" id="cb33-22" data-line-number="22"><span class="fu">sudo</span> rm -rf /var/lib/snapd</a>
-<a class="sourceLine" id="cb33-23" data-line-number="23"><span class="fu">sudo</span> rm -rf /var/cache/snapd</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 删掉所有的已经安装的 Snap 软件</span></span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> $(snap list | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span>); <span class="keyword">do</span></span><br><span class="line">  sudo snap remove <span class="variable">$p</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="comment"># 直到出现：No snaps are installed yet. Try &#x27;snap install hello-world&#x27;.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 删除 Snap 的 Core 文件</span></span><br><span class="line">sudo systemctl stop snapd</span><br><span class="line">sudo systemctl <span class="built_in">disable</span> --now snapd.socket</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> m <span class="keyword">in</span> /snap/core/*; <span class="keyword">do</span></span><br><span class="line">   sudo umount <span class="variable">$m</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 删除 Snap 的管理工具</span></span><br><span class="line">sudo apt autoremove --purge snapd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 删除 Snap 的目录</span></span><br><span class="line"><span class="built_in">rm</span> -rf ~/snap</span><br><span class="line">sudo <span class="built_in">rm</span> -rf /snap</span><br><span class="line">sudo <span class="built_in">rm</span> -rf /var/snap</span><br><span class="line">sudo <span class="built_in">rm</span> -rf /var/lib/snapd</span><br><span class="line">sudo <span class="built_in">rm</span> -rf /var/cache/snapd</span><br></pre></td></tr></table></figure>
 <h3 id="关闭-systemd-resolved">关闭 systemd-resolved</h3>
 <p>自启动且会占用 53 端口。</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co"># 停用 systemd-resolved 并取消开机自动启动</span></a>
-<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="fu">sudo</span> systemctl disable systemd-resolved</a>
-<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="fu">sudo</span> systemctl stop systemd-resolved</a>
-<a class="sourceLine" id="cb34-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb34-5" data-line-number="5"><span class="co"># 修改 NetworkManager 配置，让它能自动获取 dns</span></a>
-<a class="sourceLine" id="cb34-6" data-line-number="6"><span class="fu">sudo</span> vim /etc/NetworkManager/NetworkManager.conf</a>
-<a class="sourceLine" id="cb34-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb34-8" data-line-number="8"><span class="co"># 添加一行 dns=default</span></a>
-<a class="sourceLine" id="cb34-9" data-line-number="9"><span class="va">dns=</span>default</a>
-<a class="sourceLine" id="cb34-10" data-line-number="10"><span class="co"># [main]</span></a>
-<a class="sourceLine" id="cb34-11" data-line-number="11"><span class="co"># plugins=ifupdown,keyfile</span></a>
-<a class="sourceLine" id="cb34-12" data-line-number="12"><span class="co"># dns=default</span></a>
-<a class="sourceLine" id="cb34-13" data-line-number="13"><span class="co"># [ifupdown]</span></a>
-<a class="sourceLine" id="cb34-14" data-line-number="14"><span class="co"># managed=false</span></a>
-<a class="sourceLine" id="cb34-15" data-line-number="15"><span class="co"># [device]</span></a>
-<a class="sourceLine" id="cb34-16" data-line-number="16"><span class="co"># wifi.scan-rand-mac-address=no</span></a>
-<a class="sourceLine" id="cb34-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb34-18" data-line-number="18"><span class="co"># 删除 /etc/resolv.conf</span></a>
-<a class="sourceLine" id="cb34-19" data-line-number="19"><span class="fu">sudo</span> unlink /etc/resolv.conf</a>
-<a class="sourceLine" id="cb34-20" data-line-number="20"><span class="fu">sudo</span> touch /etc/resolv.conf</a>
-<a class="sourceLine" id="cb34-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb34-22" data-line-number="22"><span class="co"># 重启 NetworkManager</span></a>
-<a class="sourceLine" id="cb34-23" data-line-number="23"><span class="fu">sudo</span> systemctl restart NetworkManager</a>
-<a class="sourceLine" id="cb34-24" data-line-number="24"></a>
-<a class="sourceLine" id="cb34-25" data-line-number="25"><span class="co"># 查看 /etc/resolv.conf 中新的 dns</span></a>
-<a class="sourceLine" id="cb34-26" data-line-number="26"><span class="fu">cat</span> /etc/resolv.conf</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 停用 systemd-resolved 并取消开机自动启动</span></span><br><span class="line">sudo systemctl <span class="built_in">disable</span> systemd-resolved</span><br><span class="line">sudo systemctl stop systemd-resolved</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改 NetworkManager 配置，让它能自动获取 dns</span></span><br><span class="line">sudo vim /etc/NetworkManager/NetworkManager.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加一行 dns=default</span></span><br><span class="line">dns=default</span><br><span class="line"><span class="comment"># [main]</span></span><br><span class="line"><span class="comment"># plugins=ifupdown,keyfile</span></span><br><span class="line"><span class="comment"># dns=default</span></span><br><span class="line"><span class="comment"># [ifupdown]</span></span><br><span class="line"><span class="comment"># managed=false</span></span><br><span class="line"><span class="comment"># [device]</span></span><br><span class="line"><span class="comment"># wifi.scan-rand-mac-address=no</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除 /etc/resolv.conf</span></span><br><span class="line">sudo <span class="built_in">unlink</span> /etc/resolv.conf</span><br><span class="line">sudo <span class="built_in">touch</span> /etc/resolv.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启 NetworkManager</span></span><br><span class="line">sudo systemctl restart NetworkManager</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 /etc/resolv.conf 中新的 dns</span></span><br><span class="line"><span class="built_in">cat</span> /etc/resolv.conf</span><br></pre></td></tr></table></figure>
 <h3 id="重装网卡">重装网卡</h3>
 <p>重装网卡后还需要修改 DNS。</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="co"># 查看网卡名</span></a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="ex">ifconfig</span> -a</a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="co"># ens3</span></a>
-<a class="sourceLine" id="cb35-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb35-5" data-line-number="5"><span class="fu">sudo</span> dhclient <span class="op">&lt;</span>nic_name<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb35-6" data-line-number="6"><span class="fu">sudo</span> ifconfig <span class="op">&lt;</span>nic_name<span class="op">&gt;</span></a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看网卡名</span></span><br><span class="line">ifconfig -a</span><br><span class="line"><span class="comment"># ens3</span></span><br><span class="line"></span><br><span class="line">sudo dhclient &lt;nic_name&gt;</span><br><span class="line">sudo ifconfig &lt;nic_name&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="设置-dns">设置 DNS</h3>
-<div class="sourceCode" id="cb36"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="co"># 1. 修改 /etc/systemd/resolved.conf</span></a>
-<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="fu">sudo</span> vim /etc/systemd/resolved.conf</a>
-<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="co"># 修改：DNS=114.114.114.114 8.8.8.8</span></a>
-<a class="sourceLine" id="cb36-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb36-5" data-line-number="5"><span class="co"># 2. 重启 systemd-resolved</span></a>
-<a class="sourceLine" id="cb36-6" data-line-number="6"><span class="ex">systemctl</span> restart systemd-resolved</a>
-<a class="sourceLine" id="cb36-7" data-line-number="7"><span class="ex">systemctl</span> enable systemd-resolved</a>
-<a class="sourceLine" id="cb36-8" data-line-number="8"> </a>
-<a class="sourceLine" id="cb36-9" data-line-number="9"><span class="fu">mv</span> /etc/resolv.conf  /etc/resolv.conf.bak</a>
-<a class="sourceLine" id="cb36-10" data-line-number="10"><span class="fu">ln</span> -s /run/systemd/resolve/resolv.conf /etc/resolv.conf</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 修改 /etc/systemd/resolved.conf</span></span><br><span class="line">sudo vim /etc/systemd/resolved.conf</span><br><span class="line"><span class="comment"># 修改：DNS=114.114.114.114 8.8.8.8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 重启 systemd-resolved</span></span><br><span class="line">systemctl restart systemd-resolved</span><br><span class="line">systemctl <span class="built_in">enable</span> systemd-resolved</span><br><span class="line"> </span><br><span class="line"><span class="built_in">mv</span> /etc/resolv.conf  /etc/resolv.conf.bak</span><br><span class="line"><span class="built_in">ln</span> -s /run/systemd/resolve/resolv.conf /etc/resolv.conf</span><br></pre></td></tr></table></figure>
 <h3 id="网卡消失">网卡消失</h3>
 <p>问题：</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="fu">sudo</span> lshw -c network</a>
-<a class="sourceLine" id="cb37-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="co"># output:</span></a>
-<a class="sourceLine" id="cb37-4" data-line-number="4"><span class="co"># -network DISABLED</span></a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo lshw -c network</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># -network DISABLED</span></span><br></pre></td></tr></table></figure>
 <p>解决方案：</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="fu">sudo</span> service NetworkManager stop</a>
-<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="fu">sudo</span> rm  /var/lib/NetworkManager/NetworkManager.state</a>
-<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="fu">sudo</span> vi /etc/NetworkManager/NetworkManager.conf </a>
-<a class="sourceLine" id="cb38-4" data-line-number="4"><span class="co"># 打开 .conf 文件后，将 managed=false 改为 managed=true</span></a>
-<a class="sourceLine" id="cb38-5" data-line-number="5"><span class="fu">sudo</span> service NetworkManager start</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo service NetworkManager stop</span><br><span class="line">sudo <span class="built_in">rm</span>  /var/lib/NetworkManager/NetworkManager.state</span><br><span class="line">sudo vi /etc/NetworkManager/NetworkManager.conf </span><br><span class="line"><span class="comment"># 打开 .conf 文件后，将 managed=false 改为 managed=true</span></span><br><span class="line">sudo service NetworkManager start</span><br></pre></td></tr></table></figure>
 <p><code>ip link show</code> 命令可以查看所有网卡。</p>
 <h3 id="文件分割-sh-脚本">文件分割 sh 脚本</h3>
 <p>已知文件大小，利用 <code>dd</code> 命令</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="co"># Create split_file.sh: </span></a>
-<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="co"># 获取文件大小</span></a>
-<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="va">size=$(</span><span class="fu">stat</span> -c%s <span class="st">&quot;/dataset/bigann/bigann_learn.bvecs&quot;</span><span class="va">)</span></a>
-<a class="sourceLine" id="cb39-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb39-5" data-line-number="5"><span class="co"># 计算一半的大小</span></a>
-<a class="sourceLine" id="cb39-6" data-line-number="6"><span class="va">half=$((</span>size / 2<span class="va">))</span></a>
-<a class="sourceLine" id="cb39-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb39-8" data-line-number="8"><span class="co"># 提取前半部分</span></a>
-<a class="sourceLine" id="cb39-9" data-line-number="9"><span class="fu">dd</span> if=filename of=part1.bvecs bs=1 count=<span class="va">$half</span></a>
-<a class="sourceLine" id="cb39-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb39-11" data-line-number="11"><span class="co"># 提取后半部分</span></a>
-<a class="sourceLine" id="cb39-12" data-line-number="12"><span class="fu">dd</span> if=filename of=part2.bvecs bs=1 skip=<span class="va">$half</span></a></code></pre></div>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create split_file.sh: </span></span><br><span class="line"><span class="comment"># 获取文件大小</span></span><br><span class="line">size=$(<span class="built_in">stat</span> -c%s <span class="string">&quot;/dataset/bigann/bigann_learn.bvecs&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算一半的大小</span></span><br><span class="line">half=$((size / <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取前半部分</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=filename of=part1.bvecs bs=1 count=<span class="variable">$half</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取后半部分</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=filename of=part2.bvecs bs=1 skip=<span class="variable">$half</span></span><br></pre></td></tr></table></figure>
 <h3 id="sftp-大文件断点续传">sftp 大文件断点续传</h3>
-<div class="sourceCode" id="cb40"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="co"># sftp user@hostname</span></a>
-<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="ex">sftp</span> root@hust-server</a>
-<a class="sourceLine" id="cb40-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="co"># cd 到指定目录</span></a>
-<a class="sourceLine" id="cb40-5" data-line-number="5"><span class="ex">sftp</span><span class="op">&gt;</span> cd /root.....</a>
-<a class="sourceLine" id="cb40-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb40-7" data-line-number="7"><span class="co"># -a 表示使用增量续传的方式</span></a>
-<a class="sourceLine" id="cb40-8" data-line-number="8"><span class="ex">sftp</span><span class="op">&gt;</span> get -a nsg_100G.img</a>
-<a class="sourceLine" id="cb40-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb40-10" data-line-number="10"><span class="co"># 上传</span></a>
-<a class="sourceLine" id="cb40-11" data-line-number="11"><span class="ex">sftp</span><span class="op">&gt;</span> put -a nsg_100G.img</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sftp user@hostname</span></span><br><span class="line">sftp root@hust-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># cd 到指定目录</span></span><br><span class="line">sftp&gt; <span class="built_in">cd</span> /root.....</span><br><span class="line"></span><br><span class="line"><span class="comment"># -a 表示使用增量续传的方式</span></span><br><span class="line">sftp&gt; get -a nsg_100G.img</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传</span></span><br><span class="line">sftp&gt; put -a nsg_100G.img</span><br></pre></td></tr></table></figure>
 <h3 id="将命令放至后台">将命令放至后台</h3>
 <ul>
 <li><p><code>&amp;</code> 放后台</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="fu">sleep</span> 10s <span class="kw">&amp;</span></a></code></pre></div></li>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sleep</span> 10s &amp;</span><br></pre></td></tr></table></figure></p></li>
 <li><p><code>nohup</code> 命令</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="fu">nohup</span> sleep 10s <span class="kw">&amp;</span></a></code></pre></div></li>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nohup</span> <span class="built_in">sleep</span> 10s &amp;</span><br></pre></td></tr></table></figure></p></li>
 <li><p><code>&amp;&gt;/dev/null &amp;</code> 重定向</p>
 <p>输出重定向、完全挂后台</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="ex">./build/bin/nvmf_tgt</span> <span class="op">&amp;&gt;</span>/dev/null <span class="kw">&amp;</span></a></code></pre></div></li>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build/bin/nvmf_tgt &amp;&gt;/dev/null &amp;</span><br></pre></td></tr></table></figure></p></li>
 </ul>
 
 </div>
@@ -3232,7 +2861,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 安装 Node
 安装 nvm 工具
-curl https:# raw.githubusercontent.com/creationix/nvm/mas...</p>
+1curl https:# raw.githubusercontent.com/creationix/nvm/ma...</p>
         </a>
       
       
@@ -3245,7 +2874,7 @@ SSH key
 
 创建 SSH key
 
-ssh-keygen -t rsa -C &quot;812359326@qq...</p>
+1ssh-keygen -t rsa -C &quot;812359326@q...</p>
         </a>
       
     </div>
@@ -3302,7 +2931,7 @@ ssh-keygen -t rsa -C &quot;812359326@qq...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -3313,7 +2942,7 @@ ssh-keygen -t rsa -C &quot;812359326@qq...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -4174,7 +3803,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

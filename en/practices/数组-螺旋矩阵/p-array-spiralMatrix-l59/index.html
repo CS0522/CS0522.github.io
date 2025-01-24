@@ -1768,7 +1768,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2602,7 +2602,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>308 words</p>
+      <p>322 words</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2637,50 +2637,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li><code>directions[0]、[1]、[2]、[3]</code> 分别表示 4 个方向，二维分别为 <code>row</code> 和 <code>col</code></li>
 </ul>
 </div><div class="story post-story"><h2 id="代码">代码</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">class</span> Solution &#123;</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">public</span>:</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    vector&lt;vector&lt;<span class="dt">int</span>&gt;&gt; generateMatrix(<span class="dt">int</span> n) </a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">    &#123;</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">        <span class="co">// directions</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">        <span class="co">// 顺时针方向</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">        <span class="co">// 一维为某个方向，二维为 row 和 col</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">        <span class="dt">int</span> directions[<span class="dv">4</span>][<span class="dv">2</span>] = &lt;!--swig￼<span class="dv">0</span>--&gt;;</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">        <span class="co">// 最大的数</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">        <span class="dt">int</span> max_num = n * n;</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">        <span class="co">// results</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">        vector&lt;vector&lt;<span class="dt">int</span>&gt;&gt; spiral_metrix(n, vector&lt;<span class="dt">int</span>&gt;(n, <span class="dv">0</span>));</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">        <span class="co">// 当前的数</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">        <span class="dt">int</span> curr_num = <span class="dv">1</span>;</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">        <span class="dt">int</span> row = <span class="dv">0</span>, col = <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">        <span class="co">// 当前的方向</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">        <span class="dt">int</span> curr_direct = <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">        <span class="co">// 按数填充</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">        <span class="cf">while</span> (curr_num &lt;= max_num)</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">        &#123;</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">            spiral_metrix[row][col] = curr_num;</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">            ++curr_num;</a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">            <span class="co">// 计算下一个要填充的数的 row 和 col</span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">            <span class="dt">int</span> next_row = row + directions[curr_direct][<span class="dv">0</span>];</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">            <span class="dt">int</span> next_col = col + directions[curr_direct][<span class="dv">1</span>];</a>
-<a class="sourceLine" id="cb1-26" data-line-number="26">            <span class="co">// 当超出范围或者碰到已经访问过的，则改变方向</span></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27">            <span class="cf">if</span> (next_row &gt;= n || next_col &gt;= n || </a>
-<a class="sourceLine" id="cb1-28" data-line-number="28">                next_row &lt; <span class="dv">0</span> || next_col &lt; <span class="dv">0</span> ||</a>
-<a class="sourceLine" id="cb1-29" data-line-number="29">                spiral_metrix[next_row][next_col] != <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb1-30" data-line-number="30">            &#123;</a>
-<a class="sourceLine" id="cb1-31" data-line-number="31">                <span class="co">// change direction</span></a>
-<a class="sourceLine" id="cb1-32" data-line-number="32">                curr_direct = (curr_direct + <span class="dv">1</span>) % <span class="dv">4</span>;</a>
-<a class="sourceLine" id="cb1-33" data-line-number="33">            &#125;</a>
-<a class="sourceLine" id="cb1-34" data-line-number="34">            <span class="co">// 重新计算</span></a>
-<a class="sourceLine" id="cb1-35" data-line-number="35">            next_row = row + directions[curr_direct][<span class="dv">0</span>];</a>
-<a class="sourceLine" id="cb1-36" data-line-number="36">            next_col = col + directions[curr_direct][<span class="dv">1</span>];  </a>
-<a class="sourceLine" id="cb1-37" data-line-number="37"></a>
-<a class="sourceLine" id="cb1-38" data-line-number="38">            row = next_row;</a>
-<a class="sourceLine" id="cb1-39" data-line-number="39">            col = next_col;</a>
-<a class="sourceLine" id="cb1-40" data-line-number="40">        &#125; </a>
-<a class="sourceLine" id="cb1-41" data-line-number="41"></a>
-<a class="sourceLine" id="cb1-42" data-line-number="42">        <span class="cf">return</span> spiral_metrix;</a>
-<a class="sourceLine" id="cb1-43" data-line-number="43">    &#125;</a>
-<a class="sourceLine" id="cb1-44" data-line-number="44">&#125;;</a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">generateMatrix</span>(<span class="type">int</span> n) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// directions</span></span><br><span class="line">        <span class="comment">// 顺时针方向</span></span><br><span class="line">        <span class="comment">// 一维为某个方向，二维为 row 和 col</span></span><br><span class="line">        <span class="type">int</span> directions[<span class="number">4</span>][<span class="number">2</span>] = &#123;&#123;<span class="number">0</span>, <span class="number">1</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;&#125;;</span><br><span class="line">        <span class="comment">// 最大的数</span></span><br><span class="line">        <span class="type">int</span> max_num = n * n;</span><br><span class="line">        <span class="comment">// results</span></span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">spiral_metrix</span>(n, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n, <span class="number">0</span>));</span><br><span class="line">        <span class="comment">// 当前的数</span></span><br><span class="line">        <span class="type">int</span> curr_num = <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> row = <span class="number">0</span>, col = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 当前的方向</span></span><br><span class="line">        <span class="type">int</span> curr_direct = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 按数填充</span></span><br><span class="line">        <span class="keyword">while</span> (curr_num &lt;= max_num)</span><br><span class="line">        &#123;</span><br><span class="line">            spiral_metrix[row][col] = curr_num;</span><br><span class="line">            ++curr_num;</span><br><span class="line">            <span class="comment">// 计算下一个要填充的数的 row 和 col</span></span><br><span class="line">            <span class="type">int</span> next_row = row + directions[curr_direct][<span class="number">0</span>];</span><br><span class="line">            <span class="type">int</span> next_col = col + directions[curr_direct][<span class="number">1</span>];</span><br><span class="line">            <span class="comment">// 当超出范围或者碰到已经访问过的，则改变方向</span></span><br><span class="line">            <span class="keyword">if</span> (next_row &gt;= n || next_col &gt;= n || </span><br><span class="line">                next_row &lt; <span class="number">0</span> || next_col &lt; <span class="number">0</span> ||</span><br><span class="line">                spiral_metrix[next_row][next_col] != <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// change direction</span></span><br><span class="line">                curr_direct = (curr_direct + <span class="number">1</span>) % <span class="number">4</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 重新计算</span></span><br><span class="line">            next_row = row + directions[curr_direct][<span class="number">0</span>];</span><br><span class="line">            next_col = col + directions[curr_direct][<span class="number">1</span>];  </span><br><span class="line"></span><br><span class="line">            row = next_row;</span><br><span class="line">            col = next_col;</span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> spiral_metrix;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 </div>
   </div>
@@ -2804,8 +2761,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 思路
 学习点
 代码
-/**
- * Definit...</p>
+12345678910111...</p>
         </a>
       
       
@@ -2869,7 +2825,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2880,7 +2836,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3741,7 +3697,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

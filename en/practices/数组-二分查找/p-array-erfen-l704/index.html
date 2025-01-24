@@ -1769,7 +1769,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2647,43 +2647,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li><code>(left, right)</code>: while (left &lt; right - 1), left = mid, right = mid</li>
 </ul>
 </div><div class="story post-story"><h2 id="代码">代码</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">class</span> Solution &#123;</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">public</span>:</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="dt">int</span> search(vector&lt;<span class="dt">int</span>&gt;&amp; nums, <span class="dt">int</span> target) </a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">    &#123;</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">        <span class="dt">int</span> left = <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">        <span class="dt">int</span> right = nums.size() - <span class="dv">1</span>;</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">        <span class="co">// left bound</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">        <span class="cf">if</span> (nums[left] == target)</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">        &#123;</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">            <span class="cf">return</span> left;</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">        &#125;</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">        <span class="co">// right bound</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">        <span class="cf">if</span> (nums[right] == target)</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">        &#123;</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">            <span class="cf">return</span> right;</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">        &#125;</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">        <span class="co">// binary search</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">        <span class="cf">while</span> (left &lt; right - <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">        &#123;</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">            <span class="dt">int</span> mid = (left + right) / <span class="dv">2</span>;</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">            <span class="cf">if</span> (nums[mid] &lt; target)</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">            &#123;</a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">                left = mid;</a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">            &#125;</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">            <span class="cf">else</span> <span class="cf">if</span> (nums[mid] &gt; target)</a>
-<a class="sourceLine" id="cb1-26" data-line-number="26">            &#123;</a>
-<a class="sourceLine" id="cb1-27" data-line-number="27">                right = mid;</a>
-<a class="sourceLine" id="cb1-28" data-line-number="28">            &#125;</a>
-<a class="sourceLine" id="cb1-29" data-line-number="29">            <span class="cf">else</span></a>
-<a class="sourceLine" id="cb1-30" data-line-number="30">            &#123;</a>
-<a class="sourceLine" id="cb1-31" data-line-number="31">                <span class="cf">return</span> mid;</a>
-<a class="sourceLine" id="cb1-32" data-line-number="32">            &#125;</a>
-<a class="sourceLine" id="cb1-33" data-line-number="33">        &#125;</a>
-<a class="sourceLine" id="cb1-34" data-line-number="34">        <span class="co">// not found</span></a>
-<a class="sourceLine" id="cb1-35" data-line-number="35">        <span class="cf">return</span> <span class="dv">-1</span>;</a>
-<a class="sourceLine" id="cb1-36" data-line-number="36">    &#125;</a>
-<a class="sourceLine" id="cb1-37" data-line-number="37">&#125;;</a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">search</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> target)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> right = nums.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// left bound</span></span><br><span class="line">        <span class="keyword">if</span> (nums[left] == target)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> left;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// right bound</span></span><br><span class="line">        <span class="keyword">if</span> (nums[right] == target)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> right;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// binary search</span></span><br><span class="line">        <span class="keyword">while</span> (left &lt; right - <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span> (nums[mid] &lt; target)</span><br><span class="line">            &#123;</span><br><span class="line">                left = mid;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &gt; target)</span><br><span class="line">            &#123;</span><br><span class="line">                right = mid;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// not found</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 </div>
   </div>
@@ -2812,14 +2776,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         </a>
       
       
-        <a class='next' href='/docs/d-python-used-codes/'>
-          <p class='title'>【文档小记】记录 Python 中使用过的有用代码<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+        <a class='next' href='/notes/d-python-used-codes/'>
+          <p class='title'>【学习笔记】记录 Python 中使用过的有用代码<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
           <p class='content'>记录 Python 中使用过的有用代码，以后应该还用的上。
 
 平滑对比曲线图
-import matplotlib.pyplot as plt
-# 平滑曲线图
-from scipy.interpo...</p>
+1234567891011121314151617181920212223242526272829303132333...</p>
         </a>
       
     </div>
@@ -2876,7 +2838,7 @@ from scipy.interpo...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2887,7 +2849,7 @@ from scipy.interpo...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3748,7 +3710,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

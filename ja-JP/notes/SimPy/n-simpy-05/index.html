@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2600,13 +2600,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：1k 字</p>
+      <p>字数：984 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fa-solid fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>时长：5 分钟</p>
+      <p>时长：4 分钟</p>
     </a>
   </div>
 
@@ -2631,161 +2631,36 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <div class="story post-story"><h2 id="simpy-2-to-3">SimPy 2 to 3</h2>
 <h3 id="imports">Imports</h3>
 <p>SimPy 3 的 <code>import</code> 被简化。SimPy 2 需要根据模拟环境选择需要导入的模块，SimPy 3 大部分情况下只用导入 <code>simpy</code></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># SimPy 2</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="im">from</span> Simpy.Simulation <span class="im">import</span> Simulation, Process, hold</a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># SimPy 3</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="im">import</span> simpy</a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SimPy 2</span></span><br><span class="line"><span class="keyword">from</span> Simpy.Simulation <span class="keyword">import</span> Simulation, Process, hold</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SimPy 3</span></span><br><span class="line"><span class="keyword">import</span> simpy</span><br></pre></td></tr></table></figure>
 <h3 id="simulation-classes">Simulation* classes</h3>
 <p>SimPy 3 的 <code>Environment</code> 替换 <code>Simulation</code>，<code>RealtimeEnvironment</code> 替换 <code>SimulationRT</code>。</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># SimPy 2</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># Procedural API</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="im">from</span> SimPy.Simulation <span class="im">import</span> initialize, simulate</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">initialize()</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co"># Start processes</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">simulate(until<span class="op">=</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co"># Object-oriented API</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="im">from</span> SimPy.Simulation <span class="im">import</span> Simulation</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">sim <span class="op">=</span> Simulation()</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co"># Start processes</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">sim.simulate(until<span class="op">=</span><span class="dv">10</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># SimPy 3</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="im">import</span> simpy</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">env <span class="op">=</span> simpy.Environment()</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co"># Start processes</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">env.run(until<span class="op">=</span><span class="dv">10</span>)</a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SimPy 2</span></span><br><span class="line"><span class="comment"># Procedural API</span></span><br><span class="line"><span class="keyword">from</span> SimPy.Simulation <span class="keyword">import</span> initialize, simulate</span><br><span class="line"></span><br><span class="line">initialize()</span><br><span class="line"><span class="comment"># Start processes</span></span><br><span class="line">simulate(until=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Object-oriented API</span></span><br><span class="line"><span class="keyword">from</span> SimPy.Simulation <span class="keyword">import</span> Simulation</span><br><span class="line"></span><br><span class="line">sim = Simulation()</span><br><span class="line"><span class="comment"># Start processes</span></span><br><span class="line">sim.simulate(until=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SimPy 3</span></span><br><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line">env = simpy.Environment()</span><br><span class="line"><span class="comment"># Start processes</span></span><br><span class="line">env.run(until=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="defining-a-process">Defining a Process</h3>
 <p>SimPy 3 中的 Process 是一个封装在进程实例中的 Python 生成器（无论它是在模块级定义的还是作为实例方法定义的）。生成器通常需要对环境的引用才能与之交互，但这是可选的。</p>
 <p>进程可以通过创建一个进程实例并将生成器传递给它来启动。环境为此提供了一个快捷方式：<code>process()</code>。</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># SimPy 2</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># Procedural API</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="im">from</span> Simpy.Simulation <span class="im">import</span> Process</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="kw">class</span> MyProcess(Process):</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, another_param):</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">        <span class="bu">super</span>().<span class="fu">__init__</span>()</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">        <span class="va">self</span>.another_param <span class="op">=</span> another_param</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">    <span class="kw">def</span> generator_function(<span class="va">self</span>):</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">        <span class="co">&quot;&quot;&quot;Implement the process&#39; behavior.&quot;&quot;&quot;</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">        <span class="cf">yield</span> something</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">initialize()</a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">proc <span class="op">=</span> Process(<span class="st">&#39;Spam&#39;</span>)</a>
-<a class="sourceLine" id="cb5-16" data-line-number="16">activate(proc, proc.generator_function())</a>
-<a class="sourceLine" id="cb5-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co"># Object-oriented API</span></a>
-<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="im">from</span> SimPy.Simulation <span class="im">import</span> Simulation, Process</a>
-<a class="sourceLine" id="cb5-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="kw">class</span> MyProcess(Process):</a>
-<a class="sourceLine" id="cb5-22" data-line-number="22">    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, sim, another_param):</a>
-<a class="sourceLine" id="cb5-23" data-line-number="23">        <span class="bu">super</span>().<span class="fu">__init__</span>(sim<span class="op">=</span>sim)</a>
-<a class="sourceLine" id="cb5-24" data-line-number="24">        <span class="va">self</span>.another_param <span class="op">=</span> another_param</a>
-<a class="sourceLine" id="cb5-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb5-26" data-line-number="26">    <span class="kw">def</span> generator_function(<span class="va">self</span>):</a>
-<a class="sourceLine" id="cb5-27" data-line-number="27">        <span class="co">&quot;&quot;&quot;Implement the process&#39; behaviour.&quot;&quot;&quot;</span></a>
-<a class="sourceLine" id="cb5-28" data-line-number="28">        <span class="cf">yield</span> something</a>
-<a class="sourceLine" id="cb5-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb5-30" data-line-number="30">sim <span class="op">=</span> Simulation()</a>
-<a class="sourceLine" id="cb5-31" data-line-number="31">proc <span class="op">=</span> Process(sim, <span class="st">&#39;Spam&#39;</span>)</a>
-<a class="sourceLine" id="cb5-32" data-line-number="32">sim.activate(proc, proc.generator_function())</a></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># SimPy 3</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="im">import</span> simpy</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw">def</span> generator_function(env, another_param):</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">    <span class="co">&quot;&quot;&quot;Implement the process&#39; behavior.&quot;&quot;&quot;</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">    <span class="cf">yield</span> something</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">env <span class="op">=</span> simpy.Environment()</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">proc <span class="op">=</span> env.process(generator_function(env, <span class="st">&#39;Spam&#39;</span>))</a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SimPy 2</span></span><br><span class="line"><span class="comment"># Procedural API</span></span><br><span class="line"><span class="keyword">from</span> Simpy.Simulation <span class="keyword">import</span> Process</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyProcess</span>(<span class="title class_ inherited__">Process</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, another_param</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.another_param = another_param</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generator_function</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Implement the process&#x27; behavior.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">yield</span> something</span><br><span class="line"></span><br><span class="line">initialize()</span><br><span class="line">proc = Process(<span class="string">&#x27;Spam&#x27;</span>)</span><br><span class="line">activate(proc, proc.generator_function())</span><br><span class="line"></span><br><span class="line"><span class="comment"># Object-oriented API</span></span><br><span class="line"><span class="keyword">from</span> SimPy.Simulation <span class="keyword">import</span> Simulation, Process</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyProcess</span>(<span class="title class_ inherited__">Process</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, sim, another_param</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(sim=sim)</span><br><span class="line">        self.another_param = another_param</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generator_function</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Implement the process&#x27; behaviour.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">yield</span> something</span><br><span class="line"></span><br><span class="line">sim = Simulation()</span><br><span class="line">proc = Process(sim, <span class="string">&#x27;Spam&#x27;</span>)</span><br><span class="line">sim.activate(proc, proc.generator_function())</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SimPy 3</span></span><br><span class="line"><span class="keyword">import</span> simpy</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generator_function</span>(<span class="params">env, another_param</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Implement the process&#x27; behavior.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">yield</span> something</span><br><span class="line"></span><br><span class="line">env = simpy.Environment()</span><br><span class="line">proc = env.process(generator_function(env, <span class="string">&#x27;Spam&#x27;</span>))</span><br></pre></td></tr></table></figure>
 <h3 id="simpy-keywords">SimPy Keywords</h3>
 <p>SimPy 3中，可以直接生成事件。可以直接实例化事件，也可以使用 Environment 提供的快捷方式。</p>
 <p>通常，每当一个进程产生一个事件时，该进程的执行都会被挂起，并在事件被触发后重新开始。为了激发这种理解，一些活动被重新命名。例如，<code>hold</code> 关键字意味着等待一段时间。就事件而言，这意味着发生了超时。因此，<code>hold</code> 已被 <code>Timeout</code> 事件取代。</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># SimPy 2</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="cf">yield</span> hold, <span class="va">self</span>, duration</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="cf">yield</span> passivate, <span class="va">self</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="cf">yield</span> request, <span class="va">self</span>, resource</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="cf">yield</span> release, <span class="va">self</span>, resource</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="cf">yield</span> waitevent, <span class="va">self</span>, event</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="cf">yield</span> waitevent, <span class="va">self</span>, [event_a, event_b, event_c]</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="cf">yield</span> queueevent, <span class="va">self</span>, event_list</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="cf">yield</span> get, <span class="va">self</span>, level, amount</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="cf">yield</span> put, <span class="va">self</span>, level, amount</a></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># SimPy 3</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="cf">yield</span> env.timeout(duration)        <span class="co"># hold: renamed</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="cf">yield</span> env.event()                  <span class="co"># passivate: renamed</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="cf">yield</span> resource.request()           <span class="co"># Request is now bound to class Resource</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">resource.release()                 <span class="co"># Release no longer needs to be yielded</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="cf">yield</span> event                        <span class="co"># waitevent: just yield the event</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="cf">yield</span> env.all_of([event_a, event_b, event_c])  <span class="co"># waitevent</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="cf">yield</span> env.any_of([event_a, event_b, event_c])  <span class="co"># queuevent</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="cf">yield</span> container.get(amount)        <span class="co"># Level is now called Container</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="cf">yield</span> container.put(amount)</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="cf">yield</span> event_a <span class="op">|</span> event_b            <span class="co"># Wait for either a or b. This is new.</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="cf">yield</span> event_a <span class="op">&amp;</span> event_b            <span class="co"># Wait for a and b. This is new.</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="cf">yield</span> env.process(calculation(env))  <span class="co"># Wait for the process calculation to</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">                                     <span class="co"># to finish.</span></a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SimPy 2</span></span><br><span class="line"><span class="keyword">yield</span> hold, self, duration</span><br><span class="line"><span class="keyword">yield</span> passivate, self</span><br><span class="line"><span class="keyword">yield</span> request, self, resource</span><br><span class="line"><span class="keyword">yield</span> release, self, resource</span><br><span class="line"><span class="keyword">yield</span> waitevent, self, event</span><br><span class="line"><span class="keyword">yield</span> waitevent, self, [event_a, event_b, event_c]</span><br><span class="line"><span class="keyword">yield</span> queueevent, self, event_list</span><br><span class="line"><span class="keyword">yield</span> get, self, level, amount</span><br><span class="line"><span class="keyword">yield</span> put, self, level, amount</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SimPy 3</span></span><br><span class="line"><span class="keyword">yield</span> env.timeout(duration)        <span class="comment"># hold: renamed</span></span><br><span class="line"><span class="keyword">yield</span> env.event()                  <span class="comment"># passivate: renamed</span></span><br><span class="line"><span class="keyword">yield</span> resource.request()           <span class="comment"># Request is now bound to class Resource</span></span><br><span class="line">resource.release()                 <span class="comment"># Release no longer needs to be yielded</span></span><br><span class="line"><span class="keyword">yield</span> event                        <span class="comment"># waitevent: just yield the event</span></span><br><span class="line"><span class="keyword">yield</span> env.all_of([event_a, event_b, event_c])  <span class="comment"># waitevent</span></span><br><span class="line"><span class="keyword">yield</span> env.any_of([event_a, event_b, event_c])  <span class="comment"># queuevent</span></span><br><span class="line"><span class="keyword">yield</span> container.get(amount)        <span class="comment"># Level is now called Container</span></span><br><span class="line"><span class="keyword">yield</span> container.put(amount)</span><br><span class="line"></span><br><span class="line"><span class="keyword">yield</span> event_a | event_b            <span class="comment"># Wait for either a or b. This is new.</span></span><br><span class="line"><span class="keyword">yield</span> event_a &amp; event_b            <span class="comment"># Wait for a and b. This is new.</span></span><br><span class="line"><span class="keyword">yield</span> env.process(calculation(env))  <span class="comment"># Wait for the process calculation to</span></span><br><span class="line">                                     <span class="comment"># to finish.</span></span><br></pre></td></tr></table></figure>
 <h3 id="interrupts">Interrupts</h3>
 <p>SimPy 3 中，可以对进程调用 <code>interrupt()</code>。一个中断被抛出到进程中，进程必须通过 <code>try...except simpy.Interrupt</code> 处理中断。</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># SimPy 2</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw">class</span> Interrupter(Process):</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, victim):</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">        <span class="bu">super</span>().<span class="fu">__init__</span>()</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">        <span class="va">self</span>.victim <span class="op">=</span> victim</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">    <span class="kw">def</span> run(<span class="va">self</span>):</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">        <span class="cf">yield</span> hold, <span class="va">self</span>, <span class="dv">1</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">        <span class="va">self</span>.interrupt(<span class="va">self</span>.victim_proc)</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">        <span class="va">self</span>.victim_proc.interruptCause <span class="op">=</span> <span class="st">&#39;Spam&#39;</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="kw">class</span> Victim(Process):</a>
-<a class="sourceLine" id="cb9-13" data-line-number="13">    <span class="kw">def</span> run(<span class="va">self</span>):</a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">        <span class="cf">yield</span> hold, <span class="va">self</span>, <span class="dv">10</span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15">        <span class="cf">if</span> <span class="va">self</span>.interrupted:</a>
-<a class="sourceLine" id="cb9-16" data-line-number="16">            cause <span class="op">=</span> <span class="va">self</span>.interruptCause</a>
-<a class="sourceLine" id="cb9-17" data-line-number="17">            <span class="va">self</span>.interruptReset()</a></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># SimPy 3</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">def</span> interrupter(env, victim_proc):</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">    <span class="cf">yield</span> env.timeout(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">    victim_proc.interrupt(<span class="st">&#39;Spam&#39;</span>)</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="kw">def</span> victim(env):</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">    <span class="cf">try</span>:</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">        <span class="cf">yield</span> env.timeout(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">    <span class="cf">except</span> Interrupt <span class="im">as</span> interrupt:</a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">        cause <span class="op">=</span> interrupt.cause</a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SimPy 2</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Interrupter</span>(<span class="title class_ inherited__">Process</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, victim</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.victim = victim</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">yield</span> hold, self, <span class="number">1</span></span><br><span class="line">        self.interrupt(self.victim_proc)</span><br><span class="line">        self.victim_proc.interruptCause = <span class="string">&#x27;Spam&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Victim</span>(<span class="title class_ inherited__">Process</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">yield</span> hold, self, <span class="number">10</span></span><br><span class="line">        <span class="keyword">if</span> self.interrupted:</span><br><span class="line">            cause = self.interruptCause</span><br><span class="line">            self.interruptReset()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SimPy 3</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">interrupter</span>(<span class="params">env, victim_proc</span>):</span><br><span class="line">    <span class="keyword">yield</span> env.timeout(<span class="number">1</span>)</span><br><span class="line">    victim_proc.interrupt(<span class="string">&#x27;Spam&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">victim</span>(<span class="params">env</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">yield</span> env.timeout(<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">except</span> Interrupt <span class="keyword">as</span> interrupt:</span><br><span class="line">        cause = interrupt.cause</span><br></pre></td></tr></table></figure>
 </div><div class="story post-story"><h2 id="simpy-3-to-4">SimPy 3 to 4</h2>
 <p>Python &gt;= 3.6</p>
 <h3 id="environment-subclasses">Environment Subclasses</h3>
 <p><code>BaseEnvironment</code> 类已在 SimPy 4 中移除。<code>Environment</code> 类现在是最基本的类。任何从 <code>BaseEnvironment</code> 继承的代码都应该修改为从 <code>Environment</code> 继承。</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># SimPy 3</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw">class</span> MyEnv(SimPy.BaseEnvironment):</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">  ...</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co"># SimPy 4</span></a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="kw">class</span> MyEnv(SimPy.Environment):</a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">  ...</a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SimPy 3</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyEnv</span>(SimPy.BaseEnvironment):</span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line"><span class="comment"># SimPy 4</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyEnv</span>(SimPy.Environment):</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
 <h3 id="returning-from-process-generators">Returning from Process Generators</h3>
 <p>在下面的示例中，<code>Environment.exit()</code> 用于返回 the first needle。当将 SimPy 3 与 Python 2 一起使用时，这是从流程生成器返回值的唯一方法。</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># SimPy 3 + Python 2 </span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">def</span> find_first_needle(env, store):</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">    <span class="cf">while</span> <span class="va">True</span>:</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">        item <span class="op">=</span> <span class="cf">yield</span> store.get()</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">        <span class="cf">if</span> is_needle(item):</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">            env.exit(item)  <span class="co"># Python2 generators cannot use return</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="kw">def</span> proc(env, store):</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">    needle <span class="op">=</span> <span class="cf">yield</span> env.process(find_first_needle(env, store))</a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SimPy 3 + Python 2 </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">find_first_needle</span>(<span class="params">env, store</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        item = <span class="keyword">yield</span> store.get()</span><br><span class="line">        <span class="keyword">if</span> is_needle(item):</span><br><span class="line">            env.exit(item)  <span class="comment"># Python2 generators cannot use return</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">proc</span>(<span class="params">env, store</span>):</span><br><span class="line">    needle = <span class="keyword">yield</span> env.process(find_first_needle(env, store))</span><br></pre></td></tr></table></figure>
 <p>在 SimPy 4 与 Python 3 下，可以写为：</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">def</span> find_first_needle(env, store):</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">    <span class="cf">while</span> <span class="va">True</span>:</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">        item <span class="op">=</span> <span class="cf">yield</span> store.get()</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">        <span class="cf">if</span> is_needle(item):</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">            <span class="cf">return</span> item  <span class="co"># A Python3 generator can return</span></a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">find_first_needle</span>(<span class="params">env, store</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        item = <span class="keyword">yield</span> store.get()</span><br><span class="line">        <span class="keyword">if</span> is_needle(item):</span><br><span class="line">            <span class="keyword">return</span> item  <span class="comment"># A Python3 generator can return</span></span><br></pre></td></tr></table></figure>
 <p><br> <br> <br></p>
 <p>SimPy 学习</p>
 <ul>
@@ -2983,7 +2858,7 @@ Real-time-simulation
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2994,7 +2869,7 @@ Real-time-simulation
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3855,7 +3730,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

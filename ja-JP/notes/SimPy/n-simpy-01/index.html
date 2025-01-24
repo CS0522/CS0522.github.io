@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2634,7 +2634,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <a target="_blank" rel="noopener" href="https://simpy.readthedocs.io/en/latest/">SimPy 文档</a></p>
 </blockquote>
 </div><div class="story post-story"><h2 id="simpy-安装">SimPy 安装</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">pip</span> install simpy</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install simpy</span><br></pre></td></tr></table></figure>
 </div><div class="story post-story"><h2 id="simpy-基本概念">SimPy 基本概念</h2>
 <p>SimPy 是<code>离散事件</code>驱动的仿真库。所有活动部件，例如车辆、顾客，即便是信息，都可以用 <code>process</code> 来模拟。这些 <code>process</code> 存放在 <code>environment</code> 中。所有 <code>process</code> 之间，以及与 <code>environment</code> 之间的互动，通过 <code>event</code> 来进行。</p>
 <p>SimPy 可以看作一个异步事件分发器，生成一些事件并在给定的仿真时间安排它们。事件按<code>优先级</code>、<code>仿真时间</code>和<code>递增的事件id</code>排序。事件还具有回调列表，这些回调在事件触发和处理时执行。事件也可能有返回值。</p>
@@ -2657,20 +2657,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </div><div class="story post-story"><h2 id="python-yield-关键字">Python yield 关键字</h2>
 <p>看作 <code>return</code>。举例说明。</p>
 <h3 id="example-1.1">Example 1.1</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">def</span> foo():</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="bu">print</span>(<span class="st">&quot;starting...&quot;</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="cf">while</span> <span class="va">True</span>:</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">        res <span class="op">=</span> <span class="cf">yield</span> <span class="dv">4</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">        <span class="bu">print</span>(<span class="st">&quot;res:&quot;</span>,res)</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">g <span class="op">=</span> foo()</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="bu">print</span>(<span class="bu">next</span>(g))</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="bu">print</span>(<span class="st">&quot;*&quot;</span><span class="op">*</span><span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="bu">print</span>(<span class="bu">next</span>(g))</a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="ex">starting...</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="ex">4</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="ex">********************</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="ex">res</span>: None</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="ex">4</span></a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;starting...&quot;</span>)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        res = <span class="keyword">yield</span> <span class="number">4</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;res:&quot;</span>,res)</span><br><span class="line">g = foo()</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(g))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;*&quot;</span>*<span class="number">20</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(g))</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">starting...</span><br><span class="line">4</span><br><span class="line">********************</span><br><span class="line">res: None</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
 <p>运行过程：</p>
 <ul>
 <li>程序开始执行以后，因为 <code>foo()</code> 中有 <code>yield</code> 关键字，所以 <code>foo()</code> 并不会真的执行，而是先得到一个生成器 g（相当于一个对象）；</li>
@@ -2681,21 +2669,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>程序会继续在 while 里执行，又一次碰到<code>yield</code>，这个时候同样 return 出 4，然后程序停止，print 函数输出的 4 就是这次 return 出的 4。</li>
 </ul>
 <h3 id="example-1.2">Example 1.2</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">def</span> foo():</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="bu">print</span>(<span class="st">&quot;starting...&quot;</span>)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">    <span class="cf">while</span> <span class="va">True</span>:</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">        res <span class="op">=</span> <span class="cf">yield</span> <span class="dv">4</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">        <span class="bu">print</span>(<span class="st">&quot;res:&quot;</span>,res)</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">g <span class="op">=</span> foo()</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="bu">print</span>(<span class="bu">next</span>(g))</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="bu">print</span>(<span class="st">&quot;*&quot;</span><span class="op">*</span><span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">###</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="bu">print</span>(g.send(<span class="dv">7</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="ex">starting...</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="ex">4</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="ex">********************</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="ex">res</span>: 7</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="ex">4</span></a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;starting...&quot;</span>)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        res = <span class="keyword">yield</span> <span class="number">4</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;res:&quot;</span>,res)</span><br><span class="line">g = foo()</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(g))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;*&quot;</span>*<span class="number">20</span>)</span><br><span class="line"><span class="comment">###</span></span><br><span class="line"><span class="built_in">print</span>(g.send(<span class="number">7</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">starting...</span><br><span class="line">4</span><br><span class="line">********************</span><br><span class="line">res: 7</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
 <p>运行过程：</p>
 <ul>
 <li>程序执行 <code>g.send(7)</code>，程序会从 <code>yield</code>关键字那一行继续向下运行，<code>send</code> 会把 7 这个值赋值给 res 变量；</li>
@@ -2709,27 +2684,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>调用一个生成器函数，返回的是一个<code>迭代器对象</code>。</p>
 <h3 id="example-1.3">Example 1.3</h3>
 <p>生成器函数实现费波拉契数列</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="im">import</span> sys</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"> </a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw">def</span> fibonacci(n): <span class="co"># 生成器函数</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">    a, b, counter <span class="op">=</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">    <span class="cf">while</span> <span class="va">True</span>:</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">        <span class="cf">if</span> (counter <span class="op">&gt;</span> n): </a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">            <span class="cf">return</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">        <span class="cf">yield</span> a</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">        a, b <span class="op">=</span> b, a <span class="op">+</span> b</a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">        counter <span class="op">+=</span> <span class="dv">1</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12">f <span class="op">=</span> fibonacci(<span class="dv">10</span>) <span class="co"># f 是一个迭代器，由生成器返回生成</span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"> </a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="cf">while</span> <span class="va">True</span>:</a>
-<a class="sourceLine" id="cb6-15" data-line-number="15">    <span class="cf">try</span>:</a>
-<a class="sourceLine" id="cb6-16" data-line-number="16">        <span class="co"># end=&quot; &quot; 意思是每输出一个数，以&quot; &quot;结尾，而不是换行</span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17">        <span class="bu">print</span> (<span class="bu">next</span>(f), end<span class="op">=</span><span class="st">&quot; &quot;</span>)</a>
-<a class="sourceLine" id="cb6-18" data-line-number="18">    <span class="cf">except</span> <span class="pp">StopIteration</span>:</a>
-<a class="sourceLine" id="cb6-19" data-line-number="19">        sys.exit()</a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fibonacci</span>(<span class="params">n</span>): <span class="comment"># 生成器函数</span></span><br><span class="line">    a, b, counter = <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">if</span> (counter &gt; n): </span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">yield</span> a</span><br><span class="line">        a, b = b, a + b</span><br><span class="line">        counter += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">f = fibonacci(<span class="number">10</span>) <span class="comment"># f 是一个迭代器，由生成器返回生成</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># end=&quot; &quot; 意思是每输出一个数，以&quot; &quot;结尾，而不是换行</span></span><br><span class="line">        <span class="built_in">print</span> (<span class="built_in">next</span>(f), end=<span class="string">&quot; &quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> StopIteration:</span><br><span class="line">        sys.exit()</span><br></pre></td></tr></table></figure>
 <p>运行结果</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ex">0</span> 1 1 2 3 5 8 13 21 34 55</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 1 1 2 3 5 8 13 21 34 55</span><br></pre></td></tr></table></figure>
 <p><br> <br> <br></p>
 <p>SimPy 学习</p>
 <ul>
@@ -2876,8 +2833,7 @@ APIs
 
 Ubuntu14.04 x64 以下
 测试通过：Ubuntu14.04 x64，Ubuntu10.04 x86
-老版本需要更换官方源
-# ...</p>
+老版本需要更换官方源 1#...</p>
         </a>
       
     </div>
@@ -2934,7 +2890,7 @@ Ubuntu14.04 x64 以下
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2945,7 +2901,7 @@ Ubuntu14.04 x64 以下
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3806,7 +3762,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

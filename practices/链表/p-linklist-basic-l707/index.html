@@ -1769,7 +1769,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2641,140 +2641,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>链表的基本操作</li>
 </ul>
 </div><div class="story post-story"><h2 id="代码">代码</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">struct</span> DNode</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">&#123;</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="dt">int</span> val;</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">    DNode* next;</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">    DNode* prev;</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">    DNode(<span class="dt">int</span> _val): val(_val) &#123;&#125;</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">    DNode(<span class="dt">int</span> _val, DNode* _next, DNode* _prev): </a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">                val(_val), next(_next), prev(_prev) &#123;&#125;</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">&#125;;</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">// 带头节点</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw">class</span> MyLinkedList &#123;</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="kw">public</span>:</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">    MyLinkedList() &#123;</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">        <span class="co">// 初始化一个空节点</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">        <span class="kw">this</span>-&gt;head = <span class="kw">new</span> DNode(<span class="dv">-1</span>, <span class="kw">nullptr</span>, <span class="kw">nullptr</span>);</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">        <span class="kw">this</span>-&gt;size = <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">    &#125;</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">    </a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">    <span class="dt">int</span> get(<span class="dt">int</span> index) &#123;</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">        <span class="cf">if</span> (index &lt; <span class="dv">0</span> || index &gt;= <span class="kw">this</span>-&gt;size ||</a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">            <span class="kw">this</span>-&gt;head-&gt;next == <span class="kw">nullptr</span>)</a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">        &#123;</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">            <span class="cf">return</span> <span class="dv">-1</span>;</a>
-<a class="sourceLine" id="cb1-26" data-line-number="26">        &#125;</a>
-<a class="sourceLine" id="cb1-27" data-line-number="27">        <span class="kw">auto</span> p = <span class="kw">this</span>-&gt;head;</a>
-<a class="sourceLine" id="cb1-28" data-line-number="28">        <span class="cf">while</span> (index &gt;= <span class="dv">0</span> &amp;&amp; p != <span class="kw">nullptr</span>)</a>
-<a class="sourceLine" id="cb1-29" data-line-number="29">        &#123;</a>
-<a class="sourceLine" id="cb1-30" data-line-number="30">            p = p-&gt;next;</a>
-<a class="sourceLine" id="cb1-31" data-line-number="31">            --index;</a>
-<a class="sourceLine" id="cb1-32" data-line-number="32">        &#125;</a>
-<a class="sourceLine" id="cb1-33" data-line-number="33">        <span class="cf">return</span> p-&gt;val;</a>
-<a class="sourceLine" id="cb1-34" data-line-number="34">    &#125;</a>
-<a class="sourceLine" id="cb1-35" data-line-number="35">    </a>
-<a class="sourceLine" id="cb1-36" data-line-number="36">    <span class="dt">void</span> addAtHead(<span class="dt">int</span> val) &#123;</a>
-<a class="sourceLine" id="cb1-37" data-line-number="37">        DNode* new_node = <span class="kw">new</span> DNode(val, <span class="kw">nullptr</span>, <span class="kw">nullptr</span>);</a>
-<a class="sourceLine" id="cb1-38" data-line-number="38">        <span class="co">// 设置前驱后继</span></a>
-<a class="sourceLine" id="cb1-39" data-line-number="39">        new_node-&gt;next = <span class="kw">this</span>-&gt;head-&gt;next;</a>
-<a class="sourceLine" id="cb1-40" data-line-number="40">        new_node-&gt;prev = <span class="kw">this</span>-&gt;head;</a>
-<a class="sourceLine" id="cb1-41" data-line-number="41">        <span class="co">// 修改链表前驱后继</span></a>
-<a class="sourceLine" id="cb1-42" data-line-number="42">        <span class="cf">if</span> (<span class="kw">this</span>-&gt;head-&gt;next != <span class="kw">nullptr</span>)</a>
-<a class="sourceLine" id="cb1-43" data-line-number="43">        &#123;</a>
-<a class="sourceLine" id="cb1-44" data-line-number="44">            <span class="kw">this</span>-&gt;head-&gt;next-&gt;prev = new_node;</a>
-<a class="sourceLine" id="cb1-45" data-line-number="45">        &#125;</a>
-<a class="sourceLine" id="cb1-46" data-line-number="46">        <span class="kw">this</span>-&gt;head-&gt;next = new_node;</a>
-<a class="sourceLine" id="cb1-47" data-line-number="47">        <span class="co">// 增加个数</span></a>
-<a class="sourceLine" id="cb1-48" data-line-number="48">        ++<span class="kw">this</span>-&gt;size;</a>
-<a class="sourceLine" id="cb1-49" data-line-number="49">    &#125;</a>
-<a class="sourceLine" id="cb1-50" data-line-number="50">    </a>
-<a class="sourceLine" id="cb1-51" data-line-number="51">    <span class="dt">void</span> addAtTail(<span class="dt">int</span> val) &#123;</a>
-<a class="sourceLine" id="cb1-52" data-line-number="52">        <span class="dt">int</span> count = <span class="kw">this</span>-&gt;size;</a>
-<a class="sourceLine" id="cb1-53" data-line-number="53">        <span class="kw">auto</span> p = <span class="kw">this</span>-&gt;head;</a>
-<a class="sourceLine" id="cb1-54" data-line-number="54">        <span class="co">// 移动到末尾元素</span></a>
-<a class="sourceLine" id="cb1-55" data-line-number="55">        <span class="cf">while</span> (count &gt; <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb1-56" data-line-number="56">        &#123;</a>
-<a class="sourceLine" id="cb1-57" data-line-number="57">            p = p-&gt;next;</a>
-<a class="sourceLine" id="cb1-58" data-line-number="58">            --count;</a>
-<a class="sourceLine" id="cb1-59" data-line-number="59">        &#125;</a>
-<a class="sourceLine" id="cb1-60" data-line-number="60">        <span class="co">// 添加元素</span></a>
-<a class="sourceLine" id="cb1-61" data-line-number="61">        DNode* new_node = <span class="kw">new</span> DNode(val, <span class="kw">nullptr</span>, <span class="kw">nullptr</span>);</a>
-<a class="sourceLine" id="cb1-62" data-line-number="62">        <span class="co">// 设置前驱</span></a>
-<a class="sourceLine" id="cb1-63" data-line-number="63">        new_node-&gt;prev = p;</a>
-<a class="sourceLine" id="cb1-64" data-line-number="64">        <span class="co">// 链接节点</span></a>
-<a class="sourceLine" id="cb1-65" data-line-number="65">        p-&gt;next = new_node;</a>
-<a class="sourceLine" id="cb1-66" data-line-number="66">        <span class="co">// 增加个数</span></a>
-<a class="sourceLine" id="cb1-67" data-line-number="67">        ++<span class="kw">this</span>-&gt;size;</a>
-<a class="sourceLine" id="cb1-68" data-line-number="68">    &#125;</a>
-<a class="sourceLine" id="cb1-69" data-line-number="69">    </a>
-<a class="sourceLine" id="cb1-70" data-line-number="70">    <span class="dt">void</span> addAtIndex(<span class="dt">int</span> index, <span class="dt">int</span> val) &#123;</a>
-<a class="sourceLine" id="cb1-71" data-line-number="71">        <span class="cf">if</span> (index &gt; <span class="kw">this</span>-&gt;size || index &lt; <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb1-72" data-line-number="72">        &#123;</a>
-<a class="sourceLine" id="cb1-73" data-line-number="73">            <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb1-74" data-line-number="74">        &#125;</a>
-<a class="sourceLine" id="cb1-75" data-line-number="75">        <span class="cf">if</span> (index == <span class="kw">this</span>-&gt;size)</a>
-<a class="sourceLine" id="cb1-76" data-line-number="76">        &#123;</a>
-<a class="sourceLine" id="cb1-77" data-line-number="77">            addAtTail(val);</a>
-<a class="sourceLine" id="cb1-78" data-line-number="78">            <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb1-79" data-line-number="79">        &#125;</a>
-<a class="sourceLine" id="cb1-80" data-line-number="80">        <span class="kw">auto</span> p = head;</a>
-<a class="sourceLine" id="cb1-81" data-line-number="81">        <span class="co">// 遍历到 index - 1 处的元素</span></a>
-<a class="sourceLine" id="cb1-82" data-line-number="82">        <span class="cf">while</span> (index &gt; <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb1-83" data-line-number="83">        &#123;</a>
-<a class="sourceLine" id="cb1-84" data-line-number="84">            p = p-&gt;next;</a>
-<a class="sourceLine" id="cb1-85" data-line-number="85">            --index;</a>
-<a class="sourceLine" id="cb1-86" data-line-number="86">        &#125;</a>
-<a class="sourceLine" id="cb1-87" data-line-number="87">        <span class="co">// p 指向 index - 1 处的元素</span></a>
-<a class="sourceLine" id="cb1-88" data-line-number="88">        DNode* new_node = <span class="kw">new</span> DNode(val, <span class="kw">nullptr</span>, <span class="kw">nullptr</span>);</a>
-<a class="sourceLine" id="cb1-89" data-line-number="89">        p-&gt;next-&gt;prev = new_node;</a>
-<a class="sourceLine" id="cb1-90" data-line-number="90">        new_node-&gt;next = p-&gt;next;</a>
-<a class="sourceLine" id="cb1-91" data-line-number="91">        new_node-&gt;prev = p;</a>
-<a class="sourceLine" id="cb1-92" data-line-number="92">        p-&gt;next = new_node;</a>
-<a class="sourceLine" id="cb1-93" data-line-number="93">        <span class="co">// 增加个数</span></a>
-<a class="sourceLine" id="cb1-94" data-line-number="94">        ++<span class="kw">this</span>-&gt;size;</a>
-<a class="sourceLine" id="cb1-95" data-line-number="95">    &#125;</a>
-<a class="sourceLine" id="cb1-96" data-line-number="96">    </a>
-<a class="sourceLine" id="cb1-97" data-line-number="97">    <span class="dt">void</span> deleteAtIndex(<span class="dt">int</span> index) &#123;</a>
-<a class="sourceLine" id="cb1-98" data-line-number="98">        <span class="cf">if</span> (index &lt; <span class="dv">0</span> || index &gt;= <span class="kw">this</span>-&gt;size)</a>
-<a class="sourceLine" id="cb1-99" data-line-number="99">        &#123;</a>
-<a class="sourceLine" id="cb1-100" data-line-number="100">            <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb1-101" data-line-number="101">        &#125;</a>
-<a class="sourceLine" id="cb1-102" data-line-number="102">        <span class="kw">auto</span> p = head;</a>
-<a class="sourceLine" id="cb1-103" data-line-number="103">        <span class="cf">while</span> (index &gt;= <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb1-104" data-line-number="104">        &#123;</a>
-<a class="sourceLine" id="cb1-105" data-line-number="105">            p = p-&gt;next;</a>
-<a class="sourceLine" id="cb1-106" data-line-number="106">            --index;</a>
-<a class="sourceLine" id="cb1-107" data-line-number="107">        &#125;</a>
-<a class="sourceLine" id="cb1-108" data-line-number="108">        <span class="co">// p 指向要删除的节点</span></a>
-<a class="sourceLine" id="cb1-109" data-line-number="109">        <span class="co">// 前后节点链接</span></a>
-<a class="sourceLine" id="cb1-110" data-line-number="110">        p-&gt;prev-&gt;next = p-&gt;next;</a>
-<a class="sourceLine" id="cb1-111" data-line-number="111">        <span class="cf">if</span> (p-&gt;next != <span class="kw">nullptr</span>)</a>
-<a class="sourceLine" id="cb1-112" data-line-number="112">        &#123;</a>
-<a class="sourceLine" id="cb1-113" data-line-number="113">            p-&gt;next-&gt;prev = p-&gt;prev;</a>
-<a class="sourceLine" id="cb1-114" data-line-number="114">        &#125;</a>
-<a class="sourceLine" id="cb1-115" data-line-number="115">        <span class="co">// 释放 p</span></a>
-<a class="sourceLine" id="cb1-116" data-line-number="116">        <span class="kw">delete</span> p;</a>
-<a class="sourceLine" id="cb1-117" data-line-number="117">        <span class="co">// 减少个数</span></a>
-<a class="sourceLine" id="cb1-118" data-line-number="118">        --<span class="kw">this</span>-&gt;size;</a>
-<a class="sourceLine" id="cb1-119" data-line-number="119">    &#125;</a>
-<a class="sourceLine" id="cb1-120" data-line-number="120"></a>
-<a class="sourceLine" id="cb1-121" data-line-number="121"><span class="kw">private</span>:</a>
-<a class="sourceLine" id="cb1-122" data-line-number="122">    DNode* head;</a>
-<a class="sourceLine" id="cb1-123" data-line-number="123">    <span class="dt">int</span> size;</a>
-<a class="sourceLine" id="cb1-124" data-line-number="124">&#125;;</a>
-<a class="sourceLine" id="cb1-125" data-line-number="125"></a>
-<a class="sourceLine" id="cb1-126" data-line-number="126"><span class="co">/**</span></a>
-<a class="sourceLine" id="cb1-127" data-line-number="127"><span class="co"> * Your MyLinkedList object will be instantiated and called as such:</span></a>
-<a class="sourceLine" id="cb1-128" data-line-number="128"><span class="co"> * MyLinkedList* obj = new MyLinkedList();</span></a>
-<a class="sourceLine" id="cb1-129" data-line-number="129"><span class="co"> * int param_1 = obj-&gt;get(index);</span></a>
-<a class="sourceLine" id="cb1-130" data-line-number="130"><span class="co"> * obj-&gt;addAtHead(val);</span></a>
-<a class="sourceLine" id="cb1-131" data-line-number="131"><span class="co"> * obj-&gt;addAtTail(val);</span></a>
-<a class="sourceLine" id="cb1-132" data-line-number="132"><span class="co"> * obj-&gt;addAtIndex(index,val);</span></a>
-<a class="sourceLine" id="cb1-133" data-line-number="133"><span class="co"> * obj-&gt;deleteAtIndex(index);</span></a>
-<a class="sourceLine" id="cb1-134" data-line-number="134"><span class="co"> */</span></a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">DNode</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">    DNode* next;</span><br><span class="line">    DNode* prev;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">DNode</span>(<span class="type">int</span> _val): <span class="built_in">val</span>(_val) &#123;&#125;</span><br><span class="line">    <span class="built_in">DNode</span>(<span class="type">int</span> _val, DNode* _next, DNode* _prev): </span><br><span class="line">                <span class="built_in">val</span>(_val), <span class="built_in">next</span>(_next), <span class="built_in">prev</span>(_prev) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 带头节点</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyLinkedList</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyLinkedList</span>() &#123;</span><br><span class="line">        <span class="comment">// 初始化一个空节点</span></span><br><span class="line">        <span class="keyword">this</span>-&gt;head = <span class="keyword">new</span> <span class="built_in">DNode</span>(<span class="number">-1</span>, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>);</span><br><span class="line">        <span class="keyword">this</span>-&gt;size = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">get</span><span class="params">(<span class="type">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (index &lt; <span class="number">0</span> || index &gt;= <span class="keyword">this</span>-&gt;size ||</span><br><span class="line">            <span class="keyword">this</span>-&gt;head-&gt;next == <span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">auto</span> p = <span class="keyword">this</span>-&gt;head;</span><br><span class="line">        <span class="keyword">while</span> (index &gt;= <span class="number">0</span> &amp;&amp; p != <span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">            --index;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> p-&gt;val;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">addAtHead</span><span class="params">(<span class="type">int</span> val)</span> </span>&#123;</span><br><span class="line">        DNode* new_node = <span class="keyword">new</span> <span class="built_in">DNode</span>(val, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>);</span><br><span class="line">        <span class="comment">// 设置前驱后继</span></span><br><span class="line">        new_node-&gt;next = <span class="keyword">this</span>-&gt;head-&gt;next;</span><br><span class="line">        new_node-&gt;prev = <span class="keyword">this</span>-&gt;head;</span><br><span class="line">        <span class="comment">// 修改链表前驱后继</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>-&gt;head-&gt;next != <span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>-&gt;head-&gt;next-&gt;prev = new_node;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>-&gt;head-&gt;next = new_node;</span><br><span class="line">        <span class="comment">// 增加个数</span></span><br><span class="line">        ++<span class="keyword">this</span>-&gt;size;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">addAtTail</span><span class="params">(<span class="type">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> count = <span class="keyword">this</span>-&gt;size;</span><br><span class="line">        <span class="keyword">auto</span> p = <span class="keyword">this</span>-&gt;head;</span><br><span class="line">        <span class="comment">// 移动到末尾元素</span></span><br><span class="line">        <span class="keyword">while</span> (count &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">            --count;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 添加元素</span></span><br><span class="line">        DNode* new_node = <span class="keyword">new</span> <span class="built_in">DNode</span>(val, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>);</span><br><span class="line">        <span class="comment">// 设置前驱</span></span><br><span class="line">        new_node-&gt;prev = p;</span><br><span class="line">        <span class="comment">// 链接节点</span></span><br><span class="line">        p-&gt;next = new_node;</span><br><span class="line">        <span class="comment">// 增加个数</span></span><br><span class="line">        ++<span class="keyword">this</span>-&gt;size;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">addAtIndex</span><span class="params">(<span class="type">int</span> index, <span class="type">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (index &gt; <span class="keyword">this</span>-&gt;size || index &lt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (index == <span class="keyword">this</span>-&gt;size)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">addAtTail</span>(val);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">auto</span> p = head;</span><br><span class="line">        <span class="comment">// 遍历到 index - 1 处的元素</span></span><br><span class="line">        <span class="keyword">while</span> (index &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">            --index;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// p 指向 index - 1 处的元素</span></span><br><span class="line">        DNode* new_node = <span class="keyword">new</span> <span class="built_in">DNode</span>(val, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>);</span><br><span class="line">        p-&gt;next-&gt;prev = new_node;</span><br><span class="line">        new_node-&gt;next = p-&gt;next;</span><br><span class="line">        new_node-&gt;prev = p;</span><br><span class="line">        p-&gt;next = new_node;</span><br><span class="line">        <span class="comment">// 增加个数</span></span><br><span class="line">        ++<span class="keyword">this</span>-&gt;size;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">deleteAtIndex</span><span class="params">(<span class="type">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (index &lt; <span class="number">0</span> || index &gt;= <span class="keyword">this</span>-&gt;size)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">auto</span> p = head;</span><br><span class="line">        <span class="keyword">while</span> (index &gt;= <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">            --index;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// p 指向要删除的节点</span></span><br><span class="line">        <span class="comment">// 前后节点链接</span></span><br><span class="line">        p-&gt;prev-&gt;next = p-&gt;next;</span><br><span class="line">        <span class="keyword">if</span> (p-&gt;next != <span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            p-&gt;next-&gt;prev = p-&gt;prev;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 释放 p</span></span><br><span class="line">        <span class="keyword">delete</span> p;</span><br><span class="line">        <span class="comment">// 减少个数</span></span><br><span class="line">        --<span class="keyword">this</span>-&gt;size;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    DNode* head;</span><br><span class="line">    <span class="type">int</span> size;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your MyLinkedList object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * MyLinkedList* obj = new MyLinkedList();</span></span><br><span class="line"><span class="comment"> * int param_1 = obj-&gt;get(index);</span></span><br><span class="line"><span class="comment"> * obj-&gt;addAtHead(val);</span></span><br><span class="line"><span class="comment"> * obj-&gt;addAtTail(val);</span></span><br><span class="line"><span class="comment"> * obj-&gt;addAtIndex(index,val);</span></span><br><span class="line"><span class="comment"> * obj-&gt;deleteAtIndex(index);</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
 
 </div>
   </div>
@@ -2920,8 +2787,7 @@ ans = new L...</p>
 思路
 学习点
 代码
-/**
- * Definit...</p>
+12345678910111...</p>
         </a>
       
     </div>
@@ -2978,7 +2844,7 @@ ans = new L...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2989,7 +2855,7 @@ ans = new L...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3850,7 +3716,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

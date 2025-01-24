@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2666,42 +2666,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <blockquote>
 <p>synthraid5.parv</p>
 </blockquote>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" data-line-number="1">disksim_syncset sync0 &#123; </a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">   devices <span class="op">=</span> [ disk0 .. disk8 ] </a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">&#125;</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co"># Disk Array Data Organizations（磁盘阵列逻辑数据组织形式）</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># 每一种逻辑结构都可以在 logory 块中配置</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># RAID-5</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">disksim_logorg org0 &#123;</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="co"># 逻辑数据组织的编址方式（值为：Array（编成一个统一逻辑设备）或 Parts）</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">    Addressing mode <span class="op">=</span> Array,</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">    <span class="co"># 数据分布策略，体现负载均衡能力（值为：Striped，Random，N.B. 或 Ideal）</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">    Distribution scheme <span class="op">=</span> Striped,</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">    <span class="co"># 冗余方案（值为：Noredun，Shadowed，Parity_disk 或 Parity_rotated）</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">    Redundancy scheme <span class="op">=</span> Parity_rotated,</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">    <span class="co"># 当前逻辑组织中包含的设备名称列表</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">    devices <span class="op">=</span> [ disk0 .. disk8 ],</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">    <span class="co"># stripe 单元的大小</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">    Stripe unit  <span class="op">=</span>  <span class="dv">64</span>,</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">    Synch writes <span class="cf">for</span> safety <span class="op">=</span>  <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">    <span class="co"># 每个数据磁盘的备份数（仅当 Redundancy scheme = shadowed 时才有效）</span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">    Number of copies <span class="op">=</span>  <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">    <span class="co"># 哪个副本负责响应（仅当 Redundancy scheme = shadowed 时才有效）</span></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">    Copy choice on read <span class="op">=</span>  <span class="dv">6</span>,</a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">    RMW vs. reconstruct <span class="op">=</span>  <span class="fl">0.5</span>,</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">    <span class="co"># stripe 单元的大小（仅当 Redundancy scheme = Parity_rotated 时才有效）</span></a>
-<a class="sourceLine" id="cb1-26" data-line-number="26">    Parity stripe unit <span class="op">=</span>  <span class="dv">64</span>,</a>
-<a class="sourceLine" id="cb1-27" data-line-number="27">     <span class="co"># parity 在磁盘中旋转的方式（仅当 Redundancy scheme = Parity_rotated 时才有效）</span></a>
-<a class="sourceLine" id="cb1-28" data-line-number="28">    Parity rotation <span class="bu">type</span> <span class="op">=</span>  <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb1-29" data-line-number="29">    <span class="co"># time stamps 之间的间隔</span></a>
-<a class="sourceLine" id="cb1-30" data-line-number="30">    Time stamp interval <span class="op">=</span>  <span class="fl">0.000000</span>,</a>
-<a class="sourceLine" id="cb1-31" data-line-number="31">     <span class="co"># 第一个 time stamp 的模拟时间（相对于模拟开始的时间）</span></a>
-<a class="sourceLine" id="cb1-32" data-line-number="32">    Time stamp start time <span class="op">=</span>  <span class="fl">60000.000000</span>,</a>
-<a class="sourceLine" id="cb1-33" data-line-number="33">     <span class="co"># 最后一个 time stamp 的模拟时间（相对于模拟开始的时间）</span></a>
-<a class="sourceLine" id="cb1-34" data-line-number="34">    Time stamp stop time <span class="op">=</span>  <span class="fl">10000000000.000000</span>,</a>
-<a class="sourceLine" id="cb1-35" data-line-number="35">    Time stamp <span class="bu">file</span> name <span class="op">=</span>  stamps</a>
-<a class="sourceLine" id="cb1-36" data-line-number="36">&#125; <span class="co"># end of logorg org0 spec</span></a></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">disksim_syncset sync0 &#123; </span><br><span class="line">   devices = [ disk0 .. disk8 ] </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Disk Array Data Organizations（磁盘阵列逻辑数据组织形式）</span></span><br><span class="line"><span class="comment"># 每一种逻辑结构都可以在 logory 块中配置</span></span><br><span class="line"><span class="comment"># RAID-5</span></span><br><span class="line">disksim_logorg org0 &#123;</span><br><span class="line">    <span class="comment"># 逻辑数据组织的编址方式（值为：Array（编成一个统一逻辑设备）或 Parts）</span></span><br><span class="line">    Addressing mode = Array,</span><br><span class="line">    <span class="comment"># 数据分布策略，体现负载均衡能力（值为：Striped，Random，N.B. 或 Ideal）</span></span><br><span class="line">    Distribution scheme = Striped,</span><br><span class="line">    <span class="comment"># 冗余方案（值为：Noredun，Shadowed，Parity_disk 或 Parity_rotated）</span></span><br><span class="line">    Redundancy scheme = Parity_rotated,</span><br><span class="line">    <span class="comment"># 当前逻辑组织中包含的设备名称列表</span></span><br><span class="line">    devices = [ disk0 .. disk8 ],</span><br><span class="line">    <span class="comment"># stripe 单元的大小</span></span><br><span class="line">    Stripe unit  =  <span class="number">64</span>,</span><br><span class="line">    Synch writes <span class="keyword">for</span> safety =  <span class="number">0</span>,</span><br><span class="line">    <span class="comment"># 每个数据磁盘的备份数（仅当 Redundancy scheme = shadowed 时才有效）</span></span><br><span class="line">    Number of copies =  <span class="number">2</span>,</span><br><span class="line">    <span class="comment"># 哪个副本负责响应（仅当 Redundancy scheme = shadowed 时才有效）</span></span><br><span class="line">    Copy choice on read =  <span class="number">6</span>,</span><br><span class="line">    RMW vs. reconstruct =  <span class="number">0.5</span>,</span><br><span class="line">    <span class="comment"># stripe 单元的大小（仅当 Redundancy scheme = Parity_rotated 时才有效）</span></span><br><span class="line">    Parity stripe unit =  <span class="number">64</span>,</span><br><span class="line">     <span class="comment"># parity 在磁盘中旋转的方式（仅当 Redundancy scheme = Parity_rotated 时才有效）</span></span><br><span class="line">    Parity rotation <span class="built_in">type</span> =  <span class="number">1</span>,</span><br><span class="line">    <span class="comment"># time stamps 之间的间隔</span></span><br><span class="line">    Time stamp interval =  <span class="number">0.000000</span>,</span><br><span class="line">     <span class="comment"># 第一个 time stamp 的模拟时间（相对于模拟开始的时间）</span></span><br><span class="line">    Time stamp start time =  <span class="number">60000.000000</span>,</span><br><span class="line">     <span class="comment"># 最后一个 time stamp 的模拟时间（相对于模拟开始的时间）</span></span><br><span class="line">    Time stamp stop time =  <span class="number">10000000000.000000</span>,</span><br><span class="line">    Time stamp file name =  stamps</span><br><span class="line">&#125; <span class="comment"># end of logorg org0 spec</span></span><br></pre></td></tr></table></figure>
 </div><div class="story post-story"><h2 id="disksim-src-源码部分">DiskSim src 源码部分</h2>
 <p>四个文件：</p>
 <ul>
@@ -2720,50 +2685,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ol>
 <details>
 <p><summary>以 Distribution Scheme 参数为例</summary></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">// 1. disksim_logorg_param.h: 34</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">extern</span> <span class="dt">void</span> * DISKSIM_LOGORG_loaders[];</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">// 2. disksim_logorg_param.c: 172</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="dt">void</span> * DISKSIM_LOGORG_loaders[] = &#123;</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">...,</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">(<span class="dt">void</span> *)DISKSIM_LOGORG_DISTRIBUTION_SCHEME_loader,</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">...</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">&#125;</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">// 3. disksim_logorg_param.c: 18</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="dt">static</span> <span class="dt">void</span> DISKSIM_LOGORG_DISTRIBUTION_SCHEME_loader(<span class="kw">struct</span> logorg * result, <span class="dt">char</span> *s) &#123; </a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="cf">if</span> (! (!logorg_distn(result, s))) &#123; <span class="co">// foo </span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"> &#125; </a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">&#125;</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">// 4. disksim_logorg.c: 1529</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="dt">int</span> logorg_distn(logorg *result, <span class="dt">char</span> *s) &#123;</a>
-<a class="sourceLine" id="cb2-23" data-line-number="23">  <span class="cf">if</span>(!strcmp(s, <span class="st">&quot;Asis&quot;</span>)) &#123; </a>
-<a class="sourceLine" id="cb2-24" data-line-number="24">    result-&gt;maptype = ASIS;</a>
-<a class="sourceLine" id="cb2-25" data-line-number="25">  &#125; </a>
-<a class="sourceLine" id="cb2-26" data-line-number="26">  <span class="cf">else</span> <span class="cf">if</span>(!strcmp(s, <span class="st">&quot;Striped&quot;</span>)) &#123; </a>
-<a class="sourceLine" id="cb2-27" data-line-number="27">    result-&gt;maptype = STRIPED;</a>
-<a class="sourceLine" id="cb2-28" data-line-number="28">  &#125; </a>
-<a class="sourceLine" id="cb2-29" data-line-number="29">  <span class="cf">else</span> <span class="cf">if</span>(!strcmp(s, <span class="st">&quot;Random&quot;</span>)) &#123; </a>
-<a class="sourceLine" id="cb2-30" data-line-number="30">    fprintf(stderr, <span class="st">&quot;*** warning: Random logorg distribution is only &quot;</span></a>
-<a class="sourceLine" id="cb2-31" data-line-number="31">        <span class="st">&quot;to be used with constant access-time disks &quot;</span></a>
-<a class="sourceLine" id="cb2-32" data-line-number="32">        <span class="st">&quot;for load-balancing experiments </span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
-<a class="sourceLine" id="cb2-33" data-line-number="33"></a>
-<a class="sourceLine" id="cb2-34" data-line-number="34">    result-&gt;maptype = RANDOM;</a>
-<a class="sourceLine" id="cb2-35" data-line-number="35">  &#125; </a>
-<a class="sourceLine" id="cb2-36" data-line-number="36">  <span class="cf">else</span> <span class="cf">if</span>(!strcmp(s, <span class="st">&quot;Ideal&quot;</span>)) &#123; </a>
-<a class="sourceLine" id="cb2-37" data-line-number="37">    result-&gt;maptype = IDEAL;</a>
-<a class="sourceLine" id="cb2-38" data-line-number="38">  &#125; </a>
-<a class="sourceLine" id="cb2-39" data-line-number="39">  <span class="cf">else</span> &#123; </a>
-<a class="sourceLine" id="cb2-40" data-line-number="40">    fprintf(stderr, <span class="st">&quot;*** error: %s is not a valid argument for logorg addressing mode</span><span class="sc">\n</span><span class="st">&quot;</span>, s); </a>
-<a class="sourceLine" id="cb2-41" data-line-number="41">    <span class="cf">return</span> <span class="dv">-1</span>; </a>
-<a class="sourceLine" id="cb2-42" data-line-number="42">  &#125;</a>
-<a class="sourceLine" id="cb2-43" data-line-number="43">  <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb2-44" data-line-number="44">&#125;</a></code></pre></div>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. disksim_logorg_param.h: 34</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">void</span> * DISKSIM_LOGORG_loaders[];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. disksim_logorg_param.c: 172</span></span><br><span class="line"><span class="type">void</span> * DISKSIM_LOGORG_loaders[] = &#123;</span><br><span class="line">...,</span><br><span class="line">(<span class="type">void</span> *)DISKSIM_LOGORG_DISTRIBUTION_SCHEME_loader,</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. disksim_logorg_param.c: 18</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> DISKSIM_LOGORG_DISTRIBUTION_SCHEME_loader(<span class="keyword">struct</span> logorg * result, <span class="type">char</span> *s) &#123; </span><br><span class="line"><span class="keyword">if</span> (! (!logorg_distn(result, s))) &#123; <span class="comment">// foo </span></span><br><span class="line"> &#125; </span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. disksim_logorg.c: 1529</span></span><br><span class="line"><span class="type">int</span> logorg_distn(logorg *result, <span class="type">char</span> *s) &#123;</span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(s, <span class="string">&quot;Asis&quot;</span>)) &#123; </span><br><span class="line">    result-&gt;maptype = ASIS;</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(s, <span class="string">&quot;Striped&quot;</span>)) &#123; </span><br><span class="line">    result-&gt;maptype = STRIPED;</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(s, <span class="string">&quot;Random&quot;</span>)) &#123; </span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;*** warning: Random logorg distribution is only &quot;</span></span><br><span class="line">	    <span class="string">&quot;to be used with constant access-time disks &quot;</span></span><br><span class="line">	    <span class="string">&quot;for load-balancing experiments \n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    result-&gt;maptype = RANDOM;</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(s, <span class="string">&quot;Ideal&quot;</span>)) &#123; </span><br><span class="line">    result-&gt;maptype = IDEAL;</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">else</span> &#123; </span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;*** error: %s is not a valid argument for logorg addressing mode\n&quot;</span>, s); </span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </details>
 <h3 id="开始运行到发请求至-raid-流程">开始运行到发请求至 RAID 流程</h3>
 <p>初始化流程：</p>
@@ -2789,102 +2711,18 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>很多宏定义（用整型来表示参数的各个值）和预定义的结构体。主要是 <code>logorgstat</code> 和 <code>logorg</code> 结构体。 <code>logorgstat</code> 包含 RAID 的状态，<code>logorg</code> 包含 RAID 各种参数设置。</p>
 <details>
 <p><summary>logorgstat 结构体</summary></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">typedef</span> <span class="kw">struct</span> &#123;</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">   <span class="dt">double</span>   outtime;</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">   <span class="dt">double</span>   runouttime;</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">   <span class="dt">int</span>      outstanding;</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">   <span class="dt">int</span>      readoutstanding;</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">   <span class="dt">int</span>      maxoutstanding;</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">   <span class="dt">double</span>   nonzeroouttime;</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">   <span class="dt">int</span>      reads;</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">   <span class="dt">int</span>      gens[NUMGENS];</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">   <span class="dt">int</span>      seqdiskswitches;</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">   <span class="dt">int</span>      locdiskswitches;</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">   <span class="dt">int</span>      numlocal;</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">   <span class="dt">int</span>      critreads;</a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">   <span class="dt">int</span>      critwrites;</a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">   <span class="dt">int</span>      seqreads;</a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">   <span class="dt">int</span>      seqwrites;</a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">   <span class="dt">int</span>      distavgdiff[<span class="dv">10</span>];</a>
-<a class="sourceLine" id="cb3-18" data-line-number="18">   <span class="dt">int</span>      distmaxdiff[<span class="dv">10</span>];</a>
-<a class="sourceLine" id="cb3-19" data-line-number="19">   <span class="dt">double</span>       idlestart;</a>
-<a class="sourceLine" id="cb3-20" data-line-number="20">   <span class="dt">double</span>       lastarr;</a>
-<a class="sourceLine" id="cb3-21" data-line-number="21">   <span class="dt">double</span>       lastread;</a>
-<a class="sourceLine" id="cb3-22" data-line-number="22">   <span class="dt">double</span>       lastwrite;</a>
-<a class="sourceLine" id="cb3-23" data-line-number="23">   <span class="dt">int</span>          *blocked;</a>
-<a class="sourceLine" id="cb3-24" data-line-number="24">   <span class="dt">int</span>          *aligned;</a>
-<a class="sourceLine" id="cb3-25" data-line-number="25">   <span class="dt">int</span>      *lastreq;</a>
-<a class="sourceLine" id="cb3-26" data-line-number="26">   <span class="dt">int</span>      *intdist;</a>
-<a class="sourceLine" id="cb3-27" data-line-number="27">   statgen      resptimestats;</a>
-<a class="sourceLine" id="cb3-28" data-line-number="28">   statgen  idlestats;</a>
-<a class="sourceLine" id="cb3-29" data-line-number="29">   statgen      sizestats;</a>
-<a class="sourceLine" id="cb3-30" data-line-number="30">   statgen  readsizestats;</a>
-<a class="sourceLine" id="cb3-31" data-line-number="31">   statgen  writesizestats;</a>
-<a class="sourceLine" id="cb3-32" data-line-number="32">   statgen      intarrstats;</a>
-<a class="sourceLine" id="cb3-33" data-line-number="33">   statgen      readintarrstats;</a>
-<a class="sourceLine" id="cb3-34" data-line-number="34">   statgen      writeintarrstats;</a>
-<a class="sourceLine" id="cb3-35" data-line-number="35">&#125; logorgstat;</a></code></pre></div>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">   <span class="type">double</span>	outtime;</span><br><span class="line">   <span class="type">double</span>	runouttime;</span><br><span class="line">   <span class="type">int</span>		outstanding;</span><br><span class="line">   <span class="type">int</span>		readoutstanding;</span><br><span class="line">   <span class="type">int</span>		maxoutstanding;</span><br><span class="line">   <span class="type">double</span>	nonzeroouttime;</span><br><span class="line">   <span class="type">int</span>		reads;</span><br><span class="line">   <span class="type">int</span>		gens[NUMGENS];</span><br><span class="line">   <span class="type">int</span>		seqdiskswitches;</span><br><span class="line">   <span class="type">int</span>		locdiskswitches;</span><br><span class="line">   <span class="type">int</span>		numlocal;</span><br><span class="line">   <span class="type">int</span>		critreads;</span><br><span class="line">   <span class="type">int</span>		critwrites;</span><br><span class="line">   <span class="type">int</span>		seqreads;</span><br><span class="line">   <span class="type">int</span>		seqwrites;</span><br><span class="line">   <span class="type">int</span>		distavgdiff[<span class="number">10</span>];</span><br><span class="line">   <span class="type">int</span>		distmaxdiff[<span class="number">10</span>];</span><br><span class="line">   <span class="type">double</span>       idlestart;</span><br><span class="line">   <span class="type">double</span>       lastarr;</span><br><span class="line">   <span class="type">double</span>       lastread;</span><br><span class="line">   <span class="type">double</span>       lastwrite;</span><br><span class="line">   <span class="type">int</span>          *blocked;</span><br><span class="line">   <span class="type">int</span>          *aligned;</span><br><span class="line">   <span class="type">int</span>		*lastreq;</span><br><span class="line">   <span class="type">int</span>		*intdist;</span><br><span class="line">   statgen      resptimestats;</span><br><span class="line">   statgen	idlestats;</span><br><span class="line">   statgen      sizestats;</span><br><span class="line">   statgen	readsizestats;</span><br><span class="line">   statgen	writesizestats;</span><br><span class="line">   statgen      intarrstats;</span><br><span class="line">   statgen      readintarrstats;</span><br><span class="line">   statgen      writeintarrstats;</span><br><span class="line">&#125; logorgstat;</span><br></pre></td></tr></table></figure>
 </details>
 <details>
 <p><summary>logorg 结构体</summary></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">typedef</span> <span class="kw">struct</span> logorg &#123;</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="dt">char</span> *name;</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">   outstand * hashoutstand[HASH_OUTSTAND];</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">   <span class="dt">int</span>    outstandqlen;</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">   <span class="dt">int</span>    opid;</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">   <span class="dt">int</span>    addrbyparts;</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">   <span class="co">// distribution scheme</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">   <span class="dt">int</span>    maptype;</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">   <span class="co">// redundancy</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">   <span class="dt">int</span>    reduntype;</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">   <span class="dt">int</span>    numdisks;</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">   <span class="dt">int</span>    actualnumdisks;</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">   <span class="dt">int</span>    arraydisk;</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">   <span class="dt">int</span>    writesync;</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">   <span class="dt">int</span>    copies;</a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">   <span class="dt">int</span>    copychoice;</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">   <span class="dt">double</span> rmwpoint;</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">   <span class="dt">int</span>    parityunit;</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">   <span class="dt">int</span>    rottype;</a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">   <span class="dt">int</span>    blksperpart;</a>
-<a class="sourceLine" id="cb4-21" data-line-number="21">   <span class="dt">int</span>    actualblksperpart;</a>
-<a class="sourceLine" id="cb4-22" data-line-number="22">   <span class="dt">int</span>    stripeunit;</a>
-<a class="sourceLine" id="cb4-23" data-line-number="23">   <span class="dt">int</span>    sectionunit;</a>
-<a class="sourceLine" id="cb4-24" data-line-number="24">   <span class="dt">int</span>    tablestripes;</a>
-<a class="sourceLine" id="cb4-25" data-line-number="25">   tableentry *table;</a>
-<a class="sourceLine" id="cb4-26" data-line-number="26">   <span class="dt">int</span>    tablesize;</a>
-<a class="sourceLine" id="cb4-27" data-line-number="27">   <span class="dt">int</span>    partsperstripe;</a>
-<a class="sourceLine" id="cb4-28" data-line-number="28">   <span class="dt">int</span>    idealno;</a>
-<a class="sourceLine" id="cb4-29" data-line-number="29">   <span class="dt">int</span>    reduntoggle;</a>
-<a class="sourceLine" id="cb4-30" data-line-number="30">   <span class="dt">int</span>    lastdiskaccessed;</a>
-<a class="sourceLine" id="cb4-31" data-line-number="31">   <span class="dt">int</span>    numfull;</a>
-<a class="sourceLine" id="cb4-32" data-line-number="32">   <span class="dt">int</span>   *sizes;</a>
-<a class="sourceLine" id="cb4-33" data-line-number="33">   <span class="dt">int</span>   *redunsizes;</a>
-<a class="sourceLine" id="cb4-34" data-line-number="34">   <span class="dt">int</span>    printlocalitystats;</a>
-<a class="sourceLine" id="cb4-35" data-line-number="35">   <span class="dt">int</span>    printblockingstats;</a>
-<a class="sourceLine" id="cb4-36" data-line-number="36">   <span class="dt">int</span>    printinterferestats;</a>
-<a class="sourceLine" id="cb4-37" data-line-number="37">   <span class="dt">int</span>    printidlestats;</a>
-<a class="sourceLine" id="cb4-38" data-line-number="38">   <span class="dt">int</span>    printintarrstats;</a>
-<a class="sourceLine" id="cb4-39" data-line-number="39">   <span class="dt">int</span>    printstreakstats;</a>
-<a class="sourceLine" id="cb4-40" data-line-number="40">   <span class="dt">int</span>    printstampstats;</a>
-<a class="sourceLine" id="cb4-41" data-line-number="41">   <span class="dt">int</span>    printsizestats;</a>
-<a class="sourceLine" id="cb4-42" data-line-number="42">   <span class="dt">double</span> stampinterval;</a>
-<a class="sourceLine" id="cb4-43" data-line-number="43">   <span class="dt">double</span> stampstart;</a>
-<a class="sourceLine" id="cb4-44" data-line-number="44">   <span class="dt">double</span> stampstop;</a>
-<a class="sourceLine" id="cb4-45" data-line-number="45">   <span class="dt">FILE</span> * stampfile;</a>
-<a class="sourceLine" id="cb4-46" data-line-number="46">   logorgdev *devs;</a>
-<a class="sourceLine" id="cb4-47" data-line-number="47">   logorgstat stat;</a>
-<a class="sourceLine" id="cb4-48" data-line-number="48">   <span class="co">/* rcohen&#39;s additions */</span></a>
-<a class="sourceLine" id="cb4-49" data-line-number="49">   <span class="dt">int</span>    startdev;</a>
-<a class="sourceLine" id="cb4-50" data-line-number="50">   <span class="dt">int</span>    enddev;</a>
-<a class="sourceLine" id="cb4-51" data-line-number="51">&#125; logorg;</a></code></pre></div>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">logorg</span> &#123;</span></span><br><span class="line">  <span class="type">char</span> *name;</span><br><span class="line">   outstand * hashoutstand[HASH_OUTSTAND];</span><br><span class="line">   <span class="type">int</span>    outstandqlen;</span><br><span class="line">   <span class="type">int</span>    opid;</span><br><span class="line">   <span class="type">int</span>    addrbyparts;</span><br><span class="line">   <span class="comment">// distribution scheme</span></span><br><span class="line">   <span class="type">int</span>    maptype;</span><br><span class="line">   <span class="comment">// redundancy</span></span><br><span class="line">   <span class="type">int</span>    reduntype;</span><br><span class="line">   <span class="type">int</span>    numdisks;</span><br><span class="line">   <span class="type">int</span>    actualnumdisks;</span><br><span class="line">   <span class="type">int</span>    arraydisk;</span><br><span class="line">   <span class="type">int</span>    writesync;</span><br><span class="line">   <span class="type">int</span>    copies;</span><br><span class="line">   <span class="type">int</span>    copychoice;</span><br><span class="line">   <span class="type">double</span> rmwpoint;</span><br><span class="line">   <span class="type">int</span>    parityunit;</span><br><span class="line">   <span class="type">int</span>    rottype;</span><br><span class="line">   <span class="type">int</span>    blksperpart;</span><br><span class="line">   <span class="type">int</span>    actualblksperpart;</span><br><span class="line">   <span class="type">int</span>    stripeunit;</span><br><span class="line">   <span class="type">int</span>    sectionunit;</span><br><span class="line">   <span class="type">int</span>    tablestripes;</span><br><span class="line">   tableentry *table;</span><br><span class="line">   <span class="type">int</span>    tablesize;</span><br><span class="line">   <span class="type">int</span>    partsperstripe;</span><br><span class="line">   <span class="type">int</span>    idealno;</span><br><span class="line">   <span class="type">int</span>    reduntoggle;</span><br><span class="line">   <span class="type">int</span>    lastdiskaccessed;</span><br><span class="line">   <span class="type">int</span>    numfull;</span><br><span class="line">   <span class="type">int</span>   *sizes;</span><br><span class="line">   <span class="type">int</span>   *redunsizes;</span><br><span class="line">   <span class="type">int</span>    printlocalitystats;</span><br><span class="line">   <span class="type">int</span>    printblockingstats;</span><br><span class="line">   <span class="type">int</span>    printinterferestats;</span><br><span class="line">   <span class="type">int</span>    printidlestats;</span><br><span class="line">   <span class="type">int</span>    printintarrstats;</span><br><span class="line">   <span class="type">int</span>    printstreakstats;</span><br><span class="line">   <span class="type">int</span>    printstampstats;</span><br><span class="line">   <span class="type">int</span>    printsizestats;</span><br><span class="line">   <span class="type">double</span> stampinterval;</span><br><span class="line">   <span class="type">double</span> stampstart;</span><br><span class="line">   <span class="type">double</span> stampstop;</span><br><span class="line">   FILE * stampfile;</span><br><span class="line">   logorgdev *devs;</span><br><span class="line">   logorgstat stat;</span><br><span class="line">   <span class="comment">/* rcohen&#x27;s additions */</span></span><br><span class="line">   <span class="type">int</span>    startdev;</span><br><span class="line">   <span class="type">int</span>    enddev;</span><br><span class="line">&#125; logorg;</span><br></pre></td></tr></table></figure>
 </details>
 <p>以及其他一些相关函数的声明。</p>
 <h3 id="disksim_logorg.c">disksim_logorg.c</h3>
 <p>主要关注与 Distribution Scheme 和 Redundancy 有关的代码。</p>
 <details>
 <p><summary>logorg_maprequest() 函数</summary></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"></code></pre></div>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 </details>
 
 </div>
@@ -3001,14 +2839,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/docs/d-python-used-codes/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【文档小记】记录 Python 中使用过的有用代码</p>
+        <a class='prev' href='/notes/d-python-used-codes/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>【学习笔记】记录 Python 中使用过的有用代码</p>
           <p class='content'>记录 Python 中使用过的有用代码，以后应该还用的上。
 
 平滑对比曲线图
-import matplotlib.pyplot as plt
-# 平滑曲线图
-from scipy.interpo...</p>
+1234567891011121314151617181920212223242526272829303132333...</p>
         </a>
       
       
@@ -3075,7 +2911,7 @@ blocks delimited by &#123;&#125;，块...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -3086,7 +2922,7 @@ blocks delimited by &#123;&#125;，块...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3947,7 +3783,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

@@ -1768,7 +1768,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2638,25 +2638,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>如何<strong>构建哈希的 key 值</strong>，来代表每组的 anagram。因为异位词都是字母相同，字母位置不同，所以按照<strong>字典排序的结果</strong>是一样的，可以当作键。</li>
 </ul>
 </div><div class="story post-story"><h2 id="代码">代码</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">class</span> Solution &#123;</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">public</span>:</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    vector&lt;vector&lt;string&gt;&gt; groupAnagrams(vector&lt;string&gt;&amp; strs) &#123;</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">        <span class="co">// 哈希表 map，key 为排序后的 str，值为对应的 vector&lt;string&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">        unordered_map&lt;string, vector&lt;string&gt;&gt; um;</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">        <span class="cf">for</span> (string str : strs)</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">        &#123;</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">            string key = str;</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">            sort(key.begin(), key.end());</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">            um[key].emplace_back(str);</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">        &#125;</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">        vector&lt;vector&lt;string&gt;&gt; res;</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">        <span class="cf">for</span> (<span class="kw">auto</span> it = um.begin(); it != um.end(); it++)</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">        &#123;</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">            res.emplace_back(it-&gt;second);</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">        &#125;</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">        <span class="cf">return</span> res;</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">    &#125;</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">&#125;;</a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;string&gt;&gt; <span class="built_in">groupAnagrams</span>(vector&lt;string&gt;&amp; strs) &#123;</span><br><span class="line">        <span class="comment">// 哈希表 map，key 为排序后的 str，值为对应的 vector&lt;string&gt;</span></span><br><span class="line">        unordered_map&lt;string, vector&lt;string&gt;&gt; um;</span><br><span class="line">        <span class="keyword">for</span> (string str : strs)</span><br><span class="line">        &#123;</span><br><span class="line">            string key = str;</span><br><span class="line">            <span class="built_in">sort</span>(key.<span class="built_in">begin</span>(), key.<span class="built_in">end</span>());</span><br><span class="line">            um[key].<span class="built_in">emplace_back</span>(str);</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;vector&lt;string&gt;&gt; res;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> it = um.<span class="built_in">begin</span>(); it != um.<span class="built_in">end</span>(); it++)</span><br><span class="line">        &#123;</span><br><span class="line">            res.<span class="built_in">emplace_back</span>(it-&gt;second);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 </div>
   </div>
@@ -2851,7 +2833,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2862,7 +2844,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3723,7 +3705,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

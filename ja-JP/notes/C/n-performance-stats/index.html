@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2641,7 +2641,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://valgrind.org/docs/manual/manual-core.html#manual-core.options">Valgrind Docs</a></p>
 </blockquote>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">valgrind</span> [valgrind-options] your-prog [your-prog-options]</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">valgrind [valgrind-options] your-prog [your-prog-options]</span><br></pre></td></tr></table></figure>
 <p>valgrind-options: * <code>--tool=</code>: choose which tool to use, like <code>--tool=challvalgrind</code></p>
 <ul>
 <li><p><code>--trace-children=&lt;yes|no&gt;</code>: 跟踪到子进程里去，默认请况不跟踪</p></li>
@@ -2651,18 +2651,15 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <h3 id="callgrind-使用">Callgrind 使用</h3>
 <h4 id="cpp-源文件">cpp 源文件</h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">// test_wadg_search.cpp</span></a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test_wadg_search.cpp</span></span><br></pre></td></tr></table></figure>
 <h4 id="编译">编译</h4>
-<p>编译时加上 <code>-g</code> 参数，方便显示行数，如：</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="ex">g++</span> -O0 -g -std=c++11 -lpthread test_wadg_search.cpp -o test_wadg_search</a></code></pre></div>
-<p>本项目中是 CMake，如：</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">set(</span><span class="ex">CMAKE_CXX_FLAGS_DEBUG</span> <span class="st">&quot;</span><span class="va">$&#123;CMAKE_CXX_FLAGS_DEBUG&#125;</span><span class="st"> -O0 -g&quot;</span><span class="kw">)</span></a></code></pre></div>
+<p>编译时加上 <code>-g</code> 参数，方便显示行数，如： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -O0 -g -std=c++11 -lpthread test_wadg_search.cpp -o test_wadg_search</span><br></pre></td></tr></table></figure> 本项目中是 CMake，如： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>(CMAKE_CXX_FLAGS_DEBUG <span class="string">&quot;<span class="variable">$&#123;CMAKE_CXX_FLAGS_DEBUG&#125;</span> -O0 -g&quot;</span>)</span><br></pre></td></tr></table></figure></p>
 <h4 id="运行-callgrind">运行 callgrind</h4>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">valgrind</span> --tool=callgrind --separate-threads=yes ./build/tests/test_wadg_search ./dataset/sift/sift_base.fvecs ./dataset/sift/sift_query.fvecs ./nsg_graph/sift.nsg 200 200 ./search_result/sift_200nn.ivecs</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">valgrind --tool=callgrind --separate-threads=<span class="built_in">yes</span> ./build/tests/test_wadg_search ./dataset/sift/sift_base.fvecs ./dataset/sift/sift_query.fvecs ./nsg_graph/sift.nsg 200 200 ./search_result/sift_200nn.ivecs</span><br></pre></td></tr></table></figure>
 <p>得到 <code>callgrind.out.PID</code> 文件。</p>
 <h4 id="callgrind_annotate-分析文件">callgrind_annotate 分析文件</h4>
 <p>使用 <code>callgrind_annotate</code> 获取 <code>callgrind</code> 生成的输出文件，并以易于阅读的形式打印信息。</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="ex">callgrind_annotate</span> [options] <span class="op">&lt;</span>callgrind.out.PID<span class="op">&gt;</span></a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">callgrind_annotate [options] &lt;callgrind.out.PID&gt;</span><br></pre></td></tr></table></figure>
 <p><code>options</code> 可以包括：</p>
 <ul>
 <li><code>--tree=both</code>: 显示调用树的入口和出口视图。</li>
@@ -2670,26 +2667,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li><code>--threshold=&lt;percentage&gt;</code>: 只显示占总时间超过某个百分比的函数。</li>
 </ul>
 <p>想要一个包含子函数时间的更详细的报告，可以运行：</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ex">callgrind_annotate</span> --tree=both --inclusive=yes <span class="op">&lt;</span>callgrind.out.PID<span class="op">&gt;</span></a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">callgrind_annotate --tree=both --inclusive=<span class="built_in">yes</span> &lt;callgrind.out.PID&gt;</span><br></pre></td></tr></table></figure>
 <h4 id="kcachegrind-分析文件">kcachegrind 分析文件</h4>
 <p>本人 Ubuntu 22.04 电脑上运行存在问题，“打开”不显示文件。</p>
 <h4 id="使用-gprof2dot-可视化">使用 gprof2dot 可视化</h4>
 <ul>
-<li><p>安装 <code>gprof2dot</code> &amp; <code>graphviz</code>：</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="ex">conda</span> create -n <span class="st">&quot;gprof2dot-env&quot;</span> python==3.7</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="ex">conda</span> activate <span class="st">&quot;gprof2dot-env&quot;</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="ex">pip</span> install gprof2dot</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="ex">pip</span> install graphviz</a></code></pre></div></li>
-<li><p>转化为 <code>png</code> 图片：</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># 一定注意是原始的 callgrind.out.* 文件</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co"># 转化为 dot 脚本</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="ex">gprof2dot</span> -f callgrind callgrind.out.PID <span class="op">&gt;</span> callgrind.dot</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co"># 输出为 png</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="ex">dot</span> -Tpng callgrind.dot -o callgrind.png</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co"># 可以简写</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="ex">prof2dot</span> -f callgrind callgrind.out.PID <span class="kw">|</span> <span class="ex">dot</span> -Tpng -o callgrind.png</a></code></pre></div></li>
+<li><p>安装 <code>gprof2dot</code> &amp; <code>graphviz</code>： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda create -n <span class="string">&quot;gprof2dot-env&quot;</span> python==3.7</span><br><span class="line">conda activate <span class="string">&quot;gprof2dot-env&quot;</span></span><br><span class="line">pip install gprof2dot</span><br><span class="line">pip install graphviz</span><br></pre></td></tr></table></figure></p></li>
+<li><p>转化为 <code>png</code> 图片： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一定注意是原始的 callgrind.out.* 文件</span></span><br><span class="line"><span class="comment"># 转化为 dot 脚本</span></span><br><span class="line">gprof2dot -f callgrind callgrind.out.PID &gt; callgrind.dot</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出为 png</span></span><br><span class="line">dot -Tpng callgrind.dot -o callgrind.png</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以简写</span></span><br><span class="line">prof2dot -f callgrind callgrind.out.PID | dot -Tpng -o callgrind.png</span><br></pre></td></tr></table></figure></p></li>
 </ul>
 <hr />
 </div><div class="story post-story"><h2 id="gprof">gprof</h2>
@@ -2701,18 +2685,15 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <h3 id="gprof-使用">gprof 使用</h3>
 <h4 id="cpp-源文件-1">cpp 源文件</h4>
-<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co">// test_wadg_search.cpp</span></a></code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test_wadg_search.cpp</span></span><br></pre></td></tr></table></figure>
 <h4 id="编译-1">编译</h4>
-<p>编译时，加上 <code>-pg</code> 参数，如：</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="ex">g++</span> -O0 -pg -std=c++11 -lpthread test_wadg_search.cpp -o test_wadg_search</a></code></pre></div>
-<p>本项目中是 CMake，如：</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">set(</span><span class="ex">CMAKE_CXX_FLAGS_DEBUG</span> <span class="st">&quot;</span><span class="va">$&#123;CMAKE_CXX_FLAGS_DEBUG&#125;</span><span class="st"> -O0 -pg&quot;</span><span class="kw">)</span></a></code></pre></div>
+<p>编译时，加上 <code>-pg</code> 参数，如： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -O0 -pg -std=c++11 -lpthread test_wadg_search.cpp -o test_wadg_search</span><br></pre></td></tr></table></figure> 本项目中是 CMake，如： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>(CMAKE_CXX_FLAGS_DEBUG <span class="string">&quot;<span class="variable">$&#123;CMAKE_CXX_FLAGS_DEBUG&#125;</span> -O0 -pg&quot;</span>)</span><br></pre></td></tr></table></figure></p>
 <h4 id="运行程序">运行程序</h4>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="ex">test_wadg_search</span> [args]</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test_wadg_search [args]</span><br></pre></td></tr></table></figure>
 <p>运行后在当前工作目录下产生 <code>gmon.out</code> 文件。</p>
 <h4 id="运行-gprof">运行 gprof</h4>
 <p>将生成的 <code>gmon.out</code> 文件输出为可读的文本文件。</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="ex">gprof</span> ./build/tests/test_wadg_search ./anals/gmon.out <span class="op">&gt;</span> gprof.profile</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gprof ./build/tests/test_wadg_search ./anals/gmon.out &gt; gprof.profile</span><br></pre></td></tr></table></figure>
 <h4 id="gprof-报告说明">gprof 报告说明</h4>
 <table style="width:100%;">
 <colgroup>
@@ -2772,38 +2753,15 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </table>
 <h4 id="使用-gprof2dot-可视化-1">使用 gprof2dot 可视化</h4>
 <ul>
-<li><p>安装 <code>gprof2dot</code> &amp; <code>graphviz</code>：</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="ex">conda</span> create -n <span class="st">&quot;gprof2dot-env&quot;</span> python==3.7</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="ex">conda</span> activate <span class="st">&quot;gprof2dot-env&quot;</span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="ex">pip</span> install gprof2dot</a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="ex">pip</span> install graphviz</a></code></pre></div></li>
-<li><p>转化为 <code>png</code> 图片：</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># 一定注意是生成后的 utf-8 文本文件，不是原来的 gmon.out 文件</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co"># 转化为 dot 脚本</span></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="ex">gprof2dot</span> gprof.profile <span class="op">&gt;</span> gprof.dot</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="co"># 输出为 png</span></a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="ex">dot</span> -Tpng gprof.dot -o gprof.png</a>
-<a class="sourceLine" id="cb16-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co"># 可以简写</span></a>
-<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="ex">prof2dot</span> gprof.profile <span class="kw">|</span> <span class="ex">dot</span> -Tpng -o gprof.png</a></code></pre></div></li>
+<li><p>安装 <code>gprof2dot</code> &amp; <code>graphviz</code>： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda create -n <span class="string">&quot;gprof2dot-env&quot;</span> python==3.7</span><br><span class="line">conda activate <span class="string">&quot;gprof2dot-env&quot;</span></span><br><span class="line">pip install gprof2dot</span><br><span class="line">pip install graphviz</span><br></pre></td></tr></table></figure></p></li>
+<li><p>转化为 <code>png</code> 图片： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一定注意是生成后的 utf-8 文本文件，不是原来的 gmon.out 文件</span></span><br><span class="line"><span class="comment"># 转化为 dot 脚本</span></span><br><span class="line">gprof2dot gprof.profile &gt; gprof.dot</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出为 png</span></span><br><span class="line">dot -Tpng gprof.dot -o gprof.png</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以简写</span></span><br><span class="line">prof2dot gprof.profile | dot -Tpng -o gprof.png</span><br></pre></td></tr></table></figure></p></li>
 </ul>
 </div><div class="story post-story"><h2 id="strace">strace</h2>
 <h3 id="strace-使用">strace 使用</h3>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="ex">strace</span> -f -o output.log <span class="op">&lt;</span>program<span class="op">&gt;</span> [args]</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="ex">strace</span> -f -o test_nndescent_bm.log ./build/tests/test_nndescent_bm /home/frank/Workspace/Test/big_memory/dataset/bigann_learn_small.bvecs ./knn_graph/bigann_learn_small.graph 200 200 20 20 100</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="ex">strace</span> -f -o test_nndescent_bm.log -e trace=memory <span class="op">&lt;</span>program<span class="op">&gt;</span></a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">strace -f -o output.log &lt;program&gt; [args]</span><br><span class="line"></span><br><span class="line">strace -f -o test_nndescent_bm.log ./build/tests/test_nndescent_bm /home/frank/Workspace/Test/big_memory/dataset/bigann_learn_small.bvecs ./knn_graph/bigann_learn_small.graph 200 200 20 20 100</span><br><span class="line"></span><br><span class="line">strace -f -o test_nndescent_bm.log -e trace=memory &lt;program&gt;</span><br></pre></td></tr></table></figure>
 </div><div class="story post-story"><h2 id="gdb">gdb</h2>
 <h3 id="gdb-使用">gdb 使用</h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="fu">gdb</span> [--args] <span class="op">&lt;</span>program<span class="op">&gt;</span> [args]</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="co"># 编译时开启 -g 参数，或者 -DCMAKE_BUILD_TYPE=Debug</span></a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="fu">gdb</span> --args build/tests/test_nndescent_bm ../WADG_ANN/dataset/bigann/bigann_learn.bvecs ./knn_graph/bigann_learn.graph 200 200 20 20 100</a>
-<a class="sourceLine" id="cb18-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span><span class="ex">run</span></a>
-<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span><span class="ex">bt</span></a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gdb [--args] &lt;program&gt; [args]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译时开启 -g 参数，或者 -DCMAKE_BUILD_TYPE=Debug</span></span><br><span class="line">gdb --args build/tests/test_nndescent_bm ../WADG_ANN/dataset/bigann/bigann_learn.bvecs ./knn_graph/bigann_learn.graph 200 200 20 20 100</span><br><span class="line"></span><br><span class="line">(gdb)run</span><br><span class="line">(gdb)bt</span><br></pre></td></tr></table></figure>
 
 </div>
   </div>
@@ -2997,7 +2955,7 @@ cmake 3.22.1...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -3008,7 +2966,7 @@ cmake 3.22.1...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3869,7 +3827,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 

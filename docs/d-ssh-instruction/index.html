@@ -1766,7 +1766,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: false,
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737395752787),
+    lastupdate: new Date(1737707780763),
     sidebar: {
       for_page: ["blogger","category","guide","tagcloud","webinfo"],
       for_post: ["toc","webinfo"],
@@ -2596,7 +2596,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fa-solid fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：536 字</p>
+      <p>字数：533 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2629,33 +2629,25 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <ul>
 <li><p>安装 <code>OpenSSH Client</code> 和 <code>OpenSSH Server</code></p></li>
 <li><p>Powershell（管理员）中输入：</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">Start-Service</span> sshd</a></code></pre></div></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Start-Service sshd</span><br></pre></td></tr></table></figure></li>
 <li><p>命令行中输入：</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">ssh</span> Frank@localhost</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh Frank@localhost</span><br></pre></td></tr></table></figure>
 <p>测试连接成功，但需要输入密码。</p></li>
 <li><p>通过 RSA 私钥登录：</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">ssh-keygen</span> -t rsa</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
 <p>在 <code>~/.ssh</code> 目录下得到 <code>id_rsa.pub</code> 公钥和 <code>id_rsa</code> 私钥。</p></li>
 <li><p>将 <code>id_rsa.pub</code> 中的内容复制到 Server 端的 <code>~/.ssh/authorized_keys</code> 文件中。提供一个可行的方法：</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># 1. 直接通过 SSH 连接 Server 端</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="fu">ssh</span> <span class="op">&lt;</span>user<span class="op">&gt;</span>@<span class="op">&lt;</span>hostname<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># 2. echo 的方式加入到 ~/.ssh/authorized_keys 文件中</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="bu">echo</span> <span class="op">&lt;</span>content_of_id_rsa_pub<span class="op">&gt;</span> <span class="op">&gt;&gt;</span> ~/.ssh/authorized_keys</a></code></pre></div></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 直接通过 SSH 连接 Server 端</span></span><br><span class="line">ssh &lt;user&gt;@&lt;hostname&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. echo 的方式加入到 ~/.ssh/authorized_keys 文件中</span></span><br><span class="line"><span class="built_in">echo</span> &lt;content_of_id_rsa_pub&gt; &gt;&gt; ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></li>
 <li><p>在 <code>.ssh/</code> 目录下新建文本文件 <code>config</code>，内容如下：</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="ex">Host</span> <span class="op">&lt;</span>host<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="ex">HostName</span> <span class="op">&lt;</span>hostname<span class="op">&gt;</span> <span class="co"># ip address or domain</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="ex">User</span> <span class="op">&lt;</span>user<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="ex">PreferredAuthentications</span> publickey</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="ex">IdentityFile</span> <span class="op">&lt;</span>.ssh/id_rsa<span class="op">&gt;</span></a></code></pre></div></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host &lt;host&gt;</span><br><span class="line">HostName &lt;hostname&gt; <span class="comment"># ip address or domain</span></span><br><span class="line">User &lt;user&gt;</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile &lt;.ssh/id_rsa&gt;</span><br></pre></td></tr></table></figure></li>
 <li><p>验证连接：</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="fu">ssh</span> <span class="op">&lt;</span>host<span class="op">&gt;</span></a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;host&gt;</span><br></pre></td></tr></table></figure>
 <p>当所有操作正确完成后，连接成功。</p></li>
 </ul>
 <h3 id="linux">Linux</h3>
 <ul>
 <li><p>所有操作与 Windows 几乎相同，在复制 <code>id_rsa.pub</code> 公钥的时候，还可以通过以下方式：</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ex">ssh-copy-id</span> -i <span class="op">&lt;</span>~/.ssh/id_rsa.pub<span class="op">&gt;</span> <span class="op">&lt;</span>user<span class="op">&gt;</span>@<span class="op">&lt;</span>hostname<span class="op">&gt;</span></a></code></pre></div></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id -i &lt;~/.ssh/id_rsa.pub&gt; &lt;user&gt;@&lt;hostname&gt;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <hr />
 </div><div class="story post-story"><h2 id="server-端">Server 端</h2>
@@ -2664,52 +2656,24 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </blockquote>
 <ul>
 <li><p>安装 <code>openSSH</code>：</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="fu">sudo</span> apt install openssh-server</a></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install openssh-server</span><br></pre></td></tr></table></figure>
 <p>启动：</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ex">/etc/init.d/ssh</span> start</a></code></pre></div></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh start</span><br></pre></td></tr></table></figure></li>
 <li><p>使用 <code>vim</code> 打开 <code>/etc/ssh/sshd_config</code>，添加以下内容：</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="ex">AuthorizedKeysFile</span> .ssh/authorized_keys </a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="ex">PubkeyAuthentication</span> yes</a></code></pre></div></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AuthorizedKeysFile .ssh/authorized_keys </span><br><span class="line"></span><br><span class="line">PubkeyAuthentication <span class="built_in">yes</span></span><br></pre></td></tr></table></figure></li>
 <li><p>通过 <code>ssh-keygen</code> 工具生成 <code>.ssh</code> 目录。</p></li>
 <li><p>如果 <code>.ssh</code> 目录下没有 <code>authorized_keys</code> 文件，创建一个：</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="fu">touch</span> ~/.ssh/authorized_keys</a></code></pre></div></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></li>
 <li><p>将 <code>服务器自己的公钥</code> 和 <code>远程登录机器对应的公钥</code> 复制到 <code>authorized_keys</code> 文件中：</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="fu">cat</span> ~/.ssh/id_rsa.pub <span class="op">&gt;&gt;</span> ~/.ssh/authorized_keys</a></code></pre></div></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></li>
 <li><p>修改目录权限：</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># ～: 750 </span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co"># ~/.ssh: 700 </span></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="co"># ~/.ssh/*: 600 </span></a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="co"># ~/.ssh/config: 700</span></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="fu">chmod</span> 700 ~/.ssh</a>
-<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="fu">chmod</span> 600 .ssh/authorized_keys</a></code></pre></div></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ～: 750 </span></span><br><span class="line"><span class="comment"># ~/.ssh: 700 </span></span><br><span class="line"><span class="comment"># ~/.ssh/*: 600 </span></span><br><span class="line"><span class="comment"># ~/.ssh/config: 700</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> 700 ~/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 600 .ssh/authorized_keys</span><br></pre></td></tr></table></figure></li>
 <li><p>理论上可以运行成功。</p></li>
 </ul>
 <hr />
 </div><div class="story post-story"><h2 id="管理会话-screen">管理会话 —— screen</h2>
 <p>管理会话，SSH 时断开连接也不中断正在运行的进程，重新连接 SSH 后可以恢复。</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># 安装 screen</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="fu">sudo</span> apt install screen</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co"># 新建 screen</span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="ex">screen</span> -S <span class="op">&lt;</span>name<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co"># 进入 screen</span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="ex">screen</span> -r <span class="op">&lt;</span>name<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co"># 退出当前 screen</span></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co"># 在当前 screen 下</span></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="ex">Ctrl+A</span>，Ctrl+D  </a>
-<a class="sourceLine" id="cb14-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co"># 显示 screen list</span></a>
-<a class="sourceLine" id="cb14-15" data-line-number="15">​​​​​​​<span class="ex">screen</span> -ls</a>
-<a class="sourceLine" id="cb14-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co"># 删除指定 screen</span></a>
-<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co"># 在当前 screen 下</span></a>
-<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="ex">Ctrl+D</span></a>
-<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co"># 不在当前 screen 下</span></a>
-<a class="sourceLine" id="cb14-21" data-line-number="21">​​​​​​​<span class="ex">screen</span> -S <span class="op">&lt;</span>name<span class="op">&gt;</span> -X quit</a></code></pre></div>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 screen</span></span><br><span class="line">sudo apt install screen</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建 screen</span></span><br><span class="line">screen -S &lt;name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入 screen</span></span><br><span class="line">screen -r &lt;name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 退出当前 screen</span></span><br><span class="line"><span class="comment"># 在当前 screen 下</span></span><br><span class="line">Ctrl+A，Ctrl+D  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示 screen list</span></span><br><span class="line">​​​​​​​screen -<span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除指定 screen</span></span><br><span class="line"><span class="comment"># 在当前 screen 下</span></span><br><span class="line">Ctrl+D</span><br><span class="line"><span class="comment"># 不在当前 screen 下</span></span><br><span class="line">​​​​​​​screen -S &lt;name&gt; -X quit</span><br></pre></td></tr></table></figure></p>
 
 </div>
   </div>
@@ -2834,8 +2798,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 Ubuntu14.04 x64 以下
 测试通过：Ubuntu14.04 x64，Ubuntu10.04 x86
-老版本需要更换官方源
-# ...</p>
+老版本需要更换官方源 1#...</p>
         </a>
       
       
@@ -2845,7 +2808,7 @@ Ubuntu14.04 x64 以下
 
 安装 Node
 安装 nvm 工具
-curl https:# raw.githubusercontent.com/creationix/nvm/mas...</p>
+1curl https:# raw.githubusercontent.com/creationix/nvm/ma...</p>
         </a>
       
     </div>
@@ -2902,7 +2865,7 @@ curl https:# raw.githubusercontent.com/creationix/nvm/mas...</p>
       
         <div class="webinfo-item">
           <div>本站总字数：</div>
-          <div>106.1k 字</div>
+          <div>106.5k 字</div>
         </div>
       
 
@@ -2913,7 +2876,7 @@ curl https:# raw.githubusercontent.com/creationix/nvm/mas...</p>
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2025-01-21 日</div>
+          <div id="last-update-show">2025-01-24 日</div>
         </div>
       
     </div>
@@ -3774,7 +3737,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 
   <script>
-  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp"];
+  let imgs = ["https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover07.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover09.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover02.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover01.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover04.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover05.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover03.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover06.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover10.webp","https://gcore.jsdelivr.net/gh/CS0522/CSBlog/source/images/covers/cover08.webp"];
   let index = 0;
   let IntervalParallax = null;
 
